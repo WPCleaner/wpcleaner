@@ -13,6 +13,7 @@
 # Author: SomeyaMako
 # Author: Yfdyh000
 # Author: Zhang8569
+# Author: 人间百态
 # Author: 列维劳德
 # Author: 水獭很懒
 # Author: 沈澄心
@@ -26,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-04-29 12:27:14+0000\n"
+"PO-Revision-Date: 2024-05-06 12:25:51+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -391,22 +392,22 @@ msgstr "可以添加{0}的章节标题"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:408
 #, java-format
 msgid "Section headings where a {0} can be added before"
-msgstr ""
+msgstr "可在前面添加{0}的段落标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:411
 #, java-format
 msgid "Section heading where a {0} can be added before"
-msgstr ""
+msgstr "可在前面添加{0}的段落标题"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:415
 #, java-format
 msgid "Templates where a {0} can be added before"
-msgstr ""
+msgstr "可以在前面加上{0}的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:418
 #, java-format
 msgid "Template where a {0} can be added before"
-msgstr ""
+msgstr "可以在前面加上{0}的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
@@ -782,11 +783,11 @@ msgstr "放在{0}之前会产生误报的缩写"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:549
 msgid "A list of templates in which the punctuation can be safely moved after the reference"
-msgstr ""
+msgstr "标点符号可以安全地移动到参考资料之后的模版清单"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:552
 msgid "Parameter of the template"
-msgstr ""
+msgstr "模板参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
@@ -900,11 +901,11 @@ msgstr "替换ISBN的模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:946
 msgid "True if the template includes parenthesis"
-msgstr ""
+msgstr "如果模板包含圆形括号，则为 true"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:949
 msgid "True if the template includes small tags"
-msgstr ""
+msgstr "如果模板包含小标签，则为 true"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:119
 #, java-format
@@ -1013,11 +1014,11 @@ msgstr "标签具有不同的名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:297
 msgid "Name the reference from template parameter"
-msgstr ""
+msgstr "从模板参数命名参考资料"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:306
 msgid "Generate a reference name"
-msgstr ""
+msgstr "生成参考资料名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:313
 msgid "Give a name to the <ref> tag"
@@ -1029,25 +1030,25 @@ msgstr "希望<ref>标签使用什么名称？"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:499
 msgid "Parameters that can be used as title"
-msgstr ""
+msgstr "可用作标题的参数"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:513
 msgid "Name the reference with the title"
-msgstr ""
+msgstr "以标题命名参考资料"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:517
 msgid "Is it automatic?"
-msgstr ""
+msgstr "是自动的吗？"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:522
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:526
 msgid "Prefix for the automatically generated reference names"
-msgstr ""
+msgstr "自动生成的参考资料名称前缀"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:531
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:535
 msgid "Hint for a maximum length of the reference name"
-msgstr ""
+msgstr "参考资料名称最大长度的提示"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:105
 msgid "Delete section"
@@ -1248,11 +1249,11 @@ msgstr "每次替代均使用"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:796
 msgid "Regular expressions to be disabled"
-msgstr ""
+msgstr "禁用的正则表达式"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:800
 msgid "Regular expression"
-msgstr ""
+msgstr "正则表达式"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:104
 #, java-format
@@ -1679,9 +1680,8 @@ msgstr "具有已弃用参数的模板名称"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
-#, fuzzy
 msgid "Name of a deprecated parameter"
-msgstr "命名已弃用参数的 a"
+msgstr "已弃用的参数名称"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 msgid "Textual explanation about the deprecated parameter"
