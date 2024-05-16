@@ -3,6 +3,7 @@
 #
 # Author: Ellif
 # Author: Sadopaul
+# Author: Suleiman the Magnificent Television
 # Author: Ykhwong
 # Author: 밝은소년
 # --
@@ -14,7 +15,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-04-25 12:30:04+0000\n"
+"PO-Revision-Date: 2024-05-16 12:30:15+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,19 +31,19 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "{0} 확장 프로그램은 이제 모든 위키미디어 위키에서 사용할 수 있습니다."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "페이지에서 수정해야 할 또는 수정할 수 있는 위키텍스트 패턴을 식별합니다."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr ""
+msgstr "또한 그 패턴에 대한 문제와 어떻게 해결해야 하는지에 대한 몇 가지 지침을 제공합니다."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
-msgstr ""
+msgstr "린터 확장 프로그램에서 발견된 문제를 해결하는 데 도움이 될 수 있습니다."
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
