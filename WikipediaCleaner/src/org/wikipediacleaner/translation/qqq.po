@@ -3,6 +3,7 @@
 #
 # Author: Ajeje Brazorf
 # Author: NicoV
+# Author: Pppery
 # Author: Robby
 # Author: Verdy p
 # --
@@ -11,7 +12,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-04-25 12:30:08+0000\n"
+"PO-Revision-Date: 2024-06-03 12:29:10+0000\n"
 "X-POT-Import-Date: 2024-04-23 20:30:36+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4992,15 +4993,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:274
 #, java-format
 msgid "Let {0} choose the Look && Feel"
-msgstr "The litteral ampersand (<code>&</code>) is doubled in English only to escape it, to avoid its incorrect interpretation as a prefix for a keyboard shortcut. This is not a keyboard shortcut and it could be translated like the word \"and\"."
+msgstr "The literal ampersand (<code>&</code>) is doubled in English only to escape it, to avoid its incorrect interpretation as a prefix for a keyboard shortcut. This is not a keyboard shortcut and it could be translated like the word \"and\"."
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:279
 msgid "Use System Look && Feel"
-msgstr "The litteral ampersand (<code>&</code>) is doubled in English only to escape it, to avoid its incorrect interpretation as a prefix for a keyboard shortcut. This is not a keyboard shortcut and it could be translated like the word \"and\"."
+msgstr "The literal ampersand (<code>&</code>) is doubled in English only to escape it, to avoid its incorrect interpretation as a prefix for a keyboard shortcut. This is not a keyboard shortcut and it could be translated like the word \"and\"."
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:284
 msgid "Choose Look && Feel"
-msgstr "The litteral ampersand (<code>&</code>) is doubled in English only to escape it, to avoid its incorrect interpretation as a prefix for a keyboard shortcut. This is not a keyboard shortcut and it could be translated like the word \"and\"."
+msgstr "The literal ampersand (<code>&</code>) is doubled in English only to escape it, to avoid its incorrect interpretation as a prefix for a keyboard shortcut. This is not a keyboard shortcut and it could be translated like the word \"and\"."
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:91
