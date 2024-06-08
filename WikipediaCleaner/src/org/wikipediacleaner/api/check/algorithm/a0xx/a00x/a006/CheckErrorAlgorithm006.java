@@ -58,61 +58,88 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
-    EnumWikipedia wiki = analysis.getWikipedia();
     for (PageElementFunction tag : tags) {
-      if (tag != null) {
-        boolean characterFound = false;
-        boolean characterReplaced = false;
-        String unknownCharacters = "";
-        String text = "";
-        int currentPos = 0;
-        String value = (tag.getParameterCount() > 0) ? tag.getParameterValue(0) : "";
-        while (currentPos < value.length()) {
-          boolean error = false;
-          char character = value.charAt(currentPos);
-          if (!SpecialCharacters.isAuthorized(character, wiki)) {
-            characterFound = true;
-            error = true;
-          }
-          if (error) {
-            String newCharacter = SpecialCharacters.proposeReplacement(character, wiki);
-            if (!Character.toString(character).equals(newCharacter)) {
-              characterReplaced = true;
-            } else {
-              unknownCharacters += character;
-            }
-            text += newCharacter;
-          } else {
-            text += character;
-          }
-          currentPos++;
-        }
-        if (characterFound) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, tag.getBeginIndex(), tag.getEndIndex());
-          if (characterReplaced) {
-            errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
-          } else {
-            errorResult.addText(
-                GT._T("Unable to replace the characters [{0}]", unknownCharacters));
-          }
-          errors.add(errorResult);
-        } else if (tag.getParameterCount() > 1) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          int separatorIndex = tag.getParameterSeparatorOffset(1);
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, separatorIndex, separatorIndex + 1);
-          errors.add(errorResult);
-        }
-      }
+      result |= analyzeTag(analysis, tag, errors);
     }
     return result;
+  }
+
+  /**
+   * Analyze a tag to check if errors are present.
+   * 
+   * @param analysis Page analysis.
+   * @param tag Tag to analyze
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  public boolean analyzeTag(
+      PageAnalysis analysis,
+      PageElementFunction tag,
+      Collection<CheckErrorResult> errors) {
+
+    // Check for error
+    EnumWikipedia wiki = analysis.getWikipedia();
+    boolean characterFound = false;
+    boolean characterReplaced = false;
+    String unknownCharacters = "";
+    String text = "";
+    int lastPos = 0;
+    int currentPos = 0;
+    String value = (tag.getParameterCount() > 0) ? tag.getParameterValue(0) : "";
+    while (currentPos < value.length()) {
+      char character = value.charAt(currentPos);
+      boolean error = !SpecialCharacters.isAuthorized(character, wiki);
+      if (error && character == '{' && value.startsWith("{{", currentPos)) {
+        int templateEndIndex = value.indexOf("}}", currentPos);
+        if (templateEndIndex > 0) {
+          error = false;
+          currentPos = templateEndIndex + 1;
+        }
+      }
+      if (error) {
+        characterFound = true;
+        text += value.substring(lastPos, currentPos);
+        String newCharacter = SpecialCharacters.proposeReplacement(character, wiki);
+        if (!Character.toString(character).equals(newCharacter)) {
+          characterReplaced = true;
+        } else {
+          unknownCharacters += character;
+        }
+        text += newCharacter;
+        lastPos = currentPos + 1;
+      }
+      currentPos++;
+    }
+
+    // Report error
+    if (characterFound) {
+      if (errors == null) {
+        return true;
+      }
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, tag.getBeginIndex(), tag.getEndIndex());
+      if (characterReplaced) {
+        if (lastPos < value.length()) {
+          text += value.substring(lastPos);
+        }
+        errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
+      } else {
+        errorResult.addText(
+            GT._T("Unable to replace the characters [{0}]", unknownCharacters));
+      }
+      errors.add(errorResult);
+      return true;
+    }
+    if (tag.getParameterCount() > 1) {
+      if (errors == null) {
+        return true;
+      }
+      int separatorIndex = tag.getParameterSeparatorOffset(1);
+      CheckErrorResult errorResult = createCheckErrorResult(analysis, separatorIndex, separatorIndex + 1);
+      errors.add(errorResult);
+      return true;
+    }
+    return false;
   }
 
   /**
