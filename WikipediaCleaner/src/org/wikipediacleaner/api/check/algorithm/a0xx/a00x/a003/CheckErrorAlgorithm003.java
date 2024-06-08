@@ -235,9 +235,11 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       boolean automatic) {
     int beginIndex = element.getBeginIndex();
     int endIndex = element.getEndIndex();
+    boolean needNewLineBefore = beginIndex > 0 && analysis.getContents().charAt(beginIndex - 1) != '\n';
     CheckErrorResult tmpErrorResult = createCheckErrorResult(
         analysis, beginIndex, endIndex, ErrorLevel.WARNING);
     String replacement =
+        (needNewLineBefore ? "\n\n" : "") +
         TitleBuilder.from(titleLevel, preferredTitle).toString() +
         "\n" + insert + "\n\n" +
         analysis.getContents().substring(beginIndex, endIndex);
