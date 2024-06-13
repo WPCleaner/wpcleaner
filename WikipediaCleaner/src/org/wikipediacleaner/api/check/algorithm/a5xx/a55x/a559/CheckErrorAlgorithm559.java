@@ -72,7 +72,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     while (refIndex < maxRefs) {
 
       // Group references separated only by punctuation characters
-      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'′’", separators);
+      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'′’-&", separators);
       result |= analyzeGroupOfTags(analysis, contents, errors, refs, refIndex, lastRefIndex);
       refIndex = lastRefIndex + 1;
     }
@@ -247,6 +247,9 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
   /** Separator between consecutive tags */
   private static final String PARAMETER_SEPARATOR = "separator";
 
+  /** Incorrect separators between consecutive tags */
+  private static final String PARAMETER_INCORRECT_SEPARATORS = "incorrect_separators";
+
   /** Templates that can replace a tag */
   private static final String PARAMETER_TEMPLATES = "templates";
 
@@ -278,8 +281,15 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
         }
       }
     }
+    String tmp = getSpecificProperty(PARAMETER_INCORRECT_SEPARATORS, true, false, false);
+    if (tmp != null) {
+      tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      for (String tmpElement : tmpList) {
+        separators.add(tmpElement);
+      }
+    }
 
-    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     templatesName.clear();
     if (tmp != null) {
       tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
@@ -324,6 +334,13 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "true/false",
             GT._T("Option to apply automatic replacement even in templates"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_INCORRECT_SEPARATORS,
+        GT._T("Incorrect separator between consecutive {0} tags", "&lt;ref&gt;"),
+        new AlgorithmParameterElement(
+            "separator",
+            GT._T("Incorrect separator between consecutive {0} tags", "&lt;ref&gt;")),
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_SEPARATOR,
         GT._T("Used as a separator between consecutive {0} tags", "&lt;ref&gt;"),
