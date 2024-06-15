@@ -40,7 +40,8 @@ public abstract class PageElement extends ContentsElement {
       List<PageElement> elements,
       int firstIndex,
       String contents,
-      String punctuation, Collection<String> separators) {
+      String punctuation,
+      Collection<String> separators) {
     if (elements == null) {
       return firstIndex;
     }
@@ -48,35 +49,56 @@ public abstract class PageElement extends ContentsElement {
     while (elementIndex + 1 < elements.size()) {
       int nextBeginIndex = elements.get(elementIndex + 1).getBeginIndex();
       int currentIndex = elements.get(elementIndex).getEndIndex();
-      boolean separatorFound = false;
-      while (currentIndex < nextBeginIndex) {
-        
-        // Check for separators
-        if (separators != null) {
-          for (String separator : separators) {
-            if (!separatorFound && contents.startsWith(separator, currentIndex)) {
-              separatorFound = true;
-              currentIndex += separator.length();
-            }
-          }
-        }
-
-        // Check for other characters
-        if (currentIndex < nextBeginIndex) {
-          if (contents.startsWith("&nbsp;", currentIndex)) {
-            currentIndex += "&nbsp;".length();
-          } else if (!Character.isWhitespace(contents.charAt(currentIndex)) &&
-              ((punctuation == null) ||
-               (punctuation.indexOf(contents.charAt(currentIndex)) < 0))) {
-            return elementIndex;
-          } else {
-            currentIndex++;
-          }
-        }
+      if (!canGroup(contents, currentIndex, nextBeginIndex, punctuation, separators)) {
+        return elementIndex;
       }
       elementIndex++;
     }
     return elementIndex;
+  }
+
+  /**
+   * Analyze if text can be between consecutive elements.
+   * 
+   * @param contents Page contents.
+   * @param beginIndex Begin index of the text.
+   * @param endIndex End index of the text.
+   * @param punctuation Possible punctuation between elements.
+   * @param separators Possible separators between elements.
+   * @return True if the text can be between consecutive elements.
+   */
+  private static boolean canGroup(
+      final String contents, final int beginIndex, final int endIndex,
+      final String punctuation, Collection<String> separators) {
+    if (endIndex <= beginIndex) {
+      return true;
+    }
+
+    // Check for separators
+    if (separators != null) {
+      for (String separator : separators) {
+        if (contents.startsWith(separator, beginIndex)) {
+          return canGroup(contents, beginIndex + separator.length(), endIndex, punctuation, separators);
+        }
+      }
+    }
+
+    // Check for unbreakable whitespace
+    if (contents.startsWith("&nbsp;", beginIndex)) {
+      return canGroup(contents, beginIndex + "&nbsp;".length(), endIndex, punctuation, separators);
+    }
+
+    // Check for whitespace
+    if (Character.isWhitespace(contents.charAt(beginIndex))) {
+      return canGroup(contents, beginIndex + 1, endIndex, punctuation, separators);
+    }
+
+    // Check for punctuation
+    if ((punctuation != null) && (punctuation.indexOf(contents.charAt(beginIndex))>= 0)) {
+      return canGroup(contents, beginIndex + 1, endIndex, punctuation, separators);
+    }
+
+    return false;
   }
 
   /**
