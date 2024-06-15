@@ -10,7 +10,9 @@ package org.wikipediacleaner.api.data;
 import java.util.Collection;
 import java.util.List;
 
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 
 
 /**
@@ -31,17 +33,19 @@ public abstract class PageElement extends ContentsElement {
    * 
    * @param elements List of elements.
    * @param firstIndex Index of first element in the list.
-   * @param contents Page contents.
+   * @param analysis Page analysis.
    * @param punctuation Possible punctuation between elements.
    * @param separators Possible separators between elements.
+   * @param tagTypes Possible tags between elements.
    * @return Index of last element in the group of consecutive elements.
    */
   public static int groupElements(
       List<PageElement> elements,
       int firstIndex,
-      String contents,
+      PageAnalysis analysis,
       String punctuation,
-      Collection<String> separators) {
+      Collection<String> separators,
+      Collection<TagType> tagTypes) {
     if (elements == null) {
       return firstIndex;
     }
@@ -49,7 +53,7 @@ public abstract class PageElement extends ContentsElement {
     while (elementIndex + 1 < elements.size()) {
       int nextBeginIndex = elements.get(elementIndex + 1).getBeginIndex();
       int currentIndex = elements.get(elementIndex).getEndIndex();
-      if (!canGroup(contents, currentIndex, nextBeginIndex, punctuation, separators)) {
+      if (!canGroup(analysis, currentIndex, nextBeginIndex, punctuation, separators, tagTypes)) {
         return elementIndex;
       }
       elementIndex++;
@@ -65,37 +69,51 @@ public abstract class PageElement extends ContentsElement {
    * @param endIndex End index of the text.
    * @param punctuation Possible punctuation between elements.
    * @param separators Possible separators between elements.
+   * @param tagTypes Possible tags between elements.
    * @return True if the text can be between consecutive elements.
    */
   private static boolean canGroup(
-      final String contents, final int beginIndex, final int endIndex,
-      final String punctuation, Collection<String> separators) {
+      final PageAnalysis analysis, final int beginIndex, final int endIndex,
+      final String punctuation, Collection<String> separators, Collection<TagType> tagTypes) {
     if (endIndex <= beginIndex) {
       return true;
     }
+    final String contents = analysis.getContents();
 
     // Check for separators
     if (separators != null) {
       for (String separator : separators) {
         if (contents.startsWith(separator, beginIndex)) {
-          return canGroup(contents, beginIndex + separator.length(), endIndex, punctuation, separators);
+          return canGroup(analysis, beginIndex + separator.length(), endIndex, punctuation, separators, tagTypes);
         }
       }
     }
 
     // Check for unbreakable whitespace
     if (contents.startsWith("&nbsp;", beginIndex)) {
-      return canGroup(contents, beginIndex + "&nbsp;".length(), endIndex, punctuation, separators);
+      return canGroup(analysis, beginIndex + "&nbsp;".length(), endIndex, punctuation, separators, tagTypes);
     }
 
     // Check for whitespace
     if (Character.isWhitespace(contents.charAt(beginIndex))) {
-      return canGroup(contents, beginIndex + 1, endIndex, punctuation, separators);
+      return canGroup(analysis, beginIndex + 1, endIndex, punctuation, separators, tagTypes);
     }
 
     // Check for punctuation
     if ((punctuation != null) && (punctuation.indexOf(contents.charAt(beginIndex))>= 0)) {
-      return canGroup(contents, beginIndex + 1, endIndex, punctuation, separators);
+      return canGroup(analysis, beginIndex + 1, endIndex, punctuation, separators, tagTypes);
+    }
+
+    // Check for tags
+    if ((tagTypes != null) && (contents.charAt(beginIndex) == '<')) {
+      PageElementTag tag = analysis.isInTag(beginIndex);
+      if ((tag != null) && (tag.isComplete()) && (tagTypes.contains(tag.getType()))) {
+        if (tag.isFullTag()) {
+          return canGroup(analysis, tag.getCompleteEndIndex(), endIndex, punctuation, separators, tagTypes);
+        }
+        return canGroup(analysis, tag.getValueBeginIndex(), tag.getValueEndIndex(), punctuation, separators, tagTypes)
+            && canGroup(analysis, tag.getCompleteEndIndex(), endIndex, punctuation, separators, tagTypes);
+      }
     }
 
     return false;

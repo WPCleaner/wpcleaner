@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -30,6 +32,8 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.IntervalComparator;
+import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
@@ -39,6 +43,10 @@ import org.wikipediacleaner.i18n.GT;
  * Error 559: Force separator between reference tags
  */
 public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
+
+  private static final Set<TagType> TAG_SEPARATORS = Stream
+      .of(HtmlTagType.SMALL, HtmlTagType.SUB)
+      .collect(Collectors.toSet());
 
   public CheckErrorAlgorithm559() {
     super("Force separator between reference tags");
@@ -72,7 +80,9 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     while (refIndex < maxRefs) {
 
       // Group references separated only by punctuation characters
-      int lastRefIndex = PageElement.groupElements(refs, refIndex, contents, ",;.\'′’-&", separators);
+      int lastRefIndex = PageElement.groupElements(
+          refs, refIndex, analysis,
+          ",;.\'′’-&", separators, TAG_SEPARATORS);
       result |= analyzeGroupOfTags(analysis, contents, errors, refs, refIndex, lastRefIndex);
       refIndex = lastRefIndex + 1;
     }
