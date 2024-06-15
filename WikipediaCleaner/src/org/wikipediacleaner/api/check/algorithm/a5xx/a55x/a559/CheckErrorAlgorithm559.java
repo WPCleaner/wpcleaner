@@ -27,6 +27,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFullTag;
+import org.wikipediacleaner.api.data.PageElementGrouper;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTemplate.Parameter;
@@ -80,9 +81,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     while (refIndex < maxRefs) {
 
       // Group references separated only by punctuation characters
-      int lastRefIndex = PageElement.groupElements(
-          refs, refIndex, analysis,
-          ",;.\'′’-&", separators, TAG_SEPARATORS);
+      int lastRefIndex = grouper.groupElements(refs, refIndex, analysis);
       result |= analyzeGroupOfTags(analysis, contents, errors, refs, refIndex, lastRefIndex);
       refIndex = lastRefIndex + 1;
     }
@@ -315,6 +314,8 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     }
 
     referencesTemplates = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.REFERENCES_TEMPLATES);
+
+    grouper = new PageElementGrouper(",;.\'′’-&", separators, TAG_SEPARATORS);
   }
 
   /** Valid separator between consecutive tags */
@@ -331,6 +332,8 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
 
   /** Templates containing references */
   private List<String[]> referencesTemplates;
+
+  private PageElementGrouper grouper;
 
   /**
    * Build the list of parameters for this algorithm.

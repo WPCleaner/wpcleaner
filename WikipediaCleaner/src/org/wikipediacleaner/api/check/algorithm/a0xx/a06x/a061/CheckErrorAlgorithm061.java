@@ -26,6 +26,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElement;
 import org.wikipediacleaner.api.data.PageElementFullTag;
+import org.wikipediacleaner.api.data.PageElementGrouper;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -84,9 +85,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     while (refIndex < maxRefs) {
 
       // Group references separated only by punctuation characters
-      int lastRefIndex = PageElement.groupElements(
-          refs, refIndex, analysis,
-          ",;.\'′’-&", separators, TAG_SEPARATORS);
+      int lastRefIndex = grouper.groupElements(refs, refIndex, analysis);
       result |= analyzeGroupOfTags(analysis, contents, errors, refs, refIndex, lastRefIndex);
       refIndex = lastRefIndex + 1;
     }
@@ -476,6 +475,8 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
     tmp = getSpecificProperty(PARAMETER_FORCE_SEPARATOR, true, true, false);
     forceSeparator = Boolean.valueOf(tmp);
+
+    grouper = new PageElementGrouper(",;.\'′’-&", separators, TAG_SEPARATORS);
   }
 
   /** Valid separator between consecutive tags */
@@ -489,6 +490,8 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
 
   /** Templates that can replace a tag */
   private final Set<String> templatesName = new HashSet<>();
+
+  private PageElementGrouper grouper;
 
   /**
    * Build the list of parameters for this algorithm.
