@@ -152,7 +152,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, beginSelection, endSelection);
         boolean automatic = true;
         automatic &= canRemoveBetween(contents, firstRef, secondRef);
-        automatic &= forceInTemplates || (analysis.isInTemplate(beginIndex) == null);
+        automatic &= forceInTemplates || (analysis.isInTemplate(beginIndex - 1) == null);
         String replacement =
             contents.substring(beginSelection, beginIndex) +
             separator +
