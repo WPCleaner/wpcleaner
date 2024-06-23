@@ -27,14 +27,13 @@ import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.CheckErrorPage;
 import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
-import org.wikipediacleaner.api.configuration.WPCConfiguration;
-import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.AutomaticFormatter;
 import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.page.DenyBot;
 import org.wikipediacleaner.gui.swing.Controller;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
 import org.wikipediacleaner.gui.swing.basic.BasicWorker;
@@ -131,26 +130,6 @@ public abstract class AutomaticFixWorker extends BasicWorker {
   public void setRange(String begin, String end) {
     this.rangeBegin = begin;
     this.rangeEnd = end;
-  }
-
-  /**
-   * @param analysis Page analysis.
-   * @return True if bot modifications should be prevented.
-   */
-  protected boolean preventBot(PageAnalysis analysis) {
-    WPCConfiguration config = getWikipedia().getConfiguration();
-    List<String[]> nobotTemplates = config.getStringArrayList(
-        WPCConfigurationStringList.NOBOT_TEMPLATES);
-    if (nobotTemplates == null) {
-      return false;
-    }
-    for (String[] nobotTemplate : nobotTemplates) {
-      String templateName = nobotTemplate[0];
-      if (analysis.hasTemplate(templateName) != null) {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
@@ -301,7 +280,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     // Fix all errors that can be fixed
     String newContents = page.getContents();
     List<AlgorithmError.Progress> errorsFixed = new ArrayList<>();
-    if (!preventBot(analysis)) {
+    if (!DenyBot.preventAutomaticEdit(analysis)) {
       newContents = AutomaticFormatter.tidyArticle(page, newContents, allAlgorithms, true, errorsFixed);
     }
 
