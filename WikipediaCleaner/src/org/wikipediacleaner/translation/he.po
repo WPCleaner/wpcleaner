@@ -9,6 +9,7 @@
 # Author: YaronSh
 # Author: דגש
 # Author: דגש חזק
+# Author: יוסף בן מלמד
 # Author: מקף
 # Author: נדב ס
 # --
@@ -20,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-06-17 12:29:46+0000\n"
+"PO-Revision-Date: 2024-06-24 12:32:58+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Hebrew <he@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1673,7 +1674,6 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
-#, fuzzy
 msgid "Name of a deprecated parameter"
 msgstr "שם הפרמטר המיושן"
 
