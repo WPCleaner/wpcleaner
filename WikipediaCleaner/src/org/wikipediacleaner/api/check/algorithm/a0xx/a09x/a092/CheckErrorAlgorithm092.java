@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a09x.a092;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -67,10 +68,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
       // Analyze current level
       if (titleLevel <= maxLevel) {
         HashMap<String, PageElementTitle> knownTitles = titles.get(Integer.valueOf(titleLevel));
-        String titleValue = title.getTitle();
-        if (titleValue.endsWith(":")) {
-          titleValue = titleValue.substring(0, titleValue.length() - 1).trim();
-        }
+        String titleValue = cleanTitle(title);
         if (knownTitles == null) {
           knownTitles = new HashMap<>();
           knownTitles.put(titleValue, title);
@@ -108,6 +106,14 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     return result;
   }
 
+  private String cleanTitle(final PageElementTitle title) {
+    final String titleValue = title.getTitle();
+    if (titleValue.endsWith(":")) {
+      return titleValue.substring(0, titleValue.length() - 1).trim();
+    }
+    return titleValue;
+  }
+
   /**
    * Automatic fixing of all the errors in the page.
    * 
@@ -135,63 +141,83 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
       PageElementTitle currentTitle = titles.get(i);
       if ((previousTitle.getLevel() <= maxLevel) &&
           (previousTitle.getLevel() == currentTitle.getLevel()) &&
-          (previousTitle.getTitle().equals(currentTitle.getTitle()))) {
+          (cleanTitle(previousTitle).equals(cleanTitle(currentTitle)))) {
 
-        // Analyze if first title can be removed
-        int previousSectionEndIndex = getSectionEndIndex(
-            previousTitle.getEndIndex(),
-            currentTitle.getBeginIndex(),
+        // Analyze if second title can be removed
+        PageElementTitle nextTitle = (i + 1 < titles.size()) ? titles.get(i + 1) : null;
+        int currentSectionEndIndex = getSectionEndIndex(
+            currentTitle.getEndIndex(),
+            (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length(),
             analysis, contents);
-        String betweenTitles = contents.substring(
-            previousTitle.getEndIndex(), previousSectionEndIndex).trim();
+        String afterTitle = contents.substring(currentTitle.getEndIndex(), currentSectionEndIndex).trim();
         boolean shouldRemove = false;
-        if (betweenTitles.length() == 0) {
+        if (afterTitle.length() == 0) {
           shouldRemove = true;
         } else {
-          int tmpIndex = currentTitle.getEndIndex();
+          int tmpIndex = previousTitle.getEndIndex();
           while ((tmpIndex < contents.length()) &&
                  (Character.isWhitespace(contents.charAt(tmpIndex)))) {
             tmpIndex++;
           }
           if ((tmpIndex < contents.length()) &&
-              (contents.startsWith(betweenTitles, tmpIndex))) {
+              (contents.startsWith(afterTitle, tmpIndex))) {
             shouldRemove = true;
           }
         }
         if (shouldRemove) {
-          if (previousTitle.getBeginIndex() > lastIndex) {
-            buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
-            lastIndex = previousTitle.getBeginIndex();
+          boolean useSecondTitle =
+              Objects.equals(currentTitle.getTitle(), cleanTitle(currentTitle)) &&
+              !Objects.equals(previousTitle.getTitle(), cleanTitle(previousTitle));
+          if (useSecondTitle && (previousTitle.getBeginIndex() >= lastIndex)) {
+            if (previousTitle.getBeginIndex() > lastIndex) {
+              buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
+              lastIndex = previousTitle.getBeginIndex();
+            }
+            buffer.append(contents.substring(currentTitle.getBeginIndex(), currentTitle.getEndIndex()));
+            lastIndex = previousTitle.getEndIndex();
           }
-          lastIndex = previousSectionEndIndex;
+          if (currentTitle.getBeginIndex() > lastIndex) {
+            buffer.append(contents.substring(lastIndex, currentTitle.getBeginIndex()));
+            lastIndex = currentTitle.getBeginIndex();
+          }
+          lastIndex = currentSectionEndIndex;
         } else {
 
-          // Analyze if second title can be removed
-          PageElementTitle nextTitle = (i + 1 < titles.size()) ? titles.get(i + 1) : null;
-          int currentSectionEndIndex = getSectionEndIndex(
-              currentTitle.getEndIndex(),
-              (nextTitle != null) ? nextTitle.getBeginIndex() : contents.length(),
+          // Analyze if first title can be removed
+          int previousSectionEndIndex = getSectionEndIndex(
+              previousTitle.getEndIndex(),
+              currentTitle.getBeginIndex(),
               analysis, contents);
-          String afterTitle = contents.substring(currentTitle.getEndIndex(), currentSectionEndIndex).trim();
-          if (afterTitle.length() == 0) {
+          String betweenTitles = contents.substring(
+              previousTitle.getEndIndex(), previousSectionEndIndex).trim();
+          if (betweenTitles.length() == 0) {
             shouldRemove = true;
           } else {
-            int tmpIndex = previousTitle.getEndIndex();
+            int tmpIndex = currentTitle.getEndIndex();
             while ((tmpIndex < contents.length()) &&
                    (Character.isWhitespace(contents.charAt(tmpIndex)))) {
               tmpIndex++;
             }
             if ((tmpIndex < contents.length()) &&
-                (contents.startsWith(afterTitle, tmpIndex))) {
+                (contents.startsWith(betweenTitles, tmpIndex))) {
               shouldRemove = true;
             }
           }
           if (shouldRemove) {
-            if (currentTitle.getBeginIndex() > lastIndex) {
-              buffer.append(contents.substring(lastIndex, currentTitle.getBeginIndex()));
-              lastIndex = currentTitle.getBeginIndex();
+            if (previousTitle.getBeginIndex() > lastIndex) {
+              buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
+              lastIndex = previousTitle.getBeginIndex();
             }
-            lastIndex = currentSectionEndIndex;
+            boolean useFirstTitle =
+                Objects.equals(previousTitle.getTitle(), cleanTitle(previousTitle)) &&
+                !Objects.equals(currentTitle.getTitle(), cleanTitle(currentTitle));
+            if (useFirstTitle) {
+              buffer.append(contents.substring(previousSectionEndIndex, currentTitle.getBeginIndex()));
+              buffer.append(contents.substring(previousTitle.getBeginIndex(), previousTitle.getEndIndex()));
+              lastIndex = currentTitle.getEndIndex();
+            } else {
+              lastIndex = previousSectionEndIndex;
+            }
           }
         }
       }
