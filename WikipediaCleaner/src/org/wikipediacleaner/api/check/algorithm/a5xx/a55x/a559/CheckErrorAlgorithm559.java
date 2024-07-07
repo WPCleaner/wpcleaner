@@ -46,7 +46,7 @@ import org.wikipediacleaner.i18n.GT;
 public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
 
   private static final Set<TagType> TAG_SEPARATORS = Stream
-      .of(HtmlTagType.SMALL, HtmlTagType.SUB)
+      .of(HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP)
       .collect(Collectors.toSet());
 
   public CheckErrorAlgorithm559() {
