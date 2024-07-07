@@ -14,7 +14,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Set;
-import java.util.function.Predicate;
 
 import javax.annotation.Nonnull;
 
@@ -75,29 +74,10 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     // Check each group of redundant templates
     boolean result = false;
     for (Set<String> redundantTemplates : templateNames) {
-      result |= analyzeRedundantTemplates(
-          analysis, errors, templates,
-          template -> redundantTemplates.contains(template.getTemplateName()));
-    }
-    for (Set<String> redundantTemplates : unnamedParametersTemplateNames) {
-      result |= analyzeRedundantTemplates(
-          analysis, errors, templates,
-          template -> isUnnamedParametersTemplate(redundantTemplates, template));
+      result |= analyzeRedundantTemplates(analysis, errors, templates, redundantTemplates);
     }
 
     return result;
-  }
-
-  private boolean isUnnamedParametersTemplate(Set<String> redundantTemplates, PageElementTemplate template) {
-    if (!redundantTemplates.contains(template.getTemplateName())) {
-      return false;
-    }
-    for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
-      if (!"".equals(template.getParameter(paramNum).getName())) {
-        return false;
-      }
-    }
-    return true;
   }
 
   /**
@@ -106,21 +86,33 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param templates List of templates in the page.
-   * @param filter Filter to use on the list of templates. 
+   * @param redundantTemplates List of redundant templates. 
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeRedundantTemplates(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       List<PageElementTemplate> templates,
-      Predicate<PageElementTemplate> filter) {
+      Set<String> redundantTemplates) {
 
     // Filter templates
     List<PageElementTemplate> filteredTemplates = templates.stream()
-        .filter(filter)
+        .filter(template -> acceptTemplate(redundantTemplates, template))
         .collect(Collectors.toList());
     if (filteredTemplates.size() <= 1) {
       return false;
+    }
+    for (int templateIndex = 1; templateIndex < filteredTemplates.size(); templateIndex++) {
+      String contents = analysis.getContents();
+      PageElementTemplate firstTemplate = filteredTemplates.get(templateIndex - 1);
+      PageElementTemplate secondTemplate = filteredTemplates.get(templateIndex);
+      if (ignoreSplit.contains(firstTemplate.getTemplateName()) ||
+          ignoreSplit.contains(secondTemplate.getTemplateName())) {
+        int tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, firstTemplate.getEndIndex(), " \n");
+        if (tmpIndex < secondTemplate.getBeginIndex()) {
+          return false;
+        }
+      }
     }
 
     // Report errors
@@ -128,6 +120,20 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
       return true;
     }
     reportTemplates(analysis, errors, filteredTemplates);
+    return true;
+  }
+
+  private boolean acceptTemplate(final Set<String> redundantTemplates, final PageElementTemplate template) {
+    if (!redundantTemplates.contains(template.getTemplateName())) {
+      return false;
+    }
+    if (unnamedParametersTemplateNames.stream().anyMatch(set -> set.contains(template.getTemplateName()))) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        if (!"".equals(template.getParameter(paramNum).getName())) {
+          return false;
+        }
+      }
+    }
     return true;
   }
 
@@ -249,6 +255,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
   /** Templates for which we should keep the first duplicate */
   private static final String PARAMETER_KEEP_FIRST_DUPLICATE = "keep_first_duplicate";
 
+  /** Templates that should be ignored if they are split */
+  private static final String PARAMETER_IGNORE_SPLIT = "templates_ignore_split";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -266,8 +275,11 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     tmp = getSpecificProperty(PARAMETER_UNNAMED_TEMPLATES, true, true, false);
     unnamedParametersTemplateNames.clear();
     if (tmp != null) {
-      WPCConfiguration.convertPropertyToStringArrayList(tmp).forEach(elements ->
-          unnamedParametersTemplateNames.add(Arrays.stream(elements).map(Page::normalizeTitle).collect(Collectors.toSet())));
+      WPCConfiguration.convertPropertyToStringArrayList(tmp).forEach(elements -> {
+        final Set<String> set = Arrays.stream(elements).map(Page::normalizeTitle).collect(Collectors.toSet());
+        unnamedParametersTemplateNames.add(set);
+        templateNames.add(set); // Keep until configuration completed
+      });
     }
 
     tmp = getSpecificProperty(PARAMETER_MERGE_UNNAMED_TEMPLATES, true, true, false);
@@ -287,6 +299,15 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
           .map(Page::normalizeTitle)
           .forEach(keepFirstDuplicate::add);
     }
+
+    tmp = getSpecificProperty(PARAMETER_IGNORE_SPLIT, true, true, false);
+    ignoreSplit.clear();
+    if (tmp != null) {
+      WPCConfiguration.convertPropertyToStringArrayList(tmp).stream()
+          .flatMap(Arrays::stream)
+          .map(Page::normalizeTitle)
+          .forEach(ignoreSplit::add);
+    }
   }
 
   /** Templates that are redundant */
@@ -300,6 +321,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
 
   /** Templates without named parameters that can be merged */
   private final Set<String> mergeUnnamedParametersTemplateNames = new HashSet<>();
+
+  /** Templates that are ignored if they are split */
+  private final Set<String> ignoreSplit = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -331,6 +355,13 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     addParameter(new AlgorithmParameter(
         PARAMETER_KEEP_FIRST_DUPLICATE,
         GT._T("Templates for which we can keep only the first duplicate"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_IGNORE_SPLIT,
+        GT._T("Templates to ignore if they're not one after each other"),
         new AlgorithmParameterElement[] {
             new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
         },
