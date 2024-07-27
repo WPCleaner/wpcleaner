@@ -152,19 +152,32 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     int tmpIndex = ContentsUtil.moveIndexForwardWhileFound(contents, firstTemplate.getEndIndex(), " \n");
     if (tmpIndex == secondTemplate.getBeginIndex()) {
-      CheckErrorResult errorResult = createCheckErrorResult(
-          analysis, firstTemplate.getBeginIndex(), secondTemplate.getEndIndex());
-      boolean canDeleteSecondTemplate = areDuplicates(firstTemplate, secondTemplate, contents);
-      if (canDeleteSecondTemplate) {
+      if (areDuplicates(firstTemplate, secondTemplate, contents)) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, firstTemplate.getBeginIndex(), secondTemplate.getEndIndex());
         errorResult.addReplacement(
             contents.substring(firstTemplate.getBeginIndex(), firstTemplate.getEndIndex()),
             true);
+        errors.add(errorResult);
+      } else if (keepLastDifferent.contains(firstTemplate.getTemplateName()) &&
+                 keepLastDifferent.contains(secondTemplate.getTemplateName())) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, firstTemplate.getBeginIndex(), secondTemplate.getBeginIndex());
+        errorResult.addReplacement("", true);
+        errors.add(errorResult);
+
+        errors.add(createCheckErrorResult(
+            analysis,
+            secondTemplate.getBeginIndex(), secondTemplate.getEndIndex(),
+            ErrorLevel.CORRECT));
       } else if (isUnnamedParametersTemplate(firstTemplate) && isUnnamedParametersTemplate(secondTemplate)) {
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, firstTemplate.getBeginIndex(), secondTemplate.getEndIndex());
         String firstPart = contents.substring(firstTemplate.getBeginIndex(), firstTemplate.getEndIndex() - 2);
         String secondPart = contents.substring(secondTemplate.getParameterPipeIndex(0), secondTemplate.getEndIndex());
         errorResult.addReplacement(firstPart + secondPart, !firstPart.contains("}}") && !secondPart.contains("{{"));
+        errors.add(errorResult);
       }
-      errors.add(errorResult);
       reportedTemplates.add(firstTemplate);
       reportedTemplates.add(secondTemplate);
     }
@@ -185,7 +198,7 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
             analysis, template.getBeginIndex(), template.getEndIndex());
         if (areDuplicates(firstTemplate, template, contents) &&
             keepFirstDuplicate.contains(firstTemplate.getTemplateName()) &&
-            keepFirstDuplicate.contains(secondTemplate.getTemplateName())) {
+            keepFirstDuplicate.contains(template.getTemplateName())) {
           errorResult.addReplacement("", true);
         }
         errors.add(errorResult);
@@ -255,6 +268,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
   /** Templates for which we should keep the first duplicate */
   private static final String PARAMETER_KEEP_FIRST_DUPLICATE = "keep_first_duplicate";
 
+  /** Templates for which we should keep the last if different */
+  private static final String PARAMETER_KEEP_LAST_DIFFERENT = "keep_last_different";
+
   /** Templates that should be ignored if they are split */
   private static final String PARAMETER_IGNORE_SPLIT = "templates_ignore_split";
 
@@ -300,6 +316,15 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
           .forEach(keepFirstDuplicate::add);
     }
 
+    tmp = getSpecificProperty(PARAMETER_KEEP_LAST_DIFFERENT, true, true, false);
+    keepLastDifferent.clear();
+    if (tmp != null) {
+      WPCConfiguration.convertPropertyToStringArrayList(tmp).stream()
+          .flatMap(Arrays::stream)
+          .map(Page::normalizeTitle)
+          .forEach(keepLastDifferent::add);
+    }
+
     tmp = getSpecificProperty(PARAMETER_IGNORE_SPLIT, true, true, false);
     ignoreSplit.clear();
     if (tmp != null) {
@@ -318,6 +343,9 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
 
   /** Templates for which we should keep only the first duplicate */
   private final Set<String> keepFirstDuplicate = new HashSet<>();
+
+  /** Templates for which we should keep only the last if different */
+  private final Set<String> keepLastDifferent = new HashSet<>();
 
   /** Templates without named parameters that can be merged */
   private final Set<String> mergeUnnamedParametersTemplateNames = new HashSet<>();
@@ -355,6 +383,13 @@ public class CheckErrorAlgorithm580 extends CheckErrorAlgorithmBase {
     addParameter(new AlgorithmParameter(
         PARAMETER_KEEP_FIRST_DUPLICATE,
         GT._T("Templates for which we can keep only the first duplicate"),
+        new AlgorithmParameterElement[] {
+            new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
+        },
+        true));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_KEEP_LAST_DIFFERENT,
+        GT._T("Templates for which we can keep only the last if they are different"),
         new AlgorithmParameterElement[] {
             new AlgorithmParameterElement("template", GT._T("Template name"), false, true)
         },
