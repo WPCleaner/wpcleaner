@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-07-11 12:32:31+0000\n"
+"PO-Revision-Date: 2024-07-29 12:31:08+0000\n"
 "Last-Translator: UsmanKhan <khanusmanshah@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -19,7 +19,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2016-01-25 20:44+0000\n"
 "X-Generator: MediaWiki 1.43.0-alpha; Translate 2024-07-16\n"
-"X-POT-Import-Date: 2024-07-08 04:52:03+0000\n"
+"X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
 "Language: ps\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
@@ -1201,11 +1201,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:276
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:338
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:345
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:352
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:359
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:366
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:373
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:380
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:387
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:394
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:401
 msgid "Template name"
 msgstr ""
 
@@ -2071,23 +2072,27 @@ msgstr ""
 msgid "Template that shouldn't be used in list item"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:336
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:364
 msgid "Redundant templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:343
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:371
 msgid "Redundant templates when used with only unnamed parameters"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:350
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:378
 msgid "Templates that can be merged when used with only unnamed parameters"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:357
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:385
 msgid "Templates for which we can keep only the first duplicate"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:364
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:392
+msgid "Templates for which we can keep only the last if they are different"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:399
 msgid "Templates to ignore if they're not one after each other"
 msgstr ""
 
