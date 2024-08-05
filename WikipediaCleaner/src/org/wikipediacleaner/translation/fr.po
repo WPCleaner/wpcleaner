@@ -6,6 +6,7 @@
 # Author: Florian COLLIN
 # Author: Gomoko
 # Author: LD
+# Author: Méthodes Bulebe Hangi
 # Author: NicoV
 # Author: NicoV
 # Author: Pols12
@@ -23,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-07-29 12:31:03+0000\n"
+"PO-Revision-Date: 2024-08-05 12:26:20+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2103,7 +2104,7 @@ msgstr "Modèles pour lesquels nous pouvons conserver uniquement la première oc
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:392
 msgid "Templates for which we can keep only the last if they are different"
-msgstr ""
+msgstr "Templates pour lesquels nous ne pouvons conserver que les derniers si ils sont différents"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:399
 msgid "Templates to ignore if they're not one after each other"
