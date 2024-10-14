@@ -10,6 +10,7 @@
 # Author: Justman10000
 # Author: ManuelFranz
 # Author: Mglaser
+# Author: RucolaSpacecat
 # Author: ThisCarthing
 # Author: TomatoCake
 # Author: Umlaut
@@ -23,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-08-08 12:26:46+0000\n"
+"PO-Revision-Date: 2024-10-14 12:27:30+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -43,7 +44,7 @@ msgstr "{0}-Erweiterung ist jetzt in allen WikiMedia-Wikis verfügbar."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr "Es identifiziert Wikitext-Muster, die in Seiten fixiert werden müssen oder können."
+msgstr "Es identifiziert Wikitext-Muster, die in Seiten behoben werden müssen oder können."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
@@ -83,7 +84,7 @@ msgstr "Bitte melden Sie mir alle Probleme die Sie finden."
 #: org/wikipediacleaner/Version.java:49
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr "Hoffentlich gefällt es Ihnen {0}."
+msgstr "Ich hoffe du magst {0}."
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
@@ -1811,7 +1812,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:574
 msgid "Link target"
-msgstr ""
+msgstr "Linkziel"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:577
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
@@ -2952,15 +2953,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:528
 msgid "Save username and password"
-msgstr ""
+msgstr "Benutzernamen und Passwort speichern"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:540
 msgid "Save username only"
-msgstr ""
+msgstr "Nur den Benutzernamen speichern"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:550
 msgid "Save none of them"
-msgstr ""
+msgstr "Speichere nichts davon"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:585
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:219
@@ -3215,7 +3216,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1936
 msgid "List"
-msgstr ""
+msgstr "Liste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
 msgid "Random redirect pages"
@@ -4157,7 +4158,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:231
 msgid "Mark as already fixed"
-msgstr ""
+msgstr "Als bereits erledigt markieren"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:449
 #, java-format
@@ -4455,7 +4456,7 @@ msgstr "Sie können unter der folgenden Adresse Hilfe zu {0} erhalten:"
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:48
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:115
 msgid "Idea? Bug?"
-msgstr ""
+msgstr "Idee? Bug?"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:66
 msgid "Report bug"
