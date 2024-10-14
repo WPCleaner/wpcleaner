@@ -3,6 +3,7 @@
 #
 # Author: Alno
 # Author: Crochet.david
+# Author: Egidio24
 # Author: Florian COLLIN
 # Author: Gomoko
 # Author: LD
@@ -24,7 +25,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-08-05 12:26:20+0000\n"
+"PO-Revision-Date: 2024-10-14 12:27:31+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2108,7 +2109,7 @@ msgstr "Templates pour lesquels nous ne pouvons conserver que les derniers si il
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:399
 msgid "Templates to ignore if they're not one after each other"
-msgstr ""
+msgstr "Modèles à ignorer s'ils ne sont pas les uns après les autres"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
