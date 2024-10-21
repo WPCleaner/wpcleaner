@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-07-29 12:31:06+0000\n"
+"PO-Revision-Date: 2024-10-21 12:27:30+0000\n"
 "X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1230,11 +1230,11 @@ msgstr "Kiekvieną kartą pakeisti į"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:796
 msgid "Regular expressions to be disabled"
-msgstr ""
+msgstr "Reguliariškos išraiškos, kurios turi būti išjungtos"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:800
 msgid "Regular expression"
-msgstr ""
+msgstr "Reguliarioji išraiška"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:104
 #, java-format
