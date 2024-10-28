@@ -8,13 +8,14 @@
 # Author: Willy1018
 # Author: Winston Sung
 # Author: 列维劳德
+# Author: 沈澄心
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-10-24 12:30:30+0000\n"
+"PO-Revision-Date: 2024-10-28 12:29:02+0000\n"
 "X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2012,7 +2013,7 @@ msgstr "可以包含參考資料的參數名稱"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:188
 #, java-format
 msgid "Delete {0} tags"
-msgstr "刪除 {0} 個標籤"
+msgstr "刪除 {0} 標籤"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:150
 #, java-format
