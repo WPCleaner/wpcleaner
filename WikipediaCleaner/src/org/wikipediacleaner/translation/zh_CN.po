@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-10-24 12:30:30+0000\n"
+"PO-Revision-Date: 2024-10-28 12:29:02+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1264,7 +1264,7 @@ msgstr "使用模板“{0}”"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:109
 msgid "Remove references"
-msgstr ""
+msgstr "移除参考文献"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:146
 msgid "Templates that can be used to declare the reference for the entire section"
@@ -1593,15 +1593,15 @@ msgstr "修复粗斜体"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:237
 #, java-format
 msgid "Remove {0} tag"
-msgstr ""
+msgstr "移除{0}标签"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:335
 msgid "for marking an edit"
-msgstr ""
+msgstr "用于标记编辑"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:340
 msgid "for anything else"
-msgstr ""
+msgstr "用于其他"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:360
 msgid "preferred for source code"
@@ -2027,12 +2027,12 @@ msgstr "可以包含引用的参数名称"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:188
 #, java-format
 msgid "Delete {0} tags"
-msgstr ""
+msgstr "删除{0}标签"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:150
 #, java-format
 msgid "Same value as parameter {0}"
-msgstr ""
+msgstr "与参数{0}的值相同"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:315
 msgid "Templates for which unknown values should be verified"
@@ -2091,7 +2091,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:364
 msgid "Redundant templates"
-msgstr ""
+msgstr "冗余模板"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:371
 msgid "Redundant templates when used with only unnamed parameters"
@@ -3927,7 +3927,7 @@ msgstr "描述"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:513
 msgid "N°"
-msgstr ""
+msgstr "N°"
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:87
 msgid "Functions available here are considered as bot tools."
@@ -4449,11 +4449,11 @@ msgstr "有任何建议或错误？"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:66
 msgid "Report bug"
-msgstr ""
+msgstr "报告错误"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:70
 msgid "Request a new feature"
-msgstr ""
+msgstr "请求新功能"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:112
 msgid "You can submit bug reports at the following URL:"
@@ -4548,7 +4548,7 @@ msgstr "正在分析 {0}"
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
 msgid "Unknown host {0}"
-msgstr ""
+msgstr "未知主机{0}"
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
 msgid "Check article with Linter"
@@ -4707,7 +4707,7 @@ msgstr "从首选消歧义中移除"
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:564
 #, java-format
 msgid "Reverse to {0}"
-msgstr ""
+msgstr "反转至{0}"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:51
 msgid "Full Analysis window options"
