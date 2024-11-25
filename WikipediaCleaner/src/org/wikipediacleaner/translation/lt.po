@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-10-24 12:30:26+0000\n"
+"PO-Revision-Date: 2024-11-25 12:25:16+0000\n"
 "X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1158,11 +1158,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:254
 msgid "Template to be ignored"
-msgstr ""
+msgstr "Ignoruotinas šablonas"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:257
 msgid "Parameter to be ignored"
-msgstr ""
+msgstr "Ignoruotinas parametras"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
 msgid "List of ordinal suffixes"

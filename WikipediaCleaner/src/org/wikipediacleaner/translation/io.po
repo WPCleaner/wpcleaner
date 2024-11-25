@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-10-24 12:30:24+0000\n"
+"PO-Revision-Date: 2024-11-25 12:25:14+0000\n"
 "X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2675,7 +2675,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
-msgstr ""
+msgstr "Informo"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
