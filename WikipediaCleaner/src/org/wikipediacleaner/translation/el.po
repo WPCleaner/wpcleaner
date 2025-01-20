@@ -3,6 +3,7 @@
 #
 # Author: AProdromou
 # Author: Dogogos123
+# Author: Fotis A.
 # Author: Norhorn
 # Author: Pablothecat
 # Author: Spyridon Eftychios Kokotos
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-10-24 12:30:21+0000\n"
+"PO-Revision-Date: 2025-01-20 12:25:04+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,37 +32,37 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "Η επέκταση {0} είναι πλέον διαθέσιμη σε όλα τα wiki του WikiMedia."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "Αναγνωρίζει πρότυπα του wikitext που πρέπει ή μπορούν να διορθωθούν σε σελίδες."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr ""
+msgstr "Επίσης, παρέχει κάποιες οδηγίες σχετικά με τα προβλήματα με αυτά τα πρότυπα και πώς να τα διορθώσουμε."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
-msgstr ""
+msgstr "Μπορείτε να βοηθήσετε επιλύοντας προβλήματα που εντοπίζονται από την επέκταση Linter."
 
 #: org/wikipediacleaner/Version.java:36
 #, java-format
 msgid "Integration between {0} and the Linter extension is done in the following way:"
-msgstr ""
+msgstr "Η ενσωμάτωση μεταξύ του {0} και της επέκτασης Linter γίνεται με τον ακόλουθο τρόπο:"
 
 #: org/wikipediacleaner/Version.java:38
 msgid "The \"Linter categories\" button in this window lets you retrieve a list of pages detected by Linter for a given type of problem."
-msgstr ""
+msgstr "Το κουμπί \"Κατηγορίες Linter\" σε αυτό το παράθυρο σάς επιτρέπει να ανακτήσετε μια λίστα σελίδων που εντοπίστηκαν από το Linter για έναν δεδομένο τύπο προβλήματος."
 
 #: org/wikipediacleaner/Version.java:39
 msgid "The \"Check article with Linter\" button in the analysis window lets you check the current version of an article against Linter."
-msgstr ""
+msgstr "Το κουμπί \"Έλεγχος λήμματος με Linter\" στο παράθυρο ανάλυσης σάς επιτρέπει να ελέγξετε την τρέχουσα έκδοση ενός λήμματος έναντι του Linter."
 
 #: org/wikipediacleaner/Version.java:40
 #, java-format
 msgid "Some errors detected by Linter are also reported directly by {0}."
-msgstr ""
+msgstr "Ορισμένα σφάλματα που εντοπίζονται από το Linter αναφέρονται επίσης απευθείας από το {0}."
 
 #: org/wikipediacleaner/Version.java:43
 #, java-format
@@ -80,7 +81,7 @@ msgstr "Ελπίζω να σας αρέσει το {0}."
 #: org/wikipediacleaner/Version.java:50
 #, java-format
 msgid "I try to keep {0} up to date with Check Wiki, but if you find any discrepancy(ies) in the detections, please let me know."
-msgstr ""
+msgstr "Προσπαθώ να κρατήσω την {0} ενημερωμένη με το Check Wiki, αλλά αν βρείτε οποιαδήποτε διαφορά (ες) στις ανίχνευσεις, παρακαλώ ενημερώστε με."
 
 #: org/wikipediacleaner/Version.java:51
 msgid "The Check Wiki project has evolved a lot recently."
@@ -96,19 +97,19 @@ msgstr "Ίσως να χρειάζεται ανανέωση του αρχείο�
 
 #: org/wikipediacleaner/Version.java:54
 msgid "Disambiguator extension has been deployed to all WMF wikis."
-msgstr ""
+msgstr "Η επέκταση αποσαφήνισης έχει αναπτυχθεί σε όλα τα wiki WMF."
 
 #: org/wikipediacleaner/Version.java:55
 msgid "It defines the new magic word __DISAMBIG__."
-msgstr ""
+msgstr "Ορίζει τη νέα μαγική λέξη __DISAMBIG__."
 
 #: org/wikipediacleaner/Version.java:56
 msgid "This magic word should be added to all disambiguation pages (either through templates or directly)."
-msgstr ""
+msgstr "Αυτή η μαγική λέξη πρέπει να προστεθεί σε όλες τις σελίδες αποσαφήνισης (είτε μέσω προτύπων είτε απευθείας)."
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
-msgstr ""
+msgstr "Το WPCleaner v1.28 χρησιμοποιεί επίσης αυτό ως το προεπιλεγμένο σύστημα."
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
@@ -117,7 +118,7 @@ msgstr "Ίσως χρειάζεται κάποια ενέργεια στο wiki 
 #: org/wikipediacleaner/Version.java:60
 #, java-format
 msgid "You can check if {0} is used on your wiki by opening an existing disambiguation page (like \"Smith\"). Then, click on \"Page information\" in the menu on the left. Finally, search for {0} in the information page."
-msgstr ""
+msgstr "Μπορείτε να ελέγξετε εάν το {0} χρησιμοποιείται στο wiki σας ανοίγοντας μια υπάρχουσα σελίδα αποσαφήνισης (όπως \"Σμιθ\"). Στη συνέχεια, κάντε κλικ στο \"Πληροφορίες σελίδας\" στο μενού στα αριστερά. Τέλος, αναζητήστε το {0} στη σελίδα πληροφοριών."
 
 #: org/wikipediacleaner/Version.java:64
 #, java-format
@@ -130,7 +131,7 @@ msgstr "Πολλές νέες λειτουργίες προστέθηκαν πρ
 
 #: org/wikipediacleaner/Version.java:72
 msgid "Leaving a note on talk pages with the list of links to disambiguation pages."
-msgstr ""
+msgstr "Αφήνοντας μια σημείωση στις σελίδες συζήτησης με τη λίστα συνδέσμων προς σελίδες αποσαφήνισης."
 
 #: org/wikipediacleaner/Version.java:73
 msgid "Fixing errors detected by the Check Wiki project, in the full analysis window."
@@ -148,11 +149,11 @@ msgstr "Η σελίδα ανανεώνεται {0}"
 #: org/wikipediacleaner/api/MediaWiki.java:316
 #, java-format
 msgid "The page {0} has been modified."
-msgstr ""
+msgstr "Η σελίδα {0} έχει τροποποιηθεί."
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
-msgstr ""
+msgstr "Θέλετε να συνεχίσετε;"
 
 #: org/wikipediacleaner/api/ModificationReport.java:78
 #: org/wikipediacleaner/api/ModificationReport.java:108
@@ -162,7 +163,7 @@ msgstr "Σελίδα {0}:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:98
 msgid "The following errors have occurred:"
-msgstr ""
+msgstr "Παρουσιάστηκαν τα ακόλουθα σφάλματα:"
 
 #: org/wikipediacleaner/api/algorithm/AlgorithmError.java:417
 msgid "No available description"
@@ -202,91 +203,91 @@ msgstr "Διαγραφή"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:329
 msgid "Edit table of contents"
-msgstr ""
+msgstr "Επεξεργασία πίνακα περιεχομένων"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:306
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:309
 msgid "Title of the article describing this type of error"
-msgstr ""
+msgstr "Τίτλος του λήμματος που περιγράφει αυτό το είδος σφάλματος"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:312
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:315
 msgid "Set to true to prevent automatic modifications for this type of error"
-msgstr ""
+msgstr "Ορίστε σε true για να αποτρέψετε αυτόματες τροποποιήσεις για αυτόν τον τύπο σφάλματος"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:318
 msgid "List of false positives for this type of error"
-msgstr ""
+msgstr "Κατάλογος ψευδώς θετικών στοιχείων για αυτό το είδος σφάλματος"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:321
 msgid "Page containing a false positive for this type of error"
-msgstr ""
+msgstr "Σελίδα που περιέχει ψευδώς θετικό για αυτόν τον τύπο σφάλματος"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:325
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:328
 msgid "Page containing the list of false positives for this type of error"
-msgstr ""
+msgstr "Σελίδα που περιέχει τη λίστα με ψευδώς θετικά στοιχεία για αυτόν τον τύπο σφάλματος"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:370
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:320
 #, java-format
 msgid "Ask for help using {0}"
-msgstr ""
+msgstr "Ζητήστε βοήθεια χρησιμοποιώντας το {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:395
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:345
 msgid "Add a comment"
-msgstr ""
+msgstr "Προσθήκη σχόλιου."
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:430
 msgid "Search all ISBN"
-msgstr ""
+msgstr "Αναζήτηση σε όλα τα ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:435
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "Αναζήτηση όλων των ISBN-10"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:440
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "Αναζήτηση σε όλα τα ISBN-13"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:457
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:514
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:472
 #, java-format
 msgid "Search ISBN {0}"
-msgstr ""
+msgstr "Αναζήτηση ISBN {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:544
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:412
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:442
 #, java-format
 msgid "Search ISSN {0}"
-msgstr ""
+msgstr "Αναζήτηση ISSN {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:577
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:505
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:502
 #, java-format
 msgid "Search using {0}"
-msgstr ""
+msgstr "Αναζήτηση χρησιμοποιώντας {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:394
 msgid "Search all ISSN"
-msgstr ""
+msgstr "Αναζήτηση σε όλα τα ISSN"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:102
 msgid "A list of templates resulting in the inclusion of a table of contents"
-msgstr ""
+msgstr "Μια λίστα προτύπων που έχει ως αποτέλεσμα τη συμπερίληψη πίνακα περιεχομένων"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a001/CheckErrorAlgorithm001.java:92
 #, java-format
 msgid "Remove {0} namespace from template name"
-msgstr ""
+msgstr "Κατάργηση ονοματοχώρου {0} από το όνομα προτύπου"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
-msgstr ""
+msgstr "Διορθώστε όλες τις λανθασμένες ετικέτες"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
@@ -298,7 +299,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
-msgstr ""
+msgstr "Αντικατάσταση για {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
@@ -323,7 +324,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:240
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:235
 msgid "Name of the template"
-msgstr ""
+msgstr "Όνομα προτύπου"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
@@ -342,7 +343,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:243
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Name of the parameter"
-msgstr ""
+msgstr "Όνομα παραμέτρου"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:128
 msgid "Close tag"
@@ -352,7 +353,7 @@ msgstr "Κλείσιμο ετικέτας"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:386
 #, java-format
 msgid "Text to insert for adding {0}"
-msgstr ""
+msgstr "Κείμενο προς εισαγωγή για προσθήκη {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:389
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:396
@@ -363,47 +364,47 @@ msgstr "Λίστα προτύπων που περιλαμβάνουν το {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:392
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:399
-#, fuzzy, java-format
+#, java-format
 msgid "Template resulting in the inclusion of {0}"
 msgstr "Λίστα προτύπων που περιλαμβάνουν το {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:403
 #, java-format
 msgid "Section headings where a {0} can be added"
-msgstr ""
+msgstr "Επικεφαλίδες ενοτήτων όπου μπορεί να προστεθεί ένα {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:406
 #, java-format
 msgid "Section heading where a {0} can be added"
-msgstr ""
+msgstr "Επικεφαλίδα ενότητας όπου μπορεί να προστεθεί ένα {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:410
 #, java-format
 msgid "Section headings where a {0} can be added before"
-msgstr ""
+msgstr "Επικεφαλίδες ενοτήτων όπου μπορεί να προστεθεί ένα {0} πριν"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:413
 #, java-format
 msgid "Section heading where a {0} can be added before"
-msgstr ""
+msgstr "Επικεφαλίδα ενότητας όπου μπορεί να προστεθεί ένα {0} πριν"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:417
 #, java-format
 msgid "Templates where a {0} can be added before"
-msgstr ""
+msgstr "Πρότυπα στα οποία μπορεί να προστεθεί ένα {0} πριν"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:420
 #, java-format
 msgid "Template where a {0} can be added before"
-msgstr ""
+msgstr "Πρότυπο όπου μπορεί να προστεθεί ένα {0} πριν"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
-msgstr ""
+msgstr "Τελειώστε σωστά το σχόλιο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
 msgid "End the comment at the end of the line"
-msgstr ""
+msgstr "Τέλος σχόλιου στο τέλος της γραμμής"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:103
 msgid "End the comment just before the next one begins"
@@ -434,19 +435,19 @@ msgstr "Αδυναμία αντικατάστασης των χαρακτήρω�
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:363
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:365
 msgid "A list of templates in which categories should be ignored."
-msgstr ""
+msgstr "Μια λίστα προτύπων στα οποία οι κατηγορίες πρέπει να αγνοηθούν."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:249
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:367
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:369
 msgid "A template in which categories should be ignored."
-msgstr ""
+msgstr "Ένα πρότυπο στο οποίο οι κατηγορίες πρέπει να αγνοούνται."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:252
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:370
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:372
 msgid "A template parameter in which categories should be ignored."
-msgstr ""
+msgstr "Μια λίστα προτύπων στα οποία οι κατηγορίες πρέπει να αγνοηθούν."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:283
@@ -469,7 +470,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:411
 msgid "Non-breaking space"
-msgstr ""
+msgstr "Μη διαχωριστικό κενό"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:412
 msgid "Soft hyphen"
@@ -509,15 +510,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:421
 msgid "Line separator"
-msgstr ""
+msgstr "Διαχωρισμός γραμμών"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:422
 msgid "Left-to-right embedding"
-msgstr ""
+msgstr "Ενσωμάτωση από αριστερά προς τα δεξιά"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:423
 msgid "Right-to-left embedding"
-msgstr ""
+msgstr "Ενσωμάτωση από δεξιά προς τα αριστερά"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:424
 msgid "Pop directional formatting"
@@ -525,11 +526,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:425
 msgid "Left-to-right override"
-msgstr ""
+msgstr "Παράκαμψη από αριστερά προς τα δεξιά"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:426
 msgid "Right-to-left override"
-msgstr ""
+msgstr "Παράκαμψη από τα δεξιά προς τα αριστερά"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:427
 msgid "Byte order mark"
@@ -577,11 +578,11 @@ msgstr "Αντικατάσταση όλων"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:252
 msgid "Templates that can replace the end of a table"
-msgstr ""
+msgstr "Πρότυπα που μπορούν να αντικαταστήσουν το τέλος ενός πίνακα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:255
 msgid "Template that can replace the end of a table"
-msgstr ""
+msgstr "Πρότυπο που μπορεί να αντικαταστήσει το τέλος ενός πίνακα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:98
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:105
@@ -610,7 +611,7 @@ msgstr "Εμφάνιση εικόνας"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:365
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
-msgstr ""
+msgstr "Πρότυπα που μπορούν να χρησιμοποιηθούν για την αντικατάσταση ετικετών {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:519
@@ -618,40 +619,40 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:368
 #, java-format
 msgid "Template that can be used to replace {0} tags"
-msgstr ""
+msgstr "Πρότυπο που μπορεί να χρησιμοποιηθεί για την αντικατάσταση ετικετών {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
 msgid "Add DEFAULTSORT"
-msgstr ""
+msgstr "Προσθήκη DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:230
 msgid "Restrict the detection to the first characters"
-msgstr ""
+msgstr "Περιορίστε την ανίχνευση στους πρώτους χαρακτήρες"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:233
 msgid "Maximum number of characters to use for the detection"
-msgstr ""
+msgstr "Μέγιστος αριθμός χαρακτήρων που θα χρησιμοποιηθούν για την ανίχνευση"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Λίστα προτύπων που εμποδίζουν την αυτόματη διόρθωση αυτού του σφάλματος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:239
 msgid "Template that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Πρότυπο που εμποδίζει την αυτόματη διόρθωση αυτού του σφάλματος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a044/CheckErrorAlgorithm044.java:37
 msgid "Fix all bold headlines"
-msgstr ""
+msgstr "Διορθώστε όλους τους έντονους τίτλους"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:55
 msgid "Remove all links to title (first in bold)"
-msgstr ""
+msgstr "Κατάργηση όλων των συνδέσμων προς τον τίτλο (πρώτα με έντονη γραφή)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:56
 msgid "Remove all links to title"
-msgstr ""
+msgstr "Καταργήστε όλους τους συνδέσμους προς τον τίτλο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:432
 msgid "List of templates in which error should be ignored"
@@ -691,7 +692,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:308
 msgid "Name of a template in the group"
-msgstr ""
+msgstr "Όνομα ενός προτύπου στην ομάδα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
@@ -705,23 +706,23 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:244
 #, java-format
 msgid "Remove {0} tags"
-msgstr ""
+msgstr "Αφαίρεση ετικέτων {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:32
 msgid "Fix all titles"
-msgstr ""
+msgstr "Διορθώστε όλους τους τίτλους"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
-msgstr ""
+msgstr "Μια λίστα προτύπων που πρέπει να αγνοηθούν"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:230
 msgid "A template that should be ignored"
-msgstr ""
+msgstr "Ένα πρότυπο που πρέπει να αγνοηθεί"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:194
 msgid "Templates to be ignored"
-msgstr ""
+msgstr "Πρότυπα που πρέπει να αγνοηθούν"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:504
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:507
@@ -746,16 +747,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:102
 #, java-format
 msgid "Add {0}"
-msgstr ""
+msgstr "Προσθήκη {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:153
 #, java-format
 msgid "Remove {0}"
-msgstr ""
+msgstr "Αφαίρεση {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a064/CheckErrorAlgorithm064.java:38
 msgid "Modify all internal links"
-msgstr ""
+msgstr "Τροποποιήστε όλους τους εσωτερικούς συνδέσμους"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:33
 msgid "Remove all <small> tags"
@@ -764,41 +765,41 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:536
 #, java-format
 msgid "A list of abbreviations that generate false positives when placed before {0}"
-msgstr ""
+msgstr "Μια λίστα με συντομογραφίες που δημιουργούν ψευδώς θετικά αποτελέσματα όταν τοποθετούνται πριν από το {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:539
 #, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
-msgstr ""
+msgstr "Μια συντομογραφία που δημιουργεί ψευδώς θετικά αποτελέσματα όταν τοποθετείται πριν από το {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:549
 msgid "A list of templates in which the punctuation can be safely moved after the reference"
-msgstr ""
+msgstr "Μια λίστα προτύπων στα οποία τα σημεία στίξης μπορούν να μετακινηθούν με ασφάλεια μετά την αναφορά"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:552
 msgid "Parameter of the template"
-msgstr ""
+msgstr "Παράμετρος προτύπου"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
-msgstr ""
+msgstr "Ελέγξτε όλους τους συνδέσμους σε άλλη γλώσσα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:124
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:207
 msgid "Check language links"
-msgstr ""
+msgstr "Ελέγξτε τους συνδέσμους γλώσσας"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:132
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:333
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:250
 msgid "What is the title of the page on this wiki ?"
-msgstr ""
+msgstr "Ποιος είναι ο τίτλος της σελίδας σε αυτό το wiki;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:145
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:263
 #, java-format
 msgid "Replace using template {0}"
-msgstr ""
+msgstr "Αντικατάσταση με χρήση προτύπου {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:149
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:324
@@ -816,7 +817,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:245
 msgid "External Viewer"
-msgstr ""
+msgstr "Εξωτερικό πρόγραμμα προβολής"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:311
 msgid "Do not replace"
@@ -826,43 +827,43 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/Controller.java:303
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:316
 #, java-format
 msgid "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\nWith what text do you want to replace the link ?"
-msgstr ""
+msgstr "Η σελίδα \"{0}\" στο \"{1}\" έχει έναν σύνδεσμο γλώσσας προς το \"{2}\": {3}.\nΜε ποιο κείμενο θέλετε να αντικαταστήσετε τον σύνδεσμο;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:329
 #, java-format
 msgid "The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\"."
-msgstr ""
+msgstr "Η σελίδα \"{0}\" στο \"{1}\" δεν έχει σύνδεσμο γλώσσας προς το \"{2}\"."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:331
 #, java-format
 msgid "You can replace the link using template {0}."
-msgstr ""
+msgstr "Μπορείτε να αντικαταστήσετε τον σύνδεσμο χρησιμοποιώντας το πρότυπο {0}."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:417
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:421
 msgid "A template that can be used instead of the link to an other language."
-msgstr ""
+msgstr "Ένα πρότυπο που μπορεί να χρησιμοποιηθεί αντί του συνδέσμου σε μια άλλη γλώσσα."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:424
 msgid "Parameter name for the local page name"
-msgstr ""
+msgstr "Όνομα παραμέτρου για το όνομα της τοπικής σελίδας"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:427
 msgid "Parameter name for the code of the other language"
-msgstr ""
+msgstr "Όνομα παραμέτρου για τον κωδικό της άλλης γλώσσας"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:430
 msgid "Parameter name for the page name in the other language"
-msgstr ""
+msgstr "Όνομα παραμέτρου για το όνομα της σελίδας στην άλλη γλώσσα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:433
 msgid "Parameter name for the displayed text"
-msgstr ""
+msgstr "Όνομα παραμέτρου για το εμφανιζόμενο κείμενο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:933
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:936
@@ -883,24 +884,24 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:245
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:248
 msgid "An explanation of the problem"
-msgstr ""
+msgstr "Εξήγηση του προβλήματος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:939
 msgid "Templates to replace ISBN"
-msgstr ""
+msgstr "Πρότυπα για αντικατάσταση του ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:946
 msgid "True if the template includes parenthesis"
-msgstr ""
+msgstr "Σωστό αν το πρότυπο περιλαμβάνει παρένθεση"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:949
 msgid "True if the template includes small tags"
-msgstr ""
+msgstr "Σωστό αν το πρότυπο περιλαμβάνει μικρές ετικέτες"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:119
 #, java-format
 msgid "Length of ISBN is {0} instead of 10 or 13"
-msgstr ""
+msgstr "Το μήκος του ISBN είναι {0} αντί για 10 ή 13"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:136
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:128
@@ -908,7 +909,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:142
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:116
 msgid "Search as OCLC"
-msgstr ""
+msgstr "Αναζήτηση ως OCLC"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:139
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:131
@@ -916,45 +917,45 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:145
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:119
 msgid "Search as LCCN"
-msgstr ""
+msgstr "Αναζήτηση ως LCCN"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:213
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:181
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:206
 msgid "Similar ISBN"
-msgstr ""
+msgstr "Παρόμοιο ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:89
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:89
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:97
 #, java-format
 msgid "The checksum is {0} instead of {1}"
-msgstr ""
+msgstr "Το άθροισμα ελέγχου είναι {0} αντί για {1}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:95
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:95
 msgid "There's no existing range for this ISBN"
-msgstr ""
+msgstr "Δεν υπάρχει υπάρχον εύρος για αυτό το ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:97
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:97
 msgid "This ISBN is inside a reserved range"
-msgstr ""
+msgstr "Αυτό το ISBN βρίσκεται εντός δεσμευμένου εύρους"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:286
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:321
 msgid "An explanation of the problem (incorrect checksum)"
-msgstr ""
+msgstr "Εξήγηση του προβλήματος (λανθασμένο άθροισμα ελέγχου)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:292
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:327
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
-msgstr ""
+msgstr "Εξήγηση του προβλήματος (μη υπάρχον εύρος αριθμών ISBN)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:298
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:333
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
-msgstr ""
+msgstr "Επεξήγηση του προβλήματος (δεσμευμένο εύρος αριθμών ISBN)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:32
 msgid "Replace all %20 by space character"
@@ -975,32 +976,32 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:109
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:121
 msgid "What description would you like to use for the external link ?"
-msgstr ""
+msgstr "Τι περιγραφή θα θέλατε να χρησιμοποιήσετε για αυτή την εικόνα;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:114
 msgid "Convert into <ref> tag"
-msgstr ""
+msgstr "Μετατροπή σε ετικέτα <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:116
 msgid "Add a description and convert into <ref> tag"
-msgstr ""
+msgstr "Προσθέστε μια περιγραφή και μετατρέψτε σε ετικέτα <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:136
 msgid "External viewer"
-msgstr ""
+msgstr "Εξωτερικό πρόγραμμα προβολής"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:191
 msgid "Tag is unnamed"
-msgstr ""
+msgstr "Η ετικέτα είναι ανώνυμη"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:194
 msgid "Both tags have already the same name"
-msgstr ""
+msgstr "Και οι δύο ετικέτες έχουν ήδη το ίδιο όνομα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:197
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:211
 msgid "Tags have different names"
-msgstr ""
+msgstr "Οι ετικέτες έχουν διαφορετικά ονόματα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:297
 msgid "Name the reference from template parameter"
@@ -1012,15 +1013,15 @@ msgstr "Δημιουργήστε ένα όνομα αναφοράς"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:313
 msgid "Give a name to the <ref> tag"
-msgstr ""
+msgstr "Δώστε ένα όνομα στην ετικέτα <ref>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:318
 msgid "What name would you like to use for the <ref> tag ?"
-msgstr ""
+msgstr "Ποιο όνομα θα θέλατε να χρησιμοποιήσετε για την ετικέτα <ref> ;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:499
 msgid "Parameters that can be used as title"
-msgstr ""
+msgstr "Παράμετροι που μπορούν να χρησιμοποιηθούν ως τίτλος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:513
 msgid "Name the reference with the title"
@@ -1038,23 +1039,23 @@ msgstr "Πρόθεμα για τα ονόματα αναφοράς που δημ
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:531
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:535
 msgid "Hint for a maximum length of the reference name"
-msgstr ""
+msgstr "Υπόδειξη για μέγιστο μήκος του ονόματος αναφοράς"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:105
 msgid "Delete section"
-msgstr ""
+msgstr "Διαγραφή ενότητας"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:167
 msgid "A list of texts that can be added to sections without content"
-msgstr ""
+msgstr "Μια λίστα κειμένων που μπορούν να προστεθούν σε ενότητες χωρίς περιεχόμενο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:170
 msgid "A text that can be added to sections without content"
-msgstr ""
+msgstr "Ένα κείμενο που μπορεί να προστεθεί σε ενότητες χωρίς περιεχόμενο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:173
 msgid "Restrict verification to titles with a higher level"
-msgstr ""
+msgstr "Περιορίστε την επαλήθευση σε τίτλους με υψηλότερο επίπεδο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:176
 msgid "Maximum level of title to check"
@@ -1066,11 +1067,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:171
 #, java-format
 msgid "Use {0}"
-msgstr ""
+msgstr "Χρήση {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr ""
+msgstr "Μια λίστα προτύπων που μπορούν να χρησιμοποιηθούν για την αντικατάσταση των ετικετών <center>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:363
 msgid "Template that can be used to replace &lt;center&gt; tags"
@@ -1078,118 +1079,118 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:366
 msgid "Name of the parameter to use"
-msgstr ""
+msgstr "Όνομα της παραμέτρου που θα χρησιμοποιηθεί"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:670
 msgid "What text should be displayed by the link?"
-msgstr ""
+msgstr "Τι κείμενο πρέπει να εμφανίζεται από τον σύνδεσμο;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:675
 msgid "Convert into an internal link"
-msgstr ""
+msgstr "Μετατροπή σε εσωτερικό σύνδεσμο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:839
 msgid "Templates to be used for linking to the history of an article"
-msgstr ""
+msgstr "Πρότυπα που θα χρησιμοποιηθούν για τη σύνδεση με το ιστορικό ενός λήμματος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:843
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:872
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:893
 msgid "Template to be used for linking to the history of an article"
-msgstr ""
+msgstr "Πρότυπο που θα χρησιμοποιηθεί για τη σύνδεση με το ιστορικό ενός λήμματος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:846
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:875
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:896
 msgid "Parameter to be used for the article name"
-msgstr ""
+msgstr "Παράμετρος που θα χρησιμοποιηθεί για το όνομα του λήμματος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:850
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:883
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:900
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:435
 msgid "Parameter to be used for the text"
-msgstr ""
+msgstr "Παράμετρος που θα χρησιμοποιηθεί για το κείμενο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:856
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:424
 msgid "Templates using external links"
-msgstr ""
+msgstr "Πρότυπα που χρησιμοποιούν εξωτερικούς συνδέσμους"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:868
 msgid "Templates to be used for linking to an old version of an article"
-msgstr ""
+msgstr "Πρότυπα που θα χρησιμοποιηθούν για τη σύνδεση με το ιστορικό ενός λήμματος"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:879
 msgid "Parameter to be used for the identifier of the old version"
-msgstr ""
+msgstr "Παράμετρος που θα χρησιμοποιηθεί για το αναγνωριστικό της παλιάς έκδοσης"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:889
 msgid "Templates to be used instead of Special:PrefixIndex"
-msgstr ""
+msgstr "Πρότυπα που θα χρησιμοποιηθούν αντί για Special:PrefixIndex"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:55
 msgid "Convert them to internal links"
-msgstr ""
+msgstr "Μετατροπή σε εσωτερικό σύνδεσμο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:428
 #: org/wikipediacleaner/api/data/PageComparator.java:379
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:234
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:209
 msgid "Template"
-msgstr ""
+msgstr "Πρότυπο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:431
 msgid "Parameter to be used for the link"
-msgstr ""
+msgstr "Παράμετρος που θα χρησιμοποιηθεί για τη σύνδεση"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:441
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:444
 msgid "To report only links to other languages"
-msgstr ""
+msgstr "Για να αναφέρετε μόνο συνδέσμους σε άλλες γλώσσες"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:447
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:450
 msgid "To report only links to local wikis"
-msgstr ""
+msgstr "Να αναφέρετε μόνο συνδέσμους σε τοπικά wiki"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:311
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:314
 msgid "Maximum level of titles to report"
-msgstr ""
+msgstr "Μέγιστο επίπεδο τίτλων προς αναφορά"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:317
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:320
 msgid "To report only consecutive titles"
-msgstr ""
+msgstr "Να αναφέρετε μόνο διαδοχικούς τίτλους"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:250
 msgid "Templates that should be ignored"
-msgstr ""
+msgstr "Πρότυπα που πρέπει να αγνοηθούν"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:254
 msgid "Template to be ignored"
-msgstr ""
+msgstr "Πρότυπο που πρέπει να αγνοηθεί"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:257
 msgid "Parameter to be ignored"
-msgstr ""
+msgstr "Παράμετρος που πρέπει να αγνοηθεί"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
 msgid "List of ordinal suffixes"
-msgstr ""
+msgstr "Κατάλογος τακτικών επιθημάτων"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:167
 msgid "Ordinal suffix"
-msgstr ""
+msgstr "Τακτική κατάληξη"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:171
 msgid "List of possible replacements"
-msgstr ""
+msgstr "Λίστα πιθανών αντικαταστάσεων"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:174
 msgid "A possible replacemement for one suffix"
-msgstr ""
+msgstr "Πιθανή αντικατάσταση για ένα επίθημα"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a103/CheckErrorAlgorithm103.java:31
 msgid "Replace all pipe templates"
@@ -1198,12 +1199,12 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:119
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
-msgstr ""
+msgstr "Το μήκος του ISSN είναι {0} αντί για 8"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:196
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:166
 msgid "Similar ISSN"
-msgstr ""
+msgstr "Παρόμοιο ISSN"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
@@ -1215,7 +1216,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:394
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:401
 msgid "Template name"
-msgstr ""
+msgstr "Όνομα προτύπου"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
@@ -1497,7 +1498,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:606
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:627
 msgid "If replacement can be automatic"
-msgstr ""
+msgstr "Εάν η αντικατάσταση μπορεί να είναι αυτόματη"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:424
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:427
@@ -1585,24 +1586,24 @@ msgstr "Αφαίρεση όλων των χαρακτήρων ελέγχου"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
 msgid "Fix bold and italic"
-msgstr ""
+msgstr "Διορθώστε την έντονη και πλάγια γραφή"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:237
 #, java-format
 msgid "Remove {0} tag"
-msgstr ""
+msgstr "Αφαίρεση ετικέτας {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:335
 msgid "for marking an edit"
-msgstr ""
+msgstr "για τη σήμανση μιας επεξεργασίας"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:340
 msgid "for anything else"
-msgstr ""
+msgstr "για οτιδήποτε άλλο"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:360
 msgid "preferred for source code"
-msgstr ""
+msgstr "προτιμάται για τον πηγαίο κώδικα"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:365
 msgid "preferred for user input"
@@ -1625,7 +1626,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:616
 #, java-format
 msgid "Possible replacements for {0} tags"
-msgstr ""
+msgstr "Πιθανές αντικαταστάσεις για ετικέτες {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:578
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:599
@@ -1644,7 +1645,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:610
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:631
 msgid "Description of the template"
-msgstr ""
+msgstr "Περιγραφή του προτύπου"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
@@ -2113,31 +2114,31 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr ""
+msgstr "Διορθώθηκε με χρήση του {0}"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
 msgid "Deactivated"
-msgstr ""
+msgstr "Απενεργοποίηση"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
 msgid "Low priority"
-msgstr ""
+msgstr "Χαμηλή προτεραιότητα"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
 msgid "Middle priority"
-msgstr ""
+msgstr "Μεσαία προτεραιότητα"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
 msgid "Top priority"
-msgstr ""
+msgstr "Υψηλή προτεραιότητα"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
 msgid "For Bot"
-msgstr ""
+msgstr "Για Bot"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
 msgid "Priority unknown"
-msgstr ""
+msgstr "Άγνωστη προτεραιότητα"
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:402
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:421
@@ -2165,14 +2166,14 @@ msgstr ""
 #: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
 msgid "You have done the following contributions on \"{0}\":"
-msgstr ""
+msgstr "Έχετε κάνει τις ακόλουθες συνεισφορές στο \"{0}\":"
 
 #: org/wikipediacleaner/api/constants/Contributions.java:50
 #, java-format
 msgid "You have edited {0} page."
 msgid_plural "You have edited {0} pages."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " Έχετε επεξεργαστεί {0} σελίδα."
+msgstr[1] "Έχετε επεξεργαστεί {0} σελίδες."
 
 #: org/wikipediacleaner/api/constants/Contributions.java:59
 #, java-format
@@ -2185,13 +2186,13 @@ msgstr[1] ""
 #, java-format
 msgid "You have fixed {0} error \"{1}\"."
 msgid_plural "You have fixed {0} errors \"{1}\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " Διορθώσατε {0} σφάλμα \"{1}\"."
+msgstr[1] "Διορθώσατε {0} σφάλματα \"{1}\"."
 
 #: org/wikipediacleaner/api/constants/Contributions.java:84
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
-msgstr ""
+msgstr "Δεν έχετε κάνει καμία συνεισφορά στο \"{0}\""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:18
 msgid "Dormant pages"
@@ -2199,31 +2200,31 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:19
 msgid "Broken redirects"
-msgstr ""
+msgstr "Κατεστραμμένες ανακατευθύνσεις"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:20
 msgid "Dead-end pages"
-msgstr ""
+msgstr "Αδιέξοδες σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:21
 msgid "Pages linking to disambiguation pages"
-msgstr ""
+msgstr "Σελίδες που συνδέουν σε σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "Σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
-msgstr ""
+msgstr "Διπλές ανακατευθύνσεις"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
 msgid "Pages with the fewest revisions"
-msgstr ""
+msgstr "Σελίδες με τις λιγότερες αναθεωρήσεις"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr ""
+msgstr "Χρήση gadget"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
@@ -2231,47 +2232,47 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "Διπλότυπο αρχείο"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
-msgstr ""
+msgstr "Ανακατευθύνσεις"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
 msgid "Orphaned pages"
-msgstr ""
+msgstr "Ορφανές σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
 msgid "Long pages"
-msgstr ""
+msgstr "Μεγάλες σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "Στατιστικά πολυμέσων"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
-msgstr ""
+msgstr "Σελίδες με τις περισσότερες κατηγορίες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Most globally linked files"
-msgstr ""
+msgstr "Τα περισσότερα αρχεία που συνδέονται παγκοσμίως"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
-msgstr ""
+msgstr "Σελίδες με τα περισσότερα αρχεία"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr ""
+msgstr "Σελίδες με τους περισσότερους διαγλωσσικούς συνδέσμους"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
-msgstr ""
+msgstr "Σελίδες με τους περισσότερους συνδέσμους προς αυτές"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
 msgid "Most linked-to categories"
-msgstr ""
+msgstr "Κατηγορίες με τους περισσότερους συνδέσμους προς αυτές"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
 msgid "Most linked-to templates"
@@ -2279,7 +2280,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
 msgid "Pages with the most revisions"
-msgstr ""
+msgstr "Σελίδες με τις περισσότερες αναθεωρήσεις"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Orphaned timed text"
@@ -2287,77 +2288,77 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Short pages"
-msgstr ""
+msgstr "Σύντομες σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
 msgid "Uncategorized categories"
-msgstr ""
+msgstr "Αταξινόμητες κατηγορίες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
 msgid "Uncategorized files"
-msgstr ""
+msgstr "Ακατηγοριοποίητα αρχεία"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
 msgid "Uncategorized pages"
-msgstr ""
+msgstr "Αταξινόμητες σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
 msgid "Uncategorized templates"
-msgstr ""
+msgstr "Μη κατηγοριοποιημένα πρότυπα"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr ""
+msgstr "Μη συνδεδεμένες σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
-msgstr ""
+msgstr "Κενές κατηγορίες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:48
 msgid "Unused files"
-msgstr ""
+msgstr "Αχρησιμοποίητα αρχεία"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:49
 msgid "Unused templates"
-msgstr ""
+msgstr "Αχρησιμοποίητα πρότυπα"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:50
 msgid "Unwatched pages"
-msgstr ""
+msgstr "Μη παρακολουθούμενες σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
 msgid "Wanted categories"
-msgstr ""
+msgstr "Επιθυμητές κατηγορίες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
 msgid "Wanted files"
-msgstr ""
+msgstr "Ζητούμενα αρχεία"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:53
 msgid "Wanted pages"
-msgstr ""
+msgstr "Ζητούμενες σελίδες"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
 msgid "Wanted templates"
-msgstr ""
+msgstr "Ζητούμενα πρότυπα"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
 msgid "Pages without language links"
-msgstr ""
+msgstr "Σελίδες χωρίς διαγλωσσικούς συνδέσμους"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:163
 #: org/wikipediacleaner/api/data/ISBNRange.java:185
 msgid "No range found for ISBN"
-msgstr ""
+msgstr "Δεν βρέθηκε εύρος για ISBN"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:173
 #, java-format
 msgid "Suggested format: {0}"
-msgstr ""
+msgstr "Προτεινόμενη μορφή: {0}"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:175
 msgid "ISBN length incoherent with range found"
-msgstr ""
+msgstr "Το μήκος ISBN δεν είναι συνεπές με το εύρος που βρέθηκε"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:179
 #, java-format
@@ -2366,101 +2367,101 @@ msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
-msgstr ""
+msgstr "Ονοματοχώρος"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:215
 msgid "Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:284
 msgid "Revision Id"
-msgstr ""
+msgstr "Αναγνωριστικό αναθεώρησης"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:327
 msgid "Page Id"
-msgstr ""
+msgstr "Αναγνωριστικό σελίδας"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:419
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:370
 msgid "Redirect"
-msgstr ""
+msgstr "Ανακατεύθυνση"
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L.java:77
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:79
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:87
 #, java-format
 msgid "Replace parameter {0} with {1}"
-msgstr ""
+msgstr "Αντικαταστήστε την παράμετρο {0} με {1}"
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L2T.java:65
 #, java-format
 msgid "Link parameter {0} to"
-msgstr ""
+msgstr "Συνδέστε την παράμετρο {0} σε"
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
 msgid "Retrieving all links to page"
-msgstr ""
+msgstr "Ανάκτηση όλων των συνδέσμων στη σελίδα"
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
-msgstr ""
+msgstr "Ανάκτηση περιεχομένου"
 
 #: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:49
 msgid "Retrieving disambiguation information"
-msgstr ""
+msgstr "Ανάκτηση πληροφοριών αποσαφήνισης"
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
 msgid "Retrieving page usage"
-msgstr ""
+msgstr "Ανάκτηση χρήσης σελίδας"
 
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:45
 msgid "Expanding templates"
-msgstr ""
+msgstr "Επέκταση προτύπων"
 
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:55
 msgid "Retrieving page links"
-msgstr ""
+msgstr "Ανάκτηση συνδέσμων σελίδας"
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:45
 msgid "Parsing text"
-msgstr ""
+msgstr "Ανάλυση κειμένου"
 
 #: org/wikipediacleaner/api/execution/TemplatesCallable.java:43
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:214
 msgid "Retrieving templates"
-msgstr ""
+msgstr "Ανάκτηση προτύπων"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:697
 #, java-format
 msgid "URL {0} is blacklisted"
-msgstr ""
+msgstr "Η διεύθυνση URL {0} βρίσκεται στη μαύρη λίστα"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1887
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
-msgstr ""
+msgstr "Αυτή η ενέργεια προστατεύεται από ένα CAPTCHA.\nΠοια είναι η απάντηση στην ακόλουθη ερώτηση;"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1894
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
-msgstr ""
+msgstr "Αυτή η ενέργεια προστατεύεται από ένα CAPTCHA.\nΠοια είναι η απάντηση στην ερώτηση που εμφανίζεται στο πρόγραμμα περιήγησής σας;"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:62
 #: org/wikipediacleaner/gui/swing/MainWindow.java:514
 msgid "About"
-msgstr ""
+msgstr "Σχετικά"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:182
 msgid "Original text"
-msgstr ""
+msgstr "Αρχικό κείμενο"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:184
 msgid "Replacement text"
-msgstr ""
+msgstr "Αντικατάσταση κειμένου"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
-msgstr ""
+msgstr "regex"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:169
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:171
@@ -2469,53 +2470,53 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:757
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:268
 msgid "Automatic fixing"
-msgstr ""
+msgstr "Αυτόματη διόρθωση"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:235
 msgid "This feature may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Αυτή η δυνατότητα μπορεί να τροποποιήσει πολλές σελίδες σε σύντομο χρονικό διάστημα."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:236
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
-msgstr ""
+msgstr "Σε ορισμένα έργα της Wikipedia, μπορεί να χρειαστείτε το bot status για να το κάνετε αυτό."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:237
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr ""
+msgstr "Παρακαλούμε, ελέγξτε αν χρειάζεστε το status bot διαβάζοντας τους κανόνες της Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
 msgid "Add"
-msgstr ""
+msgstr "Προσθήκη"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:259
 msgid "Remove"
-msgstr ""
+msgstr "Αφαίρεση"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:265
 msgid "Modify"
-msgstr ""
+msgstr "Τροποποίηση"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:271
 msgid "Clear"
-msgstr ""
+msgstr "Εκκαθάριση"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:277
 msgid "Save"
-msgstr ""
+msgstr "Αποθήκευση"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:284
 msgid "Fix selected pages"
-msgstr ""
+msgstr "Διορθώστε επιλεγμένες σελίδες"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:290
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:390
 msgid "Test automatic replacements"
-msgstr ""
+msgstr "Δοκιμάστε τις αυτόματες αντικαταστάσεις"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:296
 msgid "Load replacements"
@@ -2523,83 +2524,83 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:302
 msgid "Save replacements"
-msgstr ""
+msgstr "Αποθήκευση αντικαταστάσεων"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
 msgid "Automatic fixing for Check Wiki"
-msgstr ""
+msgstr "Αυτόματη διόρθωση για το Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:332
 msgid "Always apply automatic fixing for Check Wiki"
-msgstr ""
+msgstr "Να εφαρμόζετε πάντα την αυτόματη διόρθωση για το Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:347
 msgid "Pause after each edit"
-msgstr ""
+msgstr "Παύση μετά από κάθε επεξεργασία"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:355
 msgid "Apply bot fixes"
-msgstr ""
+msgstr "Εφαρμόστε διορθώσεις bot"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:494
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:229
 msgid "No errors selected"
-msgstr ""
+msgstr "Δεν επιλέχθηκαν σφάλματα"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:641
 msgid "Text that should be replaced"
-msgstr ""
+msgstr "Κείμενο που πρέπει να αντικατασταθεί"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:652
 msgid "Text to be used as a replacement"
-msgstr ""
+msgstr "Κείμενο που θα χρησιμοποιηθεί ως αντικατάσταση"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:663
 msgid "Use regular expressions"
-msgstr ""
+msgstr "Χρήση κανονικών εκφράσεων"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:735
 msgid "You must select the pages on which running automatic fixing."
-msgstr ""
+msgstr "Πρέπει να επιλέξετε τις σελίδες στις οποίες εκτελείται η αυτόματη διόρθωση."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:743
 msgid "A comment is required for automatic fixing."
-msgstr ""
+msgstr "Απαιτείται σχόλιο για την αυτόματη διόρθωση."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:753
 msgid "You must input the initial and destination texts."
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε το αρχικό κείμενο και το κείμενο προορισμού."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
 msgid "!!! WARNING !!!"
-msgstr ""
+msgstr "!!! ΠΡΟΕΙΔΟΠΟΙΗΣΗ!!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:765
 msgid "This function will carry out all replacements on all selected pages."
-msgstr ""
+msgstr "Αυτή η λειτουργία θα πραγματοποιήσει όλες τις αντικαταστάσεις σε όλες τις επιλεγμένες σελίδες."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:766
 msgid "It may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Αυτή η δυνατότητα μπορεί να τροποποιήσει πολλές σελίδες σε σύντομο χρονικό διάστημα."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:769
 msgid "Also, verify again the texts you have inputted before running this function."
-msgstr ""
+msgstr "Επίσης, επαληθεύστε ξανά τα κείμενα που έχετε εισαγάγει πριν εκτελέσετε αυτήν τη λειτουργία."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:770
 msgid "You can also test the modifications before actually doing them."
-msgstr ""
+msgstr "Μπορείτε επίσης να δοκιμάσετε τις τροποποιήσεις πριν τις κάνετε."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:771
 msgid "Do you want to proceed with the modifications ?"
-msgstr ""
+msgstr "Θέλετε να προχωρήσετε με τις τροποποιήσεις;"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:829
 msgid "The following replacements have been made:"
-msgstr ""
+msgstr "Έχουν γίνει οι ακόλουθες αντικαταστάσεις:"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:840
 msgid "Do you want to test the replacements on the pages ?"
@@ -2608,43 +2609,43 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:854
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:894
 msgid "XML files"
-msgstr ""
+msgstr "αρχεία XML"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:909
 msgid "This file exists, do you want to overwrite it?"
-msgstr ""
+msgstr "Αυτό το αρχείο υπάρχει, θέλετε να το αντικαταστήσετε;"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:977
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:358
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:613
 msgid "Select errors"
-msgstr ""
+msgstr "Επιλέξτε σφάλματα"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:985
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:362
 msgid "Select all errors"
-msgstr ""
+msgstr "Επιλέξτε όλα τα σφάλματα"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:992
 msgid "Select no errors"
-msgstr ""
+msgstr "Επιλέξτε χωρίς σφάλματα"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1017
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:415
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:470
 #, java-format
 msgid "Errors from {0} to {1}"
-msgstr ""
+msgstr "Σφάλματα από {0} έως {1}"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:301
 #, java-format
 msgid "Yes, {0} pages"
-msgstr ""
+msgstr "Ναι, {0} σελίδες"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:302
 #, java-format
 msgid "No, {0} pages"
-msgstr ""
+msgstr "Όχι, {0} σελίδες"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:307
 #, java-format
@@ -2673,7 +2674,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:330
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:258
 msgid "Link count"
-msgstr ""
+msgstr "Αριθμός συνδέσμων"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
@@ -2688,35 +2689,35 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1416
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:537
 msgid "You must select pages on which running automatic fixing."
-msgstr ""
+msgstr "Πρέπει να επιλέξετε τις σελίδες στις οποίες εκτελείται η αυτόματη διόρθωση."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
-msgstr ""
+msgstr "Πληροφορίες"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
-msgstr ""
+msgstr "Πρόγραμμα εγκατάστασης WPCleaner"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
 msgid "Configuration"
-msgstr ""
+msgstr "Διαμόρφωση"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
 msgid "Installation folder"
-msgstr ""
+msgstr "Φάκελος εγκατάστασης"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
 msgid "Select installation folder"
-msgstr ""
+msgstr "Επιλέξτε φάκελο εγκατάστασης"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:318
 msgid "Create a desktop shortcut"
-msgstr ""
+msgstr "Δημιουργήστε μια συντόμευση επιφάνειας εργασίας"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:326
 msgid "Install beta version (only for experienced users)"
-msgstr ""
+msgstr "Εγκατάσταση έκδοσης beta (μόνο για έμπειρους χρήστες)"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
@@ -2724,7 +2725,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
-msgstr ""
+msgstr "Εάν η συντόμευση της επιφάνειας εργασίας δεν δημιουργείται αυτόματα, μπορείτε να τη δημιουργήσετε χειροκίνητα."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
 #, java-format
@@ -2733,7 +2734,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
 msgid "The command itself is dependent on the operating system you're using (see below)."
-msgstr ""
+msgstr "Η ίδια η εντολή εξαρτάται από το λειτουργικό σύστημα που χρησιμοποιείτε (δείτε παρακάτω)."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
 msgid "Note: avoid having whitespace characters in the installation folder path, or you will need to adapt the commands."
@@ -2761,33 +2762,33 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
 msgid "Install"
-msgstr ""
+msgstr "Εγκατάσταση"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
 msgid "Operating system"
-msgstr ""
+msgstr "Λειτουργικό σύστημα"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:655
 msgid "System information"
-msgstr ""
+msgstr "Πληροφορίες συστήματος"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
 msgid "You must select an installation folder."
-msgstr ""
+msgstr "Πρέπει να επιλέξετε έναν φάκελο εγκατάστασης."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
 #, java-format
 msgid "The path {0} already exists but is not a folder."
-msgstr ""
+msgstr "Η διαδρομή {0} υπάρχει ήδη αλλά δεν είναι φάκελος."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
-msgstr ""
+msgstr "Ο φάκελος {0} υπάρχει ήδη, θέλετε να εγκαταστήσετε το WPCleaner εκεί;"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:721
 msgid "Existing files may be deleted by the installation process."
-msgstr ""
+msgstr "Τα υπάρχοντα αρχεία ενδέχεται να διαγραφούν κατά τη διαδικασία εγκατάστασης."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
 #, java-format
@@ -2796,17 +2797,17 @@ msgstr "Δεν είναι δυνατή η δημιουργία του φακέλ
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:745
 msgid "Desktop shortcut is only supported for the following operating systems:"
-msgstr ""
+msgstr "Η συντόμευση επιφάνειας εργασίας υποστηρίζεται μόνο για τα ακόλουθα λειτουργικά συστήματα:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:806
 msgid "Installation was successful"
-msgstr ""
+msgstr "Η εγκατάσταση ήταν επιτυχής"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:824
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:839
 #, java-format
 msgid "Downloading {0}"
-msgstr ""
+msgstr "Λήψη {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
 #, fuzzy, java-format
@@ -2825,7 +2826,7 @@ msgstr "Δεν είναι δυνατή η δημιουργία του αρχεί
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:997
 #, java-format
 msgid "Error: {0}"
-msgstr ""
+msgstr "Σφάλμα: {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
 #, java-format
@@ -2859,7 +2860,7 @@ msgstr "Εκτελείται {0}"
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:988
 #, java-format
 msgid "Unable to download file {0}."
-msgstr ""
+msgstr "Δεν είναι δυνατή η λήψη του αρχείου {0}."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
 msgid "Certificate exception: old versions of Java may fail to validate recent certificates, try upgrading Java"
@@ -2867,12 +2868,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:994
 msgid "Java version: {}"
-msgstr ""
+msgstr "Έκδοση Java: {}"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:192
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:73
 msgid "Language"
-msgstr ""
+msgstr "Γλώσσα"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:206
 msgid "Script"
@@ -2880,7 +2881,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:221
 msgid "Region"
-msgstr ""
+msgstr "Περιοχή"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:240
 #, java-format
@@ -2890,15 +2891,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:198
 #, java-format
 msgid "In the near future, WPCleaner will require Java {0} or above, but you''re currently using an older version ({1})."
-msgstr ""
+msgstr "Στο εγγύς μέλλον, το WPCleaner θα απαιτεί Java {0} ή νεότερη, αλλά αυτήν τη στιγμή χρησιμοποιείτε μια παλαιότερη έκδοση ({1})."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:204
 msgid "Please, upgrade to a newer version of Java"
-msgstr ""
+msgstr "Κάντε αναβάθμιση σε νεότερη έκδοση Java"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205
 msgid "Obsolete Java version"
-msgstr ""
+msgstr "Απαρχαιωμένη έκδοση Java"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:251
 #, java-format
@@ -2907,14 +2908,14 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:361
 msgid "Message"
-msgstr ""
+msgstr "Μήνυμα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:379
 #: org/wikipediacleaner/gui/swing/MainWindow.java:448
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:115
 msgid "Login"
-msgstr ""
+msgstr "Σύνδεση"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:454
 msgid "Demo"
@@ -2922,11 +2923,11 @@ msgstr "Δοκιμαστικό"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:460
 msgid "Wiki logout"
-msgstr ""
+msgstr "Αποσύνδεση Wiki"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:467
 msgid "WPC logout"
-msgstr ""
+msgstr "Αποσύνδεση WPC"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:486
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:565
@@ -2935,28 +2936,28 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:64
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:165
 msgid "Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:493
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:185
 msgid "System options"
-msgstr ""
+msgstr "Επιλογές συστήματος"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:500
 msgid "Reload system options"
-msgstr ""
+msgstr "Επαναφόρτωση επιλογών συστήματος"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:506
 msgid "Check spelling options"
-msgstr ""
+msgstr "Ελέγξτε τις επιλογές ορθογραφίας"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:528
 msgid "Save username and password"
-msgstr ""
+msgstr "Αποθηκεύστε το όνομα χρήστη και τον κωδικό πρόσβασης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:540
 msgid "Save username only"
-msgstr ""
+msgstr "Αποθήκευση μόνο ονόματος χρήστη"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:550
 msgid "Save none of them"
@@ -2967,69 +2968,69 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:241
 msgid "Page"
-msgstr ""
+msgstr "Σελίδα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:627
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:170
 msgid "Random page"
-msgstr ""
+msgstr "Τυχαία σελίδα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:634
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:200
 msgid "Add to list"
-msgstr ""
+msgstr "Προσθήκη στην λίστα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:641
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:205
 msgid "Remove from list"
-msgstr ""
+msgstr "Αφαίρεση από τη λίστα παρακολούθησης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:667
 msgid "Search in titles"
-msgstr ""
+msgstr "Αναζήτηση σε τίτλους"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:676
 msgid "Internal links"
-msgstr ""
+msgstr "Εσωτερικοί σύνδεσμοι"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:685
 msgid "What links here"
-msgstr ""
+msgstr "Τι συνδέει εδώ"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:694
 msgid "Category members"
-msgstr ""
+msgstr "Μέλη κατηγορίας"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:703
 msgid "Embedded in"
-msgstr ""
+msgstr "Ενσωματωμένο σε"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:729
 msgid "Load list from drive"
-msgstr ""
+msgstr "Φόρτωση λίστας από τη μονάδα δίσκου"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:738
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1234
 msgid "Your contributions"
-msgstr ""
+msgstr "Οι συνεισφορές σας"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:752
 msgid "Projects"
-msgstr ""
+msgstr "Εγχειρήματα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:770
 msgid "Preload disambiguations pages"
-msgstr ""
+msgstr "Προφόρτωση σελίδων αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:779
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1442
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:125
 msgid "Current disambiguation list"
-msgstr ""
+msgstr "Τρέχουσα λίστα αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:789
 msgid "With many disambiguation links"
-msgstr ""
+msgstr "Με πολλούς συνδέσμους αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:798
 msgid "Project Check Wikipedia"
@@ -3038,11 +3039,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:807
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1495
 msgid "Help requested on..."
-msgstr ""
+msgstr "Ζητήθηκε βοήθεια για..."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:816
 msgid "Abuse filters"
-msgstr ""
+msgstr "Φίλτρο κατάχρησης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:825
 msgid "Special lists"
@@ -3055,28 +3056,28 @@ msgstr "Διόρθωση κατηγοριών"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:843
 msgid "Generate lists"
-msgstr ""
+msgstr "Δημιουργία λιστών"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:852
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1832
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
-msgstr ""
+msgstr "Τοπική λίστα παρακολούθησης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:862
 msgid "Watchlist"
-msgstr ""
+msgstr "Λίστα παρακολούθησης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:871
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1955
 #: org/wikipediacleaner/gui/swing/MainWindow.java:2020
 msgid "Random pages"
-msgstr ""
+msgstr "Τυχαίες σελίδες"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:880
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:61
 msgid "Bot tools"
-msgstr ""
+msgstr "Εργαλεία bot"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:924
 msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
@@ -3084,32 +3085,32 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:943
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr ""
+msgstr "Πρέπει να επιλέξετε σε ποια Βικιπαίδεια θέλετε να εργαστείτε πριν συνδεθείτε"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:953
 msgid "You must select a language before login"
-msgstr ""
+msgstr "Πρέπει να επιλέξετε μια γλώσσα πριν συνδεθείτε"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:965
 msgid "You must input your username before login"
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε το όνομα χρήστη σας πριν συνδεθείτε"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:977
 msgid "You must input your password before login"
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε τον κωδικό πρόσβασής σας πριν συνδεθείτε"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1086
 #, java-format
 msgid "You can learn how to configure {0} at the following URL:"
-msgstr ""
+msgstr "Μπορείτε να μάθετε πώς να διαμορφώσετε το {0} στην ακόλουθη διεύθυνση URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1134
 msgid "Activate all"
-msgstr ""
+msgstr "Ενεργοποίηση όλων"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1139
 msgid "Deactivate all"
-msgstr ""
+msgstr "Απενεργοποίηση όλων"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1246
 msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
@@ -3117,21 +3118,21 @@ msgstr "Το συνθηματικό θα αποθηκευτεί στον σκλ�
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1313
 msgid "You must input a page name for retrieving the list of internal links"
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε ένα όνομα σελίδας για την ανάκτηση της λίστας εσωτερικών συνδέσμων"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1327
 #, java-format
 msgid "Internal links in {0}"
-msgstr ""
+msgstr "Εσωτερικοί σύνδεσμοι σε {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1334
 msgid "You must input a page name"
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε ένα όνομα σελίδας"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1342
 #, java-format
 msgid "Search results for {0}"
-msgstr ""
+msgstr "Αποτελέσματα αναζήτησης για {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1350
 msgid "You must input a page name for retrieving the list of backlinks"
@@ -3140,7 +3141,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1366
 #, java-format
 msgid "Links to {0}"
-msgstr ""
+msgstr "Σύνδεσμοι προς {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1374
 msgid "You must input a page name for retrieving the list of category members"
@@ -3158,15 +3159,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1418
 #, java-format
 msgid "Template {0} embedded in"
-msgstr ""
+msgstr "Το πρότυπο {0} είναι ενσωματωμένο"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1467
 msgid "Pages with many disambiguation links"
-msgstr ""
+msgstr "Σελίδες με πολλούς συνδέσμους αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1508
 msgid "What abuse filter are you interested in?"
-msgstr ""
+msgstr "Ποιο φίλτρο κατάχρησης σε ενδιαφέρει;"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1524
 #, java-format
@@ -3175,28 +3176,28 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1597
 msgid "Without templates"
-msgstr ""
+msgstr "Χωρίς πρότυπα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1600
 msgid "With templates"
-msgstr ""
+msgstr "Με πρότυπα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1618
 msgid "All namespaces"
-msgstr ""
+msgstr "Όλοι οι ονοματοχώροι"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1634
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:231
 msgid "Main"
-msgstr ""
+msgstr "Κύρια"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1690
 msgid "All disambiguations pages"
-msgstr ""
+msgstr "Όλες οι σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1846
 msgid "Watch list"
-msgstr ""
+msgstr "Λίστα παρακολούθησης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1876
 msgid "Unformatted list of page names"
@@ -3204,19 +3205,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1877
 msgid "Internal links in a formatted list"
-msgstr ""
+msgstr "Εσωτερικοί σύνδεσμοι σε μορφοποιημένη λίστα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "The file must be encoded in UTF-8 to be read correctly."
-msgstr ""
+msgstr "Το αρχείο πρέπει να είναι κωδικοποιημένο σε UTF-8 για να διαβαστεί σωστά."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1881
 msgid "In which format is the file?"
-msgstr ""
+msgstr "Σε ποια μορφή είναι το αρχείο;"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1936
 msgid "List"
-msgstr ""
+msgstr "Λίστα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
 msgid "Random redirect pages"
@@ -3224,30 +3225,30 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1991
 msgid "How many pages do you want?"
-msgstr ""
+msgstr "Πόσες σελίδες θέλετε;"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:2003
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
-msgstr ""
+msgstr "Ο αριθμός των σελίδων πρέπει να είναι μεταξύ {0} και {1}"
 
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:109
 msgid "Recent changes monitoring"
-msgstr ""
+msgstr "Παρακολούθηση πρόσφατων αλλαγών"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:105
 #, java-format
 msgid "New section in {0}"
-msgstr ""
+msgstr "Νέα ενότητα στο {0}"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:132
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:143
 msgid "&Title"
-msgstr ""
+msgstr "Τίτλος"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:144
 msgid "&Signature"
-msgstr ""
+msgstr "Υπογραφή"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:151
 msgid "&Force watching page"
@@ -3259,16 +3260,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 msgid "&Validate"
-msgstr ""
+msgstr "Επικύρωση"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:206
 msgid "&Cancel"
-msgstr ""
+msgstr "Ακύρωση"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:245
 #, java-format
 msgid "Analysis - {0}"
-msgstr ""
+msgstr "Ανάλυση - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:457
 msgid "Mark the selected text as being in a foreign language"
@@ -3280,7 +3281,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:511
 msgid "&Options"
-msgstr ""
+msgstr "Επιλογές"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:513
 msgid "Show &disambiguation pages"
@@ -3292,7 +3293,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:521
 msgid "Show &redirect pages"
-msgstr ""
+msgstr "Εμφάνιση σελίδων ανακατεύθυνσης"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:525
 msgid "Show &other pages"
@@ -3331,42 +3332,42 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:869
 #, java-format
 msgid "Page {0} doesn''t exist, do you want to load a similar page ?"
-msgstr ""
+msgstr "Η σελίδα {0} δεν υπάρχει, θέλετε να φορτώσετε μια παρόμοια σελίδα;"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:882
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
-msgstr ""
+msgstr "Η σελίδα {0} δεν υπάρχει, θέλετε ακόμα να την αναλύσετε;"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:933
 #, java-format
 msgid "\"{0}\" has been tagged with the following templates, be careful when editing:"
-msgstr ""
+msgstr "Το \"{0}\" έχει επισημανθεί με τα ακόλουθα πρότυπα, να είστε προσεκτικοί κατά την επεξεργασία:"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:955
 msgid "Do you want to apply the automatic modifications?"
-msgstr ""
+msgstr "Θέλετε να εφαρμόσετε τις αυτόματες τροποποιήσεις;"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1089
 msgid "You must select the text that is written in a foreign language"
-msgstr ""
+msgstr "Πρέπει να επιλέξετε το κείμενο που είναι γραμμένο σε μια ξένη γλώσσα"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1098
 msgid "Foreign language"
-msgstr ""
+msgstr "Ξένη γλώσσα"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1135
 msgid "From which Wikipedia is this text coming ?"
-msgstr ""
+msgstr "Από ποια Wikipedia προέρχεται αυτό το κείμενο;"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1234
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
 msgid "Translation"
-msgstr ""
+msgstr "Μετάφραση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:319
 msgid "&Page :"
-msgstr ""
+msgstr "&Σελίδα:"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:338
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:340
@@ -3374,7 +3375,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
 msgid "Disambiguation"
-msgstr ""
+msgstr "Αποσαφήνιση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:401
 msgid "Reload (Alt + &R)"
@@ -3387,12 +3388,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:434
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
 msgid "Send"
-msgstr ""
+msgstr "Αποστολή"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:451
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:453
 msgid "Undo"
-msgstr ""
+msgstr "Αναίρεση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:459
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:461
@@ -3402,22 +3403,22 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:482
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:484
 msgid "Table of Contents"
-msgstr ""
+msgstr "Πίνακας Περιεχομένων"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:502
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:190
 msgid "Validate"
-msgstr ""
+msgstr "Επικύρωση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:550
 msgid "Automatic comment"
-msgstr ""
+msgstr "Αυτόματο σχόλιο"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:576
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:266
 msgid "Mark edit as minor"
-msgstr ""
+msgstr "Επισήμανση επεξεργασίας ως μικρή"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:582
 msgid "Disable bot flag for this edit"
@@ -3425,11 +3426,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:586
 msgid "&Close after sending"
-msgstr ""
+msgstr "&Κλείσιμο μετά την αποστολή"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:592
 msgid "&Add a note on talk page"
-msgstr ""
+msgstr "&Προσθήκη σημείωσης στη σελίδα συζήτησης"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:596
 msgid "Update disambiguation warning on talk page"
@@ -3442,48 +3443,48 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:625
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:206
 msgid "Check spelling and typography"
-msgstr ""
+msgstr "Ελέγξτε την ορθογραφία και την τυπογραφία"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:627
 msgid "Spelling"
-msgstr ""
+msgstr "Ορθογραφία"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:662
 msgid "Protection level for editing the page"
-msgstr ""
+msgstr "Επίπεδο προστασίας για την επεξεργασία της σελίδας"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:751
 #, java-format
 msgid "Last modified at {0}"
-msgstr ""
+msgstr "Τελευταία τροποποίηση στις {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:759
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
 msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " Τελευταία τροποποίηση στις {0}. Τροποποιήθηκε πριν από λιγότερο από {1} λεπτό."
+msgstr[1] "Τελευταία τροποποίηση στις {0}. Τροποποιήθηκε πριν από λιγότερο από {1} λεπτά."
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:805
 msgid "Fix &redirects"
-msgstr ""
+msgstr "Διόρθωση &ανακατευθύνσεις"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:815
 #, java-format
 msgid "Link \"{0}\" to \"{1}\""
-msgstr ""
+msgstr "Σύνδεση \"{0}\" με \"{1}\""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:832
 msgid "&Tools"
-msgstr ""
+msgstr "&Εργαλεία"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:836
 msgid "&Preview"
-msgstr ""
+msgstr "&Προεπισκόπηση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:841
 msgid "&Expand templates"
-msgstr ""
+msgstr "&Επέκταση προτύπων"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:846
 msgid "Expand templates &and Preview"
@@ -3495,23 +3496,23 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:190
 msgid "Full analysis"
-msgstr ""
+msgstr "Πλήρης ανάλυση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:947
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:266
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:271
 msgid "Disambiguation analysis"
-msgstr ""
+msgstr "Ανάλυση αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1037
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:721
 msgid "A comment is required for sending the page."
-msgstr ""
+msgstr "Απαιτείται σχόλιο για την αποστολή της σελίδας."
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1097
 #, java-format
 msgid "Sending {0}"
-msgstr ""
+msgstr "Αποστολή {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:101
 #, java-format
@@ -3522,11 +3523,11 @@ msgstr "Σχόλια σελίδας - {0}"
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:185
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:237
 msgid "Comments"
-msgstr ""
+msgstr "Σχόλια"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:140
 msgid "Comments :"
-msgstr ""
+msgstr "Σχόλια :"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:158
 msgid "Max backlinks in Main :"
@@ -3546,7 +3547,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:278
 msgid "&Remove page comments"
-msgstr ""
+msgstr "&Κατάργηση σχολίων σελίδας"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:113
 #, java-format
@@ -3556,7 +3557,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:114
 #, java-format
 msgid "Preview - {0}"
-msgstr ""
+msgstr "Προεπισκόπηση - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:117
 #, java-format
@@ -3565,25 +3566,25 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:205
 msgid "&Update"
-msgstr ""
+msgstr "Ενημέρωση"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:253
 msgid "Id"
-msgstr ""
+msgstr "Αναγνωριστικό"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:259
 msgid "User"
-msgstr ""
+msgstr "Χρήστης"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:92
 #, java-format
 msgid "Templates in {0}"
-msgstr ""
+msgstr "Πρότυπα σε {0}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:117
 #, java-format
 msgid "Templates used in {0}, linking to {1}"
-msgstr ""
+msgstr "Πρότυπα που χρησιμοποιούνται στο {0}, που συνδέονται με το {1}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:212
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
@@ -3595,55 +3596,55 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:199
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:88
 msgid "Retrieving MediaWiki API"
-msgstr ""
+msgstr "Ανάκτηση του MediaWiki API"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 msgid "Retrieving links in templates"
-msgstr ""
+msgstr "Ανάκτηση συνδέσμων σε πρότυπα"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:218
 msgid "Displaying templates found"
-msgstr ""
+msgstr "Εμφάνιση προτύπων που βρέθηκαν"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
 msgid "Check article"
-msgstr ""
+msgstr "Ελέγξτε το λήμμα"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
 msgid "You must input a page name for running a full analysis"
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε ένα όνομα σελίδας για να εκτελέσετε μια πλήρη ανάλυση"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
 msgid "Analysis"
-msgstr ""
+msgstr "Ανάλυση"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
 msgid "Check template"
-msgstr ""
+msgstr "Ελέγξτε το πρότυπο"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCopyText.java:40
 msgid "Copy selected text"
-msgstr ""
+msgstr "Αντιγραφή επιλεγμένου κειμένου"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
-msgstr ""
+msgstr "Διαγραφή σελίδας"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:130
 msgid "Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"
-msgstr ""
+msgstr "Θέλετε να διαγράψετε αυτήν τη σελίδα στη Wikipedia ?\nΠαρακαλώ, εισάγετε τον λόγο για τη διαγραφή της σελίδας"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:250
 msgid "You must input a page name for running a disambiguation analysis"
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε ένα όνομα σελίδας για την εκτέλεση μιας ανάλυσης αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:120
 msgid "Close"
-msgstr ""
+msgstr "Κλείσιμο"
 
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:55
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:91
@@ -3651,11 +3652,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:253
 msgid "History"
-msgstr ""
+msgstr "Ιστορικό"
 
 #: org/wikipediacleaner/gui/swing/action/ActionInsertPredefinedText.java:60
 msgid "Insert text"
-msgstr ""
+msgstr "Εισαγωγή κειμένου"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:51
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:66
@@ -3666,7 +3667,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:56
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:210
 msgid "First occurrence"
-msgstr ""
+msgstr "Πρώτη εμφάνιση"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:61
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:225
@@ -3680,19 +3681,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionPasteText.java:46
 msgid "Paste"
-msgstr ""
+msgstr "Επικόλληση"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:61
 msgid "Add warnings on talk page"
-msgstr ""
+msgstr "Προσθήκη προειδοποιήσεων στη σελίδα συζήτησης"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:258
 msgid "Add a warning about links to disambiguation pages"
-msgstr ""
+msgstr "Προσθέστε μια προειδοποίηση σχετικά με συνδέσμους σε σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:265
 msgid "Add a warning about ISBN errors"
-msgstr ""
+msgstr "Προσθέστε μια προειδοποίηση σχετικά με σφάλματα ISBN"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:272
 msgid "Add a warning about duplicate arguments errors"
@@ -3700,7 +3701,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:279
 msgid "Add a warning about unknown parameter errors"
-msgstr ""
+msgstr "Προσθέστε μια προειδοποίηση για σφάλματα άγνωστων παραμέτρων"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:319
 msgid "Do you want to update the disambiguation warning on talk page?"
@@ -3708,7 +3709,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:362
 msgid "Do you want to update the ISBN warning on talk page?"
-msgstr ""
+msgstr "Θέλετε να ενημερώσετε την προειδοποίηση ISBN στη σελίδα συζήτησης;"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:405
 msgid "Do you want to update the duplicate arguments warning on talk page?"
@@ -3725,18 +3726,18 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:46
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to local watchlist"
-msgstr ""
+msgstr "Προσθήκη στην τοπική λίστα παρακολούθησης"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
 msgid "You must select a page to add it on your local watchlist"
-msgstr ""
+msgstr "Επιλέξτε μια σελίδα για να την προσθέσετε στην τοπική λίστα παρακολούθησης"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
 #, java-format
 msgid "Would you like to add the page {0} on your local watchlist?"
 msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " Θέλετε να προσθέσετε τη σελίδα {0} στην τοπική σας λίστα παρακολούθησης;"
+msgstr[1] "Θέλετε να προσθέσετε αυτές τις σελίδες ({0}) στην τοπική λίστα παρακολούθησης;"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
 #, java-format
@@ -3780,7 +3781,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:138
 msgid "What replacement do you want to use?"
-msgstr ""
+msgstr "Ποια αντικατάσταση θέλετε να χρησιμοποιήσετε;"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:63
 msgid "String to find"
@@ -3788,7 +3789,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:61
 msgid "Purging page cache"
-msgstr ""
+msgstr "Εκκαθάριση της προσωρινής μνήμης σελίδας"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:61
 msgid "Retrieving members of a category"
@@ -3800,7 +3801,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:70
 msgid "Analyzing links for disambiguation pages"
-msgstr ""
+msgstr "Ανάλυση συνδέσμων για σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:78
 #, java-format
@@ -3809,7 +3810,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceAllLinksAction.java:55
 msgid "Do you want to proceed with the replacement ?"
-msgstr ""
+msgstr "Θέλετε να προχωρήσετε με τις τροποποιήσεις;"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:233
 #, java-format
@@ -3823,51 +3824,51 @@ msgstr "Το {0} λειτουργεί..."
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:52
 msgid "Yes"
-msgstr ""
+msgstr "Ναι"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:53
 msgid "Yes to all"
-msgstr ""
+msgstr "Ναι σε όλα"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
 msgid "No"
-msgstr ""
+msgstr "Όχι"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
 msgid "No to all"
-msgstr ""
+msgstr "Όχι σε όλα"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:122
 #, java-format
 msgid "An error occurred: {0}"
-msgstr ""
+msgstr "Παρουσιάστηκε σφάλμα: {0}"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:127
 msgid "An unknown error occurred"
-msgstr ""
+msgstr "Παρουσιάστηκε άγνωστο σφάλμα"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:187
 #, java-format
 msgid "You need to define the {0} property in WPCleaner configuration."
-msgstr ""
+msgstr "Πρέπει να ορίσετε την ιδιότητα {0} στη διαμόρφωση του WPCleaner."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:215
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
-msgstr ""
+msgstr "Πρέπει να ορίσετε τις ιδιότητες {0} στη διαμόρφωση του WPCleaner."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
 msgid "This function requires some configuration."
-msgstr ""
+msgstr "Αυτή η λειτουργία απαιτεί ορισμένες ρυθμίσεις."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
 msgid "Do you want to display help on configuring WPCleaner ?"
-msgstr ""
+msgstr "Θέλετε βοήθεια σχετικά με τη διαμόρφωση του WPCleaner;"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:335
 msgid "Other..."
-msgstr ""
+msgstr "Άλλες..."
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:99
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
@@ -3878,19 +3879,19 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:202
 #, java-format
 msgid "Analyzing page {0}"
-msgstr ""
+msgstr "Ανάλυση σελίδας {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:308
 #, java-format
 msgid "Fixing page {0}"
-msgstr ""
+msgstr "Διόρθωση σελίδας {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:386
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " {0} η σελίδα έχει τροποποιηθεί"
+msgstr[1] "{0} οι σελίδες έχουν τροποποιηθεί"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:391
 #, java-format
@@ -3929,7 +3930,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:507
 msgid "Description"
-msgstr ""
+msgstr "Περιγραφή"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:513
 msgid "N°"
@@ -3937,16 +3938,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:87
 msgid "Functions available here are considered as bot tools."
-msgstr ""
+msgstr "Οι λειτουργίες που είναι διαθέσιμες εδώ θεωρούνται εργαλεία bot."
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:88
 msgid "They may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Αυτή η δυνατότητα μπορεί να τροποποιήσει πολλές σελίδες σε σύντομο χρονικό διάστημα."
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:101
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:88
 msgid "General"
-msgstr ""
+msgstr "Γενικά"
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:104
 msgid "Check Wiki"
