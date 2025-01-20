@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2024-11-25 12:25:14+0000\n"
+"PO-Revision-Date: 2025-01-20 12:25:06+0000\n"
 "X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4283,7 +4283,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:665
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:117
 msgid "Detail"
-msgstr ""
+msgstr "Detali"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:672
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
@@ -5126,7 +5126,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:128
 msgid "Details"
-msgstr ""
+msgstr "Detali"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:144
 msgid "Up"
