@@ -6,6 +6,7 @@
 # Author: Arelilm
 # Author: Danniel07
 # Author: Destinid10 2
+# Author: Dgstranz
 # Author: DiegoAmbrocio
 # Author: Fitoschido
 # Author: Fitoschido
@@ -25,7 +26,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2024-10-24 12:30:22+0000\n"
+"PO-Revision-Date: 2025-02-13 12:27:43+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -2258,7 +2259,7 @@ msgstr "Páginas sin enlaces"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:21
 msgid "Pages linking to disambiguation pages"
-msgstr "Páginas que enlazan a páginas a desambiguación"
+msgstr "Páginas que enlazan a páginas de desambiguación"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
