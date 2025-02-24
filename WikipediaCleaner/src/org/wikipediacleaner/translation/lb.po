@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-01-06 12:24:48+0000\n"
+"PO-Revision-Date: 2025-02-24 12:27:40+0000\n"
 "X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4017,11 +4017,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:229
 msgid "Save selection"
-msgstr ""
+msgstr "Auswiel späicheren"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:237
 msgid "Load selection"
-msgstr ""
+msgstr "Auswiel luesen"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
 msgid "You must select at least one algorithm for fixing errors"
@@ -4035,7 +4035,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:389
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1138
 msgid "What is the name of the selection?"
-msgstr ""
+msgstr "Wat ass den Numm vun der Auswiel?"
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:142
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:668
@@ -4255,7 +4255,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:498
 msgid "Save current selection"
-msgstr ""
+msgstr "Aktuell Auswiel späicheren"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:502
 msgid "Use selection"
@@ -4263,7 +4263,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:504
 msgid "Delete selection"
-msgstr ""
+msgstr "Auswiel läschen"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:603
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:104
