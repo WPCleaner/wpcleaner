@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.check.CheckWiki;
 import org.wikipediacleaner.api.http.HttpServer;
 import org.wikipediacleaner.api.http.hc3.Hc3HttpServer;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
+import org.wikipediacleaner.Version;
 
 
 /**
@@ -90,10 +91,10 @@ public class APIFactory {
     HttpClient client = new HttpClient(manager);
     client.getParams().setParameter(
         HttpMethodParams.USER_AGENT,
-        "WPCleaner (+http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation)");
+        "WPCleaner/" + Version.VERSION + " (+http://en.wikipedia.org/wiki/User:NicoV/Wikipedia_Cleaner/Documentation)");
     return client;
   }
-
+  
   /**
    * Create an HTTP client.
    * 
