@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -19,6 +20,7 @@ import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementFunction;
@@ -101,7 +103,7 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
             category.getBeginIndex(),
             category.getEndIndex());
         String categoryName = category.getName();
-        if ((categoryName == null) || ("".equals(categoryName))) {
+        if ((categoryName == null) || categoryName.isEmpty()) {
           errorResult.addReplacement("", true);
         }
         errors.add(errorResult);
@@ -154,7 +156,10 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
-    if (!analysis.getPage().isArticle() || analysis.getPage().isInUserNamespace()) {
+    Integer namespace = analysis.getPage().getNamespace();
+    if (!Objects.equals(namespace, Namespace.MAIN) &&
+        !Objects.equals(namespace, Namespace.CATEGORY) &&
+        !Objects.equals(namespace, Namespace.MEDIA)) {
       return contents;
     }
 
@@ -254,7 +259,7 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
           int defaultSortBeginIndex = defaultSort.getBeginIndex();
           int defaultSortEndIndex = defaultSort.getEndIndex();
           if (defaultSortBeginIndex > lastIndex) {
-            newContent.append(contents.substring(lastIndex, defaultSortBeginIndex));
+            newContent.append(contents, lastIndex, defaultSortBeginIndex);
           }
           lastIndex = defaultSortEndIndex;
           if (contents.charAt(lastIndex) == '\n') {
@@ -262,16 +267,16 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
               lastIndex++;
             }
           }
-          if (newCategories.length() > 0) {
+          if (!newCategories.isEmpty()) {
             newCategories.append('\n');
           }
-          newCategories.append(contents.substring(defaultSortBeginIndex, defaultSortEndIndex));
+          newCategories.append(contents, defaultSortBeginIndex, defaultSortEndIndex);
           defaultSort = null;
         }
 
         // Move category
         if (categoryBeginIndex > lastIndex) {
-          newContent.append(contents.substring(lastIndex, categoryBeginIndex));
+          newContent.append(contents, lastIndex, categoryBeginIndex);
         }
         int tmpIndex = categoryEndIndex;
         while ((tmpIndex < contents.length()) &&
@@ -292,17 +297,17 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
             lastIndex++;
           }
         }
-        if (newCategories.length() > 0) {
+        if (!newCategories.isEmpty()) {
           newCategories.append('\n');
         }
-        newCategories.append(contents.substring(categoryBeginIndex, categoryEndIndex));
+        newCategories.append(contents, categoryBeginIndex, categoryEndIndex);
       }
     }
-    if (newCategories.length() == 0) {
+    if (newCategories.isEmpty()) {
       return fixUsingAutomaticReplacement(analysis);
     }
     if (lastIndex < position) {
-      newContent.append(contents.substring(lastIndex, position));
+      newContent.append(contents, lastIndex, position);
     }
     if (newContent.charAt(newContent.length() - 1) != '\n') {
       newContent.append('\n');
