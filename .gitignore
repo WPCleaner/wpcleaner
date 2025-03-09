@@ -4,6 +4,7 @@ WikipediaCleaner/bin/
 WikipediaCleaner/resources/credentials.txt
 WikipediaCleaner/resources/certificate/WPCleaner.p12
 WikipediaCleaner/resources/certificate/WPCleaner_old.p12
+WikipediaCleaner/resources/toolforge/toolforge
 WikipediaCleaner/resources/wmflabs/id_rsa
 WikipediaCleaner/src/org/wikipediacleaner/translation/tstamp.*.po_
 WikipediaCleaner/src/org/wikipediacleaner/translation/WikiCleaner.tgz
@@ -81,3 +82,7 @@ GitHub.sublime-settings
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+
+# IntelliJ
+.idea/*
+/out/

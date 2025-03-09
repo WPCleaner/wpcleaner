@@ -72,7 +72,7 @@ public class Page implements Comparable<Page> {
   private ProgressionValue backLinksTemplateProgression;
 
   /**
-   * @param wiki Wiki.
+   * @param wikipedia Wiki.
    * @param title Page title.
    */
   Page(EnumWikipedia wikipedia, String title) {
@@ -159,7 +159,7 @@ public class Page implements Comparable<Page> {
    */
   public void setPageId(String pageId) {
     try {
-      this.pageId = new Integer(pageId);
+      this.pageId = Integer.valueOf(pageId);
     } catch (NumberFormatException e) {
       this.pageId = Integer.valueOf(-1);
     }
@@ -177,7 +177,7 @@ public class Page implements Comparable<Page> {
    */
   public void setNamespace(String namespace) {
     try {
-      this.namespace = new Integer(namespace);
+      this.namespace = Integer.valueOf(namespace);
     } catch (NumberFormatException e) {
       this.namespace = null;
     }
@@ -278,7 +278,7 @@ public class Page implements Comparable<Page> {
       revisionId = revisionId.substring(0, revisionId.length() - 1);
     }
     try {
-      this.revisionId = new Integer(revisionId);
+      this.revisionId = Integer.valueOf(revisionId);
     } catch (NumberFormatException e) {
       //
     }

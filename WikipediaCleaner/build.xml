@@ -121,7 +121,7 @@
   <property name="WPCleaner.libs.jackson.jars"
             value="${WPCleaner.libs.jackson-annotations.jar} ${WPCleaner.libs.jackson-core.jar} ${WPCleaner.libs.jackson-databind.jar}" />
   <property name="WPCleaner.libs.jdom.jars"
-            value="${WPCleaner.libs.jaxen-core.jar} ${WPCleaner.libs.jaxen-jdom.jar} ${WPCleaner.libs.jdom.jar} ${WPCleaner.libs.saxpath.jar}" />
+            value="${WPCleaner.libs.jaxen.jar} ${WPCleaner.libs.jdom.jar} ${WPCleaner.libs.xerces-impl.jar} ${WPCleaner.libs.xerces-xml-apis.jar}" />
   <property name="WPCleaner.libs.various.jars"
             value="${WPCleaner.libs.codec.jar} ${WPCleaner.libs.compress.jar} ${WPCleaner.libs.httpclient.jar} ${WPCleaner.libs.logging.jar} ${WPCleaner.libs.gettext.jar}" />
   <property name="WPCleaner.libs.jars"
@@ -174,9 +174,9 @@
   <!-- Deploy WPCleaner on Tools -->
   <target name="deploy" description="Deploy WPCleaner on Tools">
     <input message="Please enter Password for private key for Tools:" addproperty="WPCleaner.deploy.password" />
-    <property name="WPCleaner.deploy.keyfile" value="${basedir}/resources/wmflabs/id_rsa" />
-    <property name="WPCleaner.deploy.knownhosts" value="${basedir}/resources/wmflabs/known_hosts" />
-    <property name="WPCleaner.deploy.host" value="login.tools.wmflabs.org" />
+    <property name="WPCleaner.deploy.keyfile" value="${basedir}/resources/toolforge/toolforge" />
+    <property name="WPCleaner.deploy.knownhosts" value="${basedir}/resources/toolforge/known_hosts" />
+    <property name="WPCleaner.deploy.host" value="login.toolforge.org" />
     <property name="WPCleaner.deploy.user" value="nicov" />
     <property name="WPCleaner.deploy.tmp.directory" value="/data/project/wpcleaner/tools/tmp" />
     <property name="WPCleaner.deploy.tmp.install.directory" value="${WPCleaner.deploy.tmp.directory}/install" />
@@ -188,7 +188,7 @@
     <property name="WPCleaner.deploy.wpcleaner.test.directory" value="${WPCleaner.deploy.directory}/wpcleaner-test" />
 
     <!-- Copy new installer in temporary folder on Labs -->
-    <sshexec host="${WPCleaner.deploy.host}"
+    <sshexec host="${WPCleaner.deploy.host}" verbose="true"
              username="${WPCleaner.deploy.user}"
              keyfile="${WPCleaner.deploy.keyfile}"
              passphrase="${WPCleaner.deploy.password}"
@@ -678,9 +678,12 @@
     <mkdir dir="${WPCleaner.javadoc.dir}" />
     <javadoc destdir="${WPCleaner.javadoc.dir}"
              sourcepath="${WPCleaner.src.dir}"
-             packagenames="org.wikipediacleaner.*" encoding="UTF-8">
+             packagenames="org.wikipediacleaner.*"
+             encoding="UTF-8"
+             access="public"
+             failonwarning="true" failonerror="true">
       <classpath refid="WPCleaner.class.path" />
-      <link href="https://docs.oracle.com/javase/8/docs/api/" />
+      <link href="https://docs.oracle.com/en/javase/17/docs/api/" />
     </javadoc>
   </target>
 
