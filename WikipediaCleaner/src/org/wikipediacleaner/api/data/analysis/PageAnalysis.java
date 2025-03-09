@@ -47,6 +47,7 @@ import org.wikipediacleaner.api.data.contents.comment.ContainerComment;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 import org.wikipediacleaner.api.data.contents.magicword.FunctionMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.TagType;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.utils.Configuration;
 import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.Performance;
@@ -1331,17 +1332,24 @@ public class PageAnalysis {
   /**
    * @return True if titles seem to be reliable.
    */
-  public boolean areTitlesReliable() {
+  public boolean areTitlesUnreliable() {
     List<PageElementTitle> tmpTitles = getTitles();
     for (PageElementTitle title : tmpTitles) {
       if (!title.isCoherent()) {
-        return false;
+        return true;
       }
       if (isInTemplate(title.getBeginIndex()) != null) {
-        return false;
+        return true;
       }
     }
-    return true;
+
+    if (!getTags(WikiTagType.INCLUDEONLY).isEmpty() ||
+        !getTags(WikiTagType.NOINCLUDE).isEmpty() ||
+        !getTags(WikiTagType.ONLYINCLUDE).isEmpty()) {
+      return true;
+    }
+
+    return false;
   }
 
   // ==========================================================================

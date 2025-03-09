@@ -125,7 +125,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     if ((!analysis.getPage().isArticle()) ||
         (!analysis.getWPCConfiguration().isEncyclopedicNamespace(analysis.getPage().getNamespace())) ||
-        (!analysis.areTitlesReliable())) {
+        (analysis.areTitlesUnreliable())) {
       return contents;
     }
     List<PageElementTitle> titles = analysis.getTitles();

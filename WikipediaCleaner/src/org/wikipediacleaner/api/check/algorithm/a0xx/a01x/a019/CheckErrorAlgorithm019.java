@@ -87,7 +87,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
-    if (!analysis.areTitlesReliable()) {
+    if (analysis.areTitlesUnreliable()) {
       return contents;
     }
     if (!analysis.getPage().isInMainNamespace() ||

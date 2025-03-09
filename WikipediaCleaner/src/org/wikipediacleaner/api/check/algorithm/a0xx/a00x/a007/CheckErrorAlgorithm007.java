@@ -45,7 +45,7 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
 
     // Check level of each title
     List<PageElementTitle> titles = analysis.getTitles();
-    if ((titles == null) || (titles.size() == 0)) {
+    if ((titles == null) || titles.isEmpty()) {
       return false;
     }
     for (PageElementTitle title : titles) {
@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     if (titles.size() == 1) {
       errorResult.addReplacement(
           TitleBuilder.from(2, firstTitle.getTitle()).withAfter(firstTitle.getAfterTitle()).toString(),
-          true);
+          !analysis.areTitlesUnreliable());
     }
     errorResult.addEditTocAction(firstTitle);
     errors.add(errorResult);
@@ -80,13 +80,13 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
   @Override
   protected String internalBotFix(PageAnalysis analysis) {
     String contents = analysis.getContents();
-    if (!analysis.areTitlesReliable()) {
+    if (analysis.areTitlesUnreliable()) {
       return contents;
     }
 
     // Compute minimum title level
     List<PageElementTitle> titles = analysis.getTitles();
-    if ((titles == null) || (titles.size() == 0)) {
+    if ((titles == null) || titles.isEmpty()) {
       return contents;
     }
     int minTitle = Integer.MAX_VALUE;
@@ -105,7 +105,7 @@ public class CheckErrorAlgorithm007 extends CheckErrorAlgorithmBase {
     int offset = minTitle - 2;
     for (PageElementTitle title : titles) {
       if (lastIndex < title.getBeginIndex()) {
-        tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
+        tmp.append(contents, lastIndex, title.getBeginIndex());
         lastIndex = title.getBeginIndex();
       }
       tmp.append(TitleBuilder
