@@ -8,9 +8,6 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a069;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -27,78 +24,73 @@ final class BookSources {
   }
 
   private static Map<String, Pair<Set<String>, Set<String>>> createMap() {
-    final Map<String, Pair<Set<String>, Set<String>>> map = new HashMap<>();
-    map.put("cs", createCS());
-    map.put("de", createDE());
-    map.put("en", createEN());
-    map.put("fr", createFR());
-    map.put("it", createIT());
-    map.put("nl", createNL());
-    return Collections.unmodifiableMap(map);
+      return Map.ofEntries(
+              Map.entry("cs", createCS()),
+              Map.entry("de", createDE()),
+              Map.entry("en", createEN()),
+              Map.entry("es", createES()),
+              Map.entry("fr", createFR()),
+              Map.entry("it", createIT()),
+              Map.entry("nl", createNL()),
+              Map.entry("ru", createRU()));
   }
   
   private static Pair<Set<String>, Set<String>> createCS() {
-    final Set<String> namespaceNames = new HashSet<>();
-    namespaceNames.add("Speciální");
-    final Set<String> pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("Zdroje knih");
-    pageNames.add("KnižnéZdroje");
+    final Set<String> namespaceNames = Set.of("Speciální");
+    final Set<String> pageNames = Set.of("BookSources", "Zdroje knih", "KnižnéZdroje");
     return new ImmutablePair<>(namespaceNames, pageNames);
   }
 
   private static Pair<Set<String>, Set<String>> createDE() {
-    final Set<String> namespaceNames = new HashSet<>();
-    namespaceNames.add("Spezial");
-    final Set<String> pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("ISBN Suche");
-    pageNames.add("ISBN-Suche");
+    final Set<String> namespaceNames = Set.of("Spezial");
+    final Set<String> pageNames = Set.of("BookSources", "ISBN Suche", "ISBN-Suche");
     return new ImmutablePair<>(namespaceNames, pageNames);
   }
 
   private static Pair<Set<String>, Set<String>> createEN() {
-    final Set<String> namespaceNames = new HashSet<>();
-    namespaceNames.add("Special");
-    final Set<String> pageNames = new HashSet<>();
-    pageNames.add("BookSources");
+    final Set<String> namespaceNames = Set.of("Special");
+    final Set<String> pageNames = Set.of("BookSources");
+    return new ImmutablePair<>(namespaceNames, pageNames);
+  }
+
+  private static Pair<Set<String>, Set<String>> createES() {
+    final Set<String> namespaceNames = Set.of("Especial");
+    final Set<String> pageNames = Set.of("BookSources", "FuentesDeLibros");
     return new ImmutablePair<>(namespaceNames, pageNames);
   }
 
   private static Pair<Set<String>, Set<String>> createFR() {
-    final Set<String> namespaceNames = new HashSet<>();
-    namespaceNames.add("Spécial");
-    namespaceNames.add("Sp%C3%A9cial");
-    final Set<String> pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("Ouvrages de référence");
-    pageNames.add("Ouvrages de reference");
-    pageNames.add("Ouvragesderéférence");
-    pageNames.add("Ouvragesdereference");
-    pageNames.add("Recherche ISBN");
-    pageNames.add("Recherche isbn");
-    pageNames.add("RechercheISBN");
-    pageNames.add("Rechercheisbn");
-    pageNames.add("Ouvrages%20de%20r%C3%A9f%C3%A9rence");
+    final Set<String> namespaceNames = Set.of("Spécial", "Sp%C3%A9cial");
+    final Set<String> pageNames = Set.of(
+            "BookSources",
+            "Ouvrages de référence",
+            "Ouvrages de reference",
+            "Ouvragesderéférence",
+            "Ouvragesdereference",
+            "Recherche ISBN",
+            "Recherche isbn",
+            "RechercheISBN",
+            "Rechercheisbn",
+            "Ouvrages de r%C3%A9f%C3%A9rence",
+            "Ouvrages%20de%20r%C3%A9f%C3%A9rence");
     return new ImmutablePair<>(namespaceNames, pageNames);
   }
 
   private static Pair<Set<String>, Set<String>> createIT() {
-    final Set<String> namespaceNames = new HashSet<>();
-    namespaceNames.add("Speciale");
-    final Set<String> pageNames = new HashSet<>();
-    pageNames.add("BookSources");
-    pageNames.add("RicercaISBN");
+    final Set<String> namespaceNames = Set.of("Speciale");
+    final Set<String> pageNames = Set.of("BookSources", "RicercaISBN");
     return new ImmutablePair<>(namespaceNames, pageNames);
   }
 
   private static Pair<Set<String>, Set<String>> createNL() {
-    final Set<String> namespaceNames = new HashSet<>();
-    namespaceNames.add("Speciaal");
-    final Set<String> pageNames = new HashSet<>();
-    pageNames.add("Boekbronnen");
-    pageNames.add("Boekinformatie");
-    pageNames.add("BookSources");
+    final Set<String> namespaceNames = Set.of("Speciaal");
+    final Set<String> pageNames = Set.of("Boekbronnen", "Boekinformatie", "BookSources");
+    return new ImmutablePair<>(namespaceNames, pageNames);
+  }
+
+  private static Pair<Set<String>, Set<String>> createRU() {
+    final Set<String> namespaceNames = Set.of("Служебная");
+    final Set<String> pageNames = Set.of("BookSources", "Источники книг");
     return new ImmutablePair<>(namespaceNames, pageNames);
   }
 }
