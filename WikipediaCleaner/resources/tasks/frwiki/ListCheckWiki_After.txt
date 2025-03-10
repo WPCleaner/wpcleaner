@@ -67,6 +67,8 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#106]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_106 106
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#513]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_513 513
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#529]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_529 529
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#543]]
 FixListCheckWiki Projet:Correction_syntaxique/Analyse_543 543
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#545]]

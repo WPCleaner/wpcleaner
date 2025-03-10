@@ -78,10 +78,10 @@ Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#513]]
 FixLintError wikilink-in-extlink 513
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#524]]
 FixCheckWiki 524
-Set Prefix [[Catégorie:Page_utilisant_des_liens_magiques_ISBN]]
-FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#526]]
 FixCheckWiki 526
+Set Prefix [[Catégorie:Page_utilisant_des_liens_magiques_ISBN]]
+FixCategoryCheckWiki Catégorie:Page_utilisant_des_liens_magiques_ISBN 529
 Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#534]]
 FixLintError bogus-image-options 534 576 583
 
