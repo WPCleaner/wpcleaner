@@ -9,8 +9,8 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-01-20 12:25:06+0000\n"
-"X-POT-Import-Date: 2024-07-27 12:30:40+0000\n"
+"PO-Revision-Date: 2025-03-10 12:23:28+0000\n"
+"X-POT-Import-Date: 2025-03-09 16:30:26+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: io\n"
@@ -3390,7 +3390,7 @@ msgstr "Kontenajo-tabelo"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:190
 msgid "Validate"
-msgstr "Validar"
+msgstr "Validigar"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:550
 msgid "Automatic comment"
@@ -4409,7 +4409,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:100
 msgid "Validate the new table of contents"
-msgstr ""
+msgstr "Validigar la nova tabelo di kontenajo."
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:358
 #, java-format
