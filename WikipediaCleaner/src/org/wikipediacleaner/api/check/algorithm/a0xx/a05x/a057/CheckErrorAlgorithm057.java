@@ -59,44 +59,66 @@ public class CheckErrorAlgorithm057 extends CheckErrorAlgorithmBase {
     List<PageElementTitle> titles = analysis.getTitles();
     boolean result = false;
     for (PageElementTitle title : titles) {
-      String text = title.getTitle();
-      if (text != null) {
-        text = text.trim();
-        if ((text.length() > 0) && (text.charAt(text.length() - 1) == ':')) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis,
-              title.getBeginIndex(), title.getEndIndex());
-          errorResult.addReplacement(TitleBuilder
-              .from(title.getLevel(), text.substring(0, text.length() - 1))
-              .withAfter(title.getAfterTitle()).toString());
-          errors.add(errorResult);
-        }
-      }
+      result |= analyzeTitle(analysis, title, errors);
     }
 
     return result;
   }
 
   /**
-   * Bot fixing of all the errors in the page.
-   * 
+   * Analyze a title to check if errors are present.
+   *
+   * @param analysis Page analysis.
+   * @param title Title to analyze.
+   * @param errors Errors found in the page.
+   * @return Flag indicating if the error was found.
+   */
+  private boolean analyzeTitle(
+          PageAnalysis analysis,
+          PageElementTitle title,
+          Collection<CheckErrorResult> errors) {
+    String text = title.getTitle();
+    if (text == null) {
+      return false;
+    }
+
+    text = text.trim();
+    if (!text.endsWith(":")) {
+      return false;
+    }
+
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(
+            analysis,
+            title.getBeginIndex(), title.getEndIndex());
+    final String newTitle = text.substring(0, text.length() - 1).trim();
+    final String newFormattedTitle = TitleBuilder
+            .from(title.getLevel(), newTitle)
+            .withAfter(title.getAfterTitle()).toString();
+    errorResult.addReplacement(newFormattedTitle, newTitle.length() > 2);
+    errors.add(errorResult);
+    return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   *
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
   @Override
-  protected String internalBotFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle()) {
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle() ||
+        !analysis.getPage().isInMainNamespace()) {
       return analysis.getContents();
     }
     return fix(globalFixes[0], analysis, null);
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

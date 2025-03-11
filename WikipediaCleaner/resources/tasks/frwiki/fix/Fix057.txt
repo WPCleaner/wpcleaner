@@ -1,0 +1,5 @@
+DoTasks ../_Common.txt
+Set Configuration TimeBetweenEdit 30
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#57]]
+FixCheckWiki 57
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_057 57

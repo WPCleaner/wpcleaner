@@ -7,7 +7,7 @@ toolforge_host="login.toolforge.org"
 toolforge_tmp="/data/project/wpcleaner/tools/tmp"
 toolforge_user="nicov"
 
-if [[ -z "${keyfile}" ]]; then
+if [[ -f "${keyfile}" ]]; then
   echo "No file with private key found at ${keyfile}"
   exit 1
 fi
