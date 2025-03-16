@@ -9,9 +9,11 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a05x.a057;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
@@ -110,8 +112,11 @@ public class CheckErrorAlgorithm057 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected String internalAutomaticFix(PageAnalysis analysis) {
-    if (!analysis.getPage().isArticle() ||
-        !analysis.getPage().isInMainNamespace()) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    final Integer namespace = analysis.getPage().getNamespace();
+    if (!Objects.equals(namespace, Namespace.MAIN) && !Objects.equals(namespace, Namespace.MEDIA)) {
       return analysis.getContents();
     }
     return fix(globalFixes[0], analysis, null);
