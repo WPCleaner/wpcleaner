@@ -1,6 +1,8 @@
 DoTasks ../_Common.txt
 # FixFileCheckWiki C:\Users\Nicolas\CW_frwiki_564.txt 564
-# FixListCheckWiki Projet:Correction_syntaxique/Analyse_564 564
-FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 564
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_564 564
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_564/2 564
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_564/3 564
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 564
 # ListCheckWiki C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 wiki:Projet:Correction_syntaxique/Analyse_{0} 564
 UpdateUnknownParameterWarnings

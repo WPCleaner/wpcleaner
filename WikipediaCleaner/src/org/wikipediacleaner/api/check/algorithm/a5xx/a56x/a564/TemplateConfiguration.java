@@ -127,89 +127,15 @@ class TemplateConfiguration {
       }
     }
 
-    // Handle extra whitespace characters
-    String contents = analysis.getContents();
+    // Try to get a main suggestion
     computedName = CLEAN_WHITESPACE.matcher(computedName).replaceAll(" ");
-    if (knownParams.contains(computedName)) {
-      return Optional.of(Collections.singletonList(
-          TemplateParameterSuggestion.replaceOrDeleteParam(
-              contents, template, param, computedName, param.getValue(), true, true)));
+    final Optional<TemplateParameterSuggestion> mainSuggestion = mainSuggestion(
+            analysis, template, paramNum, param, computedName);
+    if (mainSuggestion.isPresent()) {
+      return Optional.of(Collections.singletonList(mainSuggestion.get()));
     }
-
-    // Handle stranded "=" sign
     String name = param.getName();
-    if (StringUtils.isEmpty(computedName) && StringUtils.isEmpty(param.getValue())) {
-      return Optional.of(Collections.singletonList(
-          TemplateParameterSuggestion.deleteParam(contents, param, true)));
-    }
-
-    // Handle unnamed parameters
-    if (StringUtils.isEmpty(name) && !StringUtils.isEmpty(computedName)) {
-
-      // Handle unnamed parameters that can be deleted
-      for (String namedParameter : unnamedParamsToDelete) {
-        String otherValue = template.getParameterValue(namedParameter);
-        if (otherValue != null) {
-          if (otherValue.equalsIgnoreCase(param.getValue()) ||
-              otherValue.equalsIgnoreCase("[[" + param.getValue() + "]]")) {
-            return Optional.of(Collections.singletonList(
-                TemplateParameterSuggestion.deleteParam(contents, param, true)));
-          }
-        }
-      }
-
-      // Handle unnamed parameters that are in fact parameter names
-      for (String namedParameter : knownParams) {
-        if (namedParameter.equals(param.getValue())) {
-          boolean shouldRemove = true;
-          if (paramNum + 1 < template.getParameterCount()) {
-            PageElementTemplate.Parameter nextParam = template.getParameter(paramNum + 1);
-            if (StringUtils.isEmpty(nextParam.getName())) {
-              shouldRemove = false;
-            }
-          }
-          if (!shouldRemove && (param.getValue() != null)) {
-            for (int paramNumTmp = 0; paramNumTmp < template.getParameterCount(); paramNumTmp++) {
-              if (param.getValue().equalsIgnoreCase(template.getParameterName(paramNumTmp))) {
-                shouldRemove = true;
-              }
-            }
-          }
-          if (shouldRemove) {
-            return Optional.of(Collections.singletonList(
-                TemplateParameterSuggestion.deleteParam(contents, param, true)));
-          }
-        }
-      }
-
-      // Handle unnamed parameters for which their value also exist in another parameter
-      /*for (int paramTmp = 0; paramTmp < template.getParameterCount(); paramTmp++) {
-        PageElementTemplate.Parameter otherParam = template.getParameter(paramTmp);
-        if (StringUtils.isNotEmpty(otherParam.getName()) &&
-            (otherParam.getValue() != null)) {
-          if (otherParam.getValue().equalsIgnoreCase(param.getValue()) ||
-              otherParam.getValue().equalsIgnoreCase("[[" + param.getValue() + "]]")) {
-            System.err.println("Value " + param.getValue() + " exists also in parameter named " + otherParam.getName());
-          }
-        }
-      }*/
-    }
-
-    // Handle parameters that can be deleted by configuration
-    if (paramsToDelete.contains(computedName)) {
-      return Optional.of(Collections.singletonList(
-          TemplateParameterSuggestion.deleteParam(contents, param, true)));
-    }
-    if (valuesToDeleteByParam.containsKey(computedName)) {
-      Set<String> valuesToDelete = valuesToDeleteByParam.get(computedName);
-      boolean delete = valuesToDelete.contains(param.getValue());
-      delete |= valuesToDelete.contains(param.getStrippedValue()) &&
-          (StringUtils.isNotBlank(param.getName()) || StringUtils.isNotBlank(param.getStrippedValue()));
-      if (delete) {
-        return Optional.of(Collections.singletonList(
-            TemplateParameterSuggestion.deleteParam(contents, param, true)));
-      }
-    }
+    String contents = analysis.getContents();
 
     // Handle non-breaking white space in the parameter name
     List<TemplateParameterSuggestion> results = new ArrayList<>();
@@ -375,7 +301,127 @@ class TemplateConfiguration {
     safeDelete &= results.isEmpty();
     results.add(TemplateParameterSuggestion.deleteParam(contents, param, safeDelete));
     results.add(TemplateParameterSuggestion.commentParam(analysis, param, paramsToComment.contains(computedName)));
+
     return Optional.of(results);
+  }
+
+  @Nonnull
+  private Optional<TemplateParameterSuggestion> mainSuggestion(
+          final PageAnalysis analysis,
+          @Nonnull final PageElementTemplate template,
+          final int paramNum,
+          final PageElementTemplate.Parameter param,
+          final String computedName) {
+    String contents = analysis.getContents();
+
+    // Handle extra whitespace characters
+    if (knownParams.contains(computedName)) {
+      return Optional.of(
+              TemplateParameterSuggestion.replaceOrDeleteParam(
+                      contents, template, param, computedName, param.getValue(), true, true));
+    }
+
+    // Handle stranded "=" sign
+    String name = param.getName();
+    if (StringUtils.isEmpty(computedName) && StringUtils.isEmpty(param.getValue())) {
+      return Optional.of(TemplateParameterSuggestion.deleteParam(contents, param, true));
+    }
+
+    // Handle unnamed parameters
+    if (StringUtils.isEmpty(name) && !StringUtils.isEmpty(computedName)) {
+
+      // Handle unnamed parameters that can be deleted
+      for (String namedParameter : unnamedParamsToDelete) {
+        String otherValue = template.getParameterValue(namedParameter);
+        if (otherValue != null) {
+          if (otherValue.equalsIgnoreCase(param.getValue()) ||
+                  otherValue.equalsIgnoreCase("[[" + param.getValue() + "]]")) {
+            return Optional.of(TemplateParameterSuggestion.deleteParam(contents, param, true));
+          }
+        }
+      }
+
+      // Handle unnamed parameters that are in fact parameter names
+      for (String namedParameter : knownParams) {
+        if (namedParameter.equals(param.getValue())) {
+          boolean shouldRemove = true;
+          if (paramNum + 1 < template.getParameterCount()) {
+            PageElementTemplate.Parameter nextParam = template.getParameter(paramNum + 1);
+            if (StringUtils.isEmpty(nextParam.getName())) {
+              shouldRemove = false;
+            }
+          }
+          if (!shouldRemove && (param.getValue() != null)) {
+            for (int paramNumTmp = 0; paramNumTmp < template.getParameterCount(); paramNumTmp++) {
+              if (param.getValue().equalsIgnoreCase(template.getParameterName(paramNumTmp))) {
+                shouldRemove = true;
+              }
+            }
+          }
+          if (shouldRemove) {
+            return Optional.of(TemplateParameterSuggestion.deleteParam(contents, param, true));
+          }
+        }
+      }
+
+      // Handle unnamed parameters for which their value also exist in another parameter
+      /*for (int paramTmp = 0; paramTmp < template.getParameterCount(); paramTmp++) {
+        PageElementTemplate.Parameter otherParam = template.getParameter(paramTmp);
+        if (StringUtils.isNotEmpty(otherParam.getName()) &&
+            (otherParam.getValue() != null)) {
+          if (otherParam.getValue().equalsIgnoreCase(param.getValue()) ||
+              otherParam.getValue().equalsIgnoreCase("[[" + param.getValue() + "]]")) {
+            System.err.println("Value " + param.getValue() + " exists also in parameter named " + otherParam.getName());
+          }
+        }
+      }*/
+    }
+
+    // Handle parameters that can be deleted by configuration
+    if (paramsToDelete.contains(computedName)) {
+      return Optional.of(TemplateParameterSuggestion.deleteParam(contents, param, true));
+    }
+    if (valuesToDeleteByParam.containsKey(computedName)) {
+      Set<String> valuesToDelete = valuesToDeleteByParam.get(computedName);
+      boolean delete = valuesToDelete.contains(param.getValue());
+      delete |= valuesToDelete.contains(param.getStrippedValue()) &&
+              (StringUtils.isNotBlank(param.getName()) || StringUtils.isNotBlank(param.getStrippedValue()));
+      if (delete) {
+        return Optional.of(TemplateParameterSuggestion.deleteParam(contents, param, true));
+      }
+    }
+
+    // TODO: Handle cases like |<!-- auteur=Lucien Leclerc -->|
+    //   replace with <!--| auteur=Lucien Leclerc -->|
+
+    // Handle parameters name that start with a comment
+    if (name.startsWith(ContentsComment.START)) {
+      int endCommentIndex = name.indexOf(ContentsComment.END, ContentsComment.START.length());
+      if (endCommentIndex > 0) {
+        int endIndex = ContentsUtil.moveIndexBackwardWhileFound(
+                name,
+                endCommentIndex - 1,
+                " ");
+        String comment = name.substring(ContentsComment.START.length(), endIndex);
+        endCommentIndex += ContentsComment.END.length();
+        int realNameIndex = ContentsUtil.moveIndexForwardWhileFound(name, endCommentIndex, " ");
+        if (name.charAt(endIndex) == '|') {
+          final String prefix =
+                  ContentsComment.START +
+                  "|" +
+                  name.substring(endCommentIndex, realNameIndex) +
+                  name.substring(ContentsComment.START.length(), endIndex) +
+                  name.substring(endIndex + 1, endCommentIndex);
+          final String newName = name.substring(realNameIndex);
+          if (knownParams.contains(newName) && comment.contains("=")) {
+            return Optional.of(TemplateParameterSuggestion.replaceParam(
+                    contents, param, prefix, newName, param.getValue(), true));
+          }
+        }
+      }
+    }
+
+    return Optional.empty();
   }
 
   private static final Pattern REMOVE_ACCENTS = Pattern.compile("\\p{M}");
@@ -408,7 +454,7 @@ class TemplateConfiguration {
       boolean automatic =
           (missingEqualName.length() >= 5) ||
           ((missingEqualName.length() >= 4) && (missingEqualValue.length() >= 4));
-      automatic &= (missingEqualValue.length() == 0) || !Character.isDigit(missingEqualValue.charAt(0));
+      automatic &= missingEqualValue.isEmpty() || !Character.isDigit(missingEqualValue.charAt(0));
       automatic |= paramsOk.contains(missingEqualName);
       automatic &= !missingEqualFound;
       for (int nbChars = 1; nbChars < missingEqualValue.length(); nbChars++) {
@@ -431,7 +477,7 @@ class TemplateConfiguration {
         automatic &= separator;
       }
       automatic &=
-          (missingEqualValue.length() >= 1) &&
+          !missingEqualValue.isEmpty() &&
           !CharacterUtils.isPunctuation(missingEqualValue.charAt(0));
       results.add(TemplateParameterSuggestion.replaceOrDeleteParam(
           contents, template, param,

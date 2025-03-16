@@ -112,14 +112,14 @@ public class TemplateParameterSuggestion {
     }
     String newText =
         fullText.substring(0, firstChar) +
-        CommentBuilder.from(fullText.substring(firstChar, lastChar)).withWhitespace(false).toString() +
+        CommentBuilder.from(fullText.substring(firstChar, lastChar)).withWhitespace(false) +
         (lastChar < fullText.length() ? fullText.substring(lastChar) : StringUtils.EMPTY);
     return new TemplateParameterSuggestion(newText, null, automatic);
   }
 
   /**
    * Create a suggestion to replace a parameter.
-   * 
+   *
    * @param contents Page contents.
    * @param templateParam Parameter to be replaced.
    * @param newName New parameter name.
@@ -128,8 +128,29 @@ public class TemplateParameterSuggestion {
    * @return Suggestion.
    */
   public static TemplateParameterSuggestion replaceParam(
+          String contents,
+          PageElementTemplate.Parameter templateParam,
+          String newName,
+          String newValue,
+          boolean automatic) {
+    return replaceParam(contents, templateParam, "", newName, newValue, automatic);
+  }
+
+  /**
+   * Create a suggestion to replace a parameter.
+   * 
+   * @param contents Page contents.
+   * @param templateParam Parameter to be replaced.
+   * @param prefix Prefix before parameter
+   * @param newName New parameter name.
+   * @param newValue New parameter value.
+   * @param automatic True if the replacement is automatic.
+   * @return Suggestion.
+   */
+  public static TemplateParameterSuggestion replaceParam(
       String contents,
       PageElementTemplate.Parameter templateParam,
+      String prefix,
       String newName,
       String newValue,
       boolean automatic) {
@@ -141,6 +162,7 @@ public class TemplateParameterSuggestion {
     if (StringUtils.equals(templateParam.getName(), templateParam.getComputedName())) {
       int nameStartIndex = templateParam.getNameStartIndex();
       String newText =
+          prefix +
           contents.substring(beginIndex, nameStartIndex) +
           newName +
           contents.substring(nameStartIndex + templateParam.getName().length(), valueStartIndex) +
@@ -189,9 +211,7 @@ public class TemplateParameterSuggestion {
     }
 
     // Check if the values are identical
-    if (automaticDeletion) {
-      automaticDeletion &= StringUtils.equals(newValue, otherParam.getValue());
-    }
+    automaticDeletion &= StringUtils.equals(newValue, otherParam.getValue());
     return deleteParam(contents, templateParam, automaticDeletion);
   }
 
