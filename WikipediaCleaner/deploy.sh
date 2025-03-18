@@ -47,7 +47,7 @@ ssh -i "${keyfile}" -l "${toolforge_user}" "${toolforge_host}" \
 
 echo "Activate new installer on toolforge"
 ssh -i "${keyfile}" -l "${toolforge_user}" "${toolforge_host}" \
-  "rm -Rf ${toolforge_deploy}/install; mv ${toolforge_tmp}/install/ ${toolforge_deploy}/install"
+  "cp -f ${toolforge_tmp}/install/* ${toolforge_deploy}/install"
 
 echo "Activate new version on toolforge"
 answer="unknown"
