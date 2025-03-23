@@ -582,7 +582,7 @@
              access="public"
              failonwarning="true" failonerror="true">
       <classpath refid="WPCleaner.class.path" />
-      <link href="https://docs.oracle.com/en/javase/17/docs/api/" />
+      <link href="https://docs.oracle.com/en/java/javase/17/docs/api/" />
     </javadoc>
   </target>
 
