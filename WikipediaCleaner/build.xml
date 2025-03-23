@@ -192,7 +192,7 @@
     <!-- Java compilation -->
     <javac srcdir="${WPCleaner.src.dir}"
            destdir="${WPCleaner.classes_small.dir}"
-           optimize="on" encoding="UTF-8" target="8" source="8"
+           optimize="on" encoding="UTF-8" target="17" source="17"
            includeantruntime="false">
       <classpath refid="WPCleaner.class.path" />
     </javac>
