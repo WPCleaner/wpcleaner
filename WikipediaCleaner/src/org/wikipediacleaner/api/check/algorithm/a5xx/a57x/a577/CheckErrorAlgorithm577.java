@@ -14,7 +14,6 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import javax.annotation.Nonnull;
@@ -58,9 +57,9 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
       "http://dx.doi.org/",
       "https://doi.org/",
       "https://dx.doi.org/")
-      .map(Pattern::compile).collect(Collectors.toList());
+      .map(Pattern::compile).toList();
 
-  private static final Set<String> DELETE_VALUES = Stream.of("-").collect(Collectors.toSet());
+  private static final Set<String> DELETE_VALUES = Set.of("-");
 
   /**
    * Analyze a page to check if errors are present.
@@ -215,6 +214,12 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
       }
     }
 
+    // Non-breaking space
+    if (value.contains("\u00A0")) {
+      String newValue = value.replaceAll("\u00A0", " ");
+      addReplacement(analysis, errorResult, param, newValue, isValidDOI(newValue));
+    }
+
     // External viewer
     addExternalViewer(analysis, errorResult, template);
 
@@ -294,11 +299,7 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
     currentIndex++;
 
     // Check the suffix
-    if (currentIndex >= value.length()) {
-      return false;
-    }
-
-    return true;
+    return currentIndex < value.length();
   }
 
   /**
