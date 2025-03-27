@@ -28,7 +28,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-03-13 12:28:39+0000\n"
+"PO-Revision-Date: 2025-03-27 12:28:32+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:49+0000\n"
 "X-Generator: MediaWiki 1.44.0-alpha; Translate 2025-03-15\n"
 "Language: zh_cn\n"
-"X-POT-Import-Date: 2025-03-09 16:30:26+0000\n"
+"X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -445,19 +445,19 @@ msgstr "无法替换字符[{0}]"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:245
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:363
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:365
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:370
 msgid "A list of templates in which categories should be ignored."
 msgstr "应当忽略分类的模板列表。"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:249
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:367
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:369
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:374
 msgid "A template in which categories should be ignored."
 msgstr "应当忽略分类的模板。"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:252
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:370
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:372
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:377
 msgid "A template parameter in which categories should be ignored."
 msgstr "应当忽略分类的模板参数。"
 
@@ -718,7 +718,7 @@ msgstr "删除列表中的中断"
 msgid "Remove {0} tags"
 msgstr "移除{0}标签"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:32
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:34
 msgid "Fix all titles"
 msgstr "修复所有标题"
 
@@ -1436,27 +1436,31 @@ msgstr "月份文本值"
 msgid "The size below which images are not reported as duplicates"
 msgstr "低于该尺寸的图片不会被报告为重复图片"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:134
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:146
 msgid "Both values are equal"
 msgstr "两边值相等"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:136
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:148
 msgid "Other value is empty"
 msgstr "其它值为空"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:138
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
+msgid "Both values are identical"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
 msgid "Other value: {0}"
 msgstr "其他值：{0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:237
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:249
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:531
 msgid "Comment"
 msgstr "注释"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:395
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:398
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:428
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:431
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:275
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:278
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a528/CheckErrorAlgorithm528.java:251
@@ -1468,20 +1472,36 @@ msgstr "注释"
 msgid "A category containing the list of pages in error"
 msgstr "包含存在错误页面列表的分类"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:401
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
+msgid "Values that are to be considered identical"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
+msgid "Comma separated list of template names"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
+msgid "Comma separated list of parameter names"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
+msgid "Parameter value"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
 msgstr "对于给定的模板和参数可以被安全忽略的值"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:405
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:459
 msgid "Name of the template in which some values can be safely ignored"
 msgstr "某些值可以被安全忽略的模板名称"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:408
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:462
 msgid "Name of the parameter for which some values can be safely ignored"
 msgstr "某些值可以被安全忽略的参数名称"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:411
-msgid "Value of the paramter which can be safely ignored"
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:465
+msgid "Value of the parameter which can be safely ignored"
 msgstr "可以被安全忽略的参数值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:136
@@ -2059,26 +2079,26 @@ msgstr "应当验证其值的模板"
 msgid "Image attribute"
 msgstr "图片属性"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:174
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:173
 #, java-format
 msgid "Check incorrect DOI {0}"
 msgstr "检查不正确的 DOI {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:234
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:239
 #, java-format
 msgid "External viewer for parameter {0}"
 msgstr "参数{0}的外部查看器"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:259
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:264
 #, java-format
 msgid "Check DOI {0}"
 msgstr "检查 DOI {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:357
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:358
 msgid "Prefixes that can be safely deleted"
 msgstr "可被安全删除的前缀"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:361
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:362
 msgid "Prefix that can be safely deleted"
 msgstr "可被安全删除的前缀"
 
