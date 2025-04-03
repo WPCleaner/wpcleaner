@@ -15,7 +15,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-03-27 12:28:32+0000\n"
+"PO-Revision-Date: 2025-04-03 12:28:13+0000\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1431,7 +1431,7 @@ msgstr "其他值為空"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr ""
+msgstr "兩邊值相同"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
@@ -1459,19 +1459,19 @@ msgstr "包含錯誤頁面清單的分類"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
 msgid "Values that are to be considered identical"
-msgstr ""
+msgstr "應視為相同的值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
 msgid "Comma separated list of template names"
-msgstr ""
+msgstr "以逗號分隔的模板名稱清單"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
 msgid "Comma separated list of parameter names"
-msgstr ""
+msgstr "以逗號分隔的參數名稱清單"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr ""
+msgstr "參數值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
