@@ -8,6 +8,7 @@
 # Author: Lakejason0
 # Author: Lantx
 # Author: LittlePaw365
+# Author: Mishidexfc
 # Author: Qiyue2001
 # Author: Shuiwater
 # Author: SomeyaMako
@@ -28,7 +29,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-03-27 12:28:32+0000\n"
+"PO-Revision-Date: 2025-04-21 12:32:30+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Chinese (Simplified) <zh_CN@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1446,7 +1447,7 @@ msgstr "其它值为空"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr ""
+msgstr "两个值相同"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
@@ -1474,19 +1475,19 @@ msgstr "包含存在错误页面列表的分类"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
 msgid "Values that are to be considered identical"
-msgstr ""
+msgstr "应被视为相同的值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
 msgid "Comma separated list of template names"
-msgstr ""
+msgstr "以逗号分隔的模板名称列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
 msgid "Comma separated list of parameter names"
-msgstr ""
+msgstr "以逗号分隔的参数名称列表"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr ""
+msgstr "参数值"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
