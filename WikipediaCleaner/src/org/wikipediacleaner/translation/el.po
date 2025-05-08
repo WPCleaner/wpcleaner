@@ -4,6 +4,7 @@
 # Author: AProdromou
 # Author: Dogogos123
 # Author: Fotis A.
+# Author: Jimkats
 # Author: Norhorn
 # Author: Pablothecat
 # Author: Spyridon Eftychios Kokotos
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-03-27 12:28:23+0000\n"
+"PO-Revision-Date: 2025-05-08 12:33:39+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2015-11-24 21:04+0000\n"
-"X-Generator: MediaWiki 1.44.0-alpha; Translate 2025-03-15\n"
+"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-03-15\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "Language: el\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
@@ -2830,9 +2831,9 @@ msgid "Downloading {0}"
 msgstr "Λήψη {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
-#, fuzzy, java-format
+#, java-format
 msgid "Creating {0}"
-msgstr "Η σελίδα ανανεώνεται {0}"
+msgstr "Δημιουργία {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
 #, java-format
@@ -5450,9 +5451,9 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/warning/ISBNWarningProcessor.java:212
 #: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:208
-#, fuzzy, java-format
+#, java-format
 msgid "Removing {1} warning - {0}"
-msgstr "Η σελίδα ανανεώνεται {0}"
+msgstr "Αφαίρεση {1} προειδοποίησης - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/ISBNWarningProcessor.java:221
 #: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:217

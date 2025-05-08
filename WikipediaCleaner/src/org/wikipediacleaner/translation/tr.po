@@ -10,6 +10,7 @@
 # Author: Hedda
 # Author: Incelemeelemani
 # Author: Joseph
+# Author: Leo
 # Author: Melissadilara
 # Author: MuratTheTurkish
 # Author: SaldırganSincap
@@ -26,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-03-27 12:28:31+0000\n"
+"PO-Revision-Date: 2025-05-08 12:33:48+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -34,7 +35,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2018-01-31 07:41+0000\n"
-"X-Generator: MediaWiki 1.44.0-alpha; Translate 2025-03-15\n"
+"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-03-15\n"
 "Language: tr\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
@@ -2283,7 +2284,7 @@ msgstr "En fazla dosya içeren sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr "En çok intervikiye sahip sayfalar"
+msgstr "En çok interviki içeren sayfalar"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
