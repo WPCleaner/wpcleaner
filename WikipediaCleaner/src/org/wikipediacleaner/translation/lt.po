@@ -8,7 +8,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-05-08 12:33:44+0000\n"
+"PO-Revision-Date: 2025-05-26 12:32:57+0000\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1424,7 +1424,7 @@ msgstr "Kita reikšmė tuščia"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr ""
+msgstr "Abi reikšmės vienodos"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
@@ -1464,7 +1464,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr ""
+msgstr "Parametro reikšmė"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
