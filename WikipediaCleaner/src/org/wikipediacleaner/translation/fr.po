@@ -3,6 +3,7 @@
 #
 # Author: Alno
 # Author: Crochet.david
+# Author: Derugon
 # Author: Egidio24
 # Author: Florian COLLIN
 # Author: Gomoko
@@ -25,7 +26,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-05-08 12:33:41+0000\n"
+"PO-Revision-Date: 2025-06-02 12:35:02+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1443,7 +1444,7 @@ msgstr "L’autre valeur est vide"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr ""
+msgstr "Les values sont identiques"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
@@ -1471,19 +1472,19 @@ msgstr "Une catégorie qui contient la liste des pages en erreur"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
 msgid "Values that are to be considered identical"
-msgstr ""
+msgstr "Valeurs à considérer comme identiques"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
 msgid "Comma separated list of template names"
-msgstr ""
+msgstr "Liste de noms de modèles séparés par une virgule"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
 msgid "Comma separated list of parameter names"
-msgstr ""
+msgstr "Liste de noms de paramètres séparés par une virgule"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr ""
+msgstr "Valeur du paramètre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
