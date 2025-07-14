@@ -15,7 +15,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-05-08 12:33:50+0000\n"
+"PO-Revision-Date: 2025-07-14 12:29:06+0000\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4298,7 +4298,7 @@ msgstr "重新載入錯誤"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:665
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:117
 msgid "Detail"
-msgstr "詳細資料"
+msgstr "詳細資訊"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:672
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
@@ -5139,7 +5139,7 @@ msgstr "排序"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:128
 msgid "Details"
-msgstr "詳細資料"
+msgstr "詳細資訊"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:144
 msgid "Up"
