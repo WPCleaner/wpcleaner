@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-05-08 12:33:44+0000\n"
+"PO-Revision-Date: 2025-07-21 12:29:36+0000\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2649,7 +2649,7 @@ msgstr "jo, {0} Säiten"
 #: org/wikipediacleaner/gui/swing/Controller.java:302
 #, java-format
 msgid "No, {0} pages"
-msgstr "Neen, {0} Säiten"
+msgstr "Nee, {0} Säiten"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:307
 #, java-format
@@ -2687,7 +2687,7 @@ msgstr "Nummraim filteren"
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
 msgid "Sort"
-msgstr "Zortéieren"
+msgstr "Sortéieren"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:545
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1416
@@ -3835,7 +3835,7 @@ msgstr "Jo fir alles"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
 msgid "No"
-msgstr "Neen"
+msgstr "Nee"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
 msgid "No to all"
