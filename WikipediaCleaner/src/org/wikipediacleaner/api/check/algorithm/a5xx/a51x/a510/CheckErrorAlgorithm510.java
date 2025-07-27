@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    String target = link.getFullLink().trim();
+    String target = link.getFullLinkNotNormalized().trim();
     if ((analysis.getSurroundingTag(WikiTagType.GALLERY, link.getBeginIndex()) != null) ||
         (analysis.getSurroundingTag(WikiTagType.REF, link.getBeginIndex()) != null)) {
 
@@ -94,25 +94,23 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
       }
 
       // Report error
-      if ((beginIndex > 0) || (endIndex < target.length())) {
-        if (errors == null) {
-          return true;
-        }
-        if (beginIndex >= endIndex) {
-          beginIndex = 0;
-        }
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis, link.getBeginIndex(), link.getEndIndex());
-        String replacement = InternalLinkBuilder
-            .from(target)
-            .withText(target.substring(beginIndex, endIndex))
-            .toString();
-        errorResult.addReplacement(replacement);
-        replacement = InternalLinkBuilder.from(target).toString();
-        errorResult.addReplacement(replacement);
-        errors.add(errorResult);
+      if (errors == null) {
         return true;
       }
+      if (beginIndex >= endIndex) {
+        beginIndex = 0;
+      }
+      CheckErrorResult errorResult = createCheckErrorResult(
+          analysis, link.getBeginIndex(), link.getEndIndex());
+      String replacement = InternalLinkBuilder
+          .from(target)
+          .withText(target.substring(beginIndex, endIndex))
+          .toString();
+      errorResult.addReplacement(replacement, true);
+      replacement = InternalLinkBuilder.from(target).toString();
+      errorResult.addReplacement(replacement);
+      errors.add(errorResult);
+      return true;
     }
 
     // Incorrect slash trick
@@ -151,5 +149,22 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
     }
 
     return false;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   *
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    if (!analysis.getPage().isArticle()) {
+      return analysis.getContents();
+    }
+    if (!analysis.getPage().isInMainNamespace()) {
+      return analysis.getContents();
+    }
+    return fixUsingAutomaticReplacement(analysis);
   }
 }

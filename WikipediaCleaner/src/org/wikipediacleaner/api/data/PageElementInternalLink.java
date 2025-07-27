@@ -294,6 +294,13 @@ public class PageElementInternalLink extends PageElement {
     return link + "#" + anchor;
   }
 
+  public String getFullLinkNotNormalized() {
+    if (anchor == null) {
+      return getLinkNotNormalized();
+    }
+    return getLinkNotNormalized() + "#" + anchor;
+  }
+
   public String getText() {
     return text;
   }
