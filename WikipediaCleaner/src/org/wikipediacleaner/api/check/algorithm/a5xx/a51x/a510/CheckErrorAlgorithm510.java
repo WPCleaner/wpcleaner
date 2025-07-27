@@ -58,13 +58,8 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors,
       PageElementInternalLink link) {
     if ((link.getText() == null) ||
-        (link.getText().isEmpty()) ||
-        (link.getFullLink() != null)) {
-      return false;
-    }
-
-    if ((analysis.getSurroundingTag(WikiTagType.GALLERY, link.getBeginIndex()) == null) ||
-        (analysis.getSurroundingTag(WikiTagType.REF, link.getBeginIndex()) == null)) {
+        (!link.getText().isEmpty()) ||
+        (link.getFullLink() == null)) {
       return false;
     }
 
