@@ -86,3 +86,4 @@ GitHub.sublime-settings
 # IntelliJ
 .idea/*
 /out/
+/WikipediaCleaner/setup.sh
