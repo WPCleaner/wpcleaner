@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-07-21 12:29:36+0000\n"
+"PO-Revision-Date: 2025-07-28 12:32:32+0000\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3315,7 +3315,7 @@ msgstr "Säiten zielen, déi feelen"
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:538
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:163
 msgid "Count redirect pages"
-msgstr ""
+msgstr "Viruleedungssäiten zielen"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:542
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:170

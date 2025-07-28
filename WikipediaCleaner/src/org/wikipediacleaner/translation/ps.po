@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Pashto (پښتو)
 # Exported from translatewiki.net
 #
+# Author: شاه زمان پټان
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -10,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-05-08 12:33:47+0000\n"
+"PO-Revision-Date: 2025-07-28 12:32:35+0000\n"
 "Last-Translator: UsmanKhan <khanusmanshah@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,15 +27,15 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:31
 #, java-format
 msgid "{0} extension is now available on all WikiMedia wikis."
-msgstr ""
+msgstr "{0} شاتاړي اوس د ويکي‌رسنۍ په ټولو ويکي‌گانو کې د لاسرسي وړ دي."
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "دا د ويکي‌ليک هغه نمونې پېژني چې بايد يا کېدای شي په مخونو کې اوارې شي."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr ""
+msgstr "دا د دې نمونو سره د ستونزو او د هغوی د اوارولو څرنگوتي په اړه ځينې لارښوونې هم وړاندې کوي."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
@@ -70,7 +71,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:49
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr "زه هيله کوم چې ته به خوښ کړي  {0}."
+msgstr "زه هيله کوم چې ته به {0} خوښ کړې."
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
@@ -226,62 +227,62 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:320
 #, java-format
 msgid "Ask for help using {0}"
-msgstr ""
+msgstr "د {0} په کارولو سره د مرستې غوښتنه وکړئ"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:395
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:345
 msgid "Add a comment"
-msgstr ""
+msgstr "څرگندونه ورگډول"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:430
 msgid "Search all ISBN"
-msgstr ""
+msgstr "ټول آی‌اېس‌بي‌اېن پلټل"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:435
 msgid "Search all ISBN-10"
-msgstr ""
+msgstr "ټول آی‌اېس‌بي‌اېن-۱۰ پلټل"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:440
 msgid "Search all ISBN-13"
-msgstr ""
+msgstr "ټول آی‌اېس‌بي‌اېن-۱۳ پلټل"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:457
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:514
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:472
 #, java-format
 msgid "Search ISBN {0}"
-msgstr ""
+msgstr "آی‌اېس‌بي‌اېن {0} پلټل"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:544
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:412
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:442
 #, java-format
 msgid "Search ISSN {0}"
-msgstr ""
+msgstr "آی‌اېس‌بي‌اېن {0} پلټل"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:577
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:505
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:502
 #, java-format
 msgid "Search using {0}"
-msgstr ""
+msgstr "د {0} په کارولو سره پلټل"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:394
 msgid "Search all ISSN"
-msgstr ""
+msgstr "ټول آی‌اېس‌بي‌اېن پلټل"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmTOC.java:102
 msgid "A list of templates resulting in the inclusion of a table of contents"
-msgstr ""
+msgstr "د هغه کينډيو لړليک چې د نيوليک شاملولو پايلې لري"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a001/CheckErrorAlgorithm001.java:92
 #, java-format
 msgid "Remove {0} namespace from template name"
-msgstr ""
+msgstr "له کينډۍ نوم نه {0} نوم‌تشيال لرې‌کول"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
-msgstr ""
+msgstr "ټول ناسم نښلنونه رغول"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
@@ -293,7 +294,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
-msgstr ""
+msgstr "{0} لپاره ځايناستی"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
@@ -318,7 +319,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:240
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:235
 msgid "Name of the template"
-msgstr ""
+msgstr "د کينډۍ نوم"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
@@ -337,17 +338,17 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:243
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Name of the parameter"
-msgstr ""
+msgstr "د پاراميتر نوم"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:128
 msgid "Close tag"
-msgstr ""
+msgstr "نښلن تړل"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:383
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:386
 #, java-format
 msgid "Text to insert for adding {0}"
-msgstr ""
+msgstr "د {0} ورگډولو د ټومبلو ليک"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:389
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:396
@@ -5169,7 +5170,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:73
 msgid "Convert internal links without interwiki to inter language links"
-msgstr ""
+msgstr "دننه‌ني تړوني له ويکي‌خپلمنځۍ پرته دننه‌نۍ ژبتړنو ته اړول"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:80
 msgid "Translate categories"
