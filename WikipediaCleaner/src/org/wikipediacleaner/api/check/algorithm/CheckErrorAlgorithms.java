@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,7 +23,7 @@ import org.wikipediacleaner.api.constants.EnumWikipedia;
  */
 public final class CheckErrorAlgorithms {
 
-  private static Map<EnumWikipedia, List<CheckErrorAlgorithm>> algorithmsMap = new HashMap<>();
+  private static final Map<EnumWikipedia, List<CheckErrorAlgorithm>> algorithmsMap = new HashMap<>();
 
   /**
    * Initializes algorithms for a Wiki.
@@ -60,7 +61,7 @@ public final class CheckErrorAlgorithms {
         CheckErrorAlgorithm.class.getName(),
         errorNumber);
     try {
-      Class algorithmClass = null;
+      Class<?> algorithmClass;
       try {
         algorithmClass = Class.forName(className);
       } catch (ClassNotFoundException e) {
@@ -73,9 +74,13 @@ public final class CheckErrorAlgorithms {
             errorNumber);
         algorithmClass = Class.forName(className);
       }
-      return (CheckErrorAlgorithm) algorithmClass.newInstance();
+      return (CheckErrorAlgorithm) algorithmClass.getDeclaredConstructor().newInstance();
     } catch (ClassNotFoundException e) {
       // Not found: error not yet available in WikiCleaner.
+    } catch (InvocationTargetException e) {
+      System.err.println("InvocationTargetException for " + className);
+    } catch (NoSuchMethodException e) {
+      System.err.println("NoSuchMethodException for " + className);
     } catch (InstantiationException e) {
       System.err.println("InstantiationException for " + className);
     } catch (IllegalAccessException e) {
@@ -97,9 +102,9 @@ public final class CheckErrorAlgorithms {
   public static List<CheckErrorAlgorithm> getAlgorithms(EnumWikipedia wikipedia) {
     List<CheckErrorAlgorithm> algorithms = algorithmsMap.get(wikipedia);
     if (algorithms == null) {
-      return null;
+      return List.of();
     }
-    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<CheckErrorAlgorithm>();
+    List<CheckErrorAlgorithm> tmpAlgorithms = new ArrayList<>();
     for (CheckErrorAlgorithm algorithm : algorithms) {
       if (algorithm != null) {
         tmpAlgorithms.add(algorithm);
@@ -158,7 +163,7 @@ public final class CheckErrorAlgorithms {
     List<CheckErrorAlgorithm> result = new ArrayList<>();
     if (algorithms != null) {
       for (Integer algorithm : algorithms) {
-        result.add(getAlgorithm(wiki, algorithm.intValue()));
+        result.add(getAlgorithm(wiki, algorithm));
       }
     }
     return result;
