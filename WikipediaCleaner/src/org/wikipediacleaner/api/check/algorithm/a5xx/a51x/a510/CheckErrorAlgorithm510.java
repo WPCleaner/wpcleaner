@@ -136,9 +136,12 @@ public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
       if (errors == null) {
         return true;
       }
+      final boolean redirect = analysis.getPage().getRedirects().isRedirect();
       CheckErrorResult errorResult = createCheckErrorResult(
           analysis, link.getBeginIndex(), link.getEndIndex());
-      String replacement = InternalLinkBuilder
+      String replacement = InternalLinkBuilder.from(target).toString();
+      errorResult.addReplacement(replacement, redirect);
+      replacement = InternalLinkBuilder
           .from(target)
           .withText(target.substring(index + 1))
           .toString();
