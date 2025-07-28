@@ -22,10 +22,11 @@ import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
  * Algorithm for analyzing error 510 of check wikipedia project.
  * Error 510: Non-working pipe trick
  */
+@SuppressWarnings("unused")
 public class CheckErrorAlgorithm510 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm510() {
-    super("Non working pipe trick");
+    super("Non-working pipe trick");
   }
 
   /**

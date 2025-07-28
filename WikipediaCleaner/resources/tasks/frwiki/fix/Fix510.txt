@@ -1,0 +1,4 @@
+DoTasks ../_Common.txt
+Set Prefix [[Utilisateur:WikiCleanerBot#T3|Bot_T3_PCS#510]]
+FixListCheckWiki Projet:Correction_syntaxique/Analyse_510 510
+# FixDump C:\Users\Nicolas\Downloads\frwiki-$-pages-articles.xml.bz2 510
