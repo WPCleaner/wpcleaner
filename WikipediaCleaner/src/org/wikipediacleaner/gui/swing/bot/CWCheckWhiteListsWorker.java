@@ -175,7 +175,10 @@ class CWCheckWhiteListsWorker extends BasicWorker {
             }
           }
           if (lineOk) {
-            contents = contents.substring(0, lineBegin) + contents.substring(lineEnd);
+            contents = "%s<!-- %s -->%s".formatted(
+                contents.substring(0, lineBegin),
+                contents.substring(lineBegin, lineEnd),
+                contents.substring(lineEnd));
           }
         }
       }
