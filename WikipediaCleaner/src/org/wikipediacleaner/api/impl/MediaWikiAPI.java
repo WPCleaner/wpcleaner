@@ -16,7 +16,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -177,14 +176,14 @@ public class MediaWikiAPI implements API {
   private final static int MAX_PAGES_PER_QUERY = 50;
 
   private static boolean DEBUG_XML = false;
-  private static XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
+  private static final XMLOutputter xmlOutputter = new XMLOutputter(Format.getPrettyFormat());
 
-  private HttpClient httpClient;
+  private final HttpClient httpClient;
 
   /**
    * Time of last edit.
    */
-  private LinkedList<Long> lastEditTimes = new LinkedList<>();
+  private final LinkedList<Long> lastEditTimes = new LinkedList<>();
   private final Object editLock = new Object();
 
   /**
@@ -241,7 +240,7 @@ public class MediaWikiAPI implements API {
       Page page = DataManager.createSimplePage(
           wiki, configPageName, null, null, null);
       Page userConfigPage = null;
-      if ((userName != null) && (userName.trim().length() > 0) &&
+      if ((userName != null) && (!userName.trim().isEmpty()) &&
           (wiki.getUserConfigurationPage(userName) != null) &&
           (!Page.areSameTitle(wiki.getUserConfigurationPage(userName), configPageName))) {
         userConfigPage = DataManager.createSimplePage(
@@ -405,7 +404,7 @@ public class MediaWikiAPI implements API {
       CommentManager.manageComment(wikipedia.getConfiguration(), properties, "summary", "tags", automatic);
       checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
-        boolean hasCaptcha = false;
+        boolean hasCaptcha;
         do {
           hasCaptcha = false;
           try {
@@ -562,8 +561,7 @@ public class MediaWikiAPI implements API {
       if ((startTimestamp != null) && !startTimestamp.isEmpty()) {
         properties.put("starttimestamp", startTimestamp);
       }
-      String comment = title;
-      properties.put("summary", comment);
+      properties.put("summary", title);
       properties.put("text", contents);
       properties.put("title", page.getTitle());
       properties.put("token", wikipedia.getConnection().getEditToken());
@@ -571,7 +569,7 @@ public class MediaWikiAPI implements API {
       CommentManager.manageComment(wikipedia.getConfiguration(), properties, "summary", "tags", automatic);
       checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
       try {
-        boolean hasCaptcha = false;
+        boolean hasCaptcha;
         do {
           hasCaptcha = false;
           try {
@@ -731,7 +729,7 @@ public class MediaWikiAPI implements API {
         page.setExisting(Boolean.FALSE);
       }
       page.setPageId(node.getAttributeValue("pageid"));
-      Optional.ofNullable(node.getAttributeValue("starttimestamp")).ifPresent(timestamp -> page.setStartTimestamp(timestamp));
+      Optional.ofNullable(node.getAttributeValue("starttimestamp")).ifPresent(page::setStartTimestamp);
     }
     XPathExpression<Element> xpa = XPathFactory.instance().compile(
         query + "/revisions/rev", Filters.element());
@@ -774,9 +772,7 @@ public class MediaWikiAPI implements API {
     XPathExpression<Element> xpaSlot = XPathFactory.instance().compile(
         "./slots/slot", Filters.element());
     List<Element> resultPages = xpaPage.evaluate(root);
-    Iterator<Element> iterPages = resultPages.iterator();
-    while (iterPages.hasNext()) {
-      Element currentPage = iterPages.next();
+    for (Element currentPage : resultPages) {
       String title = currentPage.getAttributeValue("title");
 
       for (Page page : pages) {
@@ -997,9 +993,11 @@ public class MediaWikiAPI implements API {
       Collection<Page> pages, boolean usePageId,
       boolean withRedirects)
       throws APIException {
-    ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient);
-    ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
-    request.loadContent(pages, usePageId, withRedirects);
+    applyInBatch(pages, subPages -> {
+      ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient);
+      ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
+      request.loadContent(pages, usePageId, withRedirects);
+    });
   }
 
   /**
@@ -1060,7 +1058,7 @@ public class MediaWikiAPI implements API {
 
       // Use categories if possible
       List<Page> dabCategories = wiki.getConfiguration().getDisambiguationCategories();
-      if ((dabCategories != null) && (dabCategories.size() > 0)) {
+      if ((dabCategories != null) && (!dabCategories.isEmpty())) {
         ApiCategoriesResult result = new ApiXmlCategoriesResult(wiki, httpClient);
         ApiCategoriesRequest request = new ApiCategoriesRequest(wiki, result);
         request.setDisambiguationStatus(pages);
@@ -1211,26 +1209,6 @@ public class MediaWikiAPI implements API {
     ApiAbuseLogRequest request = new ApiAbuseLogRequest(wiki, result);
     return request.loadAbuseLog(filterId, maxDuration);
   }
-
-  /**
-   * Retrieves the back links of <code>page</code> and initialize redirect status.
-   * (<code>action=query</code>, <code>list=backlinks</code>).
-   * 
-   * @param wiki Wiki.
-   * @param page The page.
-   * @param redirects True if it should also retrieve links through redirects.
-   * @throws APIException Exception thrown by the API.
-   * @see <a href="http://www.mediawiki.org/wiki/API:Backlinks">API:Backlinks</a>
-   */
-  /* @Override
-  public void retrieveBackLinks(
-      EnumWikipedia wiki, Page page,
-      boolean redirects)
-      throws APIException {
-    ApiBacklinksResult result = new ApiXmlBacklinksResult(wiki, httpClient);
-    ApiBacklinksRequest request = new ApiBacklinksRequest(wiki, result);
-    request.loadBacklinks(page, redirects);
-  }*/
 
   /**
    * Retrieves the pages in which <code>page</code> is embedded.
@@ -1485,13 +1463,13 @@ public class MediaWikiAPI implements API {
     ApiParseRequest request = new ApiParseRequest(wiki, result);
     StringBuilder suffix = new StringBuilder();
     while ((text != null) &&
-           (text.length() > 0) &&
+           (!text.isEmpty()) &&
            ("\n ".indexOf(text.charAt(text.length() - 1)) >= 0)) {
       suffix.append(text.charAt(text.length() - 1));
       text = text.substring(0, text.length() - 1);
     }
     text = request.parseText(title, text, full);
-    return text + suffix.toString();
+    return text + suffix;
   }
 
   /**
@@ -1658,7 +1636,7 @@ public class MediaWikiAPI implements API {
       Map<String, String> properties,
       int                 maxTry)
       throws JDOMParseException, APIException {
-    Element root = null;
+    Element root;
     HttpMethod method = null;
     int attempt = 0;
     for (;;) {
@@ -1708,7 +1686,7 @@ public class MediaWikiAPI implements API {
         }
         waitBeforeRetrying();
       } catch (IOException e) {
-        String message = "" + e.getClass().getName() + ": " + e.getMessage();
+        String message = e.getClass().getName() + ": " + e.getMessage();
         log.error(message);
         if (attempt > maxTry) {
           log.warn("Error. Maximum attempts count reached.");
@@ -1750,7 +1728,7 @@ public class MediaWikiAPI implements API {
     Configuration config = Configuration.getConfiguration();
     int minimumTime = config.getInt(null, ConfigurationValueInteger.TIME_BETWEEN_EDIT);
     int maxEdits = 0;
-    if ((namespace == null) || (namespace.intValue() % 2 == 0)) {
+    if ((namespace == null) || (namespace % 2 == 0)) {
       config.getInt(null, ConfigurationValueInteger.MAX_EDITS_PER_MINUTE);
       if ((maxEdits > ConfigurationValueInteger.MAX_EDITS_PER_MINUTE_NORMAL) ||
           (maxEdits <= 0)) {
@@ -1767,9 +1745,9 @@ public class MediaWikiAPI implements API {
       long currentTime = System.currentTimeMillis();
       if ((minimumTime > 0) && (!lastEditTimes.isEmpty())) {
         long lastEditTime = lastEditTimes.getLast();
-        if (currentTime < lastEditTime + minimumTime * 1000) {
+        if (currentTime < lastEditTime + minimumTime * 1000L) {
           try {
-            Thread.sleep(lastEditTime + minimumTime * 1000 - currentTime);
+            Thread.sleep(lastEditTime + minimumTime * 1000L - currentTime);
           } catch (InterruptedException e) {
             // Nothing to do
           }
@@ -1823,10 +1801,7 @@ public class MediaWikiAPI implements API {
     if (action == null) {
       return false;
     }
-    if (ApiRequest.ACTION_QUERY.equals(action)) {
-      return true;
-    }
-    return false;
+    return ApiRequest.ACTION_QUERY.equals(action);
   }
 
   /**
@@ -1845,9 +1820,7 @@ public class MediaWikiAPI implements API {
         "/api/error", Filters.element());
     List<Element> listErrors = xpa.evaluate(root);
     if (listErrors != null) {
-      Iterator<Element> iterErrors = listErrors.iterator();
-      while (iterErrors.hasNext()) {
-        Element currentNode = iterErrors.next();
+      for (Element currentNode : listErrors) {
         String text = "Error reported: " + currentNode.getAttributeValue("code") + " - " + currentNode.getAttributeValue("info");
         log.warn(text);
         throw new APIException(text, currentNode.getAttributeValue("code"));
@@ -1859,9 +1832,7 @@ public class MediaWikiAPI implements API {
         "/api/warnings/*", Filters.element());
     List<Element> listWarnings = xpa.evaluate(root);
     if (listWarnings != null) {
-      Iterator iterWarnings = listWarnings.iterator();
-      while (iterWarnings.hasNext()) {
-        Element currentNode = (Element) iterWarnings.next();
+      for (Element currentNode : listWarnings) {
         log.warn("Warning reported: " + currentNode.getName() + " - " + currentNode.getValue());
       }
     }
@@ -1881,13 +1852,13 @@ public class MediaWikiAPI implements API {
     if (captcha == null) {
       return null;
     }
-    if ((captcha.getQuestion() != null) && (captcha.getQuestion().trim().length() > 0)) {
+    if ((captcha.getQuestion() != null) && (!captcha.getQuestion().trim().isEmpty())) {
       return Utilities.askForValue(
           null,
           GT._T("This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?") + "\n" + captcha.getQuestion(),
           "", null);
     }
-    if ((captcha.getURL() != null) && (captcha.getURL().trim().length() > 0)) {
+    if ((captcha.getURL() != null) && (!captcha.getURL().trim().isEmpty())) {
       Utilities.browseURL(wikipedia.getSettings().getHostURL(false) + captcha.getURL());
       return Utilities.askForValue(
           null,
@@ -1912,5 +1883,24 @@ public class MediaWikiAPI implements API {
         // Nothing to do
       }
     }
+  }
+
+  private void applyInBatch(Collection<Page> pages, APIExceptionConsumer<Collection<Page>> consumer) throws APIException {
+    final Collection<Page> tmpCollection = new ArrayList<>();
+    for (Page page : pages) {
+      tmpCollection.add(page);
+      if (tmpCollection.size() >= MAX_PAGES_PER_QUERY) {
+        consumer.apply(tmpCollection);
+        tmpCollection.clear();
+      }
+    }
+    if (!tmpCollection.isEmpty()) {
+      consumer.apply(tmpCollection);
+    }
+  }
+
+  @FunctionalInterface
+  interface APIExceptionConsumer<T> {
+    void apply(T t) throws APIException;
   }
 }
