@@ -163,16 +163,15 @@ public class CheckWiki {
    */
   public List<CheckWikiDetection> check(Page page) {
     try {
-      List<CheckWikiDetection> detections = null;
       EnumWikipedia wiki = page.getWikipedia();
       String code = wiki.getSettings().getCodeCheckWiki().replace("-", "_");
       Map<String, String> properties = new HashMap<>();
       properties.put("project", code);
       properties.put("article", page.getTitle());
-      detections = new ArrayList<>();
+      List<CheckWikiDetection> detections = new ArrayList<>();
       labs.sendPost(
           rootPath + "cgi-bin/checkarticle.cgi", properties,
-          new CheckResponseManager(detections));
+          new CheckResponseManager(detections, page));
       return detections;
     } catch (APIException e) {
       return null;

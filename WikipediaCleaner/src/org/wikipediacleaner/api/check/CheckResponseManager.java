@@ -12,10 +12,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 
-import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.ResponseManager;
+import org.wikipediacleaner.api.data.Page;
 
 /**
  * Response manager for the list of detections in a page.
@@ -27,40 +28,28 @@ class CheckResponseManager implements ResponseManager {
    */
   private final Collection<CheckWikiDetection> detections;
 
-  /**
-   * @param detections List of detections to be filled by the response manager.
-   */
-  public CheckResponseManager(
-      Collection<CheckWikiDetection> detections) {
-    this.detections = detections;
-  }
+  private final Page page;
 
   /**
-   * @param stream
-   * @throws IOException
-   * @throws APIException
-   * @see org.wikipediacleaner.api.ResponseManager#manageResponse(java.io.InputStream)
+   * @param detections List of detections to be filled by the response manager.
+   * @param page Page
    */
+  public CheckResponseManager(
+      Collection<CheckWikiDetection> detections,
+      Page page) {
+    this.detections = detections;
+    this.page = page;
+  }
+
   @Override
-  public void manageResponse(InputStream stream) throws IOException,
-      APIException {
+  public void manageResponse(InputStream stream) throws IOException {
     if (stream != null) {
-      BufferedReader reader = null;
-      try {
-        reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-        String line = null;
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
+        String line;
         while ((line = reader.readLine()) != null) {
-          CheckWikiDetection detection = CheckWikiDetection.analyzeLine(line);
+          CheckWikiDetection detection = CheckWikiDetection.analyzeLine(line, page);
           if (detection != null) {
             detections.add(detection);
-          }
-        }
-      } finally {
-        if (reader != null) {
-          try {
-            reader.close();
-          } catch (IOException e) {
-            //
           }
         }
       }

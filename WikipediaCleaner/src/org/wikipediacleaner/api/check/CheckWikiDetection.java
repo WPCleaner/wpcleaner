@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.comment.ContentsComment;
 
@@ -40,9 +41,10 @@ public class CheckWikiDetection {
    * Analyze a line produced by checkarticle.cgi
    * 
    * @param line Line.
+   * @param page Page.
    * @return Detection.
    */
-  public static CheckWikiDetection analyzeLine(String line) {
+  public static CheckWikiDetection analyzeLine(String line, Page page) {
     if (line == null) {
       return null;
     }
@@ -62,11 +64,20 @@ public class CheckWikiDetection {
     if (spaceIndex <= 0) {
       return null;
     }
+    final String whiteListPrefix = "%s is in whitelist with error: ".formatted(page.getTitle());
+    if (line.startsWith(whiteListPrefix)) {
+      try {
+        int errorNumber = Integer.parseInt(line.substring(whiteListPrefix.length()));
+        return new CheckWikiDetection(originalLine, locationMethod, errorNumber, -1, null);
+      } catch (NumberFormatException e) {
+        log.error("Line with invalid format: {}", line);
+      }
+    }
     try {
       int errorNumber = Integer.parseInt(line.substring(0, spaceIndex));
       line = line.substring(spaceIndex).trim();
       spaceIndex = line.indexOf(' ');
-      int location = -1;
+      int location;
       String detection = null;
       if (spaceIndex <= 0) {
         location = Integer.parseInt(line);
