@@ -15,6 +15,7 @@ import java.util.Set;
 
 import org.wikipediacleaner.api.configuration.CWConfiguration.Origin;
 import org.wikipediacleaner.api.data.Page;
+import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -575,10 +576,15 @@ public class CWConfigurationError {
   public void setWhiteList(Page whiteListPage) {
     List<Page> pages = whiteListPage.getLinks();
     whiteListPages = null;
-    if ((pages != null) && (pages.size() > 0)) {
+    if ((pages != null) && (!pages.isEmpty())) {
       whiteListPages = new HashSet<>();
+      PageAnalysis analysis = new PageAnalysis(whiteListPage, whiteListPage.getContents());
       for (Page page : pages) {
-        whiteListPages.add(page.getTitle());
+        final boolean hasTrueLink = analysis.getInternalLinks().stream()
+            .anyMatch(link -> Page.areSameTitle(link.getLink(), page.getTitle()));
+        if (hasTrueLink) {
+          whiteListPages.add(page.getTitle());
+        }
       }
     }
   }

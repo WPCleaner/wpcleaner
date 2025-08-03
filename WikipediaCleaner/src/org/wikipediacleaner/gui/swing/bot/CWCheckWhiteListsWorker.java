@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
+import org.wikipediacleaner.api.data.contents.ContentsUtil;
 import org.wikipediacleaner.api.data.contents.tag.CompleteTagBuilder;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.gui.swing.InformationWindow;
@@ -158,14 +159,8 @@ class CWCheckWhiteListsWorker extends BasicWorker {
       for (int linkNumber = links.size(); linkNumber > 0; linkNumber--) {
         PageElementInternalLink link = links.get(linkNumber - 1);
         if (Page.areSameTitle(page.getTitle(), link.getLink())) {
-          int lineBegin = link.getBeginIndex();
-          while ((lineBegin > 0) && (contents.charAt(lineBegin) != '\n')) {
-            lineBegin--;
-          }
-          int lineEnd = link.getEndIndex();
-          while ((lineEnd < contents.length()) && (contents.charAt(lineEnd) != '\n')) {
-            lineEnd++;
-          }
+          int lineBegin = ContentsUtil.moveIndexBackwardWhileNotFound(contents, link.getBeginIndex(), "\n") + 1;
+          int lineEnd = ContentsUtil.moveIndexForwardWhileNotFound(contents, link.getEndIndex(), "\n");
           boolean lineOk = true;
           for (PageElementInternalLink tmpLink : links) {
             if ((tmpLink != link) &&
@@ -183,11 +178,12 @@ class CWCheckWhiteListsWorker extends BasicWorker {
         }
       }
     }
-    if (!contents.equals(initialContents)) {
-      api.updatePage(
-          wiki, whiteListPage, contents, comment,
-          true, true, true, false);
-    }
+    // TODO: Re-enable when able to know if CW should detect a page if it wasn't in the white list
+    //if (!contents.equals(initialContents)) {
+    //  api.updatePage(
+    //      wiki, whiteListPage, contents, comment,
+    //      true, true, true, false);
+    //}
   }
 
   /**

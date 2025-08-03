@@ -103,15 +103,13 @@ public class CheckWiki {
     if (!useBotList) {
       properties.put("view", "bots");
       String url = rootPath + "cgi-bin/checkwiki.cgi";
-      HttpServer server = labs;
-      server.sendPost(
+      labs.sendPost(
           url, properties,
           new PagesResponseManager(true, algorithm, wiki, errors));
     } else {
       properties.put("action", "list");
       String url = rootPath + "cgi-bin/checkwiki_bots.cgi";
-      HttpServer server = labs;
-      server.sendPost(
+      labs.sendPost(
           url, properties,
           new PagesResponseManager(false, algorithm, wiki, errors));
     }
@@ -151,9 +149,7 @@ public class CheckWiki {
         labs.sendPost(rootPath + "cgi-bin/checkwiki_bots.cgi", properties, null);
       }
 
-    } catch (NumberFormatException e) {
-      return false;
-    } catch (APIException e) {
+    } catch (NumberFormatException | APIException e) {
       return false;
     }
     return true;
@@ -259,13 +255,11 @@ public class CheckWiki {
       final EnumWikipedia wiki,
       final CheckErrorAlgorithm algorithm) {
     String path = rootPath + "cgi-bin/checkwiki.cgi";
-    HttpServer server = labs;
-    String url =
-        server.getBaseUrl() + path +
+    return
+        labs.getBaseUrl() + path +
         "?id=" + algorithm.getErrorNumberString() +
         "&project=" + wiki.getSettings().getCodeCheckWiki() +
         "&view=only";
-    return url;
   }
 
   /**
@@ -318,7 +312,8 @@ public class CheckWiki {
         whiteListPages.put(error.getWhiteListPageName(), page);
       }
     }
-    if (whiteListPages.size() > 0) {
+    if (!whiteListPages.isEmpty()) {
+      api.retrieveContents(wiki, whiteListPages.values(), false, false);
       api.retrieveLinks(wiki, whiteListPages.values());
       for (int i = 0; i < CWConfiguration.MAX_ERROR_NUMBER; i++) {
         CWConfigurationError error = cwConfiguration.getErrorConfiguration(i);

@@ -47,7 +47,7 @@ public class CheckWikiDetection {
       return null;
     }
     line = line.trim();
-    if ((line.length() == 0) || "None".equalsIgnoreCase(line)) {
+    if ((line.isEmpty()) || "None".equalsIgnoreCase(line)) {
       return null;
     }
     char locationMethod = '-';
@@ -78,7 +78,7 @@ public class CheckWikiDetection {
       return new CheckWikiDetection(
           originalLine, locationMethod, errorNumber, location, detection);
     } catch (NumberFormatException e) {
-      log.error("Line with invalide format: " + line);
+      log.error("Line with invalid format: {}", line);
       return null;
     }
   }
@@ -144,12 +144,10 @@ public class CheckWikiDetection {
       while ((currentIndex < contents.length()) &&
              (currentCount < location)) {
         boolean moved = false;
-        if (!moved) {
-          ContentsComment comment = analysis.comments().getBeginsAt(currentIndex);
-          if (comment != null) {
-            moved = true;
-            currentIndex = comment.getEndIndex();
-          }
+        ContentsComment comment = analysis.comments().getBeginsAt(currentIndex);
+        if (comment != null) {
+          moved = true;
+          currentIndex = comment.getEndIndex();
         }
         // TODO: ignore other things
         if (!moved) {
