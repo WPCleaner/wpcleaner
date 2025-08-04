@@ -996,7 +996,7 @@ public class MediaWikiAPI implements API {
     applyInBatch(pages, subPages -> {
       ApiRevisionsResult result = new ApiXmlRevisionsResult(wiki, httpClient);
       ApiRevisionsRequest request = new ApiRevisionsRequest(wiki, result);
-      request.loadContent(pages, usePageId, withRedirects);
+      request.loadContent(subPages, usePageId, withRedirects);
     });
   }
 
