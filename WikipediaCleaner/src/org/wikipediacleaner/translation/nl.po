@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Dutch (Nederlands)
 # Exported from translatewiki.net
 #
+# Author: ABPMAB
 # Author: Bas dehaan
 # Author: Dutchy45
 # Author: McDutchie
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-05-08 12:33:46+0000\n"
+"PO-Revision-Date: 2025-08-04 12:33:43+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +26,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2018-01-31 07:40+0000\n"
-"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-03-15\n"
+"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-07-31\n"
 "Language: nl\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
@@ -2224,7 +2225,7 @@ msgstr "Pagina's die een koppeling hebben naar doorverwijspagina's"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "Doorverwijspagina's"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
@@ -2236,7 +2237,7 @@ msgstr "Pagina's met de minste bewerkingen"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr ""
+msgstr "Gebruik van gadgets"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
@@ -2244,7 +2245,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "Gedupliceerde bestanden"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
@@ -2465,11 +2466,11 @@ msgstr "Over"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:182
 msgid "Original text"
-msgstr ""
+msgstr "Originele tekst"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:184
 msgid "Replacement text"
-msgstr ""
+msgstr "Vervangende tekst"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
@@ -2705,7 +2706,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
-msgstr ""
+msgstr "Informatie"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
@@ -3839,7 +3840,7 @@ msgstr "Ja"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:53
 msgid "Yes to all"
-msgstr ""
+msgstr "Ja op alles"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
 msgid "No"
@@ -3847,7 +3848,7 @@ msgstr "Nee"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
 msgid "No to all"
-msgstr ""
+msgstr "Nee op alles"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:122

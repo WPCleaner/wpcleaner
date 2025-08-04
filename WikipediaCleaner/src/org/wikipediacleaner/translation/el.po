@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-05-08 12:33:39+0000\n"
+"PO-Revision-Date: 2025-08-04 12:33:37+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -25,7 +25,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Launchpad-Export-Date: 2015-11-24 21:04+0000\n"
-"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-03-15\n"
+"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-07-31\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "Language: el\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
@@ -409,7 +409,7 @@ msgstr "Τέλος σχόλιου στο τέλος της γραμμής"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:103
 msgid "End the comment just before the next one begins"
-msgstr ""
+msgstr "Τερματίστε το σχόλιο λίγο πριν ξεκινήσει το επόμενο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:106
 msgid "Merge comments"
@@ -418,7 +418,7 @@ msgstr "Συγχώνευση σχολίων"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:109
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:113
 msgid "Uncomment"
-msgstr ""
+msgstr "Χωρίς σχόλιο"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:32
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a088/CheckErrorAlgorithm088.java:31
@@ -458,10 +458,9 @@ msgstr "Αφαίρεση όλων των χαρακτήρων ελέγχου"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:397
 msgid "To report control characters only in templates"
-msgstr ""
+msgstr "Για να αναφέρετε χαρακτήρες ελέγχου μόνο σε πρότυπα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:400
-#, fuzzy
 msgid "To ignore some control characters"
 msgstr "Αφαίρεση όλων των χαρακτήρων ελέγχου"
 
@@ -675,7 +674,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:301
 msgid "Groups of templates"
-msgstr ""
+msgstr "Ομάδες προτύπων"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:448
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:458
@@ -684,7 +683,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:305
 msgid "Name of the group"
-msgstr ""
+msgstr "Όνομα ομάδας"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:451
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
@@ -697,7 +696,7 @@ msgstr "Όνομα ενός προτύπου στην ομάδα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
-msgstr ""
+msgstr "Αφαίρεση αλλαγών στη λίστα"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:182
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
@@ -2135,7 +2134,7 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr "Διορθώθηκε με χρήση του {0}"
+msgstr "Έγινε διόρθωση με χρήση του {0}"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
 msgid "Deactivated"
@@ -4164,7 +4163,7 @@ msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
-msgstr "Ελέγξτε το άρθρο με το CheckWiki"
+msgstr "Ελέγξτε το λήμμα με το CheckWiki"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:137
 msgid "Unable to retrieve analysis from CheckWiki."
@@ -4265,56 +4264,56 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:351
 #, java-format
 msgid "Load errors {0}"
-msgstr ""
+msgstr "Τρέχοντα σφάλματα {0}"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:367
 msgid "Select high priority errors"
-msgstr ""
+msgstr "Επιλογή σφαλμάτων υψηλής προτεραιότητας"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:372
 msgid "Select middle priority (and above) errors"
-msgstr ""
+msgstr "Επιλογή σφαλμάτων μεσαίας προτεραιότητας (και άνω)"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:377
 msgid "Select middle priority errors"
-msgstr ""
+msgstr "Επιλογή σφαλμάτων μεσαίας προτεραιότητας"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:382
 msgid "Select lowest priority (and above) errors"
-msgstr ""
+msgstr "Επιλογή σφαλμάτων χαμηλότερης προτεραιότητας (και άνω)"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:387
 msgid "Select lowest priority errors"
-msgstr ""
+msgstr "Επιλογή σφαλμάτων χαμηλότερης προτεραιότητας"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:468
 msgid "Select only"
-msgstr ""
+msgstr "Επιλέξτε μόνο"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:498
 msgid "Save current selection"
-msgstr ""
+msgstr "Αποθήκευση τρέχουσας επιλογής"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:502
 msgid "Use selection"
-msgstr ""
+msgstr "Χρήση επιλογής"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:504
 msgid "Delete selection"
-msgstr ""
+msgstr "Διαγραφή επιλεγμένων"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:603
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:104
 msgid "Maximum number of errors for Check Wiki :"
-msgstr ""
+msgstr "Μέγιστος αριθμός σφαλμάτων για το Check Wiki:"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:625
 msgid "Right click to select errors"
-msgstr ""
+msgstr "Κάντε δεξί κλικ για να επιλέξετε σφάλματα"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:637
 msgid "List of errors detected :"
-msgstr ""
+msgstr "Λίστα σφαλμάτων που εντοπίστηκαν:"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:659
 msgid "Reload error"
@@ -4323,35 +4322,35 @@ msgstr "Επαναφόρτωση σφάλματος"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:665
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:117
 msgid "Detail"
-msgstr ""
+msgstr "Λεπτομέρεια"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:672
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
 #, java-format
 msgid "List on {0}"
-msgstr ""
+msgstr "Κατάλογος σε {0}"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:679
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:121
 msgid "View or edit whitelist"
-msgstr ""
+msgstr "Δείτε ή επεξεργαστείτε λευκό κατάλογο"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:728
 msgid "Pages"
-msgstr ""
+msgstr "Σελίδες"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:749
 msgid "&Load pages"
-msgstr ""
+msgstr "&Φόρτωση σελίδων"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:854
 msgid "Pages with several errors"
-msgstr ""
+msgstr "Σελίδες με αρκετά σφάλματα"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1062
 #, java-format
 msgid "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :"
-msgstr ""
+msgstr "Το σφάλμα αρ. {0} μπορεί να ρυθμιστεί με τις ακόλουθες παραμέτρους στο <a href=\"{1}\">αρχείο μετάφρασης</a> :"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1260
 #, java-format
@@ -4365,91 +4364,91 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:155
 msgid "Error"
-msgstr ""
+msgstr "Σφάλμα"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:159
 msgid "Location"
-msgstr ""
+msgstr "Τοποθεσία"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:163
 msgid "Notice"
-msgstr ""
+msgstr "Σημείωση"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:74
 msgid "The following errors are currently detected by CheckWiki:"
-msgstr ""
+msgstr "Τα ακόλουθα σφάλματα εντοπίζονται αυτήν τη στιγμή από το CheckWiki:"
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
-msgstr ""
+msgstr "Σφάλμα αρ. {0}"
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
-msgstr ""
+msgstr "Κλείσιμο αυτής της καρτέλας"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:251
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:283
 #, java-format
 msgid "Page: {0}"
-msgstr ""
+msgstr "Σελίδα {0}:"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:318
 #, java-format
 msgid "Interwiki: {0}"
-msgstr ""
+msgstr "Ιντερβίκι: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:391
 #, java-format
 msgid "Image: {0}"
-msgstr ""
+msgstr "Εικόνα: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:428
 #, java-format
 msgid "Category: {0}"
-msgstr ""
+msgstr "Κατηγορία: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:456
 #, java-format
 msgid "External link: {0}"
-msgstr ""
+msgstr "Εξωτερικός σύνδεσμος: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:490
 #, java-format
 msgid "Template: {0}"
-msgstr ""
+msgstr "Πρότυπο: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:537
 #, java-format
 msgid "Parameter: {0}"
-msgstr ""
+msgstr "Παράμετρος: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:562
 #, java-format
 msgid "Function: {0}"
-msgstr ""
+msgstr "Συνάρτηση: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:587
 #, java-format
 msgid "ISBN: {0}"
-msgstr ""
+msgstr "ISBN: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:618
 #, java-format
 msgid "ISSN: {0}"
-msgstr ""
+msgstr "ISSN: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:88
 msgid "Decrement title level"
-msgstr ""
+msgstr "Μείωση επιπέδου τίτλου"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:94
 msgid "Increment title level"
-msgstr ""
+msgstr "Αύξηση επιπέδου τίτλου"
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:100
 msgid "Validate the new table of contents"
-msgstr ""
+msgstr "Επικύρωση του νέου πίνακα περιεχομένων"
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:358
 #, java-format
@@ -4468,41 +4467,41 @@ msgstr[1] ""
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:54
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
 msgid "Help"
-msgstr ""
+msgstr "Βοήθεια"
 
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:84
 #, java-format
 msgid "You can read the help on {0} at the following URL:"
-msgstr ""
+msgstr "Μπορείτε να διαβάσετε τη βοήθεια στο {0} στην ακόλουθη διεύθυνση URL:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:48
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:115
 msgid "Idea? Bug?"
-msgstr ""
+msgstr "Ιδέα; Σφάλμα;"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:66
 msgid "Report bug"
-msgstr ""
+msgstr "Αναφορά σφάλματος"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:70
 msgid "Request a new feature"
-msgstr ""
+msgstr "Αίτημα για νέα λειτουργία"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:112
 msgid "You can submit bug reports at the following URL:"
-msgstr ""
+msgstr "Μπορείτε να υποβάλετε αναφορές σφαλμάτων στην ακόλουθη διεύθυνση URL:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:125
 msgid "You can submit feature requests at the following URL:"
-msgstr ""
+msgstr "Μπορείτε να υποβάλετε αιτήματα για λειτουργίες στην ακόλουθη διεύθυνση URL:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:83
 msgid "Other Language"
-msgstr ""
+msgstr "Άλλες γλώσσες"
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:141
 msgid "You can learn how to add other languages at the following URL:"
-msgstr ""
+msgstr "Μπορείτε να μάθετε πώς να προσθέσετε άλλες γλώσσες στην ακόλουθη διεύθυνση URL:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/PasswordInput.java:61
 msgid "Password:"
@@ -4510,19 +4509,19 @@ msgstr "Συνθηματικό:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/UserNameSelector.java:62
 msgid "Username:"
-msgstr ""
+msgstr "Όνομα χρήστη:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:74
 msgid "Wiki"
-msgstr ""
+msgstr "Βίκι"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:84
 msgid "Other Wiki"
-msgstr ""
+msgstr "Άλλο Wiki"
 
 #: org/wikipediacleaner/gui/swing/component/simple/WikiSelector.java:139
 msgid "You can learn how to add other Wikipedia at the following URL:"
-msgstr ""
+msgstr "Μπορείτε να μάθετε πώς να προσθέσετε άλλες γλώσσες στην ακόλουθη διεύθυνση URL:"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:49
 msgid "Check dead links"
@@ -4530,16 +4529,16 @@ msgstr "Έλεγχος ανενεργών συνδέσμων"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:204
 msgid "You need to select pages to check for dead links"
-msgstr ""
+msgstr "Πρέπει να επιλέξετε σελίδες για να ελέγξετε για νεκρούς συνδέσμους"
 
 #: org/wikipediacleaner/gui/swing/deadlink/ActionDeadLink.java:207
 msgid "Do you want to check for dead links?"
-msgstr ""
+msgstr "Θέλετε να ελέγξετε για νεκρούς συνδέσμους;"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:210
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:222
 msgid "End"
-msgstr ""
+msgstr "Τέλος"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
 msgid "Link"
@@ -4548,28 +4547,28 @@ msgstr "Σύνδεσμος"
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
 msgid "Start"
-msgstr ""
+msgstr "Έναρξη"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:225
 msgid "Status"
-msgstr ""
+msgstr "Κατάσταση"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkPanel.java:80
 msgid "The following links seem to be dead:"
-msgstr ""
+msgstr "Οι παρακάτω σύνδεσμοι φαίνεται να είναι νεκροί:"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWindow.java:37
 msgid "Dead links"
-msgstr ""
+msgstr "Νεκροί σύνδεσμοι"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:83
 msgid "No dead links were found."
-msgstr ""
+msgstr "Δεν βρέθηκαν νεκροί σύνδεσμοι."
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
 msgid "Retrieving page contents"
-msgstr ""
+msgstr "Ανάκτηση περιεχομένου σελίδας"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
@@ -4585,49 +4584,48 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
 msgid "Check article with Linter"
-msgstr ""
+msgstr "Ελέγξτε το λήμμα με το Linter"
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:203
 msgid "You need to select pages to check for linter errors"
-msgstr ""
+msgstr "Πρέπει να επιλέξετε σελίδες για να ελέγξετε για σφάλματα linter"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
 msgid "Multiple templates"
-msgstr ""
+msgstr "Πολλαπλά πρότυπα"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
-msgstr ""
+msgstr "Παράμετροι"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:236
 msgid "Type"
-msgstr ""
+msgstr "Τύπος"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorPanel.java:81
 msgid "The following errors are currently detected by Linter:"
-msgstr ""
+msgstr "Τα ακόλουθα σφάλματα εντοπίζονται αυτήν τη στιγμή από το Linter:"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:38
-#, fuzzy
 msgid "Linter errors"
-msgstr "Διόρθωση κατηγοριών"
+msgstr "Σφάλματα Linter"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:70
 msgid "No linter errors were found."
-msgstr ""
+msgstr "Δεν βρέθηκαν σφάλματα linter."
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:44
 msgid "Find text"
-msgstr ""
+msgstr "Εύρεση κειμένου"
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:61
 msgid "Search in templates"
-msgstr ""
+msgstr "Αναζήτηση σε πρότυπα"
 
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:91
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:258
 msgid "Link to"
-msgstr ""
+msgstr "Σύνδεση με"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:156
 msgid "Template External Viewer"
@@ -4635,35 +4633,35 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:165
 msgid "Template history"
-msgstr ""
+msgstr "Ιστορικό προτύπου"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:199
 msgid "Analyze"
-msgstr ""
+msgstr "Ανάλυση"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:238
 msgid "Analyze template"
-msgstr ""
+msgstr "Ανάλυση προτύπου"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:240
 msgid "Analyze page"
-msgstr ""
+msgstr "Ανάλυση σελίδας"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:306
 msgid "Current chapter"
-msgstr ""
+msgstr "Τρέχον κεφάλαιο"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:351
 msgid "Remove link"
-msgstr ""
+msgstr "Αφαίρεση συνδέσμου"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:410
 msgid "Purge cache"
-msgstr ""
+msgstr "Εκκαθάριση προσωρινής μνήμης"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:429
 msgid "Reload links"
-msgstr ""
+msgstr "Επαναφόρτωση συνδέσμων"
 
 #: org/wikipediacleaner/gui/swing/menu/DisambiguationPageListMenuCreator.java:56
 msgid "Remove mark on backlink"
@@ -4698,11 +4696,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:259
 msgid "Replace with"
-msgstr ""
+msgstr "Αντικατάσταση με"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:260
 msgid "Add to preferred disambiguations"
-msgstr ""
+msgstr "Προσθήκη στις προτιμώμενες αποσαφηνίσεις"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:287
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:300
@@ -4710,7 +4708,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:539
 #, java-format
 msgid "&Link to {0}"
-msgstr ""
+msgstr "&Σύνδεσμος προς {0}"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:292
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:305
@@ -4718,38 +4716,38 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:548
 #, java-format
 msgid "&Replace with {0}"
-msgstr ""
+msgstr "&Αντικατάσταση με {0}"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:411
 msgid "Reload category members"
-msgstr ""
+msgstr "Επαναφόρτωση μελών κατηγορίας"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:500
 msgid "Add other preferred disambiguation..."
-msgstr ""
+msgstr "Προσθήκη άλλης προτιμώμενης αποσαφήνισης..."
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:504
 msgid "What link do you want to add to the preferred disambiguations?"
-msgstr ""
+msgstr "Ποιον σύνδεσμο θέλετε να προσθέσετε στις προτιμώμενες αποσαφηνίσεις;"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:511
 msgid "Remove from preferred disambiguations"
-msgstr ""
+msgstr "Αφαίρεση από τις προτιμώμενες αποσαφηνίσεις"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:525
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:555
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:564
 #, java-format
 msgid "Reverse to {0}"
-msgstr ""
+msgstr "Αντιστροφή σε {0}"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:51
 msgid "Full Analysis window options"
-msgstr ""
+msgstr "Επιλογές παραθύρου πλήρους ανάλυσης"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:72
 msgid "Close full analysis window after sending"
-msgstr ""
+msgstr "Κλείσιμο πλήρους παραθύρου ανάλυσης μετά την αποστολή"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:79
 msgid "Create disambiguation warning on talk page (in main namespace)"
@@ -4777,43 +4775,43 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:121
 msgid "Show disambiguation pages"
-msgstr ""
+msgstr "Όλες οι σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:128
 msgid "Show missing pages"
-msgstr ""
+msgstr "Εμφάνιση σελίδων που λείπουν"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:135
 msgid "Show redirect pages"
-msgstr ""
+msgstr "Εμφάνιση σελίδων ανακατεύθυνσης"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:142
 msgid "Show other pages"
-msgstr ""
+msgstr "Εμφάνιση άλλων σελίδων"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:177
 msgid "Hide window when sending"
-msgstr ""
+msgstr "Απόκρυψη παραθύρου κατά την αποστολή"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:184
 msgid "Save last replacement used"
-msgstr ""
+msgstr "Αποθήκευση της τελευταίας αντικατάστασης που χρησιμοποιήθηκε"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:191
 msgid "Remember last edited page"
-msgstr ""
+msgstr "Απομνημόνευση της τελευταίας επεξεργασμένης σελίδας"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:200
 msgid "Number of links selected :"
-msgstr ""
+msgstr "Αριθμός επιλεγμένων συνδέσμων:"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:217
 msgid "Undo levels :"
-msgstr ""
+msgstr "Αναίρεση επιπέδων:"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:47
 msgid "Debug options"
-msgstr ""
+msgstr "Επιλογές εντοπισμού σφαλμάτων"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:67
 #, java-format
@@ -4830,15 +4828,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:88
 msgid "Use a log file"
-msgstr ""
+msgstr "Χρησιμοποιήστε ένα αρχείο καταγραφής"
 
 #: org/wikipediacleaner/gui/swing/options/DebugOptionsPanel.java:95
 msgid "Detailed debugging"
-msgstr ""
+msgstr "Λεπτομερής εντοπισμός σφαλμάτων"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:73
 msgid "Formatting options (restart needed)"
-msgstr ""
+msgstr "Επιλογές μορφοποίησης (απαιτείται επανεκκίνηση)"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:112
 msgid "Select editor font name"
@@ -4854,93 +4852,93 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:161
 msgid "Increase font size"
-msgstr ""
+msgstr "Αύξηση μεγέθους γραμματοσειράς"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
 msgid "Internal link"
-msgstr ""
+msgstr "Εσωτερικός σύνδεσμος"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:197
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:299
 msgid "Redirect link"
-msgstr ""
+msgstr "Σύνδεσμος ανακατεύθυνσης"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:203
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:305
 msgid "Missing link"
-msgstr ""
+msgstr "Ανύπαρκτος σύνδεσμος"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:221
 msgid "Image"
-msgstr ""
+msgstr "Εικόνα"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:227
 msgid "Category"
-msgstr ""
+msgstr "Κατηγορία"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:233
 msgid "Default sort"
-msgstr ""
+msgstr "Προεπιλεγμένο κλειδί ταξινόμησης"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:239
 msgid "Language link"
-msgstr ""
+msgstr "Σύνδεσμος γλώσσας"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:245
 msgid "External link"
-msgstr ""
+msgstr "Εξωτερικός σύνδεσμος"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
 msgid "Interwiki link"
-msgstr ""
+msgstr "Σύνδεσμοι interwiki"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Tag"
-msgstr ""
+msgstr "Ετικέτα"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:263
 msgid "List items"
-msgstr ""
+msgstr "Κατάλογος στοιχείων"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:269
 msgid "Table"
-msgstr ""
+msgstr "Πίνακας"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:275
 msgid "Reference"
-msgstr ""
+msgstr "Παραπομπή"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:281
 msgid "Programming elements"
-msgstr ""
+msgstr "Στοιχεία προγραμματισμού"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:287
 msgid "Disambiguation link"
-msgstr ""
+msgstr "Σύνδεσμοι αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:293
 msgid "Normal internal link"
-msgstr ""
+msgstr "Κανονικός εσωτερικός σύνδεσμος"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:311
 msgid "Disambiguation template"
-msgstr ""
+msgstr "Πρότυπο αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:317
 msgid "Normal template"
-msgstr ""
+msgstr "Κανονικό πρότυπο"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:323
 msgid "Help requested"
-msgstr ""
+msgstr "Ζητήθηκε βοήθεια"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:329
 msgid "Check wiki error"
-msgstr ""
+msgstr "Σφάλμα ελέγχου wiki"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:335
 msgid "Check wiki warning"
-msgstr ""
+msgstr "Ελέγξτε την προειδοποίηση wiki"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:341
 msgid "Check wiki OK"
@@ -4948,15 +4946,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:452
 msgid "Italic"
-msgstr ""
+msgstr "Πλάγια γραφή"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:460
 msgid "Bold"
-msgstr ""
+msgstr "Έντονα"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:468
 msgid "Underline"
-msgstr ""
+msgstr "Υπογράμμιση"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:476
 msgid "Strike through"
@@ -4974,47 +4972,47 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:497
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:502
 msgid "Background color"
-msgstr ""
+msgstr "Χρώμα Φόντου"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:501
 msgid "Choose background color"
-msgstr ""
+msgstr "Επιλογή χρώματος φόντου"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:59
 msgid "General options"
-msgstr ""
+msgstr "Γενικές επιλογές"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:80
 msgid "Use HTTP for MediaWiki API calls (less secure)"
-msgstr ""
+msgstr "Χρήση HTTP για κλήσεις API του MediaWiki (λιγότερο ασφαλές)"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:89
 msgid "Use secure URL in external viewer (https)"
-msgstr ""
+msgstr "Χρήση ασφαλούς URL σε εξωτερικό πρόγραμμα προβολής (https)"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:98
 msgid "Mark edits as minor"
-msgstr ""
+msgstr "Επισήμανση επεξεργασίας ως μικρή"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:107
 msgid "Close disambiguation window after sending"
-msgstr ""
+msgstr "Κλείσιμο παραθύρου αποσαφήνισης μετά την αποστολή"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:116
 msgid "Add a note on talk page when requesting help"
-msgstr ""
+msgstr "Προσθήκη σημείωσης στη σελίδα συζήτησης όταν ζητάτε βοήθεια"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:125
 msgid "Ignore disambiguation links from User namespace"
-msgstr ""
+msgstr "Αγνόηση συνδέσμων αποσαφήνισης από τον χώρο ονομάτων χρήστη"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:134
 msgid "Restore window position"
-msgstr ""
+msgstr "Επαναφορά θέσης παραθύρου"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:143
 msgid "Save window position"
-msgstr ""
+msgstr "Αποθήκευση θέσης παραθύρου"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:152
 msgid "Use short notation [[Xxxxx (yyy)|]]"
@@ -5022,7 +5020,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:161
 msgid "Use advanced features (experimental)"
-msgstr ""
+msgstr "Χρήση προηγμένων λειτουργιών (πειραματικό)"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:170
 #, java-format
@@ -5031,7 +5029,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:179
 msgid "Show errors with no detection found"
-msgstr ""
+msgstr "Εμφάνιση σφαλμάτων χωρίς εντοπισμό"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:188
 msgid "Add link to error description in comments"
@@ -5039,61 +5037,61 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:197
 msgid "Watch all edited pages"
-msgstr ""
+msgstr "Παρακολουθήστε όλες τις επεξεργασμένες σελίδες"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
 msgid "Copy/paste in popup menu"
-msgstr ""
+msgstr "Αντιγραφή/επικόλληση στο αναδυόμενο μενού"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
 msgid "Act as user:"
-msgstr ""
+msgstr "Ενεργήστε ως χρήστης:"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:239
 msgid "Signature:"
-msgstr ""
+msgstr "Υπογραφή"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:270
 msgid "Look & Feel"
-msgstr ""
+msgstr "Εμφάνιση & Αίσθηση"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:274
 #, java-format
 msgid "Let {0} choose the Look && Feel"
-msgstr ""
+msgstr "Αφήστε το {0} να επιλέξει την Εμφάνιση && Αίσθηση"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:279
 msgid "Use System Look && Feel"
-msgstr ""
+msgstr "Χρήση εμφάνισης και αίσθησης συστήματος"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:284
 msgid "Choose Look && Feel"
-msgstr ""
+msgstr "Επιλέξτε Εμφάνιση & Αίσθηση"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:49
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:91
 msgid "Limits"
-msgstr ""
+msgstr "Όρια"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:69
 msgid "Maximum number of items in a menu :"
-msgstr ""
+msgstr "Μέγιστος αριθμός στοιχείων σε ένα μενού:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:86
 msgid "Maximum number of simultaneous analyses :"
-msgstr ""
+msgstr "Μέγιστος αριθμός ταυτόχρονων αναλύσεων:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:122
 msgid "Maximum number of errors for Linter :"
-msgstr ""
+msgstr "Μέγιστος αριθμός σφαλμάτων για το Linter:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:139
 msgid "Minimum time between consecutive edits :"
-msgstr ""
+msgstr "Ελάχιστος χρόνος μεταξύ διαδοχικών επεξεργασιών:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:156
 msgid "Maximum number of edits per minute :"
-msgstr ""
+msgstr "Μέγιστος αριθμός επεξεργασιών ανά λεπτό:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:173
 msgid "Maximum number of interrogation threads :"
@@ -5109,101 +5107,101 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:224
 msgid "Maximum number of category members :"
-msgstr ""
+msgstr "Μέγιστος αριθμός μελών κατηγορίας:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:241
 msgid "Maximum duration for abuse logs :"
-msgstr ""
+msgstr "Μέγιστη διάρκεια για τα αρχεία καταγραφής κατάχρησης:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:258
 msgid "Maximum number of embedding pages :"
-msgstr ""
+msgstr "Μέγιστος αριθμός σελίδων ενσωμάτωσης:"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:275
 msgid "Maximum number of search results :"
-msgstr ""
+msgstr "Μέγιστος αριθμός αποτελεσμάτων αναζήτησης:"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:97
 msgid "Sorting"
-msgstr ""
+msgstr "Ταξινόμηση"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:100
 msgid "Formatting"
-msgstr ""
+msgstr "Μορφοποίηση"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:103
 msgid "Shortcuts"
-msgstr ""
+msgstr "Συντομεύσεις"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:106
 msgid "Debug"
-msgstr ""
+msgstr "Εντοπισμός σφαλμάτων"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:124
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:110
 msgid "Apply"
-msgstr ""
+msgstr "Εφαρμογή"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:144
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:175
 msgid "Restore defaults"
-msgstr ""
+msgstr "Επαναφορά προεπιλογών"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
-msgstr ""
+msgstr "Επιλογές συντόμευσης (απαιτείται επανεκκίνηση)"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:160
 msgid "Logout"
-msgstr ""
+msgstr "Αποσύνδεση"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:229
 msgid "Press key for shortcut or ESC to cancel"
-msgstr ""
+msgstr "Πατήστε το πλήκτρο για συντόμευση ή το ESC για ακύρωση"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:91
 msgid "Sort orders"
-msgstr ""
+msgstr "Σειρά ταξινόμησης"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:128
 msgid "Details"
-msgstr ""
+msgstr "Λεπτομέρειες"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:144
 msgid "Up"
-msgstr ""
+msgstr "Πάνω"
 
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:149
 msgid "Down"
-msgstr ""
+msgstr "Κάτω"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:46
 msgid "Translation options"
-msgstr ""
+msgstr "Επιλογές μετάφρασης"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:66
 msgid "Translate internal links text"
-msgstr ""
+msgstr "Μετάφραση κειμένου εσωτερικών συνδέσμων"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:73
 msgid "Convert internal links without interwiki to inter language links"
-msgstr ""
+msgstr "Μετατροπή εσωτερικών συνδέσμων χωρίς interwiki σε διαγλωσσικούς συνδέσμους"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:80
 msgid "Translate categories"
-msgstr ""
+msgstr "Μετάφραση κατηγοριών"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:87
 msgid "Translate templates names"
-msgstr ""
+msgstr "Μετάφραση ονομάτων προτύπων"
 
 #: org/wikipediacleaner/gui/swing/options/TranslationOptionsPanel.java:94
 msgid "Translate templates without parameters"
-msgstr ""
+msgstr "Μετάφραση προτύπων χωρίς παραμέτρους"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:235
 msgid "Other"
-msgstr ""
+msgstr "Άλλο"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:176
 msgid "Backlinks"
@@ -5215,47 +5213,47 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:220
 msgid "Analyze pages with links to disambiguation pages"
-msgstr ""
+msgstr "Ανάλυση σελίδων με συνδέσμους προς σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:231
 msgid "Update page information (Alt + &U)"
-msgstr ""
+msgstr "Ενημέρωση πληροφοριών σελίδας (Alt + &U)"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:238
 msgid "Set page comments (Alt + &C)"
-msgstr ""
+msgstr "Ορισμός σχολίων σελίδας (Alt + &C)"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:261
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:501
 msgid "Save list"
-msgstr ""
+msgstr "Αποθήκευση λίστας"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:285
 msgid "Remove page"
-msgstr ""
+msgstr "Αφαίρεση σελίδας"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:292
 msgid "Add page"
-msgstr ""
+msgstr "Προσθήκη σελίδας"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:371
 msgid "Articles with links to disambiguation pages"
-msgstr ""
+msgstr "Λήμματα με συνδέσμους προς σελίδες αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:379
 msgid "You are about to remove the pages from your local watchlist.\nAre you sure?"
-msgstr ""
+msgstr "Πρόκειται να καταργήσετε τις σελίδες από την τοπική λίστα παρακολούθησής σας.\n Είστε σίγουροι;"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:403
 msgid "Enter the page title you want to add to your local watchlist"
-msgstr ""
+msgstr "Εισαγάγετε τον τίτλο σελίδας που θέλετε να προσθέσετε στην τοπική λίστα παρακολούθησής σας"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:590
 #, java-format
 msgid "{0} page"
 msgid_plural "{0} pages"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " {0} σελίδα"
+msgstr[1] "{0} σελίδες"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:593
 #, java-format
@@ -5264,19 +5262,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
 msgid "All articles"
-msgstr ""
+msgstr "Όλα τα λήμματα"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
-msgstr ""
+msgstr "Λήμματα στον κύριο ονοματοχώρο"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:89
 msgid "Articles associated to talk pages"
-msgstr ""
+msgstr "Λήμματα που σχετίζονται με σελίδες συζήτησης"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:90
 msgid "Linter extension category"
-msgstr ""
+msgstr "Κατηγορία επέκτασης Linter"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:91
 msgid "Pages with missing templates"
@@ -5315,7 +5313,7 @@ msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:104
 msgid "Templates"
-msgstr ""
+msgstr "Πρότυπα"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:107
 #, java-format
@@ -5396,38 +5394,38 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:130
 msgid "Loading configuration"
-msgstr ""
+msgstr "Φόρτωση διαμόρφωσης"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:160
 msgid "Retrieving disambiguation templates"
-msgstr ""
+msgstr "Ανάκτηση προτύπων αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:165
 msgid "Retrieving suggestions for text replacements"
-msgstr ""
+msgstr "Ανάκτηση προτάσεων για αντικαταστάσεις κειμένου"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:169
 msgid "Retrieving Check Wiki configuration"
-msgstr ""
+msgstr "Ανάκτηση ρυθμίσεων Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:64
 msgid "Adding comment"
-msgstr ""
+msgstr "Προσθήκη σχόλιου."
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:51
 msgid "Getting random page"
-msgstr ""
+msgstr "Λήψη τυχαίας σελίδας"
 
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:205
 msgid "Updating page contents"
-msgstr ""
+msgstr "Ενημέρωση περιεχομένου σελίδας"
 
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:107
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:196
 #: org/wikipediacleaner/gui/swing/worker/TranslateWorker.java:255
 #, java-format
 msgid "Retrieving interwiki for {0}"
-msgstr ""
+msgstr "Ανάκτηση interwiki για {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/DabWarningProcessor.java:223
 #, java-format
@@ -5464,7 +5462,7 @@ msgstr "Ενημέρωση σε εξέλιξη {1} προειδοποίηση - 
 #: org/wikipediacleaner/gui/swing/worker/warning/UnknownParameterWarningProcessor.java:193
 #, java-format
 msgid "Removing unknown parameter warning - {0}"
-msgstr ""
+msgstr "Αφαίρεση προειδοποίησης άγνωστης παραμέτρου - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UnknownParameterWarningProcessor.java:202
 #, java-format
@@ -5478,7 +5476,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:125
 msgid "Retrieving disambiguation pages"
-msgstr ""
+msgstr "Ανάκτηση σελίδων αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:149
 #, java-format
@@ -5511,7 +5509,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateISSNWarningWorker.java:281
 #, java-format
 msgid "Do you want to update {0}?"
-msgstr ""
+msgstr "Θέλετε να ενημερώσετε το {0};"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateUnknownParameterWarningWorker.java:76
 #, java-format
@@ -5527,12 +5525,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:341
 #, java-format
 msgid "Retrieving page contents - {0}"
-msgstr ""
+msgstr "Ανάκτηση περιεχομένου σελίδας - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningWorker.java:124
 #, java-format
 msgid "Retrieving talk pages including {0}"
-msgstr ""
+msgstr "Ανάκτηση σελίδων συζήτησης συμπεριλαμβανομένων των {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningWorker.java:136
 msgid "Constructing list of articles with warning"

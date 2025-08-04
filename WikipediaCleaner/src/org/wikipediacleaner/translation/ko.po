@@ -4,6 +4,7 @@
 # Author: Ellif
 # Author: Sadopaul
 # Author: Suleiman the Magnificent Television
+# Author: YeBoy371
 # Author: Ykhwong
 # Author: 밝은소년
 # --
@@ -15,7 +16,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-05-08 12:33:44+0000\n"
+"PO-Revision-Date: 2025-08-04 12:33:41+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -23,7 +24,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
-"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-03-15\n"
+"X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-07-31\n"
 "Language: ko\n"
 "X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
@@ -75,7 +76,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:49
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr ""
+msgstr "{0}을(를) 좋아하시길 바랍니다."
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
@@ -255,21 +256,21 @@ msgstr "모든 ISBN-13 검색"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:472
 #, java-format
 msgid "Search ISBN {0}"
-msgstr ""
+msgstr "ISBN {0} 검색"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:544
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:412
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:442
 #, java-format
 msgid "Search ISSN {0}"
-msgstr ""
+msgstr "ISSN {0} 검색"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:577
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:505
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:502
 #, java-format
 msgid "Search using {0}"
-msgstr ""
+msgstr "{0}으(로) 검색"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:394
 msgid "Search all ISSN"
@@ -2656,12 +2657,12 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/Controller.java:301
 #, java-format
 msgid "Yes, {0} pages"
-msgstr ""
+msgstr "네, {0} 문서"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:302
 #, java-format
 msgid "No, {0} pages"
-msgstr ""
+msgstr "아니오, {0} 문서"
 
 #: org/wikipediacleaner/gui/swing/Controller.java:307
 #, java-format
