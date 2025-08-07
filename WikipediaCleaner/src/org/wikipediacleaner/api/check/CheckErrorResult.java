@@ -227,7 +227,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
 
   /**
    * Add a possible replacement for the error.
-   * 
+   *
    * @param replacement Possible replacement.
    * @param text Text explaining the replacement.
    * @param automatic True if replacement can be done automatically.
@@ -235,6 +235,21 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
    */
   public void addReplacement(
       String replacement, String text,
+      boolean automatic, boolean automaticBot) {
+    addReplacement(replacement, text, false, automatic, automaticBot);
+  }
+
+  /**
+   * Add a possible replacement for the error.
+   * 
+   * @param replacement Possible replacement.
+   * @param text Text explaining the replacement.
+   * @param fullParsing True if text expansion should be complete.
+   * @param automatic True if replacement can be done automatically.
+   * @param automaticBot True if replacement can be done automatically in bot mode.
+   */
+  public void addReplacement(
+      String replacement, String text, boolean fullParsing,
       boolean automatic, boolean automaticBot) {
     if (replacement == null) {
       return;
@@ -251,7 +266,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     SimpleAction action = new SimpleAction(
         text,
         new ReplaceTextActionProvider(
-            page, replacement, automatic, automaticBot));
+            page, replacement, fullParsing, automatic, automaticBot));
     possibleActions.add(action);
     possibleReplacements.add(action);
   }

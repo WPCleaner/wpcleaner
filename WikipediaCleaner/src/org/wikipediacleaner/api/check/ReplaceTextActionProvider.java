@@ -25,52 +25,25 @@ import org.wikipediacleaner.gui.swing.action.ReplaceTextAction;
 /**
  * An action provider for ReplaceTextAction.
  */
-class ReplaceTextActionProvider implements ActionProvider {
+public class ReplaceTextActionProvider implements ActionProvider {
 
   private final Page page;
-
   private final String newText;
-
+  private final boolean fullParsing;
   private final boolean automatic;
-
   private final boolean automaticBot;
 
   /**
    * @param newText New text.
-   */
-  ReplaceTextActionProvider(String newText) {
-    this(newText, false, false);
-  }
-
-  /**
-   * @param newText New text.
-   * @param automatic True if the replacement can be done automatically.
-   */
-  ReplaceTextActionProvider(
-      String newText, boolean automatic) {
-    this(newText, automatic, automatic);
-  }
-
-  /**
-   * @param newText New text.
    * @param automatic True if the replacement can be done automatically.
    * @param automaticBot True if the replacement can be done automatically in bot mode.
    */
   ReplaceTextActionProvider(
-      String newText, boolean automatic, boolean automaticBot) {
-    this(null, newText, automatic, automaticBot);
-  }
-
-  /**
-   * @param newText New text.
-   * @param automatic True if the replacement can be done automatically.
-   * @param automaticBot True if the replacement can be done automatically in bot mode.
-   */
-  ReplaceTextActionProvider(
-      Page page, String newText,
+      Page page, String newText, boolean fullParsing,
       boolean automatic, boolean automaticBot) {
     this.page = page;
     this.newText = newText;
+    this.fullParsing = fullParsing;
     this.automatic = automatic;
     this.automaticBot = automaticBot;
   }
@@ -97,7 +70,7 @@ class ReplaceTextActionProvider implements ActionProvider {
       try {
         PageAnalysis analysis = page.getAnalysis(localNewText, false);
         List<PageElementFunction> functions = analysis.getFunctions();
-        boolean parseNeeded = false;
+        boolean parseNeeded = fullParsing;
         if (functions != null) {
           for (PageElementFunction function : functions) {
             if (function.getMagicWord() == null) {
@@ -109,7 +82,7 @@ class ReplaceTextActionProvider implements ActionProvider {
         }
         if (parseNeeded) {
           API api = APIFactory.getAPI();
-          localNewText = api.parseText(page.getWikipedia(), page.getTitle(), localNewText, false);
+          localNewText = api.parseText(page.getWikipedia(), page.getTitle(), localNewText, fullParsing);
         }
       } catch (APIException e) {
         // Nothing to do

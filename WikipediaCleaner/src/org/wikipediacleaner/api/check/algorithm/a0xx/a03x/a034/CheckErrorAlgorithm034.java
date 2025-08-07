@@ -23,6 +23,7 @@ import org.wikipediacleaner.api.data.contents.magicword.MagicWord;
 import org.wikipediacleaner.api.data.contents.magicword.MagicWordType;
 import org.wikipediacleaner.api.data.contents.magicword.SimpleMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -169,13 +170,20 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
     if ((analysis.isInTag(currentIndex, WikiTagType.GALLERY) == null) &&
         (analysis.isInTag(currentIndex, WikiTagType.INCLUDEONLY) == null) &&
         (analysis.isInTag(currentIndex, WikiTagType.REF) == null) &&
-        (analysis.isInTag(currentIndex, WikiTagType.TIMELINE) == null) &&
-        (!FunctionMagicWordType.INVOKE.equals(magicWordType)) &&
-        (!FunctionMagicWordType.SUBST.equals(magicWordType)) &&
-        (!FunctionMagicWordType.SAFE_SUBST.equals(magicWordType))) {
+        (analysis.isInTag(currentIndex, WikiTagType.TIMELINE) == null)) {
+      if ((!FunctionMagicWordType.INVOKE.equals(magicWordType)) &&
+          (!FunctionMagicWordType.SUBST.equals(magicWordType)) &&
+          (!FunctionMagicWordType.SAFE_SUBST.equals(magicWordType))) {
+        errorResult.addReplacement(
+            "{{subst:" +
+                contents.substring(function.getBeginIndex() + 2, function.getEndIndex()));
+      }
       errorResult.addReplacement(
-          "{{subst:" +
-              contents.substring(function.getBeginIndex() + 2, function.getEndIndex()));
+          contents.substring(function.getBeginIndex(), function.getEndIndex()),
+          GT._T("Expand"),
+          true,
+          false,
+          false);
     }
     errors.add(errorResult);
     progress.currentIndex = function.getEndIndex();
