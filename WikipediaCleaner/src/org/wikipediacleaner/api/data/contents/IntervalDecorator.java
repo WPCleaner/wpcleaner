@@ -42,15 +42,4 @@ public abstract class IntervalDecorator implements Interval {
   public int getEndIndex() {
     return (interval != null) ? interval.getEndIndex() : 0;
   }
-
-  /**
-   * @param index Index.
-   * @return True if the index is inside the interval.
-   * @see org.wikipediacleaner.api.data.contents.Interval#containsIndex(int)
-   */
-  @Override
-  public boolean containsIndex(int index) {
-    return (interval != null) ? interval.containsIndex(index) : false;
-  }
-
 }

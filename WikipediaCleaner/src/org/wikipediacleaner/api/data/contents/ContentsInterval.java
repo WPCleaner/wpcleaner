@@ -46,18 +46,6 @@ public class ContentsInterval implements Interval {
   }
 
   /**
-   * @param index Index to check.
-   * @return True if the provided index is inside the interval.
-   */
-  @Override
-  public boolean containsIndex(int index) {
-    if ((index >= beginIndex) && (index < endIndex)) {
-      return true;
-    }
-    return false;
-  }
-
-  /**
    * @return Textual description.
    * @see java.lang.Object#toString()
    */

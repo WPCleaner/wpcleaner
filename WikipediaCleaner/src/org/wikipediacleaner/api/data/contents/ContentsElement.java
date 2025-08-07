@@ -73,15 +73,6 @@ public abstract class ContentsElement implements Interval {
   }
 
   /**
-   * @param index Index to check.
-   * @return True if the provided index is inside the element.
-   */
-  @Override
-  final public boolean containsIndex(int index) {
-    return interval.containsIndex(index);
-  }
-
-  /**
    * @return A string representation of the element.
    * @see java.lang.Object#toString()
    */

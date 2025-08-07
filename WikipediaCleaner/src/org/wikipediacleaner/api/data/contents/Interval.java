@@ -17,16 +17,22 @@ public interface Interval {
   /**
    * @return Begin index of the interval.
    */
-  public int getBeginIndex();
+  int getBeginIndex();
 
   /**
    * @return End index of the interval.
    */
-  public int getEndIndex();
+  int getEndIndex();
 
   /**
    * @param index Index to check.
    * @return True if the provided index is inside the element.
    */
-  public boolean containsIndex(int index);
+  default boolean containsIndex(final int index) {
+    return (index >= getBeginIndex() && index < getEndIndex());
+  }
+
+  default boolean overlap(final int beginIndex, final int endIndex) {
+    return (beginIndex < getEndIndex() && endIndex > getBeginIndex());
+  }
 }
