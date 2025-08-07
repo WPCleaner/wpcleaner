@@ -9,6 +9,7 @@ package org.wikipediacleaner.gui.swing.bot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -25,6 +26,7 @@ import org.wikipediacleaner.api.configuration.CWConfigurationError;
 import org.wikipediacleaner.api.configuration.WPCConfigurationString;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.DataManager;
+import org.wikipediacleaner.api.data.Namespace;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementInternalLink;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
@@ -85,9 +87,6 @@ class CWCheckWhiteListsWorker extends BasicWorker {
       return;
     }
 
-    List<Page> unnecessaryPages = new ArrayList<>();
-    StringBuilder details = new StringBuilder();
-
     // Prepare list of pages to check
     List<Page> pages = new ArrayList<>(whiteList.size());
     for (String pageName : whiteList) {
@@ -99,73 +98,60 @@ class CWCheckWhiteListsWorker extends BasicWorker {
     mw.retrieveContents(wiki, pages, true, false, false, false);
 
     // Check each page
+    List<PageResult> unnecessaryPages = new ArrayList<>();
+    boolean hasUnnecessaryPages = false;
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     for (Page page : pages) {
       if (Boolean.FALSE.equals(page.isExisting())) {
-        details.append(CompleteTagBuilder
-            .from(HtmlTagType.LI, GT._T("The page {0} doesn''t exist on Wikipedia", page.getTitle())));
-        unnecessaryPages.add(page);
+        unnecessaryPages.add(PageResult.ofMissingPage(page));
+        hasUnnecessaryPages = true;
       } else {
         CheckErrorPage errorPage = AlgorithmError.analyzeError(
             algorithm, page.getAnalysis(page.getContents(), true));
-        if ((errorPage == null) || (!errorPage.getErrorFound())) {
-          details.append(HtmlTagType.LI.getOpenTag());
-          String pageLink = CompleteTagBuilder.from(HtmlTagType.A, page.getTitle())
-              .addAttribute("href", wiki.getSettings().getURL(page.getTitle(), false, true)).toString();
-          details.append(GT._T("The error hasn''t been detected in page {0}.", pageLink));
-          Boolean errorDetected = checkWiki.isErrorDetected(page, errorNumber);
-          if (errorDetected != null) {
-            details.append(" ");
-            if (errorDetected) {
-              details.append(GT._T("It's still being detected by CheckWiki."));
-            } else {
-              details.append(GT._T("It's not detected either by CheckWiki."));
-              unnecessaryPages.add(page);
+        if (errorPage == null || !errorPage.getErrorFound()) {
+          if (algorithm.getErrorNumber() < CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
+            Boolean errorDetected = checkWiki.isErrorDetected(page, errorNumber);
+            if (errorDetected != null) {
+              unnecessaryPages.add(PageResult.ofExistingPageWithCheckWiki(page, errorDetected));
+              hasUnnecessaryPages |= !errorDetected;
             }
+          } else {
+            unnecessaryPages.add(PageResult.ofExistingPageWithoutCheckWiki(page));
+            hasUnnecessaryPages = true;
           }
-          details.append(HtmlTagType.LI.getCloseTag());
         }
       }
     }
-    if (details.isEmpty()) {
+    if (!hasUnnecessaryPages) {
       return;
     }
-
-    // Establish a report
-    String pageLink = String.valueOf(errorNumber);
-    String whiteListPageName = cwConfig.getWhiteListPageName();
-    if (whiteListPageName != null) {
-      pageLink = CompleteTagBuilder.from(HtmlTagType.A, String.valueOf(errorNumber))
-          .addAttribute("href", wiki.getSettings().getURL(cwConfig.getWhiteListPageName(), false, true)).toString();
-    }
-    result.append(GT._T(
-        "The following problems were detected on the whitelist for error {0}:",
-        pageLink));
-    result.append(CompleteTagBuilder.from(HtmlTagType.UL, details.toString()));
 
     // Update white list
     String comment = wiki.getConfiguration().getString(WPCConfigurationString.CW_WHITELISTE_COMMENT);
-    if (unnecessaryPages.isEmpty() || whiteListPageName  == null || comment == null) {
-      return;
-    }
-    API api = APIFactory.getAPI();
-    Page whiteListPage = DataManager.createSimplePage(wiki, whiteListPageName, null, null, null);
-    api.retrieveContents(wiki, Collections.singletonList(whiteListPage), false, false);
-    String initialContents = whiteListPage.getContents();
-    String contents = initialContents;
-    for (Page page : unnecessaryPages) {
+    String whiteListPageName = cwConfig.getWhiteListPageName();
+    Set<PageResult> removed = new HashSet<>();
+    if (whiteListPageName != null && comment != null) {
+      API api = APIFactory.getAPI();
+      Page whiteListPage = DataManager.createSimplePage(wiki, whiteListPageName, null, null, null);
+      api.retrieveContents(wiki, Collections.singletonList(whiteListPage), false, false);
+      String initialContents = whiteListPage.getContents();
+      String contents = initialContents;
       PageAnalysis analysis = whiteListPage.getAnalysis(contents, false);
       List<PageElementInternalLink> links = analysis.getInternalLinks();
       for (int linkNumber = links.size(); linkNumber > 0; linkNumber--) {
         PageElementInternalLink link = links.get(linkNumber - 1);
-        if (Page.areSameTitle(page.getTitle(), link.getLink())) {
+        PageResult pageResult = unnecessaryPages.stream()
+            .filter(tmp -> Page.areSameTitle(tmp.page().getTitle(), link.getLink()))
+            .filter(PageResult::shouldBeRemoved)
+            .findFirst().orElse(null);
+        if (pageResult != null && link.getNamespace(wiki) != Namespace.SPECIAL) {
           int lineBegin = ContentsUtil.moveIndexBackwardWhileNotFound(contents, link.getBeginIndex(), "\n") + 1;
           int lineEnd = ContentsUtil.moveIndexForwardWhileNotFound(contents, link.getEndIndex(), "\n");
           boolean lineOk = true;
           for (PageElementInternalLink tmpLink : links) {
-            if ((tmpLink != link) &&
-                (tmpLink.getBeginIndex() < lineEnd) &&
-                (tmpLink.getEndIndex() > lineBegin)) {
+            boolean inSameLine = (tmpLink != link) && tmpLink.overlap(lineBegin, lineEnd);
+            boolean isSpecial = tmpLink.getNamespace(wiki) == Namespace.SPECIAL;
+            if (inSameLine && !isSpecial) {
               lineOk = false;
             }
           }
@@ -174,16 +160,53 @@ class CWCheckWhiteListsWorker extends BasicWorker {
                 contents.substring(0, lineBegin),
                 contents.substring(lineBegin, lineEnd),
                 contents.substring(lineEnd));
+            removed.add(pageResult);
           }
         }
       }
+      if (!contents.equals(initialContents)) {
+        api.updatePage(
+            wiki, whiteListPage, contents, comment,
+            true, true, true, false);
+      }
     }
-    // TODO: Re-enable when able to know if CW should detect a page if it wasn't in the white list
-    //if (!contents.equals(initialContents)) {
-    //  api.updatePage(
-    //      wiki, whiteListPage, contents, comment,
-    //      true, true, true, false);
-    //}
+
+    // Establish a report
+    String pageLink = String.valueOf(errorNumber);
+    if (whiteListPageName != null) {
+      pageLink = CompleteTagBuilder.from(HtmlTagType.A, String.valueOf(errorNumber))
+          .addAttribute("href", wiki.getSettings().getURL(cwConfig.getWhiteListPageName(), false, true)).toString();
+    }
+    result.append(GT._T("Regarding whitelist for error {0}:", pageLink));
+    result.append(HtmlTagType.UL.getOpenTag());
+    for (PageResult page : unnecessaryPages) {
+      final String title = page.page().getTitle();
+      result.append(HtmlTagType.LI.getOpenTag());
+      pageLink = CompleteTagBuilder.from(HtmlTagType.A, title)
+          .addAttribute("href", wiki.getSettings().getURL(title, false, true)).toString();
+      if (page.shouldBeRemoved()) {
+        result.append(GT._T("Page {0} should be removed from the whitelist.", pageLink));
+      } else {
+        result.append(GT._T("Page {0} should be kept in the whitelist.", pageLink));
+      }
+      result.append(" ");
+      if (!page.exists()) {
+        result.append(GT._T("It doesn't exist on Wikipedia."));
+      } else if (!page.checkWiki()) {
+        result.append(GT._T("The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."));
+      } else {
+        if (page.checkWikiResult()) {
+          result.append(GT._T("The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."));
+        } else {
+          result.append(GT._T("The error hasn't been detected neither by WPCleaner or CheckWiki."));
+        }
+      }
+      if (page.shouldBeRemoved() && !removed.contains(page)) {
+        result.append(" ").append(GT._T("WPCleaner couldn't perform the removal."));
+      }
+      result.append(HtmlTagType.LI.getCloseTag());
+    }
+    result.append(HtmlTagType.UL.getCloseTag());
   }
 
   /**
@@ -201,4 +224,21 @@ class CWCheckWhiteListsWorker extends BasicWorker {
     }
   }
 
+  private record PageResult(Page page, boolean exists, boolean checkWiki, boolean checkWikiResult) {
+    public static PageResult ofMissingPage(final Page page) {
+      return new PageResult(page, false, false, false);
+    }
+
+    public static PageResult ofExistingPageWithoutCheckWiki(final Page page) {
+      return new PageResult(page, true, false, false);
+    }
+
+    public static PageResult ofExistingPageWithCheckWiki(final Page page, final boolean checkWikiResult) {
+      return new PageResult(page, true, true, checkWikiResult);
+    }
+
+    boolean shouldBeRemoved() {
+      return !exists || !checkWiki || !checkWikiResult;
+    }
+  }
 }
