@@ -30,13 +30,13 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
   private final int endPosition;
   private final ErrorLevel errorLevel;
 
-  private List<Actionnable> possibleActions;
+  private final List<Actionnable> possibleActions;
   private List<Actionnable> possibleReplacements;
 
   /**
    * Error levels.
    */
-  public static enum ErrorLevel {
+  public enum ErrorLevel {
     ERROR("Error"),
     WARNING("Warning"),
     CORRECT("Correct");
@@ -47,7 +47,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     /**
      * @param description Description of the error level.
      */
-    private ErrorLevel(String description) {
+    ErrorLevel(String description) {
       this.description = description;
     }
 
@@ -196,9 +196,9 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
       boolean automatic, boolean automaticBot) {
     addReplacement(
         replacement,
-        (replacement.length() > 0) ?
-            GT._T("Replace with {0}", replacement.replaceAll("\\n", "\u21b5")) :
-            GT._T("Delete"),
+        replacement.isEmpty() ?
+            GT._T("Delete") :
+            GT._T("Replace with {0}", replacement.replaceAll("\\n", "↵")),
         automatic, automaticBot);
   }
 
@@ -287,8 +287,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     for (Actionnable action : possibleReplacements) {
       if (action instanceof SimpleAction) {
         ActionProvider provider = ((SimpleAction) action).getActionProvider();
-        if (provider instanceof ReplaceTextActionProvider) {
-          ReplaceTextActionProvider textProvider = (ReplaceTextActionProvider) provider;
+        if (provider instanceof ReplaceTextActionProvider textProvider) {
           if (textProvider.isAutomatic()) {
             return textProvider.getFinalizedNewText();
           }
@@ -308,8 +307,7 @@ public class CheckErrorResult implements Comparable<CheckErrorResult> {
     for (Actionnable action : possibleReplacements) {
       if (action instanceof SimpleAction) {
         ActionProvider provider = ((SimpleAction) action).getActionProvider();
-        if (provider instanceof ReplaceTextActionProvider) {
-          ReplaceTextActionProvider textProvider = (ReplaceTextActionProvider) provider;
+        if (provider instanceof ReplaceTextActionProvider textProvider) {
           if (textProvider.isAutomaticBot()) {
             return textProvider.getFinalizedNewText();
           }

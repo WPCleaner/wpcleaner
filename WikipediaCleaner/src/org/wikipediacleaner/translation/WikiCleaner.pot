@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: https://phabricator.wikimedia.org/project/board/4842/\n"
-"POT-Creation-Date: 2025-08-07 15:39+0200\n"
+"POT-Creation-Date: 2025-08-07 16:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -164,15 +164,6 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:200
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
-#, java-format
-msgid "Replace with {0}"
-msgstr ""
-
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:410
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:246
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:111
@@ -190,7 +181,16 @@ msgstr ""
 msgid "Delete"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:329
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
+#, java-format
+msgid "Replace with {0}"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:327
 msgid "Edit table of contents"
 msgstr ""
 
@@ -3986,37 +3986,37 @@ msgstr ""
 msgid "Regarding whitelist for error {0}:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:189
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
 msgid "Page {0} should be removed from the whitelist."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:191
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
 #, java-format
 msgid "Page {0} should be kept in the whitelist."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:195
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
 msgid "It doesn't exist on Wikipedia."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:197
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
 msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:200
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
 msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:202
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
 msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:206
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
 msgid "WPCleaner couldn't perform the removal."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:224
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
 msgstr ""
 
