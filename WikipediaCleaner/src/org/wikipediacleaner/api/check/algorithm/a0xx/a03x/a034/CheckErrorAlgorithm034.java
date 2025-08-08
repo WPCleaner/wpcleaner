@@ -106,6 +106,7 @@ public class CheckErrorAlgorithm034 extends CheckErrorAlgorithmBase {
         errorResult.addReplacement("{{");
         errors.add(errorResult);
         progress.currentIndex += 3;
+        return true;
       }
     }
 
