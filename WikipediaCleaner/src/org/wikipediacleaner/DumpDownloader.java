@@ -23,7 +23,6 @@ import org.apache.commons.net.ftp.FTP;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPClientConfig;
 import org.apache.commons.net.ftp.FTPFile;
-import org.apache.commons.net.ftp.FTPFileFilter;
 import org.apache.commons.net.ftp.FTPReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -163,22 +162,15 @@ public class DumpDownloader {
 
       // Search in dumps if one has the requested file (recent first)
       for (String dump : dumps) {
-        FTPFile[] files = ftp.listFiles(dump, new FTPFileFilter() {
-          
-          @Override
-          public boolean accept(FTPFile file) {
-            if (file == null) {
-              return false;
-            }
-            if (!file.isFile() || file.isSymbolicLink()) {
-              return false;
-            }
-            String name = file.getName();
-            if (name.endsWith(fileType)) {
-              return true;
-            }
+        FTPFile[] files = ftp.listFiles(dump, file -> {
+          if (file == null) {
             return false;
           }
+          if (!file.isFile() || file.isSymbolicLink()) {
+            return false;
+          }
+          String name = file.getName();
+          return name.endsWith(fileType);
         });
         if (files.length > 0) {
           FTPFile ftpFile = files[0];
@@ -222,7 +214,6 @@ public class DumpDownloader {
               } catch (IOException e) {
                 // Nothing to do
               }
-              output = null;
             }
           }
         }

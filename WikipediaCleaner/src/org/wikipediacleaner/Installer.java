@@ -47,18 +47,12 @@ public class Installer {
     Locale.setDefault(language.getLocale());
 
     // Look & Feel
-    String lookAndFeelClassName = null;
-    lookAndFeelClassName = getLookAndFeelClassName("Nimbus");
+    String lookAndFeelClassName = getLookAndFeelClassName("Nimbus");
     if (lookAndFeelClassName != null) {
       try {
         UIManager.setLookAndFeel(lookAndFeelClassName);
-      } catch (ClassNotFoundException e) {
-        // Not important
-      } catch (InstantiationException e) {
-        // Not important
-      } catch (IllegalAccessException e) {
-        // Not important
-      } catch (UnsupportedLookAndFeelException e) {
+      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+               UnsupportedLookAndFeelException e) {
         // Not important
       }
     }

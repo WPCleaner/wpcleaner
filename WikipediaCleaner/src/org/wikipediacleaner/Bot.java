@@ -11,9 +11,9 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -134,7 +134,7 @@ public class Bot implements BasicWorkerListener {
         String arg = args[currentArg];
 
         if ("-timelimit".equals(arg)) {
-          timeLimit = Long.valueOf(System.currentTimeMillis() + 1000 * Integer.parseInt(args[currentArg + 1]));
+          timeLimit = System.currentTimeMillis() + 1000 * Long.parseLong(args[currentArg + 1]);
           currentArg += 2;
         } else if ("-credentials".equals(arg)) {
           if (args.length <= currentArg + 1) {
@@ -170,12 +170,13 @@ public class Bot implements BasicWorkerListener {
     }
     currentArg++;
 
-    // Retrieve user name and password
+    // Retrieve username and password
     String userName = null;
     String password = null;
     if (credentials != null) {
       Properties properties = new Properties();
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(credentials), "UTF8"))) {
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+          new FileInputStream(credentials), StandardCharsets.UTF_8))) {
         properties.load(reader);
       } catch (IOException e) {
         log.warn("Unable to load credentials file {}", credentials);
@@ -318,11 +319,11 @@ public class Bot implements BasicWorkerListener {
           new File(actionConfig.actionArgs[0]);
       int actionNum = 0;
       try (BufferedReader reader = new BufferedReader(new FileReader(tasks))) {
-        String line = null;
+        String line;
         while ((line = reader.readLine()) != null) {
-          if (line.trim().length() > 0 && !line.startsWith("#")) {
+          if (!line.trim().isEmpty() && !line.startsWith("#")) {
             String[] tmpArgs = line.split(" +");
-            if ((tmpArgs != null) && (tmpArgs.length > 0)) {
+            if (tmpArgs.length > 0) {
               actions.add(actionNum, new Action(tmpArgs, tasks.getParentFile()));
               actionNum++;
             }
@@ -497,9 +498,8 @@ public class Bot implements BasicWorkerListener {
     if (actionConfig.actionArgs.length > 0) {
       extractAlgorithms(algorithms, allAlgorithms, actionConfig.actionArgs, 0);
     }
-    AutomaticCWWorker worker = new AutomaticCWWorker(
+    return new AutomaticCWWorker(
         wiki, null, algorithms, 10000, true, allAlgorithms, null, false, false);
-    return worker;
   }
 
   /**
@@ -663,9 +663,7 @@ public class Bot implements BasicWorkerListener {
     if ("TypoGroups".equalsIgnoreCase(parameter) &&
         (actionArgs.length > 1)) {
       typoGroups.clear();
-      for (int numArg = 1; numArg < actionArgs.length; numArg++) {
-        typoGroups.add(actionArgs[numArg]);
-      }
+      typoGroups.addAll(Arrays.asList(actionArgs).subList(1, actionArgs.length));
       return true;
     }
 
@@ -673,9 +671,7 @@ public class Bot implements BasicWorkerListener {
     if ("AdditionalTypoGroups".equalsIgnoreCase(parameter) &&
         (actionArgs.length > 1)) {
       additionalTypoGroups.clear();
-      for (int numArg = 1; numArg < actionArgs.length; numArg++) {
-        additionalTypoGroups.add(actionArgs[numArg]);
-      }
+      additionalTypoGroups.addAll(Arrays.asList(actionArgs).subList(1, actionArgs.length));
       return true;
     }
 
@@ -766,18 +762,9 @@ public class Bot implements BasicWorkerListener {
     if (starIndex < 0) {
       return null;
     }
-    String[] filenames = parent.list(new FilenameFilter() {
-      
-      @Override
-      public boolean accept(@SuppressWarnings("unused") File dir, String name) {
-        if (name.startsWith(filename.substring(0, starIndex)) &&
-            name.endsWith(filename.substring(starIndex + 1))) {
-          return true;
-        }
-        return false;
-      }
-    });
-    if (filenames.length == 0) {
+    String[] filenames = parent.list((dir, name) -> name.startsWith(filename.substring(0, starIndex)) &&
+        name.endsWith(filename.substring(starIndex + 1)));
+    if (filenames == null || filenames.length == 0) {
       return null;
     }
     Arrays.sort(filenames);

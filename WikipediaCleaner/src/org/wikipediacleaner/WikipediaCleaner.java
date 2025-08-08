@@ -16,6 +16,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -116,25 +117,17 @@ public class WikipediaCleaner {
     if (SYSTEM_LF) {
       lookAndFeelClassName = UIManager.getSystemLookAndFeelClassName();
     }
-    switch (config.getInt(null, ConfigurationValueInteger.PLAF_TYPE)) {
-    case ConfigurationConstants.VALUE_PLAF_TYPE_WPCLEANER:
-      lookAndFeelClassName = getLookAndFeelClassName("Nimbus");
-      break;
-    case ConfigurationConstants.VALUE_PLAF_TYPE_USER:
-      lookAndFeelClassName = getLookAndFeelClassName(
+    lookAndFeelClassName = switch (config.getInt(null, ConfigurationValueInteger.PLAF_TYPE)) {
+      case ConfigurationConstants.VALUE_PLAF_TYPE_WPCLEANER -> getLookAndFeelClassName("Nimbus");
+      case ConfigurationConstants.VALUE_PLAF_TYPE_USER -> getLookAndFeelClassName(
           config.getString(null, ConfigurationValueString.PLAF_NAME));
-      break;
-    }
+      default -> lookAndFeelClassName;
+    };
     if (lookAndFeelClassName != null) {
       try {
         UIManager.setLookAndFeel(lookAndFeelClassName);
-      } catch (ClassNotFoundException e) {
-        // Not important
-      } catch (InstantiationException e) {
-        // Not important
-      } catch (IllegalAccessException e) {
-        // Not important
-      } catch (UnsupportedLookAndFeelException e) {
+      } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+               UnsupportedLookAndFeelException e) {
         // Not important
       }
     }
@@ -153,7 +146,7 @@ public class WikipediaCleaner {
     }
 
     // Manage copy/paste for OS X
-    int menuShortcut = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    int menuShortcut = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
     if (menuShortcut == InputEvent.META_DOWN_MASK) {
       InputMap im = (InputMap) UIManager.get("TextField.focusInputMap");
       if (im != null) {
@@ -199,12 +192,13 @@ public class WikipediaCleaner {
     EnumWikipedia wiki = (wikiCode != null) ? EnumWikipedia.getWikipedia(wikiCode) : null;
     currentArg++;
 
-    // Retrieve user name and password
+    // Retrieve username and password
     String userName = null;
     String password = null;
     if (credentials != null) {
       Properties properties = new Properties();
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(credentials), "UTF8"))) {
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+          new FileInputStream(credentials), StandardCharsets.UTF_8))) {
         properties.load(reader);
       } catch (IOException e) {
         // Doing nothing
@@ -233,8 +227,7 @@ public class WikipediaCleaner {
     while (keys.hasMoreElements()) {
       Object key = keys.nextElement();
       Object value = defaults.get(key);
-      if (value instanceof FontUIResource) {
-        FontUIResource resource = (FontUIResource) value;
+      if (value instanceof FontUIResource resource) {
         Font newFont = font.deriveFont(resource.getStyle()).deriveFont((float) resource.getSize() + fontSize);
         defaults.put(key, new FontUIResource(newFont));
       }
