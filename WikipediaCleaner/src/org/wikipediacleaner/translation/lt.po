@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-08-04 12:33:41+0000\n"
-"X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
+"PO-Revision-Date: 2025-08-11 12:33:02+0000\n"
+"X-POT-Import-Date: 2025-08-08 06:36:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: lt\n"
@@ -165,15 +165,6 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "Klaida Nr. {0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:200
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
-#, java-format
-msgid "Replace with {0}"
-msgstr "Pakeisti į {0}"
-
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:410
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:246
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:111
@@ -191,7 +182,16 @@ msgstr "Pakeisti į {0}"
 msgid "Delete"
 msgstr "Ištrinti"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:329
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
+#, java-format
+msgid "Replace with {0}"
+msgstr "Pakeisti į {0}"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:327
 msgid "Edit table of contents"
 msgstr "Redaguoti turinį"
 
@@ -608,6 +608,10 @@ msgstr "Šablonai, kuriuos galima naudoti pakeisti {0} žymas"
 #, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr "Šablonas, kurį galima naudoti pakeisti {0} žymas"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:183
+msgid "Expand"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
@@ -2117,27 +2121,27 @@ msgstr ""
 msgid "Fixed using {0}"
 msgstr "Ištaisyta naudojant {0}"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:320
 msgid "Deactivated"
 msgstr "Išjungta"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:322
 msgid "Low priority"
 msgstr "Žemo prioriteto"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:324
 msgid "Middle priority"
 msgstr "Vidutinio prioriteto"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:326
 msgid "Top priority"
 msgstr "Aukšto prioriteto"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:328
 msgid "For Bot"
 msgstr "Robotui"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:330
 msgid "Priority unknown"
 msgstr "Prioritetas nežinomas"
 
@@ -2437,16 +2441,16 @@ msgstr ""
 msgid "Retrieving templates"
 msgstr "Gaunami šablonai"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:697
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:695
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "URL {0} įtrauktas į juodąjį sąrašą"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1887
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1858
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
 msgstr "Šis veiksmas apsaugotas CAPTCHA.\nKoks yra atsakymas į šį klausimą?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1894
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1865
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
 msgstr "Šis veiksmas apsaugotas CAPTCHA.\nKoks yra atsakymas į klausimą, rodomą jūsų naršyklėje?"
 
@@ -3961,36 +3965,47 @@ msgstr "Bendra"
 msgid "Check Wiki"
 msgstr "Patikrinti Vikį"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:73
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:83
 #, java-format
 msgid "Checking whitelist for error {0}"
 msgstr "Baltasis sąrašas tikrinimas dėl klaidos {0}"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:94
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
-msgid "The page {0} doesn''t exist on Wikipedia"
-msgstr "Puslapis {0} neegzistuoja Vikipedijoje"
-
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:104
-#, java-format
-msgid "The error hasn''t been detected in page {0}."
-msgstr "Klaida neaptikta puslapyje {0}."
-
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:109
-msgid "It's still being detected by CheckWiki."
+msgid "Regarding whitelist for error {0}:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:111
-msgid "It's not detected either by CheckWiki."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:132
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
-msgid "The following problems were detected on the whitelist for error {0}:"
+msgid "Page {0} should be removed from the whitelist."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:200
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
+#, java-format
+msgid "Page {0} should be kept in the whitelist."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
+msgid "It doesn't exist on Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
+msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
+msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
+msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
+msgid "WPCleaner couldn't perform the removal."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
 msgstr "Baltieji sąrašai"
 
@@ -4170,6 +4185,11 @@ msgstr "Aptikimai"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:231
 msgid "Mark as already fixed"
 msgstr "Pažymėti kaip jau ištaisytas"
+
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
+#, java-format
+msgid "The page {0} doesn''t exist on Wikipedia"
+msgstr "Puslapis {0} neegzistuoja Vikipedijoje"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:449
 #, java-format
