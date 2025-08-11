@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-04 12:33:38+0000\n"
+"PO-Revision-Date: 2025-08-11 12:32:58+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2016-11-01 21:08+0000\n"
 "X-Generator: MediaWiki 1.45.0-alpha; Translate 2025-07-31\n"
 "Language: fa\n"
-"X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
+"X-POT-Import-Date: 2025-08-08 06:36:23+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -176,15 +176,6 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "خطای شمارهٔ {0} ({1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:200
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
-#, java-format
-msgid "Replace with {0}"
-msgstr "جایگزین با {0}"
-
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:410
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:246
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:111
@@ -202,7 +193,16 @@ msgstr "جایگزین با {0}"
 msgid "Delete"
 msgstr "حذف"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:329
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
+#, java-format
+msgid "Replace with {0}"
+msgstr "جایگزین با {0}"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:327
 msgid "Edit table of contents"
 msgstr "ویرایش فهرست مطالب"
 
@@ -619,6 +619,10 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:368
 #, java-format
 msgid "Template that can be used to replace {0} tags"
+msgstr ""
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:183
+msgid "Expand"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
@@ -2144,27 +2148,27 @@ msgstr ""
 msgid "Fixed using {0}"
 msgstr "اصلاح با {0}"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:320
 msgid "Deactivated"
 msgstr ""
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:322
 msgid "Low priority"
 msgstr ""
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:324
 msgid "Middle priority"
 msgstr ""
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:326
 msgid "Top priority"
 msgstr ""
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:328
 msgid "For Bot"
 msgstr ""
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:330
 msgid "Priority unknown"
 msgstr ""
 
@@ -2458,16 +2462,16 @@ msgstr ""
 msgid "Retrieving templates"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:697
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:695
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1887
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1858
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
 msgstr ""
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1894
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1865
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
 msgstr ""
 
@@ -3975,36 +3979,47 @@ msgstr ""
 msgid "Check Wiki"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:73
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:83
 #, java-format
 msgid "Checking whitelist for error {0}"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:94
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
-msgid "The page {0} doesn''t exist on Wikipedia"
+msgid "Regarding whitelist for error {0}:"
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:104
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
-msgid "The error hasn''t been detected in page {0}."
+msgid "Page {0} should be removed from the whitelist."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:109
-msgid "It's still being detected by CheckWiki."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:111
-msgid "It's not detected either by CheckWiki."
-msgstr ""
-
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:132
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
 #, java-format
-msgid "The following problems were detected on the whitelist for error {0}:"
+msgid "Page {0} should be kept in the whitelist."
 msgstr ""
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:200
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
+msgid "It doesn't exist on Wikipedia."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
+msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
+msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
+msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
+msgid "WPCleaner couldn't perform the removal."
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
 msgstr ""
 
@@ -4179,6 +4194,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:231
 msgid "Mark as already fixed"
+msgstr ""
+
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
+#, java-format
+msgid "The page {0} doesn''t exist on Wikipedia"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:449

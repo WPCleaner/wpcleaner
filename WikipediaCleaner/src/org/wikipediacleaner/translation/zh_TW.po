@@ -15,8 +15,8 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-08-04 12:33:47+0000\n"
-"X-POT-Import-Date: 2025-03-25 17:03:39+0000\n"
+"PO-Revision-Date: 2025-08-11 12:33:08+0000\n"
+"X-POT-Import-Date: 2025-08-08 06:36:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: zh_tw\n"
@@ -172,15 +172,6 @@ msgid "Error n°{0} ({1} - {2}) - {3}"
 msgstr "錯誤號碼：{0}（{1} - {2}) - {3}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:200
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
-#, java-format
-msgid "Replace with {0}"
-msgstr "替換為{0}"
-
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:410
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:246
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:111
@@ -198,7 +189,16 @@ msgstr "替換為{0}"
 msgid "Delete"
 msgstr "刪除"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:329
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:201
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:106
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a026/CheckErrorAlgorithm026.java:109
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:105
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a038/CheckErrorAlgorithm038.java:108
+#, java-format
+msgid "Replace with {0}"
+msgstr "替換為{0}"
+
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:327
 msgid "Edit table of contents"
 msgstr "編輯目錄"
 
@@ -615,6 +615,10 @@ msgstr "可用於替換{0}標籤的模板"
 #, java-format
 msgid "Template that can be used to replace {0} tags"
 msgstr "可用於替換{0}標籤的模板"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:183
+msgid "Expand"
+msgstr "展開"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
@@ -2124,27 +2128,27 @@ msgstr "若模板不是按照一個接一個的，則忽略"
 msgid "Fixed using {0}"
 msgstr "使用{0}修正"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:319
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:320
 msgid "Deactivated"
 msgstr "已停用"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:321
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:322
 msgid "Low priority"
 msgstr "低優先度"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:323
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:324
 msgid "Middle priority"
 msgstr "中優先度"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:325
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:326
 msgid "Top priority"
 msgstr "高優先度"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:327
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:328
 msgid "For Bot"
 msgstr "用於機器人"
 
-#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:329
+#: org/wikipediacleaner/api/configuration/CWConfigurationError.java:330
 msgid "Priority unknown"
 msgstr "優先度未知"
 
@@ -2438,16 +2442,16 @@ msgstr "正在解析文字"
 msgid "Retrieving templates"
 msgstr "正在檢索模板"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:697
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:695
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "URL {0} 已列入黑名單"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1887
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1858
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
 msgstr "此操作受驗證碼保護。\n以下問題的答案是什麼？"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1894
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1865
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
 msgstr "此操作受驗證碼保護。\n在您的瀏覽器中顯示的問題答案是什麼？"
 
@@ -3952,36 +3956,47 @@ msgstr "一般"
 msgid "Check Wiki"
 msgstr "檢查 wiki"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:73
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:83
 #, java-format
 msgid "Checking whitelist for error {0}"
 msgstr "正在檢查錯誤編號為 {0} 的白名單"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:94
-#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
-msgid "The page {0} doesn''t exist on Wikipedia"
-msgstr "頁面{0}不存在維基百科上"
+msgid "Regarding whitelist for error {0}:"
+msgstr "關於錯誤{0}的白名單："
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:104
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
-msgid "The error hasn''t been detected in page {0}."
-msgstr "未在頁面{0}裡偵測到錯誤。"
+msgid "Page {0} should be removed from the whitelist."
+msgstr "應將頁面{0}從白名單中移除。"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:109
-msgid "It's still being detected by CheckWiki."
-msgstr "CheckWiki 仍在偵測。"
-
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:111
-msgid "It's not detected either by CheckWiki."
-msgstr "CheckWiki 也沒有偵測到。"
-
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:132
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
 #, java-format
-msgid "The following problems were detected on the whitelist for error {0}:"
-msgstr "在錯誤{0}白名單上偵測到以下問題："
+msgid "Page {0} should be kept in the whitelist."
+msgstr "頁面{0}應保留在白名單。"
 
-#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:200
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
+msgid "It doesn't exist on Wikipedia."
+msgstr "不存在維基百科上。"
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
+msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
+msgstr "錯誤未被 WPCleaner 偵測到，所以 CheckWiki 不會處理此錯誤。"
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
+msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
+msgstr "WPCleaner 未偵測到該錯誤，但有被 CheckWiki 偵測到。"
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
+msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
+msgstr "WPCleaner 與 CheckWiki 都沒有偵測到該錯誤。"
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
+msgid "WPCleaner couldn't perform the removal."
+msgstr "WPCleaner 無法執行移除。"
+
+#: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
 msgstr "白名單"
 
@@ -4157,6 +4172,11 @@ msgstr "檢測"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:231
 msgid "Mark as already fixed"
 msgstr "標記為已修正"
+
+#: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
+#, java-format
+msgid "The page {0} doesn''t exist on Wikipedia"
+msgstr "頁面{0}不存在維基百科上"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:449
 #, java-format
