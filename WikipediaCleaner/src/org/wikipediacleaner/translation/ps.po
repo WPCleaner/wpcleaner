@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:33:05+0000\n"
+"PO-Revision-Date: 2025-08-14 12:33:42+0000\n"
 "Last-Translator: UsmanKhan <khanusmanshah@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -96,11 +96,11 @@ msgstr ""
 
 #: org/wikipediacleaner/Version.java:55
 msgid "It defines the new magic word __DISAMBIG__."
-msgstr ""
+msgstr "دا نوی کوډگر ويوکی __DISAMBIG__ راپېژني."
 
 #: org/wikipediacleaner/Version.java:56
 msgid "This magic word should be added to all disambiguation pages (either through templates or directly)."
-msgstr ""
+msgstr "دا کوډگر ويوکی بايد په ټولو څومانيزو مخونو کې ورگډ شي (نېغ په نېغه يا د کينډۍ له لارې)."
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
