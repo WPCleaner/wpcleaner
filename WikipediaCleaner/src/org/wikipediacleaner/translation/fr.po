@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:32:58+0000\n"
+"PO-Revision-Date: 2025-08-14 12:33:38+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -632,7 +632,7 @@ msgstr "Modèle qui peut être utilisé au lieu de balises {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:183
 msgid "Expand"
-msgstr ""
+msgstr "Développer"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
@@ -3984,40 +3984,39 @@ msgid "Checking whitelist for error {0}"
 msgstr "Vérification de la liste de blanche pour l’erreur {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
-#, fuzzy, java-format
+#, java-format
 msgid "Regarding whitelist for error {0}:"
-msgstr "Regarding whitelist for error {0}:"
+msgstr "Concernant la liste de blanche pour l’erreur {0} :"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
-#, fuzzy, java-format
+#, java-format
 msgid "Page {0} should be removed from the whitelist."
-msgstr "Page {0} should be removed from the whitelist."
+msgstr "La page {0} doit être retirée de la liste blanche."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
 #, java-format
 msgid "Page {0} should be kept in the whitelist."
-msgstr ""
+msgstr "La page {0} doit être conservée dans la liste blanche."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
 msgid "It doesn't exist on Wikipedia."
-msgstr ""
+msgstr "Elle n’existe pas sur Wikipédia."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
 msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
-msgstr ""
+msgstr "L’erreur n’a pas été détectée par WPCleaner et CheckWiki ne gère pas cette erreur."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
 msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
-msgstr ""
+msgstr "L’erreur n’a pas été détectée par WPCleaner mais elle l’a été par CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
-#, fuzzy
 msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
-msgstr "The error hasn't been detected neither by WPCleaner or CheckWiki."
+msgstr "L’erreur n’a été détectée ni par WPCleaner, ni par CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
 msgid "WPCleaner couldn't perform the removal."
-msgstr ""
+msgstr "WPCleaner n’a pas pu appliquer la suppression."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
