@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-08-11 12:33:02+0000\n"
+"PO-Revision-Date: 2025-08-18 12:32:05+0000\n"
 "X-POT-Import-Date: 2025-08-08 06:36:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3994,7 +3994,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
 msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
-msgstr ""
+msgstr "De Feeler gouf weder vu WPCleaner nach vun CheckWiki entdeckt."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
 msgid "WPCleaner couldn't perform the removal."
