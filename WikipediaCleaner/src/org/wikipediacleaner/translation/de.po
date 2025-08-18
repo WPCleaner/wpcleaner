@@ -12,6 +12,7 @@
 # Author: Mglaser
 # Author: MoritzMT20
 # Author: RucolaSpacecat
+# Author: Russianbabe1978
 # Author: ThisCarthing
 # Author: TomatoCake
 # Author: Umlaut
@@ -26,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:32:57+0000\n"
+"PO-Revision-Date: 2025-08-18 12:32:00+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3986,7 +3987,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
 msgid "Regarding whitelist for error {0}:"
-msgstr ""
+msgstr "Bezüglich Whitelist für Fehler {0}:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
