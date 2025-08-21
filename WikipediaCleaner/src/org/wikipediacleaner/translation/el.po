@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:32:57+0000\n"
+"PO-Revision-Date: 2025-08-21 12:32:17+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2138,7 +2138,7 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr "Έγινε διόρθωση με χρήση του {0}"
+msgstr "Διόρθωση με το WPCleaner {0}"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:320
 msgid "Deactivated"
@@ -5400,17 +5400,17 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:386
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:404
 msgid "No problem has been detected."
-msgstr ""
+msgstr "Δεν έχει εντοπιστεί κανένα πρόβλημα."
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:409
 msgid "The following problem has been detected:"
 msgid_plural "The following problems have been detected:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] " Εντοπίστηκε το ακόλουθο πρόβλημα:"
+msgstr[1] "Εντοπίστηκαν τα ακόλουθα προβλήματα:"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:91
 msgid "Sorting errors by priority"
-msgstr ""
+msgstr "Ταξινόμηση σφαλμάτων κατά προτεραιότητα"
 
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:130
 msgid "Loading configuration"
@@ -5430,7 +5430,7 @@ msgstr "Ανάκτηση ρυθμίσεων Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:64
 msgid "Adding comment"
-msgstr "Προσθήκη σχόλιου."
+msgstr "Προσθήκη σχόλιου"
 
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:51
 msgid "Getting random page"
@@ -5487,12 +5487,12 @@ msgstr "Αφαίρεση προειδοποίησης άγνωστης παρα�
 #: org/wikipediacleaner/gui/swing/worker/warning/UnknownParameterWarningProcessor.java:202
 #, java-format
 msgid "Updating unknown parameter warning - {0}"
-msgstr ""
+msgstr "Αφαίρεση προειδοποίησης άγνωστης παραμέτρου - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:100
 #, java-format
 msgid "Analysis found {0} articles with disambiguation warning {1}.\nDo you want to update the disambiguation warnings ?"
-msgstr ""
+msgstr "Η ανάλυση εντόπισε {0} άρθρα με προειδοποίηση αποσαφήνισης {1}.\nΘέλετε να ενημερώσετε τις προειδοποιήσεις αποσαφήνισης;"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:125
 msgid "Retrieving disambiguation pages"
@@ -5501,7 +5501,7 @@ msgstr "Ανάκτηση σελίδων αποσαφήνισης"
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:149
 #, java-format
 msgid "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\nError: {0}"
-msgstr ""
+msgstr "Παρουσιάστηκε σφάλμα κατά την ενημέρωση των προειδοποιήσεων αποσαφήνισης. Θέλετε να συνεχίσετε ?\n\nΣφάλμα: {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDuplicateArgsWarningWorker.java:76
 #, java-format
@@ -5517,7 +5517,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateISSNWarningWorker.java:86
 #, java-format
 msgid "Analysis found {0} articles to check for {1} errors.\nDo you want to update the warnings ?"
-msgstr ""
+msgstr "Η ανάλυση εντόπισε {0} άρθρα για έλεγχο για {1} σφάλματα.\nΘέλετε να ενημερώσετε τις προειδοποιήσεις;"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateISBNWarningWorker.java:131
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateISSNWarningWorker.java:127
