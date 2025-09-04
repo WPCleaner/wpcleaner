@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-08-18 12:32:05+0000\n"
+"PO-Revision-Date: 2025-09-04 12:30:39+0000\n"
 "X-POT-Import-Date: 2025-08-08 06:36:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3139,7 +3139,7 @@ msgstr "Dir musst den Numm vun enger Säit aginn"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1342
 #, java-format
 msgid "Search results for {0}"
-msgstr ""
+msgstr "Sichresultater fir {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1350
 msgid "You must input a page name for retrieving the list of backlinks"
@@ -5122,7 +5122,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:275
 msgid "Maximum number of search results :"
-msgstr ""
+msgstr "Maximal Zuel vu Sichresultater:"
 
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:97
 msgid "Sorting"
