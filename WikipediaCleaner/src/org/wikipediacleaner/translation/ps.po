@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-14 12:33:42+0000\n"
+"PO-Revision-Date: 2025-09-08 12:22:42+0000\n"
 "Last-Translator: UsmanKhan <khanusmanshah@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -154,7 +154,7 @@ msgstr ""
 #: org/wikipediacleaner/api/ModificationReport.java:108
 #, java-format
 msgid "Page {0}:"
-msgstr ""
+msgstr "{0} مخ:"
 
 #: org/wikipediacleaner/api/ModificationReport.java:98
 msgid "The following errors have occurred:"
@@ -550,7 +550,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a045/CheckErrorAlgorithm045.java:36
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:42
 msgid "Delete all"
-msgstr ""
+msgstr "ټول ړنگول"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a018/CheckErrorAlgorithm018.java:31
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a022/CheckErrorAlgorithm022.java:33
@@ -671,7 +671,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:301
 msgid "Groups of templates"
-msgstr ""
+msgstr "د کينډيو ډلې"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:448
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:458
@@ -680,7 +680,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:305
 msgid "Name of the group"
-msgstr ""
+msgstr "د ډلې نوم"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:451
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
@@ -824,7 +824,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/Controller.java:303
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
-msgstr ""
+msgstr "ناگارل"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:316
 #, java-format
@@ -985,7 +985,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:136
 msgid "External viewer"
-msgstr ""
+msgstr "بهرنی ليدونکی"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:191
 msgid "Tag is unnamed"
@@ -1064,7 +1064,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:171
 #, java-format
 msgid "Use {0}"
-msgstr ""
+msgstr "{0} کارول"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
@@ -1135,7 +1135,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:234
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:209
 msgid "Template"
-msgstr ""
+msgstr "کينډۍ"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:431
 msgid "Parameter to be used for the link"
@@ -1248,7 +1248,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:104
 #, java-format
 msgid "Use template {0}"
-msgstr ""
+msgstr "{0} کينډۍ کارول"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:109
 msgid "Remove references"
@@ -1444,7 +1444,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:531
 msgid "Comment"
-msgstr ""
+msgstr "څرگندونه"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:428
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:431
@@ -1588,7 +1588,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a532/CheckErrorAlgorithm532.java:46
 msgid "Fix tags"
-msgstr ""
+msgstr "نښانونه اوارول"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a538/CheckErrorAlgorithm538.java:29
 msgid "Remove whitespace characters"
