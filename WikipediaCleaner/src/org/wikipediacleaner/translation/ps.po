@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-09-08 12:22:42+0000\n"
+"PO-Revision-Date: 2025-09-15 12:39:16+0000\n"
 "Last-Translator: UsmanKhan <khanusmanshah@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +104,7 @@ msgstr "دا کوډگر ويوکی بايد په ټولو څومانيزو مخ�
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
-msgstr ""
+msgstr "WPCleaner v1.28 دا د تلواليز غونډال په توگه کاروي."
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
@@ -419,7 +419,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a089/CheckErrorAlgorithm089_Old.java:31
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090_Old.java:31
 msgid "Fix DEFAULTSORT"
-msgstr ""
+msgstr "تلواليزاوډون اوارول"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a006/CheckErrorAlgorithm006.java:128
 #, java-format
@@ -621,7 +621,7 @@ msgstr "غځول"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
 msgid "Add DEFAULTSORT"
-msgstr ""
+msgstr "تلواليزاوډون ورگډول"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:230
 msgid "Restrict the detection to the first characters"
@@ -1978,7 +1978,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:292
 msgid "Default value for the meaning"
-msgstr ""
+msgstr "مانا لپاره تلواليز ارزښت"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:238
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:258
@@ -4883,7 +4883,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:233
 msgid "Default sort"
-msgstr ""
+msgstr "تلواليز اوډون"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:239
 msgid "Language link"
@@ -5150,7 +5150,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:144
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:175
 msgid "Restore defaults"
-msgstr ""
+msgstr "تلواليزې بيازېرمل"
 
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:73
 msgid "Shortcut options (restart needed)"
