@@ -24,6 +24,7 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.wiki.AbstractWikiSettings;
+import org.wikipediacleaner.api.constants.wiki.UkMinecraft;
 import org.wikipediacleaner.api.constants.wiki.Waze;
 import org.wikipediacleaner.api.constants.wiki.WazeopediaUSA;
 import org.wikipediacleaner.api.constants.wiki.WikiSkripta;
@@ -145,7 +146,8 @@ public enum EnumWikipedia {
 
   WIKIVOYAGE_BN(new Wikivoyage("bn", "Bengali Wikivoyage")),
   WIKIVOYAGE_FR(new Wikivoyage("fr", "Wikivoyage en français")),
-  
+
+  UKMINECRAFT(new UkMinecraft()),
   WAZE(new Waze()),
   WAZEOPEDIA_USA(new WazeopediaUSA()),
   WIKISKRIPTA(new WikiSkripta()),
@@ -156,7 +158,7 @@ public enum EnumWikipedia {
   private List<Page> disambiguationTemplates;
 
   /**
-   * @param settigs Wiki settings.
+   * @param settings Wiki settings.
    */
   EnumWikipedia(AbstractWikiSettings settings) {
     this.settings = settings;
@@ -169,9 +171,7 @@ public enum EnumWikipedia {
    */
   public static List<EnumWikipedia> getList() {
     List<EnumWikipedia> list = new ArrayList<>(EnumWikipedia.values().length);
-    for (EnumWikipedia e : EnumWikipedia.values()) {
-      list.add(e);
-    }
+    Collections.addAll(list, EnumWikipedia.values());
     return list;
   }
 
@@ -305,11 +305,11 @@ public enum EnumWikipedia {
    */
   public String createUpdatePageComment(String text, String details) {
     StringBuilder comment = new StringBuilder();
-    if ((text != null) && (text.length() > 0)) {
+    if ((text != null) && (!text.isEmpty())) {
       comment.append(text);
     }
-    if ((details != null) && (details.length() > 0)) {
-      if (comment.length() > 0) {
+    if ((details != null) && (!details.isEmpty())) {
+      if (!comment.isEmpty()) {
         comment.append(" - ");
       }
       comment.append(details);
@@ -350,7 +350,7 @@ public enum EnumWikipedia {
 
     // Use categories if they are defined
     List<Page> dabCategories = config.getDisambiguationCategories();
-    if ((dabCategories != null) && (dabCategories.size() > 0)) {
+    if ((dabCategories != null) && (!dabCategories.isEmpty())) {
       ArrayList<Page> tmpResult = new ArrayList<>();
       for (Page dabCategory : dabCategories) {
         api.retrieveCategoryMembers(
