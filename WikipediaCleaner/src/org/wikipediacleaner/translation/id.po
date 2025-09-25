@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:33:00+0000\n"
+"PO-Revision-Date: 2025-09-25 12:43:12+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -87,27 +87,27 @@ msgstr "Proyek Check Wiki telah banyak dikembangkan baru-baru ini."
 
 #: org/wikipediacleaner/Version.java:52
 msgid "New detections have been added either with new error numbers or by replacing previously used error numbers."
-msgstr ""
+msgstr "Deteksi baru telah ditambahkan baik dengan nomor kesalahan baru atau dengan mengganti nomor kesalahan yang digunakan sebelumnya."
 
 #: org/wikipediacleaner/Version.java:53
 msgid "You may need to update the Check Wiki translation file on your wiki to configure the new detections."
-msgstr ""
+msgstr "Anda mungkin perlu memperbarui file terjemahan Check Wiki di wiki Anda untuk mengkonfigurasi deteksi baru."
 
 #: org/wikipediacleaner/Version.java:54
 msgid "Disambiguator extension has been deployed to all WMF wikis."
-msgstr ""
+msgstr "Ekstensi Disambiguator telah diterapkan ke semua wiki WMF."
 
 #: org/wikipediacleaner/Version.java:55
 msgid "It defines the new magic word __DISAMBIG__."
-msgstr ""
+msgstr "Ini mendefinisikan kata ajaib baru __DISAMBIG__."
 
 #: org/wikipediacleaner/Version.java:56
 msgid "This magic word should be added to all disambiguation pages (either through templates or directly)."
-msgstr ""
+msgstr "Kata ajaib ini harus ditambahkan ke semua halaman disambiguasi (baik melalui templat atau langsung)."
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
-msgstr ""
+msgstr "WPCleaner v1.28 juga menggunakan ini sebagai sistem default."
 
 #: org/wikipediacleaner/Version.java:58
 msgid "An action may be required on your wiki:"
@@ -116,12 +116,12 @@ msgstr "Tindakan mungkin perlu dilakukan pada wiki Anda:"
 #: org/wikipediacleaner/Version.java:60
 #, java-format
 msgid "You can check if {0} is used on your wiki by opening an existing disambiguation page (like \"Smith\"). Then, click on \"Page information\" in the menu on the left. Finally, search for {0} in the information page."
-msgstr ""
+msgstr "Anda dapat memeriksa apakah {0} digunakan di wiki Anda dengan membuka halaman disambiguasi yang ada (misalnya, \"Smith\"). Kemudian, klik \"Informasi Halaman\" di menu sebelah kiri. Terakhir, cari {0} di halaman informasi."
 
 #: org/wikipediacleaner/Version.java:64
 #, java-format
 msgid "If {0} is not used on your wiki, you should add {1} to the page {2}."
-msgstr ""
+msgstr "Jika {0} tidak digunakan di wiki Anda, Anda harus menambahkan {1} ke halaman {2}."
 
 #: org/wikipediacleaner/Version.java:70
 msgid "Many new features were added recently : try them !"
@@ -137,7 +137,7 @@ msgstr "Memperbaiki deteksi kesalahan oleh proyek Check Wiki , dengan analisis l
 
 #: org/wikipediacleaner/Version.java:74
 msgid "Fixing spelling or typography based on a list of suggestions."
-msgstr ""
+msgstr "Memperbaiki ejaan atau tipografi berdasarkan daftar saran."
 
 #: org/wikipediacleaner/api/MediaWiki.java:301
 #, java-format
@@ -211,7 +211,7 @@ msgstr "Judul artikel yang menjelaskan jenis kesalahan ini"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:312
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:315
 msgid "Set to true to prevent automatic modifications for this type of error"
-msgstr ""
+msgstr "Atur ke benar untuk mencegah modifikasi otomatis untuk jenis kesalahan ini"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:318
 msgid "List of false positives for this type of error"
@@ -219,12 +219,12 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:321
 msgid "Page containing a false positive for this type of error"
-msgstr ""
+msgstr "Halaman yang berisi positif palsu untuk jenis kesalahan ini"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:325
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:328
 msgid "Page containing the list of false positives for this type of error"
-msgstr ""
+msgstr "Halaman yang berisi daftar positif palsu untuk jenis kesalahan ini"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:370
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:320
@@ -281,7 +281,7 @@ msgstr "Daftar templat yang menghasilkan inklusi daftar isi"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a001/CheckErrorAlgorithm001.java:92
 #, java-format
 msgid "Remove {0} namespace from template name"
-msgstr ""
+msgstr "Hapus namespace {0} dari nama templat"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
@@ -351,7 +351,7 @@ msgstr "Tutup tag"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:386
 #, java-format
 msgid "Text to insert for adding {0}"
-msgstr ""
+msgstr "Teks yang akan disisipkan untuk menambahkan {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:389
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:396
@@ -369,32 +369,32 @@ msgstr "Daftar templat yang mengakibatkan masuknya {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:403
 #, java-format
 msgid "Section headings where a {0} can be added"
-msgstr ""
+msgstr "Judul bagian tempat {0} dapat ditambahkan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:406
 #, java-format
 msgid "Section heading where a {0} can be added"
-msgstr ""
+msgstr "Judul bagian tempat {0} dapat ditambahkan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:410
 #, java-format
 msgid "Section headings where a {0} can be added before"
-msgstr ""
+msgstr "Judul bagian di mana {0} dapat ditambahkan sebelum"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:413
 #, java-format
 msgid "Section heading where a {0} can be added before"
-msgstr ""
+msgstr "Judul bagian di mana {0} dapat ditambahkan sebelumnya"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:417
 #, java-format
 msgid "Templates where a {0} can be added before"
-msgstr ""
+msgstr "Templat tempat {0} dapat ditambahkan sebelum"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:420
 #, java-format
 msgid "Template where a {0} can be added before"
-msgstr ""
+msgstr "Templat tempat {0} dapat ditambahkan sebelumnya"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
@@ -402,11 +402,11 @@ msgstr "Akhiri komentar dengan benar"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:99
 msgid "End the comment at the end of the line"
-msgstr ""
+msgstr "Akhiri komentar di akhir baris"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:103
 msgid "End the comment just before the next one begins"
-msgstr ""
+msgstr "Akhiri komentar tepat sebelum komentar berikutnya dimulai"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:106
 msgid "Merge comments"
@@ -433,19 +433,19 @@ msgstr "Tidak dapat mengganti karakter [{0}]"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:363
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:370
 msgid "A list of templates in which categories should be ignored."
-msgstr ""
+msgstr "Daftar templat di mana kategori harus diabaikan."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:249
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:367
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:374
 msgid "A template in which categories should be ignored."
-msgstr ""
+msgstr "Templat yang kategori-kategorinya harus diabaikan."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a009/CheckErrorAlgorithm009.java:252
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:370
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a052/CheckErrorAlgorithm052.java:377
 msgid "A template parameter in which categories should be ignored."
-msgstr ""
+msgstr "Parameter templat yang kategori-kategorinya harus diabaikan."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:283
@@ -455,7 +455,7 @@ msgstr "Ganti semua karakter kontrol"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:397
 msgid "To report control characters only in templates"
-msgstr ""
+msgstr "Untuk melaporkan karakter kontrol hanya dalam templat"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:400
 msgid "To ignore some control characters"
@@ -463,7 +463,7 @@ msgstr "Untuk mengabaikan beberapa karakter kontrol"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:403
 msgid "To ignore control character with hexadecimal code equal to XX"
-msgstr ""
+msgstr "Untuk mengabaikan karakter kontrol dengan kode heksadesimal sama dengan XX"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:411
 msgid "Non-breaking space"
@@ -471,83 +471,83 @@ msgstr "Spasi penggabung"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:412
 msgid "Soft hyphen"
-msgstr ""
+msgstr "Tanda hubung lunak"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:413
 msgid "Thee-per-em space"
-msgstr ""
+msgstr "Ruang tiga per satu"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:414
 msgid "Four-per-em space"
-msgstr ""
+msgstr "Ruang empat per em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:415
 msgid "Six-per-em space"
-msgstr ""
+msgstr "Ruang enam per em"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:416
 msgid "Figure space"
-msgstr ""
+msgstr "Ruang gambar"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:417
 msgid "Punctuation space"
-msgstr ""
+msgstr "Ruang tanda baca"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:418
 msgid "Zero-width space"
-msgstr ""
+msgstr "Ruang dengan lebar nol"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:419
 msgid "Left-to-right mark"
-msgstr ""
+msgstr "Tanda kiri ke kanan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:420
 msgid "Right-to-left mark"
-msgstr ""
+msgstr "Tanda dari kanan ke kiri"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:421
 msgid "Line separator"
-msgstr ""
+msgstr "Pemisah garis"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:422
 msgid "Left-to-right embedding"
-msgstr ""
+msgstr "Penyematan dari kiri ke kanan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:423
 msgid "Right-to-left embedding"
-msgstr ""
+msgstr "Penyematan dari kanan ke kiri"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:424
 msgid "Pop directional formatting"
-msgstr ""
+msgstr "Pemformatan arah pop"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:425
 msgid "Left-to-right override"
-msgstr ""
+msgstr "Penimpaan dari kiri ke kanan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:426
 msgid "Right-to-left override"
-msgstr ""
+msgstr "Penimpaan dari kanan ke kiri"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:427
 msgid "Byte order mark"
-msgstr ""
+msgstr "Tanda urutan byte"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:428
 msgid "Object replacement character"
-msgstr ""
+msgstr "Karakter pengganti objek"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:429
 msgid "Private use area"
-msgstr ""
+msgstr "Area penggunaan pribadi"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:430
 msgid "Private use area A"
-msgstr ""
+msgstr "Area penggunaan pribadi A"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:431
 msgid "Private use area B"
-msgstr ""
+msgstr "Area penggunaan pribadi B"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:47
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a045/CheckErrorAlgorithm045.java:36
@@ -574,11 +574,11 @@ msgstr "Ganti semua"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:252
 msgid "Templates that can replace the end of a table"
-msgstr ""
+msgstr "Template yang dapat menggantikan bagian akhir tabel"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:255
 msgid "Template that can replace the end of a table"
-msgstr ""
+msgstr "Template yang dapat menggantikan bagian akhir tabel"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:98
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:105
@@ -607,7 +607,7 @@ msgstr "Lihat gambar"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:365
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
-msgstr ""
+msgstr "Template yang dapat digunakan untuk mengganti tag {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:519
@@ -615,11 +615,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:368
 #, java-format
 msgid "Template that can be used to replace {0} tags"
-msgstr ""
+msgstr "Template yang dapat digunakan untuk mengganti tag {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:183
 msgid "Expand"
-msgstr ""
+msgstr "Perluas"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
@@ -628,7 +628,7 @@ msgstr "Tambahkan DEFAULTSORT"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:230
 msgid "Restrict the detection to the first characters"
-msgstr ""
+msgstr "Batasi deteksi ke karakter pertama"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:233
 msgid "Maximum number of characters to use for the detection"
@@ -636,15 +636,15 @@ msgstr "Jumlah maksimum karakter yang digunakan untuk deteksi"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Daftar templat yang mencegah perbaikan otomatis kesalahan ini"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:239
 msgid "Template that prevent automatic fixing of this error"
-msgstr ""
+msgstr "Template yang mencegah perbaikan otomatis kesalahan ini"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a044/CheckErrorAlgorithm044.java:37
 msgid "Fix all bold headlines"
-msgstr ""
+msgstr "Perbaiki semua judul tebal"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:55
 msgid "Remove all links to title (first in bold)"
@@ -652,20 +652,20 @@ msgstr "Hapus semua pranala pada judul (awal huruf besar)"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:56
 msgid "Remove all links to title"
-msgstr ""
+msgstr "Hapus semua tautan ke judul"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:432
 msgid "List of templates in which error should be ignored"
-msgstr ""
+msgstr "Daftar templat di mana kesalahan harus diabaikan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:435
 msgid "Name of the template in which error should be ignored"
-msgstr ""
+msgstr "Nama templat di mana kesalahan harus diabaikan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:438
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
 msgid "Set to true to report also links in <imagemap>"
-msgstr ""
+msgstr "Atur ke benar untuk melaporkan juga tautan di<imagemap>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:444
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:454
@@ -674,7 +674,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:301
 msgid "Groups of templates"
-msgstr ""
+msgstr "Kelompok templat"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:448
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:458
@@ -683,7 +683,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:305
 msgid "Name of the group"
-msgstr ""
+msgstr "Nama grup"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:451
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
@@ -692,11 +692,11 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:308
 msgid "Name of a template in the group"
-msgstr ""
+msgstr "Nama templat dalam grup"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
-msgstr ""
+msgstr "Hapus jeda dalam daftar"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:182
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
@@ -714,21 +714,21 @@ msgstr "Perbaiki semua judul"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
-msgstr ""
+msgstr "Daftar templat yang harus diabaikan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:230
 msgid "A template that should be ignored"
-msgstr ""
+msgstr "Template yang harus diabaikan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:194
 msgid "Templates to be ignored"
-msgstr ""
+msgstr "Template yang harus diabaikan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:504
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:507
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
-msgstr ""
+msgstr "Untuk memaksa penggunaan pemisah antara tag {0} yang berurutan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:510
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:513
@@ -741,7 +741,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:362
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
-msgstr ""
+msgstr "Digunakan sebagai pemisah antara tag {0} yang berurutan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:152
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:102
@@ -756,11 +756,11 @@ msgstr "Hapus {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a064/CheckErrorAlgorithm064.java:38
 msgid "Modify all internal links"
-msgstr ""
+msgstr "Ubah semua tautan internal"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:33
 msgid "Remove all <small> tags"
-msgstr ""
+msgstr "Hapus semua <small>tag</small>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:536
 #, java-format
@@ -770,7 +770,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:539
 #, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
-msgstr ""
+msgstr "Singkatan yang menghasilkan positif palsu jika ditempatkan sebelum {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:549
 msgid "A list of templates in which the punctuation can be safely moved after the reference"
