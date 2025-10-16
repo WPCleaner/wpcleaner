@@ -5,6 +5,7 @@
 # Author: Fitoschido
 # Author: Javiero
 # Author: Robin van der Vliet
+# Author: Tymewalk
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -14,7 +15,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:32:57+0000\n"
+"PO-Revision-Date: 2025-10-16 12:42:05+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -147,11 +148,11 @@ msgstr ""
 #: org/wikipediacleaner/api/MediaWiki.java:316
 #, java-format
 msgid "The page {0} has been modified."
-msgstr ""
+msgstr "La paĝo {0} estis modifita."
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
-msgstr ""
+msgstr "Ĉu vi volas daŭrigi?"
 
 #: org/wikipediacleaner/api/ModificationReport.java:78
 #: org/wikipediacleaner/api/ModificationReport.java:108
@@ -201,7 +202,7 @@ msgstr "Anstataŭigita per {0}"
 
 #: org/wikipediacleaner/api/check/CheckErrorResult.java:327
 msgid "Edit table of contents"
-msgstr ""
+msgstr "Redakti enhavtabelon"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:306
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:309
@@ -235,7 +236,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:395
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:345
 msgid "Add a comment"
-msgstr ""
+msgstr "Aldoni komenton"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:430
 msgid "Search all ISBN"
@@ -584,7 +585,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:98
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:105
 msgid "Add a description..."
-msgstr ""
+msgstr "Aldoni priskribon..."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:102
 msgid "What description would you like to use for the image ?"
@@ -1206,7 +1207,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:196
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:166
 msgid "Similar ISSN"
-msgstr ""
+msgstr "Simila ISSN"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
@@ -2142,7 +2143,7 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr ""
+msgstr "Riparis per {0}"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:320
 msgid "Deactivated"
@@ -2268,11 +2269,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
 msgid "Orphaned pages"
-msgstr ""
+msgstr "Neligitaj paĝoj"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
 msgid "Long pages"
-msgstr ""
+msgstr "Longaj paĝoj"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
@@ -2316,7 +2317,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Short pages"
-msgstr ""
+msgstr "Mallongaj paĝoj"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
 msgid "Uncategorized categories"
@@ -2683,7 +2684,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:138
 #, java-format
 msgid "Disambiguation - {0}"
-msgstr ""
+msgstr "Apartigilo - {0}"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
 msgid "Select &next links"
@@ -2721,7 +2722,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
-msgstr ""
+msgstr "Informo"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
@@ -3001,17 +3002,17 @@ msgstr "Paĝo"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:627
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:170
 msgid "Random page"
-msgstr ""
+msgstr "Hazarda paĝo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:634
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:200
 msgid "Add to list"
-msgstr ""
+msgstr "Aldoni al listo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:641
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:205
 msgid "Remove from list"
-msgstr ""
+msgstr "Forigi el listo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:667
 msgid "Search in titles"
@@ -3044,7 +3045,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:752
 msgid "Projects"
-msgstr ""
+msgstr "Projektoj"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:770
 msgid "Preload disambiguations pages"
@@ -3247,7 +3248,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1936
 msgid "List"
-msgstr ""
+msgstr "Listo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
 msgid "Random redirect pages"
@@ -3405,7 +3406,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
 msgid "Disambiguation"
-msgstr ""
+msgstr "Apartigilo"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:401
 msgid "Reload (Alt + &R)"
@@ -3857,19 +3858,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:52
 msgid "Yes"
-msgstr ""
+msgstr "Jes"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:53
 msgid "Yes to all"
-msgstr ""
+msgstr "Jes al ĉiuj"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
 msgid "No to all"
-msgstr ""
+msgstr "Ne al ĉiuj"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:122
