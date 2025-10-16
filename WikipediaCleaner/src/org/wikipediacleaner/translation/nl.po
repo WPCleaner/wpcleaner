@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-09-18 12:37:40+0000\n"
+"PO-Revision-Date: 2025-10-16 12:42:11+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1178,7 +1178,7 @@ msgstr "Het te negeren sjabloon"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:257
 msgid "Parameter to be ignored"
-msgstr "De te negeren optie"
+msgstr "De te negeren parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
 msgid "List of ordinal suffixes"
