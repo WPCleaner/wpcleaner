@@ -9,7 +9,6 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a575;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
@@ -24,13 +23,14 @@ import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
  * <br>
  * Error 575: Non-breaking space in internal links.
  */
+@SuppressWarnings("unused")
 public class CheckErrorAlgorithm575 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm575() {
     super("Non-breaking space in internal links");
   }
 
-  private static final List<String> NBSP = Stream.of("&nbsp;", "\u00A0").collect(Collectors.toList());
+  private static final List<String> NBSP = Stream.of("&nbsp;", "\u00A0").toList();
 
   /**
    * Analyze a page to check if errors are present.
@@ -98,7 +98,11 @@ public class CheckErrorAlgorithm575 extends CheckErrorAlgorithmBase {
               contents.substring(endIndex, fullEndIndex);
           error.addReplacement(replacement, true);
         } else {
-          error.addReplacement(nbsp, true);
+          String replacement =
+              contents.substring(fullBeginIndex, beginIndex) +
+              nbsp +
+              contents.substring(endIndex, fullEndIndex);
+          error.addReplacement(replacement, true);
         }
         errors.add(error);
         return true;
