@@ -9,6 +9,7 @@
 # Author: Gianfranco
 # Author: GryffindorD
 # Author: Luca.favorido
+# Author: SaldırganSincap
 # Author: Stefano
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:33:01+0000\n"
+"PO-Revision-Date: 2025-10-20 05:59:49+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1076,11 +1077,11 @@ msgstr "Usa {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr "Un elenco di modelli che possono essere utilizzati per sostituire i tag <center>"
+msgstr "Un elenco di modelli che possono essere utilizzati per sostituire i tag &lt;center&gt;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:363
 msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr "Modello che può essere utilizzato per sostituire i tag <center>"
+msgstr "Modello che può essere utilizzato per sostituire i tag &lt;center&gt;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:366
 msgid "Name of the parameter to use"

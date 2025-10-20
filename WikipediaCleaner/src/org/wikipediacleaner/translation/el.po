@@ -7,6 +7,7 @@
 # Author: Jimkats
 # Author: Norhorn
 # Author: Pablothecat
+# Author: SaldırganSincap
 # Author: Spyridon Eftychios Kokotos
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-21 12:32:17+0000\n"
+"PO-Revision-Date: 2025-10-20 05:59:45+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1075,7 +1076,7 @@ msgstr "Χρήση {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr "Μια λίστα προτύπων που μπορούν να χρησιμοποιηθούν για την αντικατάσταση των ετικετών <center>"
+msgstr "Μια λίστα προτύπων που μπορούν να χρησιμοποιηθούν για την αντικατάσταση των ετικετών &lt;center&gt;"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:363
 msgid "Template that can be used to replace &lt;center&gt; tags"

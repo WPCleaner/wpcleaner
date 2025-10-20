@@ -6,6 +6,7 @@
 # Author: Ebraminio
 # Author: Huji
 # Author: Jeeputer
+# Author: LordProfo
 # Author: Mohammad ebz
 # Author: Mojtabakd
 # --
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:32:58+0000\n"
+"PO-Revision-Date: 2025-10-20 05:59:46+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -628,7 +629,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
 msgid "Add DEFAULTSORT"
-msgstr "اضافه کردن ترتیب‌پیش‌فرض"
+msgstr "افزودن ترتیب‌پیش‌فرض"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:230
 msgid "Restrict the detection to the first characters"
