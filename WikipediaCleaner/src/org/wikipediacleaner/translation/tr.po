@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-08-11 12:33:06+0000\n"
+"PO-Revision-Date: 2025-10-20 05:59:55+0000\n"
 "Last-Translator: volkan <volkanyeke@gmail.com>\n"
 "Language-Team: Turkish <tr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1706,7 +1706,6 @@ msgstr "Kullanımdan kaldırılmış parametresi olan bir şablonun adı"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
-#, fuzzy
 msgid "Name of a deprecated parameter"
 msgstr "Kullanımdan kaldırılmış bir parametrenin adı"
 
@@ -3755,10 +3754,10 @@ msgid "You must select a page to add it on your local watchlist"
 msgstr "Yerel izleme listenize eklemek için bir sayfa seçmelisiniz"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
-#, fuzzy, java-format
+#, java-format
 msgid "Would you like to add the page {0} on your local watchlist?"
 msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
-msgstr[0] "Bu sayfayı yerel izleme listenize eklemek ister misiniz?"
+msgstr[0] "{0} sayfasını yerel izleme listenize eklemek ister misiniz?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
 #, java-format
