@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-10-20 05:59:46+0000\n"
+"PO-Revision-Date: 2025-10-22 09:03:00+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Esperanto <eo@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -39,7 +39,7 @@ msgstr "Ĝi identigas vikitekstajn ŝablonojn, kiujn devas aŭ povas esti ripari
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
-msgstr "Ĝi ankaŭ provizas iu gvido pri la problemoj kun tiuj regulecoj kaj kiel ripari ilin."
+msgstr "Ĝi ankaŭ provizas iu gvido pri la problemoj kun tiuj ŝablonoj kaj kiel ripari ilin."
 
 #: org/wikipediacleaner/Version.java:35
 msgid "You can help by fixing problems identified by the Linter extension."
