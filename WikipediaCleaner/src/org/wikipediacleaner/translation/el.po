@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-10-30 12:50:09+0000\n"
+"PO-Revision-Date: 2025-11-03 12:48:20+0000\n"
 "Last-Translator: Magioladitis <Unknown>\n"
 "Language-Team: Greek <el@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2033,49 +2033,49 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:269
 msgid "Parameter name"
-msgstr ""
+msgstr "Ονομασία παραμέτρου"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:274
 msgid "Template parameters that can contain a reference"
-msgstr ""
+msgstr "Παράμετροι προτύπου που μπορούν να περιέχουν μια αναφορά"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:277
 msgid "Parameter name with the formatnum"
-msgstr ""
+msgstr "Όνομα παραμέτρου με αριθμό μορφής"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:278
 msgid "Parameter name that can contain a reference"
-msgstr ""
+msgstr "Όνομα παραμέτρου που μπορεί να περιέχει μια αναφορά"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:188
 #, java-format
 msgid "Delete {0} tags"
-msgstr ""
+msgstr "Διαγραφή {0} ετικετών"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:150
 #, java-format
 msgid "Same value as parameter {0}"
-msgstr ""
+msgstr "Ίδια τιμή με την παράμετρο {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:315
 msgid "Templates for which unknown values should be verified"
-msgstr ""
+msgstr "Πρότυπα για τα οποία θα πρέπει να επαληθευτούν άγνωστες τιμές"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:325
 msgid "True if the value is case sensitive"
-msgstr ""
+msgstr "Αληθές εάν η τιμή κάνει διάκριση πεζών-κεφαλαίων"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:335
 msgid "Template values which can be safely replaced"
-msgstr ""
+msgstr "Τιμές προτύπου που μπορούν να αντικατασταθούν με ασφάλεια"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:353
 msgid "Possible confusions with another parameter"
-msgstr ""
+msgstr "Πιθανές συγχύσεις με άλλη παράμετρο"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:231
 msgid "Templates for which values should be verified"
-msgstr ""
+msgstr "Πρότυπα για τα οποία θα πρέπει να επαληθευτούν άγνωστες τιμές"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:241
 msgid "Image attribute"
@@ -2106,11 +2106,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:181
 msgid "Templates that shouldn't be used in list item"
-msgstr ""
+msgstr "Πρότυπα που δεν πρέπει να χρησιμοποιούνται σε στοιχεία λίστας"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:185
 msgid "Template that shouldn't be used in list item"
-msgstr ""
+msgstr "Πρότυπο που δεν πρέπει να χρησιμοποιείται σε στοιχείο λίστας"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:364
 msgid "Redundant templates"
@@ -2139,7 +2139,7 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr "Διόρθωση σφάλματος {0}"
+msgstr "Διόρθωση με χρήση του WPCleaner {0}"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:320
 msgid "Deactivated"
@@ -2186,7 +2186,7 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:472
 #, java-format
 msgid "Attribute {0} should be integer value"
-msgstr ""
+msgstr "Το χαρακτηριστικό {0} πρέπει να είναι ακέραια τιμή"
 
 #: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
@@ -2545,7 +2545,7 @@ msgstr "Δοκιμάστε τις αυτόματες αντικαταστάσε�
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:296
 msgid "Load replacements"
-msgstr ""
+msgstr "Αποθήκευση αντικαταστάσεων"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:302
 msgid "Save replacements"
@@ -2675,7 +2675,7 @@ msgstr "Όχι, {0} σελίδες"
 #: org/wikipediacleaner/gui/swing/Controller.java:307
 #, java-format
 msgid "You have selected {0} pages.\nWould you like to analyze more than {1} pages ?"
-msgstr ""
+msgstr "Έχετε επιλέξει {0} σελίδες.\nΘα θέλατε να αναλύσετε περισσότερες από {1} σελίδες;"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:138
 #, java-format
@@ -2708,7 +2708,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
 msgid "Sort"
-msgstr ""
+msgstr "Ταξινόμηση"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:545
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1416
@@ -2746,7 +2746,7 @@ msgstr "Εγκατάσταση έκδοσης beta (μόνο για έμπειρ
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
-msgstr ""
+msgstr "Μια συντόμευση στην επιφάνεια εργασίας μπορεί να δημιουργηθεί αυτόματα στα Windows και σε ορισμένες εκδόσεις Linux."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
@@ -2767,23 +2767,23 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:380
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
-msgstr ""
+msgstr "Αν θέλετε να εκτελέσετε το WPCleaner χειροκίνητα, ανοίξτε ένα τερματικό/γραμμή εντολών/... και αλλάξτε τον τρέχοντα κατάλογο στον φάκελο εγκατάστασης."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:385
 msgid "And then execute the command dependent on the operating system you're using (see below)."
-msgstr ""
+msgstr "Και στη συνέχεια εκτελέστε την εντολή ανάλογα με το λειτουργικό σύστημα που χρησιμοποιείτε (δείτε παρακάτω)."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:388
 msgid "Under Windows, the command can be:"
-msgstr ""
+msgstr "Στα Windows, η εντολή μπορεί να είναι:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:394
 msgid "Under Linux (or other systems working with .sh scripts), the command can be:"
-msgstr ""
+msgstr "Στο Linux (ή σε άλλα συστήματα που λειτουργούν με .sh scripts), η εντολή μπορεί να είναι:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:400
 msgid "On any operating system, the command can be:"
-msgstr ""
+msgstr "Σε οποιοδήποτε λειτουργικό σύστημα, η εντολή μπορεί να είναι:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
 msgid "Install"
@@ -2860,7 +2860,7 @@ msgstr "Γίνεται εγκατάσταση {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
 msgid "Problem running getdown installer"
-msgstr ""
+msgstr "Πρόβλημα στην εκτέλεση του προγράμματος εγκατάστασης getdown"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:887
 #, java-format
@@ -2871,11 +2871,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:968
 #, java-format
 msgid "Problem running {0}"
-msgstr ""
+msgstr "Πρόβλημα στην εκτέλεση του {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:947
 msgid "Problem creating desktop file"
-msgstr ""
+msgstr "Πρόβλημα με τη δημιουργία αρχείου επιφάνειας εργασίας"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:955
 #, java-format
@@ -2929,7 +2929,7 @@ msgstr "Απαρχαιωμένη έκδοση Java"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:251
 #, java-format
 msgid "{0} - Version {1} ({2})"
-msgstr ""
+msgstr "{0} - Έκδοση {1} ({2})"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:361
 msgid "Message"
@@ -3106,7 +3106,7 @@ msgstr "Εργαλεία bot"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:924
 msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
-msgstr ""
+msgstr "Η λειτουργία demo είναι διαθέσιμη μόνο για δοκιμές WPCleaner. Δεν θα μπορείτε να τροποποιήσετε σελίδες στην Wikipedia στη λειτουργία Demo. Θέλεις να συνεχίσεις;"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:943
 msgid "You must select which Wikipedia you want to work on before login"
@@ -3161,7 +3161,7 @@ msgstr "Αποτελέσματα αναζήτησης για {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1350
 msgid "You must input a page name for retrieving the list of backlinks"
-msgstr ""
+msgstr "Πρέπει να εισαγάγετε ένα όνομα σελίδας για την ανάκτηση της λίστας εσωτερικών συνδέσμων"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1366
 #, java-format
@@ -3246,7 +3246,7 @@ msgstr "Λίστα"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
 msgid "Random redirect pages"
-msgstr ""
+msgstr "Τυχαίες σελίδες ανακατεύθυνσης"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1991
 msgid "How many pages do you want?"
@@ -3281,7 +3281,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:194
 msgid "Article contents"
-msgstr ""
+msgstr "Περιεχόμενα λήμματος"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 msgid "&Validate"
@@ -3302,7 +3302,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:463
 msgid "Translation of an article copied from an other wiki"
-msgstr ""
+msgstr "Μετάφραση λήμματος που αντιγράφηκε από άλλο wiki"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:511
 msgid "&Options"
@@ -3347,7 +3347,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:579
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:76
 msgid "Remove all links"
-msgstr ""
+msgstr "Αφαίρεση όλων των συνδέσμων"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:641
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:153
@@ -3408,7 +3408,7 @@ msgstr "Ανανέωση (Alt + &R)"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:403
 msgid "&Reload"
-msgstr ""
+msgstr "Επαναφόρτωση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:434
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
@@ -3423,7 +3423,7 @@ msgstr "Αναίρεση"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:459
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:461
 msgid "Redo"
-msgstr ""
+msgstr "Αναίρεση"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:482
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:484
@@ -3899,7 +3899,7 @@ msgstr "Άλλες..."
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
-msgstr ""
+msgstr "Έλεγχος για σφάλματα αρ. {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:202
 #, java-format
@@ -3934,11 +3934,11 @@ msgstr[1] ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:288
 msgid "Activate automatic fixing for all algorithms"
-msgstr ""
+msgstr "Ενεργοποίηση αυτόματης διόρθωσης για όλους τους αλγόριθμους"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:294
 msgid "Deactivate automatic fixing for all algorithms"
-msgstr ""
+msgstr "Απενεργοποίηση αυτόματης διόρθωσης για όλους τους αλγόριθμους"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:300
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:323
@@ -4000,47 +4000,47 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
 msgid "It doesn't exist on Wikipedia."
-msgstr ""
+msgstr "Δεν υπάρχει στη Βικιπαίδεια."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
 msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
-msgstr ""
+msgstr "Το σφάλμα δεν έχει εντοπιστεί από το WPCleaner και το CheckWiki δεν το χειρίζεται."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
 msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
-msgstr ""
+msgstr "Το σφάλμα δεν έχει εντοπιστεί από το WPCleaner, αλλά εξακολουθεί να εντοπίζεται από το CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
 msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
-msgstr ""
+msgstr "Το σφάλμα δεν έχει εντοπιστεί ούτε από το WPCleaner ούτε από το CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
 msgid "WPCleaner couldn't perform the removal."
-msgstr ""
+msgstr "Το WPCleaner δεν μπόρεσε να εκτελέσει την αφαίρεση."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
-msgstr ""
+msgstr "Λευκές λίστες"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
 msgid "To use Check Wiki bot tools:"
-msgstr ""
+msgstr "Για να χρησιμοποιήσετε τα εργαλεία bot Check Wiki:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
 msgid "Select algorithms for which automatic fixing will be applied"
-msgstr ""
+msgstr "Επιλέξτε αλγόριθμους για τους οποίους θα εφαρμοστεί αυτόματη διόρθωση"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
 msgid "Select algorithms that will be used to create a list of pages to work on"
-msgstr ""
+msgstr "Επιλέξτε αλγόριθμους που θα χρησιμοποιηθούν για τη δημιουργία μιας λίστας σελίδων στις οποίες θα εργαστείτε"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Run the tools below"
-msgstr ""
+msgstr "Εκτελέστε τα παρακάτω εργαλεία"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:149
 msgid "Analyze pages that couldn't be fixed by bot"
-msgstr ""
+msgstr "Ανάλυση σελίδων που δεν μπόρεσαν να διορθωθούν από bot"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:156
 msgid "Ignore limit for errors not on Labs"
@@ -4048,16 +4048,16 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:164
 msgid "Number of pages:"
-msgstr ""
+msgstr "Αριθμός σελίδων"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:254
 msgid "Comment:"
-msgstr ""
+msgstr "Σχόλιο:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
 msgid "Mark errors already fixed"
-msgstr ""
+msgstr "Σήμανση σφαλμάτων που έχουν ήδη διορθωθεί ως τέτοια."
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
 msgid "Check whitelists"
@@ -4078,7 +4078,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
 msgid "You must select at least one algorithm for fixing errors"
-msgstr ""
+msgstr "Πρέπει να επιλέξετε τουλάχιστον έναν αλγόριθμο για τη διόρθωση σφαλμάτων"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
@@ -4106,7 +4106,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:123
 msgid "Semi-automatic disambiguation fixing"
-msgstr ""
+msgstr "Ημιαυτόματη διόρθωση αποσαφήνισης"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:132
 msgid "Update existing disambiguation warning messages"
@@ -4116,13 +4116,13 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:159
 #, java-format
 msgid "Update {0} warning messages"
-msgstr ""
+msgstr "Ενημέρωση {0} μηνυμάτων προειδοποίησης"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:150
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:168
 #, java-format
 msgid "List {0} errors"
-msgstr ""
+msgstr "Λίστα {0} σφαλμάτων"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:177
 msgid "Update duplicate argument warning messages"
@@ -4134,11 +4134,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:195
 msgid "Monitor recent changes"
-msgstr ""
+msgstr "Παρακολούθηση πρόσφατων αλλαγών"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:240
 msgid "At what page do you wish to start updating the warnings ?"
-msgstr ""
+msgstr "Σε ποια σελίδα θέλετε να ξεκινήσετε την ενημέρωση των προειδοποιήσεων;"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:96
 msgid "Dump file:"
@@ -4151,7 +4151,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:121
 msgid "Export directory:"
-msgstr ""
+msgstr "Εξαγωγή καταλόγου:"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:127
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:276
@@ -4160,11 +4160,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:144
 msgid "Export pages:"
-msgstr ""
+msgstr "Εξαγωγή σελίδων"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:159
 msgid "Check last version of article before reporting an error"
-msgstr ""
+msgstr "Ελέγξτε την τελευταία έκδοση του λήμματος πριν αναφέρετε κάποιο σφάλμα"
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:168
 msgid "Only check articles previously reported"
@@ -4187,7 +4187,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:143
 msgid "No errors are currently detected by CheckWiki."
-msgstr ""
+msgstr "Δεν έχουν εντοπιστεί σφάλματα αυτήν τη στιγμή από το CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:149
 msgid "Detections"
@@ -4195,12 +4195,12 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:231
 msgid "Mark as already fixed"
-msgstr ""
+msgstr "Επισήμανση ως ήδη διορθωμένου"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
-msgstr ""
+msgstr "Η σελίδα {0} δεν υπάρχει στη Βικιπαίδεια"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:449
 #, java-format
