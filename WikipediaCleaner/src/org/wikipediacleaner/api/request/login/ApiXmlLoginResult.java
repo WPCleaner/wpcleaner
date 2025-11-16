@@ -66,16 +66,17 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
    * 
    * @param root Root element in MediaWiki answer.
    * @return Result of the login.
-   * @throws APIException Exception thrown by the API.
    */
-  private LoginResult constructLogin(Element root)
-      throws APIException {
-//    try {
+  private LoginResult constructLogin(Element root)  {
       XPathExpression<Element> xpa = XPathFactory.instance().compile(
           "/api/login", Filters.element());
       Element node = xpa.evaluateFirst(root);
       if (node != null) {
         String result = node.getAttributeValue("result");
+        String details = node.getAttributeValue("details");
+        if (details == null) {
+          details = node.getAttributeValue("reason");
+        }
         if ("Success".equalsIgnoreCase(result)) {
           getWiki().getConnection().setLgInformation(
               node.getAttributeValue("lgtoken"),
@@ -84,18 +85,12 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
           return LoginResult.createCorrectLogin();
         } else if (EnumLoginResult.NEED_TOKEN.getCode().equalsIgnoreCase(result)) {
           return LoginResult.createNeedTokenLogin(node.getAttributeValue("token"));
-        }
-        String details = node.getAttributeValue("details");
-        if (details == null) {
-          details = node.getAttributeValue("reason");
+        } else if (EnumLoginResult.ABORTED.getCode().equalsIgnoreCase(result)) {
+          return LoginResult.createAbortedLogin(details);
         }
         return LoginResult.createErrorLogin(
             result, details, node.getAttributeValue("wait"));
       }
-//    } catch (JDOMException e) {
-//      log.error("Error login", e);
-//      throw new APIException("Error parsing XML result", e);
-//    }
     return LoginResult.createErrorLogin(null, null, null);
   }
 

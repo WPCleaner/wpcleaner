@@ -15,9 +15,9 @@ import org.wikipediacleaner.api.constants.EnumLoginResult;
  */
 public class LoginResult {
 
-  private EnumLoginResult loginResult;
-  private String details;
-  private String wait;
+  private final EnumLoginResult loginResult;
+  private final String details;
+  private final String wait;
 
   /**
    * Create a correct login result.
@@ -36,6 +36,22 @@ public class LoginResult {
    */
   static public LoginResult createNeedTokenLogin(String token) {
     return new LoginResult(EnumLoginResult.NEED_TOKEN, token, null);
+  }
+
+  /**
+   * Create a login result to indicate that the login is aborted.
+   *
+   * @param detail Detail.
+   * @return Login result.
+   */
+  static public LoginResult createAbortedLogin(String detail) {
+    return new LoginResult(
+        EnumLoginResult.ABORTED,
+        """
+        Login with main account is not supported, obtain credentials Special:BotPasswords.
+        See https://en.wikipedia.org/wiki/Wikipedia:WPCleaner/BotPasswords for detailed explanations.
+        %s
+        """.formatted(detail), null);
   }
 
   /**
