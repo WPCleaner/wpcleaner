@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: *Surak*
+# Author: Ameisenigel
 # Author: Brettchenweber
 # Author: DraconicDark
 # Author: Druesenfieber
@@ -27,7 +28,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-10-30 12:50:09+0000\n"
+"PO-Revision-Date: 2025-11-17 12:44:51+0000\n"
 "Last-Translator: Crazy1880 <Unknown>\n"
 "Language-Team: German <de@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -82,7 +83,7 @@ msgstr "Eine Erklärung der WPCleaner-Einstellungen ist online, siehe {0}System 
 
 #: org/wikipediacleaner/Version.java:46
 msgid "Please, report any other problem you find to me."
-msgstr "Bitte melden Sie mir alle Probleme die Sie finden."
+msgstr "Bitte melde mir alle Probleme die du findest."
 
 #: org/wikipediacleaner/Version.java:49
 #, java-format
@@ -164,7 +165,7 @@ msgstr "Die Seite {0} wurde geändert."
 
 #: org/wikipediacleaner/api/MediaWiki.java:317
 msgid "Do you want to continue?"
-msgstr "Möchten Sie fortfahren?"
+msgstr "Möchtest du fortfahren?"
 
 #: org/wikipediacleaner/api/ModificationReport.java:78
 #: org/wikipediacleaner/api/ModificationReport.java:108
@@ -2513,7 +2514,7 @@ msgstr "Bei einigen Wikipedia-Projekten benötigen Sie den Bot-Status um dies zu
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr "Bitte überprüfen Sie, ob Sie den Bot-Status benötigen, indem Sie die Richtlinen von Wikipedia durchlesen."
+msgstr "Bitte überprüfe, ob du den Bot-Status benötigst, indem du die Richtlinen von Wikipedia durchliest."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
@@ -3111,7 +3112,7 @@ msgstr "Der Demomodus ist nur für das Testen von WPCleaner verfügbar.\nSie wer
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:943
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr "Sie müssen zuerst auswählen an welcher Wikipedia Sie mitarbeiten wollen, bevor Sie sich anmelden können."
+msgstr "Du musst zuerst auswählen an welcher Wikipedia du mitarbeiten willst, bevor du dich anmelden kannst."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:953
 msgid "You must select a language before login"
