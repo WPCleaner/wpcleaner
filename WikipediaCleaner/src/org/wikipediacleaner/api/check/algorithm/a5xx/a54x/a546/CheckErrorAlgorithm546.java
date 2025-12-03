@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a54x.a546;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -21,6 +22,8 @@ import org.wikipediacleaner.api.data.PageElementCategory;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.i18n.GT;
+
+import javax.annotation.Nullable;
 
 
 /**
@@ -51,7 +54,7 @@ public class CheckErrorAlgorithm546 extends CheckErrorAlgorithmBase {
 
     // Only in main name space
     if ((analysis.getPage().getNamespace() == null) ||
-        (analysis.getPage().getNamespace().intValue() != Namespace.MAIN)) {
+        (analysis.getPage().getNamespace() != Namespace.MAIN)) {
       return false;
     }
 
@@ -79,14 +82,8 @@ public class CheckErrorAlgorithm546 extends CheckErrorAlgorithmBase {
           String paramName = categorizingTemplate[1];
           String paramValue = (categorizingTemplate.length > 2) ? categorizingTemplate[2] : null;
           for (PageElementTemplate template : templates) {
-            int paramIndex = template.getParameterIndex(paramName);
-            if (paramIndex >= 0) {
-              if (paramValue == null) {
-                return false;
-              }
-              if (paramValue.equals(template.getParameterValue(paramIndex))) {
-                return false;
-              }
+            if (hasParameter(template, paramName, paramValue)) {
+              return false;
             }
           }
         }
@@ -95,6 +92,25 @@ public class CheckErrorAlgorithm546 extends CheckErrorAlgorithmBase {
 
     // No categories found
     return true;
+  }
+
+  private boolean hasParameter(final PageElementTemplate template, @Nullable final String name, @Nullable final String value) {
+    if (Objects.equals("*", name)) {
+      for (int paramNum = 0; paramNum < template.getParameterCount(); paramNum++) {
+        final String paramValue = template.getParameterValue(paramNum);
+        if (Objects.equals(paramValue, value)) {
+          return true;
+        }
+      }
+    }
+    int paramIndex = template.getParameterIndex(name);
+    if (paramIndex < 0) {
+      return false;
+    }
+    if (value == null) {
+      return true;
+    }
+    return Objects.equals(value, template.getParameterValue(paramIndex));
   }
 
   /* ====================================================================== */
