@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Avilena
+# Author: Yupik
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -11,7 +12,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-10-30 12:50:16+0000\n"
+"PO-Revision-Date: 2025-12-04 12:34:47+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Norwegian Bokmal <nb@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4431,7 +4432,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:428
 #, java-format
 msgid "Category: {0}"
-msgstr ""
+msgstr "Kategori: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:456
 #, java-format
@@ -4902,7 +4903,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:227
 msgid "Category"
-msgstr ""
+msgstr "Kategori"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:233
 msgid "Default sort"
