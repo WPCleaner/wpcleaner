@@ -4,7 +4,9 @@
 # Author: Agam Riyandana
 # Author: David Wadie Fisher-Freberg
 # Author: Hidayatsrf
+# Author: Penyuwangi
 # Author: Veracious
+# Author: William Surya Permana
 # --
 # This file is distributed under the same license as the wikicleaner package.
 #
@@ -14,7 +16,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-10-30 12:50:12+0000\n"
+"PO-Revision-Date: 2025-12-11 12:35:19+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3091,7 +3093,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1832
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
-msgstr "Daftar Pantauan lokal"
+msgstr "Daftar Pantauan Lokal"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:862
 msgid "Watchlist"
@@ -5267,11 +5269,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:379
 msgid "You are about to remove the pages from your local watchlist.\nAre you sure?"
-msgstr "Anda akan menghapus artikel ini dari daftar pantauan lokal anda.\nAnda yakin ?"
+msgstr "Anda akan menghapus artikel ini dari daftar pantauan setempat anda.\nAnda yakin ?"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:403
 msgid "Enter the page title you want to add to your local watchlist"
-msgstr "Ketik judul artikel yang akan ditambahkan pada daftar pantauan lokal anda"
+msgstr "Ketik judul artikel yang akan ditambahkan pada daftar pantauan setempat anda"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:590
 #, java-format
