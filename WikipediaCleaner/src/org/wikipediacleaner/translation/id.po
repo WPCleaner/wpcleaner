@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-12-11 12:35:19+0000\n"
+"PO-Revision-Date: 2025-12-15 12:37:14+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -685,7 +685,7 @@ msgstr "Kelompok templat"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:305
 msgid "Name of the group"
-msgstr "Nama grup"
+msgstr "Nama kelompok"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:451
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
@@ -694,7 +694,7 @@ msgstr "Nama grup"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:308
 msgid "Name of a template in the group"
-msgstr "Nama templat dalam grup"
+msgstr "Nama templat dalam kelompok"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
@@ -5269,11 +5269,11 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:379
 msgid "You are about to remove the pages from your local watchlist.\nAre you sure?"
-msgstr "Anda akan menghapus artikel ini dari daftar pantauan setempat anda.\nAnda yakin ?"
+msgstr "Anda akan menghapus artikel ini dari daftar pantauan lokal anda.\nAnda yakin?"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:403
 msgid "Enter the page title you want to add to your local watchlist"
-msgstr "Ketik judul artikel yang akan ditambahkan pada daftar pantauan setempat anda"
+msgstr "Ketik judul artikel yang akan ditambahkan pada daftar pantauan lokal anda"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:590
 #, java-format
