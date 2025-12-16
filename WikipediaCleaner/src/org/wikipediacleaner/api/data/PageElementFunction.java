@@ -148,7 +148,7 @@ public class PageElementFunction extends PageElement {
       return null;
     }
     String functionName = contents.substring(startFunctionName, tmpIndex).trim();
-    if (functionName.length() == 0) {
+    if (functionName.isEmpty()) {
       return null;
     }
 
@@ -441,7 +441,7 @@ public class PageElementFunction extends PageElement {
    * @return Separator offset.
    */
   public int getParameterSeparatorOffset(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).separatorIndex;
     }
     return 0;
@@ -454,7 +454,7 @@ public class PageElementFunction extends PageElement {
    * @return Parameter full text.
    */
   public String getParameterFullText(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).fullText;
     }
     return null;
@@ -467,7 +467,7 @@ public class PageElementFunction extends PageElement {
    * @return Parameter name.
    */
   public String getParameterName(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).name;
     }
     return null;
@@ -480,7 +480,7 @@ public class PageElementFunction extends PageElement {
    * @return Parameter name offset.
    */
   public int getParameterNameOffset(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).nameStartIndex;
     }
     return 0;
@@ -493,7 +493,7 @@ public class PageElementFunction extends PageElement {
    * @return Parameter value.
    */
   public String getParameterValue(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).value;
     }
     return null;
@@ -506,7 +506,7 @@ public class PageElementFunction extends PageElement {
    * @return Parameter value offset.
    */
   public int getParameterValueNotTrimmedOffset(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).valueNotTrimmedStartIndex;
     }
     return 0;
@@ -519,7 +519,7 @@ public class PageElementFunction extends PageElement {
    * @return Parameter value not trimmed.
    */
   public String getParameterValueNotTrimmed(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).valueNotTrimmed;
     }
     return null;
@@ -532,7 +532,7 @@ public class PageElementFunction extends PageElement {
    * @return Parameter value offset.
    */
   public int getParameterValueOffset(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).valueStartIndex;
     }
     return 0;
@@ -552,7 +552,7 @@ public class PageElementFunction extends PageElement {
     int paramNum = 1;
     while (index < parameters.size()) {
       String parameterName = parameters.get(index).name;
-      if ((parameterName == null) || (parameterName.length() == 0)) {
+      if ((parameterName == null) || (parameterName.isEmpty())) {
         parameterName = Integer.toString(paramNum);
       }
       if (parameterName.equals(Integer.toString(paramNum))) {
@@ -573,7 +573,7 @@ public class PageElementFunction extends PageElement {
    * @return True if the parameter seems correct.
    */
   public boolean isParameterCorrect(int index) {
-    if ((index >= 0) && (index < parameters.size())) {
+    if ((index >= 0) && (index < getParameterCount())) {
       return parameters.get(index).correct;
     }
     return false;
@@ -604,7 +604,7 @@ public class PageElementFunction extends PageElement {
 
   private void addParameter(StringBuilder sb, String parameterName, String parameterValue) {
     sb.append('|');
-    if ((parameterName != null) && (parameterName.trim().length() > 0)) {
+    if ((parameterName != null) && (!parameterName.trim().isEmpty())) {
       sb.append(parameterName);
       sb.append('=');
     }
@@ -632,7 +632,7 @@ public class PageElementFunction extends PageElement {
     sb.append("{{");
     sb.append(name);
     if (value != null) {
-      if ((name.length() > 0) && (name.charAt(name.length() - 1) != ':')) {
+      if ((!name.isEmpty()) && (name.charAt(name.length() - 1) != ':')) {
         sb.append(':');
       }
       sb.append(value.trim());

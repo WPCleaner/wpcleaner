@@ -101,6 +101,9 @@ public class CheckErrorAlgorithm567 extends CheckErrorAlgorithmBase {
     if (NumericFormatnum.isValidFormatnum(analysis, function)) {
       return false;
     }
+    if (function.getParameterCount() == 0) {
+      return false;
+    }
     int beginIndex = function.getBeginIndex();
     int endIndex = function.getEndIndex();
     if ((analysis.getSurroundingTag(WikiTagType.NOWIKI, beginIndex) != null) ||
