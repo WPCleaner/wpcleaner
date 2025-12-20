@@ -34,6 +34,7 @@ import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
  * Algorithm for analyzing error 10 of check wikipedia project.
  * Error 10: Square brackets not correct end
  */
+@SuppressWarnings("unused")
 public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm010() {
@@ -60,181 +61,18 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
 
     // Analyze contents by looking for [[
     String contents = analysis.getContents();
-    int maxLength = contents.length();
     int currentIndex = contents.indexOf("[[");
     boolean result = false;
     while (currentIndex >= 0) {
-      boolean shouldCount = true;
-      if (shouldCount) {
-        PageElementInternalLink link = analysis.isInInternalLink(currentIndex);
-        if ((link != null) && (link.getBeginIndex() == currentIndex)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        PageElementImage image = analysis.isInImage(currentIndex);
-        if ((image != null) && (image.getBeginIndex() == currentIndex)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        PageElementCategory category = analysis.isInCategory(currentIndex);
-        if ((category != null) && (category.getBeginIndex() == currentIndex)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        PageElementLanguageLink link = analysis.isInLanguageLink(currentIndex);
-        if ((link != null) && (link.getBeginIndex() == currentIndex)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        PageElementInterwikiLink link = analysis.isInInterwikiLink(currentIndex);
-        if ((link != null) && (link.getBeginIndex() == currentIndex)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        PageElementExternalLink link = analysis.isInExternalLink(currentIndex + 1);
-        if ((link != null) && (link.getBeginIndex() == currentIndex + 1)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        if (analysis.comments().isAt(currentIndex) ||
-            (analysis.getSurroundingTag(WikiTagType.NOWIKI, currentIndex) != null) ||
-            (analysis.getSurroundingTag(HtmlTagType.CODE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.MAPFRAME, currentIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.MATH, currentIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, currentIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.PRE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SCORE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SOURCE, currentIndex) != null) ||
-            (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, currentIndex) != null) ||
-            (analysis.isInTag(currentIndex) != null)) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
-        PageElementTemplate template = analysis.isInTemplate(currentIndex + 2);
-        if ((template != null) && (contents.startsWith("]]", template.getEndIndex()))) {
-          shouldCount = false;
-        }
-      }
-      if (shouldCount) {
+      int nextIndex = currentIndex;
+      if (shouldCount(analysis, currentIndex)) {
         if (errors == null) {
           return true;
         }
         result = true;
-        
-        // Check if there is a potential end
-        int tmpIndex = currentIndex + 2;
-        boolean errorReported = false;
-        boolean finished = false;
-        while (!finished && (tmpIndex < maxLength)) {
-          char tmpChar = contents.charAt(tmpIndex);
-          if (REJECTED_CHARS.indexOf(tmpChar) >= 0) {
-            finished = true;
-          } else if (tmpChar == ']') {
-            int tmpIndex2 = tmpIndex + 1;
-            while ((tmpIndex2 < maxLength) &&
-                   (contents.charAt(tmpIndex2) != ']') &&
-                   (REJECTED_CHARS.indexOf(contents.charAt(tmpIndex2)) < 0)) {
-              tmpIndex2++;
-            }
-            String suffix = "";
-            if ((tmpIndex2 < maxLength) && (contents.charAt(tmpIndex2) == ']')) {
-              suffix = contents.substring(tmpIndex + 1, tmpIndex2);
-              while (suffix.endsWith(" ") &&
-                     (tmpIndex2 + 1 < maxLength) &&
-                     (contents.charAt(tmpIndex2) + 1 == ' ')) {
-                suffix = suffix.substring(0, suffix.length() - 1);
-              }
-            } else {
-              tmpIndex2 = tmpIndex;
-            }
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, currentIndex, tmpIndex2 + 1);
-
-            // Check if the situation is something like [[http://....] (replacement: [http://....])
-            boolean protocolFound = PageElementExternalLink.isPossibleProtocol(contents, currentIndex + 2);
-            if (protocolFound) {
-              errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex2 + 1));
-            }
-
-            boolean automatic = false;
-            int lineBeginIndex = ContentsUtil.getLineBeginIndex(contents, currentIndex);
-            int lineEndIndex = ContentsUtil.getLineEndIndex(contents, currentIndex);
-            if ((lineBeginIndex == currentIndex) &&
-                (lineEndIndex == tmpIndex2  + 1)) {
-              int colonIndex = contents.indexOf(':', currentIndex + 2);
-              if ((colonIndex > currentIndex + 2) && (colonIndex < lineEndIndex)) {
-                int namespace = Namespace.getNamespace(
-                    analysis.getWikiConfiguration().getNamespaces(),
-                    contents.substring(currentIndex + 2, colonIndex));
-                if (namespace == Namespace.CATEGORY) {
-                  int openBracketIndex = contents.indexOf('[', currentIndex + 2);
-                  int closeBracketIndex = contents.indexOf(']', currentIndex + 2);
-                  if ((closeBracketIndex == tmpIndex2) &&
-                      ((openBracketIndex < 0) || (openBracketIndex > lineEndIndex))) {
-                    automatic = !analysis.getPage().isInUserNamespace();
-                  }
-                }
-              }
-              // TODO: analyze if category at the beginning of a line
-            }
-            errorResult.addReplacement(
-                contents.substring(currentIndex, tmpIndex) + "]]" + suffix,
-                automatic && (suffix.length() == 0));
-            if (suffix.length() > 0) {
-              errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + suffix + "]]");
-            }
-            errors.add(errorResult);
-            errorReported = true;
-            finished = true;
-          } else if (tmpChar == '}') {
-            int lastChar = tmpIndex;
-            if ((lastChar + 1 < maxLength) && (contents.charAt(lastChar + 1) == '}')) {
-              lastChar++;
-            }
-            CheckErrorResult errorResult = createCheckErrorResult(
-                analysis, currentIndex, lastChar + 1);
-            errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "]]");
-            errorResult.addReplacement("{{" + contents.substring(currentIndex + 2, tmpIndex) + "}}");
-            errors.add(errorResult);
-            errorReported = true;
-            finished = true;
-          }
-          tmpIndex++;
-        }
-
-        // Default
-        if (!errorReported) {
-
-          // Check if there's an internal link just after
-          int extraBrackets = 0;
-          if (contents.startsWith("[[", currentIndex + 1)) {
-            PageElement nextLink = analysis.isInInternalLink(currentIndex + 2);
-            if (nextLink == null) {
-              nextLink = analysis.isInCategory(currentIndex + 2);
-            }
-            if (nextLink != null) {
-              if (nextLink.getBeginIndex() == currentIndex + 2) {
-                extraBrackets = 2;
-              } else if (nextLink.getBeginIndex() == currentIndex + 1) {
-                extraBrackets = 1;
-              }
-            }
-          }
-
-          CheckErrorResult errorResult = createCheckErrorResult(
-              analysis, currentIndex, currentIndex + 2 + extraBrackets);
-          errorResult.addReplacement("[[", extraBrackets == 2);
-          errors.add(errorResult);
-        }
+        nextIndex = reportCurrentIndex(analysis, errors, currentIndex);
       }
-      currentIndex = contents.indexOf("[[", currentIndex + 2);
+      currentIndex = contents.indexOf("[[", Math.max(currentIndex + 2, nextIndex));
     }
 
     // Analyze each internal link to see if it contains a [
@@ -298,6 +136,158 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
     }
 
     return result;
+  }
+
+  private boolean shouldCount(final PageAnalysis analysis, final int currentIndex) {
+    PageElementInternalLink link = analysis.isInInternalLink(currentIndex);
+    if ((link != null) && (link.getBeginIndex() == currentIndex)) {
+      return false;
+    }
+    PageElementImage image = analysis.isInImage(currentIndex);
+    if ((image != null) && (image.getBeginIndex() == currentIndex)) {
+      return false;
+    }
+    PageElementCategory category = analysis.isInCategory(currentIndex);
+    if ((category != null) && (category.getBeginIndex() == currentIndex)) {
+      return false;
+    }
+    PageElementLanguageLink languageLinkink = analysis.isInLanguageLink(currentIndex);
+    if ((languageLinkink != null) && (languageLinkink.getBeginIndex() == currentIndex)) {
+      return false;
+    }
+    PageElementInterwikiLink iwLink = analysis.isInInterwikiLink(currentIndex);
+    if ((iwLink != null) && (iwLink.getBeginIndex() == currentIndex)) {
+      return false;
+    }
+    PageElementExternalLink externalLink = analysis.isInExternalLink(currentIndex + 1);
+    if ((externalLink != null) && (externalLink.getBeginIndex() == currentIndex + 1)) {
+      return false;
+    }
+    if (analysis.comments().isAt(currentIndex) ||
+        (analysis.getSurroundingTag(WikiTagType.NOWIKI, currentIndex) != null) ||
+        (analysis.getSurroundingTag(HtmlTagType.CODE, currentIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MAPFRAME, currentIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MATH, currentIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.MATH_CHEM, currentIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.PRE, currentIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SCORE, currentIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SOURCE, currentIndex) != null) ||
+        (analysis.getSurroundingTag(WikiTagType.SYNTAXHIGHLIGHT, currentIndex) != null) ||
+        (analysis.isInTag(currentIndex) != null)) {
+      return false;
+    }
+    PageElementTemplate template = analysis.isInTemplate(currentIndex + 2);
+    if ((template != null) && (analysis.getContents().startsWith("]]", template.getEndIndex()))) {
+      return false;
+    }
+    return true;
+  }
+
+  private int reportCurrentIndex(
+      final PageAnalysis analysis,
+      Collection<CheckErrorResult> errors,
+      final int currentIndex) {
+
+    // Check if there is a potential end
+    String contents = analysis.getContents();
+    int maxLength = contents.length();
+    int tmpIndex = currentIndex + 2;
+    while ((tmpIndex < maxLength) && (REJECTED_CHARS.indexOf(contents.charAt(tmpIndex)) < 0)) {
+      char tmpChar = contents.charAt(tmpIndex);
+      if (tmpChar == ']') {
+        int tmpIndex2 = tmpIndex + 1;
+        while ((tmpIndex2 < maxLength) &&
+            (contents.charAt(tmpIndex2) != ']') &&
+            (REJECTED_CHARS.indexOf(contents.charAt(tmpIndex2)) < 0)) {
+          tmpIndex2++;
+        }
+        String suffix = "";
+        if ((tmpIndex2 < maxLength) && (contents.charAt(tmpIndex2) == ']')) {
+          suffix = contents.substring(tmpIndex + 1, tmpIndex2);
+          while (suffix.endsWith(" ") &&
+              (tmpIndex2 + 1 < maxLength) &&
+              (contents.charAt(tmpIndex2) + 1 == ' ')) {
+            suffix = suffix.substring(0, suffix.length() - 1);
+          }
+        } else {
+          tmpIndex2 = tmpIndex;
+        }
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, currentIndex, tmpIndex2 + 1);
+
+        // Check if the situation is something like [[http://....] (replacement: [http://....])
+        boolean protocolFound = PageElementExternalLink.isPossibleProtocol(contents, currentIndex + 2);
+        if (protocolFound) {
+          errorResult.addReplacement(contents.substring(currentIndex + 1, tmpIndex2 + 1));
+        }
+
+        boolean automatic = false;
+        int lineBeginIndex = ContentsUtil.getLineBeginIndex(contents, currentIndex);
+        int lineEndIndex = ContentsUtil.getLineEndIndex(contents, currentIndex);
+        if ((lineBeginIndex == currentIndex) &&
+            (lineEndIndex == tmpIndex2  + 1)) {
+          int colonIndex = contents.indexOf(':', currentIndex + 2);
+          if ((colonIndex > currentIndex + 2) && (colonIndex < lineEndIndex)) {
+            int namespace = Namespace.getNamespace(
+                analysis.getWikiConfiguration().getNamespaces(),
+                contents.substring(currentIndex + 2, colonIndex));
+            if (namespace == Namespace.CATEGORY) {
+              int openBracketIndex = contents.indexOf('[', currentIndex + 2);
+              int closeBracketIndex = contents.indexOf(']', currentIndex + 2);
+              if ((closeBracketIndex == tmpIndex2) &&
+                  ((openBracketIndex < 0) || (openBracketIndex > lineEndIndex))) {
+                automatic = !analysis.getPage().isInUserNamespace();
+              }
+            }
+          }
+          // TODO: analyze if category at the beginning of a line
+        }
+        errorResult.addReplacement(
+            contents.substring(currentIndex, tmpIndex) + "]]" + suffix,
+            automatic && suffix.isEmpty());
+        if (!suffix.isEmpty()) {
+          errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + suffix + "]]");
+        }
+        errors.add(errorResult);
+        return currentIndex + 2;
+      }
+
+      if (tmpChar == '}') {
+        int lastChar = tmpIndex;
+        if ((lastChar + 1 < maxLength) && (contents.charAt(lastChar + 1) == '}')) {
+          lastChar++;
+        }
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, currentIndex, lastChar + 1);
+        errorResult.addReplacement(contents.substring(currentIndex, tmpIndex) + "]]");
+        errorResult.addReplacement("{{" + contents.substring(currentIndex + 2, tmpIndex) + "}}");
+        errors.add(errorResult);
+        return currentIndex + 2;
+      }
+      tmpIndex++;
+    }
+
+    // Check if there's an internal link just after
+    int extraBrackets = 0;
+    if (contents.startsWith("[[", currentIndex + 1)) {
+      PageElement nextLink = analysis.isInInternalLink(currentIndex + 2);
+      if (nextLink == null) {
+        nextLink = analysis.isInCategory(currentIndex + 2);
+      }
+      if (nextLink != null) {
+        if (nextLink.getBeginIndex() == currentIndex + 2) {
+          extraBrackets = 2;
+        } else if (nextLink.getBeginIndex() == currentIndex + 1) {
+          extraBrackets = 1;
+        }
+      }
+    }
+
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis, currentIndex, currentIndex + 2 + extraBrackets);
+    errorResult.addReplacement("[[", extraBrackets == 2);
+    errors.add(errorResult);
+    return currentIndex + 2;
   }
 
   /**
@@ -433,7 +423,7 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
           }
           int count = doubleBrackets ? 2 : 1;
           if (ok && (sb != null)) {
-            sb.append(originalText.substring(index, index + count));
+            sb.append(originalText, index, index + count);
           }
           index += count;
           done = true;
