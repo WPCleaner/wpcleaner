@@ -28,6 +28,7 @@ import org.wikipediacleaner.api.data.contents.ilink.InternalLinkBuilder;
 import org.wikipediacleaner.api.data.contents.magicword.ImageMagicWordType;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
+import org.wikipediacleaner.i18n.GT;
 
 
 /**
@@ -188,8 +189,25 @@ public class CheckErrorAlgorithm010 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors,
       final int currentIndex) {
 
-    // Check if there is a potential end
+    // Check if it's surrounding a real link
     String contents = analysis.getContents();
+    int lastOpeningBracket = ContentsUtil.moveIndexForwardWhileFound(contents, currentIndex, "[");
+    if (lastOpeningBracket - currentIndex > 2) {
+      PageElementInternalLink link = analysis.isInInternalLink(lastOpeningBracket - 2);
+      if ((link != null) && (link.getBeginIndex() == lastOpeningBracket - 2)) {
+        int lastClosingBracket = ContentsUtil.moveIndexForwardWhileFound(contents, link.getEndIndex(), "]");
+        CheckErrorResult errorResult = createCheckErrorResult(
+            analysis, currentIndex, lastClosingBracket);
+        errorResult.addReplacement(
+            contents.substring(link.getBeginIndex(), link.getEndIndex()),
+            GT._T("Remove surrounding brackets"),
+            true);
+        errors.add(errorResult);
+        return lastClosingBracket;
+      }
+    }
+
+    // Check if there is a potential end
     int maxLength = contents.length();
     int tmpIndex = currentIndex + 2;
     while ((tmpIndex < maxLength) && (REJECTED_CHARS.indexOf(contents.charAt(tmpIndex)) < 0)) {
