@@ -28,7 +28,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-10-30 12:50:19+0000\n"
+"PO-Revision-Date: 2025-12-22 12:37:37+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +38,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.46.0-alpha; Translate 2025-07-31\n"
 "Language: ru\n"
-"X-POT-Import-Date: 2025-08-08 06:36:23+0000\n"
+"X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -214,7 +214,7 @@ msgstr "Удалить"
 msgid "Replace with {0}"
 msgstr "Заменить на  {0}"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:327
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:342
 msgid "Edit table of contents"
 msgstr "Редактировать содержание"
 
@@ -462,6 +462,10 @@ msgstr "Шаблон, в котором категории следует игн
 msgid "A template parameter in which categories should be ignored."
 msgstr "Параметр шаблона, в котором категории следует игнорировать."
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a010/CheckErrorAlgorithm010.java:203
+msgid "Remove surrounding brackets"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:283
 msgid "Remove all control characters"
@@ -632,7 +636,7 @@ msgstr "Шаблоны, которые могут заменить тэги {0}"
 msgid "Template that can be used to replace {0} tags"
 msgstr "Шаблон, который может заменить тэги {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:183
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:184
 msgid "Expand"
 msgstr ""
 
@@ -1737,19 +1741,19 @@ msgstr ""
 msgid "Value of the replacement parameter"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:135
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:151
 msgid "List of categorizing templates"
 msgstr "Список категоризующих шаблонов"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:139
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:155
 msgid "Name of a template that categorizes articles"
 msgstr "Название шаблона, категоризующего статьи"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:142
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:158
 msgid "Name of the parameter that triggers the categorization"
 msgstr "Название параметра, активирующего категоризацию"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:146
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:162
 msgid "Value of the parameter that triggers the categorization"
 msgstr "Значение параметра, активирующего категоризацию"
 
@@ -1999,31 +2003,31 @@ msgstr ""
 msgid "Default value for the meaning"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:238
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:258
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:244
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:261
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:245
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
 msgid "Prefixes that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:251
 msgid "Prefix that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:252
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
 msgid "Suffixes that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:258
 msgid "Suffix that can be safely extracted"
 msgstr ""
 
