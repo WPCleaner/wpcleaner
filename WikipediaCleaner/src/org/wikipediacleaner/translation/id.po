@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Agam Riyandana
+# Author: Bennylin
 # Author: David Wadie Fisher-Freberg
 # Author: Hidayatsrf
 # Author: Penyuwangi
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-12-15 12:37:14+0000\n"
+"PO-Revision-Date: 2025-12-22 12:37:32+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +27,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2019-09-09 19:40+0000\n"
 "X-Generator: MediaWiki 1.46.0-alpha; Translate 2025-07-31\n"
 "Language: id\n"
-"X-POT-Import-Date: 2025-08-08 06:36:23+0000\n"
+"X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -201,7 +202,7 @@ msgstr "Hapus"
 msgid "Replace with {0}"
 msgstr "Ganti dengan {0}"
 
-#: org/wikipediacleaner/api/check/CheckErrorResult.java:327
+#: org/wikipediacleaner/api/check/CheckErrorResult.java:342
 msgid "Edit table of contents"
 msgstr "Sunting daftar isi"
 
@@ -449,6 +450,10 @@ msgstr "Templat yang kategori-kategorinya harus diabaikan."
 msgid "A template parameter in which categories should be ignored."
 msgstr "Parameter templat yang kategori-kategorinya harus diabaikan."
 
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a010/CheckErrorAlgorithm010.java:203
+msgid "Remove surrounding brackets"
+msgstr ""
+
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:283
 msgid "Remove all control characters"
@@ -619,7 +624,7 @@ msgstr "Template yang dapat digunakan untuk mengganti tag {0}"
 msgid "Template that can be used to replace {0} tags"
 msgstr "Template yang dapat digunakan untuk mengganti tag {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:183
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:184
 msgid "Expand"
 msgstr "Perluas"
 
@@ -1736,21 +1741,21 @@ msgstr ""
 msgid "Value of the replacement parameter"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:135
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:151
 #, fuzzy
 msgid "List of categorizing templates"
 msgstr "Kembalikan templat"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:139
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:155
 msgid "Name of a template that categorizes articles"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:142
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:158
 #, fuzzy
 msgid "Name of the parameter that triggers the categorization"
 msgstr "Cari pada templat"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:146
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:162
 msgid "Value of the parameter that triggers the categorization"
 msgstr ""
 
@@ -2004,31 +2009,31 @@ msgstr ""
 msgid "Default value for the meaning"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:238
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:258
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:244
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:261
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:245
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
 msgid "Prefixes that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:251
 msgid "Prefix that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:252
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
 msgid "Suffixes that can be safely extracted"
 msgstr ""
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:258
 msgid "Suffix that can be safely extracted"
 msgstr ""
 
@@ -2398,7 +2403,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
-msgstr "Ruangnama"
+msgstr "Ruang nama"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
@@ -5284,7 +5289,7 @@ msgstr[0] ""
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:593
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Pranala - Ruangnama utama: {0}, Semua ruangnama: {1}"
+msgstr "Pranala - Ruang nama utama: {0}, Semua ruang nama: {1}"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
 msgid "All articles"
