@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-12-22 12:37:33+0000\n"
+"PO-Revision-Date: 2026-01-05 12:28:49+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -76,7 +76,7 @@ msgstr ""
 #: org/wikipediacleaner/Version.java:49
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr "{0}을(를) 좋아하시길 바랍니다."
+msgstr "{0}을(를) 마음에 들어하셨으면 좋겠습니다."
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
@@ -712,7 +712,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:244
 #, java-format
 msgid "Remove {0} tags"
-msgstr ""
+msgstr "{0} 태그 제거"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:34
 msgid "Fix all titles"
@@ -753,7 +753,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:102
 #, java-format
 msgid "Add {0}"
-msgstr ""
+msgstr "{0} 추가"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:153
 #, java-format
@@ -1071,9 +1071,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:214
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:171
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0}"
-msgstr "페이지 {0}:"
+msgstr "{0} 사용"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
@@ -1229,9 +1229,9 @@ msgid "Parameter for the name of the group"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:629
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0} and {1}"
-msgstr "페이지 {0}:"
+msgstr "{0}와(과) {1} 사용"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:158
 msgid "Restore original text"
@@ -1288,14 +1288,12 @@ msgid "An internal link that can be extracted when at the beginning of the exter
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:885
-#, fuzzy
 msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "틀"
+msgstr "외부 링크의 끝에서 추출할 수 있는 링크 목록"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:888
-#, fuzzy
 msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "틀"
+msgstr "외부 링크의 끝에서 추출할 수 있는 내부 링크"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:892
 msgid "A list of links for which the external link can be removed it it takes all the text"
@@ -1576,9 +1574,8 @@ msgid "Automatic replacements of ISBN"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:416
-#, fuzzy
 msgid "Name of the template to use for ISBN"
-msgstr "틀"
+msgstr "ISBN에 사용할 틀 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:419
 msgid "Text before the ISBN to be removed in the replacement"
@@ -1705,9 +1702,8 @@ msgstr "구식 변수가 포함된 틀 이름"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
-#, fuzzy
 msgid "Name of a deprecated parameter"
-msgstr "구식 변수 이름"
+msgstr "구식 매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 msgid "Textual explanation about the deprecated parameter"
@@ -3630,9 +3626,8 @@ msgid "Displaying templates found"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "틀"
+msgstr "문서 확인"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -4584,9 +4579,9 @@ msgstr "문서 내용을 검색 중"
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:93
-#, fuzzy, java-format
+#, java-format
 msgid "Analyzing {0}"
-msgstr "분석 - {0}"
+msgstr "{0} 분석"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
@@ -4594,9 +4589,8 @@ msgid "Unknown host {0}"
 msgstr "알 수 없는 호스트 {0}"
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
-#, fuzzy
 msgid "Check article with Linter"
-msgstr "틀"
+msgstr "Linter로 기사 확인"
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:203
 msgid "You need to select pages to check for linter errors"

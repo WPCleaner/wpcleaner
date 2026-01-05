@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-12-22 12:37:40+0000\n"
+"PO-Revision-Date: 2026-01-05 12:28:54+0000\n"
 "X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -374,22 +374,22 @@ msgstr "Phần đầu đề nơi có thể thêm {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:410
 #, java-format
 msgid "Section headings where a {0} can be added before"
-msgstr "Phần tiêu đề nơi có thể thêm {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:413
 #, java-format
 msgid "Section heading where a {0} can be added before"
-msgstr "Phần đầu đề nơi có thể thêm {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:417
 #, java-format
 msgid "Templates where a {0} can be added before"
-msgstr "Các mẫu mà {0} có thể được thêm vào trước"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:420
 #, java-format
 msgid "Template where a {0} can be added before"
-msgstr "Mẫu nơi có thể thêm {0} trước"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
@@ -466,106 +466,106 @@ msgstr "Để bỏ qua ký tự điều khiển có mã thập lục phân bằn
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:411
 msgid "Non-breaking space"
-msgstr "Không gian không bị phá vỡ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:412
 msgid "Soft hyphen"
-msgstr "dấu gạch mềm"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:413
 msgid "Thee-per-em space"
-msgstr "Không gian ba người"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:414
 msgid "Four-per-em space"
-msgstr "Không gian bốn ô trên mỗi ô"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:415
 msgid "Six-per-em space"
-msgstr "Không gian sáu người một mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:416
 msgid "Figure space"
-msgstr "Không gian hình ảnh"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:417
 msgid "Punctuation space"
-msgstr "Khoảng trống dấu câu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:418
 msgid "Zero-width space"
-msgstr "Khoảng trắng ẩn (Zero-width space)"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:419
 msgid "Left-to-right mark"
-msgstr "Dấu hiệu từ trái sang phải"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:420
 msgid "Right-to-left mark"
-msgstr "Đánh dấu phải-trái"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:421
 msgid "Line separator"
-msgstr "Dấu phân công"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:422
 msgid "Left-to-right embedding"
-msgstr "Nhúng từ trái sang phải"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:423
 msgid "Right-to-left embedding"
-msgstr "Nhúng từ phải sang trái"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:424
 msgid "Pop directional formatting"
-msgstr "Định dạng hướng phổ biến"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:425
 msgid "Left-to-right override"
-msgstr "Ghi đè trái-phải"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:426
 msgid "Right-to-left override"
-msgstr "Ghi đè từ phải sang trái"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:427
 msgid "Byte order mark"
-msgstr "Dấu thứ tự byte"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:428
 msgid "Object replacement character"
-msgstr "Ký tự thay thế đối tượng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:429
 msgid "Private use area"
-msgstr "Khu vực sử dụng riêng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:430
 msgid "Private use area A"
-msgstr "Khu vực sử dụng riêng A"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:431
 msgid "Private use area B"
-msgstr "Khu vực sử dụng riêng B"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a017/CheckErrorAlgorithm017.java:47
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a045/CheckErrorAlgorithm045.java:36
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:42
 msgid "Delete all"
-msgstr "Xóa toàn bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a018/CheckErrorAlgorithm018.java:31
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a022/CheckErrorAlgorithm022.java:33
 msgid "Fix categories"
-msgstr "Không có thể loại"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a021/CheckErrorAlgorithm021.java:77
 msgid "Check category"
-msgstr "Kiểm tra danh mục"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a021/CheckErrorAlgorithm021.java:103
 msgid "Comment category out"
-msgstr "Bình luận thuộc danh mục đã bị loại bỏ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a027/CheckErrorAlgorithm027.java:31
 msgid "Replace all"
@@ -573,32 +573,32 @@ msgstr "Thay thế tất cả"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:252
 msgid "Templates that can replace the end of a table"
-msgstr "Các mẫu có thể thay thế phần cuối của bảng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a02x/a028/CheckErrorAlgorithm028.java:255
 msgid "Template that can replace the end of a table"
-msgstr "Mẫu có thể thay thế phần cuối của bảng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:98
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:105
 msgid "Add a description..."
-msgstr "Thêm lời tóm lược"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:102
 msgid "What description would you like to use for the image ?"
-msgstr "Bạn muốn dùng mô tả cho hình ảnh này"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:105
 msgid "Add an alternate description..."
-msgstr "Thêm mô tả khác"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:109
 msgid "What alternate description would you like to use for the image ?"
-msgstr "Bạn muốn sử dụng mô tả khác cho hình ảnh này?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a030/CheckErrorAlgorithm030.java:114
 msgid "View image"
-msgstr "Xem hình ảnh"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:144
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:516
@@ -606,7 +606,7 @@ msgstr "Xem hình ảnh"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:365
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
-msgstr "Các mẫu có thể được sử dụng để thay thế thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:519
@@ -614,57 +614,57 @@ msgstr "Các mẫu có thể được sử dụng để thay thế thẻ {0}"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:368
 #, java-format
 msgid "Template that can be used to replace {0} tags"
-msgstr "Mẫu có thể được sử dụng để thay thế thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:184
 msgid "Expand"
-msgstr "Mở rộng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
 msgid "Add DEFAULTSORT"
-msgstr "Sửa lỗi DEFAULTSORT"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:230
 msgid "Restrict the detection to the first characters"
-msgstr "Giới hạn việc phát hiện chỉ ở các ký tự đầu tiên."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:233
 msgid "Maximum number of characters to use for the detection"
-msgstr "Số lượng ký tự tối đa được sử dụng để phát hiện"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:236
 msgid "List of templates that prevent automatic fixing of this error"
-msgstr "Danh sách các mẫu ngăn chặn việc tự động sửa lỗi này"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:239
 msgid "Template that prevent automatic fixing of this error"
-msgstr "Mẫu này ngăn chặn việc tự động sửa lỗi này."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a044/CheckErrorAlgorithm044.java:37
 msgid "Fix all bold headlines"
-msgstr "Sửa tất cả các tiêu đề in đậm."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:55
 msgid "Remove all links to title (first in bold)"
-msgstr "Xóa tất cả các liên kết đến tiêu đề (liên kết đầu tiên được in đậm)"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:56
 msgid "Remove all links to title"
-msgstr "Xóa tất cả các liên kết đến tiêu đề"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:432
 msgid "List of templates in which error should be ignored"
-msgstr "Danh sách các mẫu mà lỗi nên được bỏ qua."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:435
 msgid "Name of the template in which error should be ignored"
-msgstr "Tên của mẫu mà lỗi cần được bỏ qua."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:438
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
 msgid "Set to true to report also links in <imagemap>"
-msgstr "Đặt thành true để báo cáo cả các liên kết trong <imagemap>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:444
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:454
@@ -673,7 +673,7 @@ msgstr "Đặt thành true để báo cáo cả các liên kết trong <imagemap
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:326
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:301
 msgid "Groups of templates"
-msgstr "Nhóm mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:448
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:458
@@ -682,7 +682,7 @@ msgstr "Nhóm mẫu"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:330
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:305
 msgid "Name of the group"
-msgstr "Tên nhóm mới"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:451
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:461
@@ -691,11 +691,11 @@ msgstr "Tên nhóm mới"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:333
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:308
 msgid "Name of a template in the group"
-msgstr "Tên của một mẫu trong nhóm"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a054/CheckErrorAlgorithm054.java:38
 msgid "Remove breaks in list"
-msgstr "Xóa dấu ngắt dòng trong danh sách"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a055/CheckErrorAlgorithm055.java:182
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:96
@@ -705,29 +705,29 @@ msgstr "Xóa dấu ngắt dòng trong danh sách"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:244
 #, java-format
 msgid "Remove {0} tags"
-msgstr "Xóa thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:34
 msgid "Fix all titles"
-msgstr "Sửa tất cả tiêu đề"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:227
 msgid "A list of templates that should be ignored"
-msgstr "Danh sách các mẫu cần bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a059/CheckErrorAlgorithm059.java:230
 msgid "A template that should be ignored"
-msgstr "Một mẫu nên được bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:194
 msgid "Templates to be ignored"
-msgstr "Các mẫu cần bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:504
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:507
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
-msgstr "Để buộc sử dụng dấu phân cách giữa các thẻ {0} liên tiếp"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:510
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:513
@@ -740,65 +740,65 @@ msgstr "Để buộc sử dụng dấu phân cách giữa các thẻ {0} liên t
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:362
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
-msgstr "Được sử dụng làm dấu phân cách giữa các thẻ {0} liên tiếp"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:152
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:102
 #, java-format
 msgid "Add {0}"
-msgstr "Thêm {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:153
 #, java-format
 msgid "Remove {0}"
-msgstr "Xóa {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a064/CheckErrorAlgorithm064.java:38
 msgid "Modify all internal links"
-msgstr "Sửa đổi tất cả các liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:33
 msgid "Remove all <small> tags"
-msgstr "Xóa tất cả các thẻ <small>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:536
 #, java-format
 msgid "A list of abbreviations that generate false positives when placed before {0}"
-msgstr "Danh sách các từ viết tắt tạo ra kết quả dương tính giả khi được đặt trước {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:539
 #, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
-msgstr "Một từ viết tắt tạo ra kết quả dương tính giả khi được đặt trước {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:549
 msgid "A list of templates in which the punctuation can be safely moved after the reference"
-msgstr "Danh sách các mẫu mà trong đó dấu câu có thể được di chuyển một cách an toàn sau phần tham chiếu."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:552
 msgid "Parameter of the template"
-msgstr "Tham số của mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:54
 msgid "Check all links to other language"
-msgstr "Kiểm tra tất cả các liên kết đến ngôn ngữ khác"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:124
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:207
 msgid "Check language links"
-msgstr "Danh sách liên kết ngôn ngữ thu gọn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:132
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:333
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:250
 msgid "What is the title of the page on this wiki ?"
-msgstr "Tiêu đề của trang trên wiki này là gì?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:145
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:263
 #, java-format
 msgid "Replace using template {0}"
-msgstr "Thay thế bằng mẫu {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:149
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:324
@@ -816,53 +816,53 @@ msgstr "Thay thế bằng mẫu {0}"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:135
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:245
 msgid "External Viewer"
-msgstr "Trình xem bên ngoài"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:311
 msgid "Do not replace"
-msgstr "Không thay thế"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:312
 #: org/wikipediacleaner/gui/swing/Controller.java:303
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 msgid "Cancel"
-msgstr "Hủy bỏ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:316
 #, java-format
 msgid "The page \"{0}\" in \"{1}\" has a language link to \"{2}\": {3}.\nWith what text do you want to replace the link ?"
-msgstr "Trang \"{0}\" trong \"{1}\" có liên kết ngôn ngữ tới \"{2}\": {3}.\nBạn muốn thay thế liên kết bằng văn bản nào?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:329
 #, java-format
 msgid "The page \"{0}\" in \"{1}\" doesn''t have a language link to \"{2}\"."
-msgstr "Trang \"{0}\" trong \"{1}\" không có liên kết ngôn ngữ tới \"{2}\"."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:331
 #, java-format
 msgid "You can replace the link using template {0}."
-msgstr "Bạn có thể thay thế liên kết bằng mẫu {0}."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:417
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:421
 msgid "A template that can be used instead of the link to an other language."
-msgstr "Một mẫu có thể được sử dụng thay cho liên kết đến ngôn ngữ khác."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:424
 msgid "Parameter name for the local page name"
-msgstr "Tên tham số cho tên trang cục bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:427
 msgid "Parameter name for the code of the other language"
-msgstr "Tên tham số cho mã của ngôn ngữ khác"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:430
 msgid "Parameter name for the page name in the other language"
-msgstr "Tên tham số cho tên trang trong ngôn ngữ khác"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:433
 msgid "Parameter name for the displayed text"
-msgstr "Tên tham số cho văn bản được hiển thị"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:933
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:936
@@ -883,24 +883,24 @@ msgstr "Tên tham số cho văn bản được hiển thị"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:245
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:248
 msgid "An explanation of the problem"
-msgstr "Lời giải thích về vấn đề"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:939
 msgid "Templates to replace ISBN"
-msgstr "Các mẫu để thay thế mã ISBN"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:946
 msgid "True if the template includes parenthesis"
-msgstr "Đúng nếu mẫu bao gồm dấu ngoặc đơn."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:949
 msgid "True if the template includes small tags"
-msgstr "Đúng nếu mẫu bao gồm các thẻ nhỏ."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:119
 #, java-format
 msgid "Length of ISBN is {0} instead of 10 or 13"
-msgstr "Độ dài của ISBN là {0} thay vì 10 hoặc 13"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:136
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:128
@@ -908,7 +908,7 @@ msgstr "Độ dài của ISBN là {0} thay vì 10 hoặc 13"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:142
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:116
 msgid "Search as OCLC"
-msgstr "Tìm kiếm dưới dạng OCLC"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:139
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:131
@@ -916,149 +916,149 @@ msgstr "Tìm kiếm dưới dạng OCLC"
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:145
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:119
 msgid "Search as LCCN"
-msgstr "Tìm kiếm với tên LCCN"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:213
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:181
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:206
 msgid "Similar ISBN"
-msgstr "Mã ISBN tương tự"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:89
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:89
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:97
 #, java-format
 msgid "The checksum is {0} instead of {1}"
-msgstr "Mã kiểm tra là {0} thay vì {1}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:95
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:95
 msgid "There's no existing range for this ISBN"
-msgstr "Hiện không có phạm vi giá nào được quy định cho mã ISBN này."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:97
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:97
 msgid "This ISBN is inside a reserved range"
-msgstr "Mã ISBN này nằm trong phạm vi được dành riêng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:286
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:321
 msgid "An explanation of the problem (incorrect checksum)"
-msgstr "Giải thích về vấn đề (mã kiểm tra không chính xác)"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:292
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:327
 msgid "An explanation of the problem (non-existing range of ISBN numbers)"
-msgstr "Giải thích về vấn đề (không có phạm vi số ISBN)"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a072/CheckErrorAlgorithm072.java:298
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a073/CheckErrorAlgorithm073.java:333
 msgid "An explanation of the problem (reserved range of ISBN numbers)"
-msgstr "Giải thích về vấn đề (phạm vi số ISBN dành riêng)"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:32
 msgid "Replace all %20 by space character"
-msgstr "Thay thế tất cả các ký tự %20 bằng ký tự khoảng trắng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a076/CheckErrorAlgorithm076.java:69
 msgid "Replace %20 by space character"
-msgstr "Thay thế %20 bằng ký tự khoảng trắng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
 msgid "A list of regular expressions to find templates replacing <references> tags"
-msgstr "Danh sách các biểu thức chính quy để tìm các mẫu thay thế<references> thẻ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:205
 msgid "A regular expression to find templates replacing <references> tags"
-msgstr "Biểu thức chính quy để tìm các mẫu thay thế<references> thẻ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:109
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:121
 msgid "What description would you like to use for the external link ?"
-msgstr "Bạn muốn sử dụng mô tả nào cho liên kết ngoài?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:114
 msgid "Convert into <ref> tag"
-msgstr "Chuyển đổi thành thẻ <ref>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:116
 msgid "Add a description and convert into <ref> tag"
-msgstr "Thêm mô tả và chuyển đổi thành<ref> nhãn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a079/CheckErrorAlgorithm079.java:136
 msgid "External viewer"
-msgstr "Trình xem bên ngoài"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:191
 msgid "Tag is unnamed"
-msgstr "Thẻ này chưa được đặt tên."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:194
 msgid "Both tags have already the same name"
-msgstr "Cả hai thẻ đều đã có cùng tên."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:197
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:211
 msgid "Tags have different names"
-msgstr "Thẻ có tên khác nhau"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:297
 msgid "Name the reference from template parameter"
-msgstr "Đặt tên tham chiếu từ tham số mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:306
 msgid "Generate a reference name"
-msgstr "Tạo tên tham chiếu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:313
 msgid "Give a name to the <ref> tag"
-msgstr "Hãy đặt tên cho<ref> nhãn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:318
 msgid "What name would you like to use for the <ref> tag ?"
-msgstr "Bạn muốn dùng tên gì cho...<ref> nhãn ?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:499
 msgid "Parameters that can be used as title"
-msgstr "Các tham số có thể được sử dụng làm tiêu đề"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:513
 msgid "Name the reference with the title"
-msgstr "Đặt tên cho tài liệu tham khảo kèm theo tiêu đề."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:517
 msgid "Is it automatic?"
-msgstr "Nó có tự động không?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:522
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:526
 msgid "Prefix for the automatically generated reference names"
-msgstr "Tiền tố cho tên tham chiếu được tạo tự động"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:531
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:535
 msgid "Hint for a maximum length of the reference name"
-msgstr "Gợi ý về độ dài tối đa của tên tham chiếu."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:105
 msgid "Delete section"
-msgstr "Xóa câu hỏi"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:167
 msgid "A list of texts that can be added to sections without content"
-msgstr "Danh sách các văn bản có thể được thêm vào các phần chưa có nội dung."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:170
 msgid "A text that can be added to sections without content"
-msgstr "Một đoạn văn bản có thể được thêm vào các phần chưa có nội dung."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:173
 msgid "Restrict verification to titles with a higher level"
-msgstr "Giới hạn việc xác minh đối với các chức danh có cấp độ cao hơn."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:176
 msgid "Maximum level of title to check"
-msgstr "Cấp độ chức danh tối đa cần kiểm tra"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:300
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
@@ -1066,144 +1066,144 @@ msgstr "Cấp độ chức danh tối đa cần kiểm tra"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:171
 #, java-format
 msgid "Use {0}"
-msgstr "Sử dụng {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
-msgstr "Danh sách các mẫu có thể được sử dụng để thay thế thẻ <center>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:363
 msgid "Template that can be used to replace &lt;center&gt; tags"
-msgstr "Mẫu có thể được sử dụng để thay thế thẻ </center>"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:366
 msgid "Name of the parameter to use"
-msgstr "Tên tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:670
 msgid "What text should be displayed by the link?"
-msgstr "Liên kết này nên hiển thị văn bản gì?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:675
 msgid "Convert into an internal link"
-msgstr "Chuyển đổi thành liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:839
 msgid "Templates to be used for linking to the history of an article"
-msgstr "Các mẫu được sử dụng để liên kết đến lịch sử của một bài viết."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:843
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:872
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:893
 msgid "Template to be used for linking to the history of an article"
-msgstr "Mẫu này được sử dụng để liên kết đến lịch sử của một bài viết."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:846
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:875
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:896
 msgid "Parameter to be used for the article name"
-msgstr "Tham số được sử dụng cho tên bài viết"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:850
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:883
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:900
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:435
 msgid "Parameter to be used for the text"
-msgstr "Tham số được sử dụng cho văn bản"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:856
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:424
 msgid "Templates using external links"
-msgstr "Các mẫu sử dụng liên kết ngoài"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:868
 msgid "Templates to be used for linking to an old version of an article"
-msgstr "Các mẫu được sử dụng để liên kết đến phiên bản cũ của bài viết"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:879
 msgid "Parameter to be used for the identifier of the old version"
-msgstr "Tham số được sử dụng để định danh phiên bản cũ."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:889
 msgid "Templates to be used instead of Special:PrefixIndex"
-msgstr "Các mẫu được sử dụng thay cho Special:PrefixIndex"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:55
 msgid "Convert them to internal links"
-msgstr "Chuyển đổi thành liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:428
 #: org/wikipediacleaner/api/data/PageComparator.java:379
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:234
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:209
 msgid "Template"
-msgstr "Bản mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:431
 msgid "Parameter to be used for the link"
-msgstr "Tham số được sử dụng cho văn bản"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:441
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:444
 msgid "To report only links to other languages"
-msgstr "Chỉ báo cáo các liên kết đến các ngôn ngữ khác."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:447
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:450
 msgid "To report only links to local wikis"
-msgstr "Chỉ báo cáo các liên kết đến wiki địa phương"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:311
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:314
 msgid "Maximum level of titles to report"
-msgstr "Cấp độ chức danh tối đa cần kiểm tra"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:317
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:320
 msgid "To report only consecutive titles"
-msgstr "Chỉ báo cáo các tựa đề liên tiếp"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:250
 msgid "Templates that should be ignored"
-msgstr "Một mẫu nên được bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:254
 msgid "Template to be ignored"
-msgstr "Mẫu này sẽ bị bỏ qua."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:257
 msgid "Parameter to be ignored"
-msgstr "Tham số cần bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:164
 msgid "List of ordinal suffixes"
-msgstr "Danh sách các hậu tố thứ tự"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:167
 msgid "Ordinal suffix"
-msgstr "Hậu tố thứ tự"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:171
 msgid "List of possible replacements"
-msgstr "Danh sách các ứng viên thay thế khả thi"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:174
 msgid "A possible replacemement for one suffix"
-msgstr "Một phương án thay thế khả thi cho một hậu tố."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a103/CheckErrorAlgorithm103.java:31
 msgid "Replace all pipe templates"
-msgstr "Thay thế tất cả các mẫu ống"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:119
 #, java-format
 msgid "Length of ISSN is {0} instead of 8"
-msgstr "Độ dài của ISBN là {0} thay vì 10 hoặc 13"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:196
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a108/CheckErrorAlgorithm108.java:166
 msgid "Similar ISSN"
-msgstr "Mã ISBN tương tự"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:204
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
@@ -1215,238 +1215,238 @@ msgstr "Mã ISBN tương tự"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:394
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:401
 msgid "Template name"
-msgstr "Tên bản mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a111/CheckErrorAlgorithm111.java:207
 msgid "Parameter for the name of the group"
-msgstr "Tham số cho tên của nhóm"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:629
 #, java-format
 msgid "Use {0} and {1}"
-msgstr "Sử dụng {0} và {1}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:158
 msgid "Restore original text"
-msgstr "Khôi phục văn bản gốc"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:164
 #, java-format
 msgid "Replace each time with {0}"
-msgstr "Thay thế mỗi lần bằng {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:171
 msgid "Replace each time with"
-msgstr "Thay thế mỗi lần bằng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:796
 msgid "Regular expressions to be disabled"
-msgstr "Biểu thức chính quy sẽ bị vô hiệu hóa"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:800
 msgid "Regular expression"
-msgstr "Biểu thức chính quy"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:104
 #, java-format
 msgid "Use template {0}"
-msgstr "Sử dụng mẫu {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:109
 msgid "Remove references"
-msgstr "Xóa các tham chiếu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:146
 msgid "Templates that can be used to declare the reference for the entire section"
-msgstr "Các mẫu có thể được sử dụng để khai báo tham chiếu cho toàn bộ phần."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:160
 msgid "Comment about the template"
-msgstr "Nhận xét về mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:32
 msgid "Compact links"
-msgstr "Liên kết nhỏ gọn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a509/CheckErrorAlgorithm509.java:78
 msgid "Compact link"
-msgstr "Liên kết nhỏ gọn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:878
 msgid "A list of links that can be extracted when at the beginning of the external link"
-msgstr "Danh sách các liên kết có thể được trích xuất khi ở đầu liên kết ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:881
 msgid "An internal link that can be extracted when at the beginning of the external link"
-msgstr "Một liên kết nội bộ có thể được trích xuất khi ở đầu liên kết bên ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:885
 msgid "A list of links that can be extracted when at the end of the external link"
-msgstr "Danh sách các liên kết có thể được trích xuất khi ở cuối liên kết ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:888
 msgid "An internal link that can be extracted when at the end of the external link"
-msgstr "Một liên kết nội bộ có thể được trích xuất khi ở cuối liên kết bên ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:892
 msgid "A list of links for which the external link can be removed it it takes all the text"
-msgstr "Danh sách các liên kết mà liên kết ngoài có thể được xóa nếu thao tác này xóa toàn bộ văn bản."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:896
 msgid "An internal link for which the external link can be removed it it takes all the text"
-msgstr "Một liên kết nội bộ mà liên kết bên ngoài của nó có thể bị xóa nếu nó lấy toàn bộ văn bản."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:899
 msgid "Value of the URL to remove the external link"
-msgstr "Giá trị của URL để xóa liên kết ngoài"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:905
 msgid "A list of templates that create an internal link"
-msgstr "Danh sách các mẫu tạo liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:909
 msgid "Name of a template that creates an internal link"
-msgstr "Tên của một mẫu tạo liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:912
 msgid "Name of a template that can be used as a replacement"
-msgstr "Tên của một mẫu có thể được sử dụng để thay thế."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:916
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:253
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:271
 msgid "True if the replacement can be automatic"
-msgstr "Đúng nếu việc thay thế có thể được thực hiện tự động."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:922
 msgid "A list of template parameters that create the text of an external link"
-msgstr "Danh sách các tham số mẫu tạo nên văn bản của liên kết ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:926
 msgid "Name of a template that creates an external link"
-msgstr "Tên của một mẫu tạo liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:929
 msgid "Name of a parameter that is used to create the text of the external link"
-msgstr "Tên của một tham số được sử dụng để tạo văn bản của liên kết ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:932
 msgid "True if removing internal links in the text can be automatic"
-msgstr "Đúng nếu việc loại bỏ các liên kết nội bộ trong văn bản có thể được thực hiện tự động."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:938
 msgid "A list of texts (regular expressions) that can be after the internal link"
-msgstr "Danh sách các đoạn văn bản (biểu thức chính quy) có thể xuất hiện sau liên kết nội bộ."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:941
 msgid "Regular expression that can be after the internal link"
-msgstr "Biểu thức chính quy có thể được đặt sau liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:945
 msgid "A list of texts that can be before the internal link"
-msgstr "Danh sách các văn bản có thể xuất hiện trước liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:949
 msgid "Text that can be before the internal link"
-msgstr "Văn bản có thể xuất hiện trước liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:952
 msgid "True if finding this text means that the replacement can be automatic"
-msgstr "Đúng nếu việc tìm thấy đoạn văn bản này đồng nghĩa với việc thay thế có thể được thực hiện tự động."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:188
 msgid "References defined by templates."
-msgstr "Các tham chiếu được định nghĩa bởi các mẫu."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:192
 msgid "Name of a template which defines references"
-msgstr "Tên của một mẫu định nghĩa các tham chiếu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:195
 msgid "Name of the reference defined by the template"
-msgstr "Tên của tham chiếu được định nghĩa bởi mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:404
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
-msgstr "Mã định danh của bộ lọc lạm dụng được kích hoạt bởi các thẻ {0}."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:414
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:417
 msgid "A template that can be used instead of an apostrophe."
-msgstr "Một mẫu có thể được sử dụng thay cho dấu nháy đơn."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:420
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:423
 msgid "A template that can be used instead of an asterisk."
-msgstr "Một mẫu có thể được sử dụng thay cho dấu hoa thị."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:426
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:429
 msgid "A template that can be used instead of a closing square bracket."
-msgstr "Một mẫu có thể được sử dụng thay cho dấu ngoặc vuông đóng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:432
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:435
 msgid "A template that can be used instead of an opening square bracket."
-msgstr "Một mẫu có thể được sử dụng thay cho dấu ngoặc vuông mở."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:150
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:153
 msgid "An identifier of an abuse filter that is triggered by weird characters."
-msgstr "Mã định danh của bộ lọc lạm dụng được kích hoạt bởi các thẻ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:468
 msgid "A list of templates and parameters in which format should be checked"
-msgstr "Danh sách các mẫu và tham số cần kiểm tra định dạng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:472
 msgid "The name of a template in which format should be checked"
-msgstr "Tên của một mẫu mà định dạng cần được kiểm tra."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:475
 msgid "The name of a parameter in which format should be checked"
-msgstr "Tên của tham số cần kiểm tra định dạng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:478
 msgid "A correct format for the date"
-msgstr "Định dạng chính xác cho ngày tháng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:484
 msgid "A list of text values for months"
-msgstr "Danh sách các giá trị văn bản cho các tháng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:487
 msgid "A text value for a month"
-msgstr "Giá trị văn bản cho một tháng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:223
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:226
 msgid "The size below which images are not reported as duplicates"
-msgstr "Kích thước nhỏ hơn mức mà hình ảnh không được báo cáo là ảnh trùng lặp."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:146
 msgid "Both values are equal"
-msgstr "Cả hai giá trị đều bằng nhau"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:148
 msgid "Other value is empty"
-msgstr "Giá trị khác trống"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr "Cả hai giá trị đều giống nhau"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
 msgid "Other value: {0}"
-msgstr "Giá trị khác: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:249
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:531
 msgid "Comment"
-msgstr "Bình luận"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:428
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:431
@@ -1459,73 +1459,73 @@ msgstr "Bình luận"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:258
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:261
 msgid "A category containing the list of pages in error"
-msgstr "Một danh mục chứa danh sách các trang bị lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
 msgid "Values that are to be considered identical"
-msgstr "Các giá trị được coi là giống hệt nhau"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
 msgid "Comma separated list of template names"
-msgstr "Danh sách các tên mẫu được phân cách bằng dấu phẩy"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
 msgid "Comma separated list of parameter names"
-msgstr "Danh sách các tên tham số được phân cách bằng dấu phẩy."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr "Tên tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
-msgstr "Các giá trị có thể bỏ qua một cách an toàn đối với một mẫu và đối số nhất định."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:459
 msgid "Name of the template in which some values can be safely ignored"
-msgstr "Tên của mẫu mà trong đó một số giá trị có thể được bỏ qua một cách an toàn."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:462
 msgid "Name of the parameter for which some values can be safely ignored"
-msgstr "Name of the parameter for which some values can be safely ignored"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:465
 msgid "Value of the parameter which can be safely ignored"
-msgstr "Giá trị của tham số có thể được bỏ qua một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:136
 msgid "Use an anchor template?"
-msgstr "Use an anchor template?"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:232
 #, java-format
 msgid "A template that can replace a {0}"
-msgstr "Một mẫu có thể thay thế {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
 msgid "Name of the parameter to be used for the anchor identifier"
-msgstr "Tên của tham số được sử dụng cho định danh neo"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:239
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:585
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:606
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:627
 msgid "If replacement can be automatic"
-msgstr "Đúng nếu việc thay thế có thể được thực hiện tự động."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:424
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:427
 msgid "An identifier of an abuse filter that is triggered by incorrect year links."
-msgstr "Mã định danh của bộ lọc lạm dụng được kích hoạt bởi các thẻ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:430
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:437
 msgid "Text added after the link to ask for help."
-msgstr "Văn bản được thêm vào sau liên kết để yêu cầu trợ giúp."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:434
 msgid "Description of the action"
-msgstr "Mô tả hành động"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:442
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:445
@@ -1534,623 +1534,623 @@ msgstr "Mô tả hành động"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:295
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:298
 msgid "A page containing a dump analysis for this error."
-msgstr "Trang này chứa kết quả phân tích lỗi."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:448
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:451
 msgid "Minimum number of digits for the year"
-msgstr "Số chữ số tối thiểu cho năm"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:454
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:457
 msgid "Maximum number of digits for the year"
-msgstr "Số chữ số tối đa cho năm"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:460
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:463
 msgid "Minimum difference between the year displayed and the year linked"
-msgstr "Chênh lệch tối thiểu giữa năm hiển thị và năm được liên kết"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:466
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:469
 msgid "Minimum difference between the year linked and the year displayed"
-msgstr "Chênh lệch tối thiểu giữa năm liên kết và năm hiển thị"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
 msgid "Trim text"
-msgstr "Cắt bớt văn bản"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:412
 msgid "Automatic replacements of ISBN"
-msgstr "Tự động thay thế mã ISBN"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:416
 msgid "Name of the template to use for ISBN"
-msgstr "Tên mẫu cần sử dụng cho ISBN"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:419
 msgid "Text before the ISBN to be removed in the replacement"
-msgstr "Văn bản trước mã ISBN sẽ bị xóa trong bản thay thế."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:422
 msgid "Text after the ISBN to be removed in the replacement"
-msgstr "Văn bản sau mã ISBN sẽ bị xóa trong bản thay thế."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
-msgstr "Xem RFC"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:131
 msgid "A list of templates that can't be used inside a reference"
-msgstr "Danh sách các mẫu không thể sử dụng bên trong tài liệu tham khảo"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:135
 msgid "Name of a template that can't be used inside a reference"
-msgstr "Name of a template that can't be used inside a reference"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a532/CheckErrorAlgorithm532.java:46
 msgid "Fix tags"
-msgstr "Sửa thẻ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a538/CheckErrorAlgorithm538.java:29
 msgid "Remove whitespace characters"
-msgstr "Loại bỏ các ký tự khoảng trắng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
 msgid "Fix bold and italic"
-msgstr "Sửa lỗi in đậm và in nghiêng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:237
 #, java-format
 msgid "Remove {0} tag"
-msgstr "Xóa thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:335
 msgid "for marking an edit"
-msgstr "để đánh dấu một chỉnh sửa"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:340
 msgid "for anything else"
-msgstr "cho bất cứ điều gì khác"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:360
 msgid "preferred for source code"
-msgstr "ưu tiên cho mã nguồn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:365
 msgid "preferred for user input"
-msgstr "ưu tiên cho nhập liệu của người dùng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:370
 msgid "preferred for variables"
-msgstr "ưu tiên cho các biến"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:375
 msgid "preferred for output, function and tag names, etc."
-msgstr "Ưu tiên sử dụng cho tên đầu ra, chức năng và thẻ, v.v."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:383
 msgid "preferred for everything else"
-msgstr "được ưa chuộng cho mọi thứ khác"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:574
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:595
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:616
 #, java-format
 msgid "Possible replacements for {0} tags"
-msgstr "Các lựa chọn thay thế khả thi cho thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:578
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:599
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:620
 #, java-format
 msgid "Template for replacing {0} tag"
-msgstr "Mẫu để thay thế thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:581
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:602
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:623
 msgid "Parameter to use in the template for the text"
-msgstr "Tham số cần sử dụng trong mẫu cho văn bản"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:589
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:610
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:631
 msgid "Description of the template"
-msgstr "Mô tả mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
-msgstr "Các cặp mẫu: đối với mỗi mẫu mở, tất cả các mẫu đóng có thể có."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:220
 msgid "Name of the opening template in the pair"
-msgstr "Tên của mẫu mở đầu trong cặp"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:223
 msgid "Name of a closing template in the pair"
-msgstr "Tên của một mẫu đóng trong cặp đó"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:274
 msgid "Categories listing pages using templates with deprecated parameters"
-msgstr "Trang liệt kê danh mục sử dụng mẫu với các tham số đã lỗi thời."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:277
 msgid "Name of a category listing pages using templates with deprecated parameters"
-msgstr "Tên của danh mục liệt kê các trang sử dụng mẫu với các tham số đã lỗi thời."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:295
 msgid "Templates with deprecated parameters"
-msgstr "Các mẫu có tham số đã lỗi thời"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:299
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:315
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:331
 msgid "Name of a template with deprecated parameter"
-msgstr "Tên của một mẫu có tham số đã lỗi thời."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
 msgid "Name of a deprecated parameter"
-msgstr "Tên của một tham số đã lỗi thời"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 msgid "Textual explanation about the deprecated parameter"
-msgstr "Giải thích bằng văn bản về tham số đã lỗi thời."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:311
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:327
 msgid "Replacements of deprecated parameters"
-msgstr "Thay thế các tham số đã lỗi thời"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:321
 msgid "Name of a replacement parameter"
-msgstr "Tên của tham số thay thế"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:337
 msgid "Value of the deprecated parameter"
-msgstr "Tên của một tham số đã lỗi thời"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:340
 msgid "Name of the replacement parameter"
-msgstr "Tên của tham số thay thế"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:343
 msgid "Value of the replacement parameter"
-msgstr "Giá trị của tham số thay thế"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:151
 msgid "List of categorizing templates"
-msgstr "Danh sách các mẫu phân loại"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:155
 msgid "Name of a template that categorizes articles"
-msgstr "Tên của một mẫu dùng để phân loại bài viết"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:158
 msgid "Name of the parameter that triggers the categorization"
-msgstr "Tên của tham số kích hoạt quá trình phân loại"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:162
 msgid "Value of the parameter that triggers the categorization"
-msgstr "Giá trị của tham số kích hoạt quá trình phân loại."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:260
 msgid "Templates in which empty list items should be ignored"
-msgstr "Các mẫu trong đó các mục trống trong danh sách cần được bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:264
 msgid "Template in which empty list items should be ignored"
-msgstr "Mẫu trong đó các mục trống trong danh sách cần được bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:267
 msgid "Template parameter in which empty list items should be ignored"
-msgstr "Tham số mẫu trong đó các mục danh sách trống cần được bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:374
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:271
 msgid "Links to ignore"
-msgstr "Các liên kết cần bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:377
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:274
 msgid "Link to ignore"
-msgstr "Liên kết cần bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:284
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:236
 msgid "Templates to ignore"
-msgstr "Các mẫu cần bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:287
 msgid "Template to ignore"
-msgstr "Mẫu này sẽ bị bỏ qua."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:435
 msgid "Acceptable suffixes"
-msgstr "Các hậu tố được chấp nhận"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:438
 msgid "Acceptable suffix"
-msgstr "Hậu tố được chấp nhận"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:442
 msgid "Words that should be separated from the link"
-msgstr "Những từ cần được tách ra khỏi liên kết"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:445
 msgid "Word that should be separated from the link by a whitespace"
-msgstr "Từ cần được tách khỏi liên kết bằng khoảng trắng"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:156
 #, java-format
 msgid "Add inside a {0} tag"
-msgstr "Thêm vào bên trong thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:163
 #, java-format
 msgid "Keep text and add link inside a {0} tag"
-msgstr "Giữ nguyên văn bản và thêm liên kết bên trong thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:255
 msgid "Templates in which external links are normal"
-msgstr "Các mẫu trong đó liên kết ngoài là bình thường"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:259
 msgid "Template in which external links are normal"
-msgstr "Mẫu trong đó các liên kết ngoài là bình thường"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:262
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:272
 msgid "Parameter in which external links are normal"
-msgstr "Tham số trong đó các liên kết ngoài được coi là bình thường."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:268
 msgid "Template parameters in which external links are normal"
-msgstr "Các mẫu trong đó liên kết ngoài là bình thường"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:277
 msgid "Sections in which external links are normal"
-msgstr "Các mẫu trong đó liên kết ngoài là bình thường"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:280
 msgid "Section in which external links are normal"
-msgstr "Các mẫu trong đó liên kết ngoài là bình thường"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:570
 msgid "Links which are correct with a prefix"
-msgstr "Các liên kết chính xác có tiền tố"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:574
 msgid "Link target"
-msgstr "Liên kết mục tiêu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:577
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:228
 msgid "Link text"
-msgstr "Văn bản liên kết:"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:584
 msgid "Prefixes which can be before an internal link"
-msgstr "Các tiền tố có thể đứng trước liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:588
 msgid "Prefix which can be before an internal link"
-msgstr "Tiền tố có thể đứng trước một liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:593
 msgid "Prefixes which should be excluded from the internal link"
-msgstr "Các tiền tố cần loại trừ khỏi liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:597
 msgid "Prefix which should be excluded from the internal link"
-msgstr "Tiền tố cần loại bỏ khỏi liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:602
 msgid "List of suggestions for separators between the text and the internal link"
-msgstr "Danh sách các gợi ý về dấu phân cách giữa văn bản và liên kết nội bộ"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:606
 msgid "Suggestion for a separator between the text and the internal link"
-msgstr "Đề xuất thêm dấu phân cách giữa văn bản và liên kết nội bộ."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:346
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:349
 msgid "Option to apply automatic replacement even in templates"
-msgstr "Tùy chọn áp dụng thay thế tự động ngay cả trong các mẫu."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:352
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:355
 #, java-format
 msgid "Incorrect separator between consecutive {0} tags"
-msgstr "Được sử dụng làm dấu phân cách giữa các thẻ {0} liên tiếp"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:230
 msgid "Templates for which unused parameters should be verified"
-msgstr "Các mẫu mà các tham số không được sử dụng cần được xác minh."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:237
 msgid "Set to true to automatically remove unused parameters"
-msgstr "Đặt thành true để tự động loại bỏ các tham số không sử dụng."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:248
 msgid "Parameters that should be ignored"
-msgstr "Một mẫu nên được bỏ qua"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:137
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:129
 #, java-format
 msgid "Template {0}"
-msgstr "Mẫu {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:340
 msgid "Templates for which unknown parameters should be verified"
-msgstr "Các mẫu mà các tham số không được sử dụng cần được xác minh."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:354
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:413
 msgid "Template parameters which can be safely deleted"
-msgstr "Các tham số mẫu có thể được xóa một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:368
 msgid "Template parameters for which unnamed parameters can be safely deleted when values are equal"
-msgstr "Các tham số mẫu mà các tham số không tên có thể được xóa một cách an toàn khi giá trị của chúng bằng nhau."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:375
 msgid "Name of parameter"
-msgstr "Tên tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:382
 msgid "Template parameters which can be safely deleted if they have a given value"
-msgstr "Các tham số mẫu có thể được xóa một cách an toàn nếu chúng có giá trị xác định."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:389
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:328
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:363
 msgid "Value of the parameter"
-msgstr "Tên tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:399
 msgid "Template parameters which can be safely commented"
-msgstr "Các tham số mẫu có thể được chú thích một cách an toàn."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:427
 msgid "Template parameters which can be safely replaced"
-msgstr "Các tham số mẫu có thể được xóa một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:434
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:453
 msgid "Initial name of the parameter"
-msgstr "Tên ban đầu của tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:439
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:459
 msgid "Target name of the parameter"
-msgstr "Tên mục tiêu của tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:446
 msgid "Template parameters which can be safely replaced if they have a given value"
-msgstr "Các tham số mẫu có thể được thay thế một cách an toàn nếu chúng có giá trị xác định."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:456
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:345
 msgid "Initial value of the parameter"
-msgstr "Giá trị ban đầu của tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:462
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:348
 msgid "Target value of the parameter"
-msgstr "Tên mục tiêu của tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:246
 msgid "Possible replacements based on abbreviation value"
-msgstr "Các từ thay thế khả thi dựa trên giá trị viết tắt"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:250
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:265
 msgid "Value of the abbreviation"
-msgstr "Giá trị của chữ viết tắt"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:256
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:274
 msgid "Replacement for the abbreviation"
-msgstr "Từ thay thế cho từ viết tắt"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:261
 msgid "Possible replacements based on abbreviation value and title"
-msgstr "Các từ thay thế khả thi dựa trên giá trị viết tắt"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:268
 msgid "Title of the abbreviation"
-msgstr "Giá trị của chữ viết tắt"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:279
 msgid "Templates which can replace an abbreviation"
-msgstr "Các mẫu có thể thay thế cho từ viết tắt."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:286
 msgid "Name of the parameter for the abbreviation"
-msgstr "Tên của tham số dùng để viết tắt"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:289
 msgid "Name of the parameter for the meaning"
-msgstr "Tên của tham số cho ý ngngh"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:292
 msgid "Default value for the meaning"
-msgstr "Giá trị mặc định cho ý nghĩa"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:258
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
-msgstr "Các trang liệt kê danh mục sử dụng các đối số không phải số {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:244
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:261
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
-msgstr "Tên của danh mục liệt kê các trang sử dụng các đối số không phải số {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
 msgid "Prefixes that can be safely extracted"
-msgstr "Các tiền tố có thể được trích xuất một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:251
 msgid "Prefix that can be safely extracted"
-msgstr "Tiền tố có thể được trích xuất một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
 msgid "Suffixes that can be safely extracted"
-msgstr "Các hậu tố có thể được trích xuất một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:258
 msgid "Suffix that can be safely extracted"
-msgstr "Các tiền tố có thể được trích xuất một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:265
 msgid "Template parameters that should only contain numeric arguments"
-msgstr "Các tham số mẫu chỉ nên chứa các đối số dạng số."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:268
 msgid "If parameters accept only integer values"
-msgstr "Nếu các tham số chỉ chấp nhận giá trị số nguyên"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:269
 msgid "Parameter name"
-msgstr "Tên tham số"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:274
 msgid "Template parameters that can contain a reference"
-msgstr "Các tham số mẫu có thể chứa tham chiếu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:277
 msgid "Parameter name with the formatnum"
-msgstr "Tên tham số kèm định dạng số."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:278
 msgid "Parameter name that can contain a reference"
-msgstr "Tên tham số có thể chứa tham chiếu"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:188
 #, java-format
 msgid "Delete {0} tags"
-msgstr "Xóa thẻ {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:150
 #, java-format
 msgid "Same value as parameter {0}"
-msgstr "Giá trị giống với tham số {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:315
 msgid "Templates for which unknown values should be verified"
-msgstr "Các mẫu mà các tham số không được sử dụng cần được xác minh."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:325
 msgid "True if the value is case sensitive"
-msgstr "True nếu giá trị phân biệt chữ hoa chữ thường."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:335
 msgid "Template values which can be safely replaced"
-msgstr "Các tham số mẫu có thể được xóa một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:353
 msgid "Possible confusions with another parameter"
-msgstr "Có thể gây nhầm lẫn với thông số khác"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:231
 msgid "Templates for which values should be verified"
-msgstr "Các mẫu mà các tham số không được sử dụng cần được xác minh."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:241
 msgid "Image attribute"
-msgstr "Thuộc tính hình ảnh"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:173
 #, java-format
 msgid "Check incorrect DOI {0}"
-msgstr "Kiểm tra DOI không chính xác {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:239
 #, java-format
 msgid "External viewer for parameter {0}"
-msgstr "Trình xem bên ngoài cho tham số {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:264
 #, java-format
 msgid "Check DOI {0}"
-msgstr "Kiểm tra DOI {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:358
 msgid "Prefixes that can be safely deleted"
-msgstr "Các tiền tố có thể được trích xuất một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:362
 msgid "Prefix that can be safely deleted"
-msgstr "Tiền tố có thể được trích xuất một cách an toàn"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:181
 msgid "Templates that shouldn't be used in list item"
-msgstr "Các mẫu không nên sử dụng trong mục danh sách"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:185
 msgid "Template that shouldn't be used in list item"
-msgstr "Mẫu không nên sử dụng trong mục danh sách"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:364
 msgid "Redundant templates"
-msgstr "Các mẫu dư thừa"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:371
 msgid "Redundant templates when used with only unnamed parameters"
-msgstr "Các mẫu dư thừa khi chỉ được sử dụng với các tham số không được đặt tên."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:378
 msgid "Templates that can be merged when used with only unnamed parameters"
-msgstr "Các mẫu có thể được sáp nhập khi sử dụng chỉ với các tham số không được đặt tên"
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:385
 msgid "Templates for which we can keep only the first duplicate"
-msgstr "Các mẫu mà chúng ta chỉ có thể giữ lại bản sao đầu tiên."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:392
 msgid "Templates for which we can keep only the last if they are different"
-msgstr "Các mẫu mà chúng ta chỉ có thể giữ lại mẫu cuối cùng nếu chúng khác nhau."
+msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:399
 msgid "Templates to ignore if they're not one after each other"
-msgstr "Các mẫu cần bỏ qua nếu chúng không nằm liền kề nhau."
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr "Đã sửa bằng cách sử dụng {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:320
 msgid "Deactivated"
-msgstr "Kích hoạt lại"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:322
 msgid "Low priority"
-msgstr "Ưu tiên thấp"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:324
 msgid "Middle priority"
-msgstr "Ưu tiên trung bình"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:326
 msgid "Top priority"
-msgstr "Ưu tiên thấp"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:328
 msgid "For Bot"
-msgstr "Dành cho Bot"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:330
 msgid "Priority unknown"
-msgstr "Mức độ ưu tiên chưa xác định"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:402
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:421
@@ -2159,7 +2159,7 @@ msgstr "Mức độ ưu tiên chưa xác định"
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:510
 #, java-format
 msgid "Attribute {0} can''t be set in general configuration"
-msgstr "Thuộc tính {0} không thể được thiết lập trong cấu hình chung"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:408
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:427
@@ -2168,17 +2168,17 @@ msgstr "Thuộc tính {0} không thể được thiết lập trong cấu hình 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:482
 #, java-format
 msgid "Attribute {0} can''t be set in user configuration"
-msgstr "Thuộc tính {0} không thể được thiết lập trong cấu hình người dùng"
+msgstr ""
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:472
 #, java-format
 msgid "Attribute {0} should be integer value"
-msgstr "Thuộc tính {0} phải là giá trị số nguyên"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
 msgid "You have done the following contributions on \"{0}\":"
-msgstr "Bạn đã thực hiện các đóng góp sau trên \"{0}\":"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/Contributions.java:50
 #, java-format
@@ -2201,276 +2201,276 @@ msgstr[0] ""
 #: org/wikipediacleaner/api/constants/Contributions.java:84
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
-msgstr "Bạn chưa đóng góp gì cho \"{0}\""
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:18
 msgid "Dormant pages"
-msgstr "Trang không hoạt động"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:19
 msgid "Broken redirects"
-msgstr "Đổi hướng sai"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:20
 msgid "Dead-end pages"
-msgstr "Trang đường cùng"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:21
 msgid "Pages linking to disambiguation pages"
-msgstr "Trang liên kết đến trang định hướng"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr "Trang định hướng"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
-msgstr "Đổi hướng kép"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
 msgid "Pages with the fewest revisions"
-msgstr "Trang có ít sửa đổi nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr "Việc sử dụng các tiện ích"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
-msgstr "Tập tin cần thiết toàn cục"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr "Tập tin trùng lặp"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
-msgstr "Trang đổi hướng"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:29
 msgid "Orphaned pages"
-msgstr "Trang mồ côi"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:30
 msgid "Long pages"
-msgstr "Trang dài nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr "Thống kê phương tiện"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
-msgstr "Trang có nhiều thể loại nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Most globally linked files"
-msgstr "Hầu hết các tập tin được liên kết toàn cầu"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
-msgstr "Trang được sửa đổi nhiều lần nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr "Trang có nhiều liên kết liên wiki nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
-msgstr "Trang được liên kết đến nhiều nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
 msgid "Most linked-to categories"
-msgstr "Thể loại có nhiều trang nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
 msgid "Most linked-to templates"
-msgstr "Trang được liên kết đến nhiều nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
 msgid "Pages with the most revisions"
-msgstr "Trang được sửa đổi nhiều lần nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Orphaned timed text"
-msgstr "Văn bản có thời gian bị bỏ rơi"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Short pages"
-msgstr "Trang ngắn nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
 msgid "Uncategorized categories"
-msgstr "Danh mục chưa được phân loại"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
 msgid "Uncategorized files"
-msgstr "Tập tin chưa được phân loại"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
 msgid "Uncategorized pages"
-msgstr "Trang chưa xếp thể loại"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
 msgid "Uncategorized templates"
-msgstr "Bản mẫu chưa được phân loại"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr "Các trang không liên kết"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
-msgstr "Thể loại trống"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:48
 msgid "Unused files"
-msgstr "Tập tin chưa dùng"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:49
 msgid "Unused templates"
-msgstr "Bản mẫu chưa dùng"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:50
 msgid "Unwatched pages"
-msgstr "Trang chưa được theo dõi"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
 msgid "Wanted categories"
-msgstr "Thể loại cần thiết"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
 msgid "Wanted files"
-msgstr "Tập tin cần thiết"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:53
 msgid "Wanted pages"
-msgstr "Trang cần viết"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:54
 msgid "Wanted templates"
-msgstr "Bản mẫu cần viết nhất"
+msgstr ""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:55
 msgid "Pages without language links"
-msgstr "Trang chưa có liên kết ngoại ngữ"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:163
 #: org/wikipediacleaner/api/data/ISBNRange.java:185
 msgid "No range found for ISBN"
-msgstr "Không tìm thấy phạm vi cho ISBN"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:173
 #, java-format
 msgid "Suggested format: {0}"
-msgstr "Định dạng được đề xuất: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:175
 msgid "ISBN length incoherent with range found"
-msgstr "Độ dài ISBN không phù hợp với phạm vi tìm thấy"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:179
 #, java-format
 msgid "ISBN is in a reserved range {0}"
-msgstr "Mã ISBN nằm trong phạm vi dành riêng {0}"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
-msgstr "Không gian tên"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:215
 msgid "Title"
-msgstr "Tựa đề"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:284
 msgid "Revision Id"
-msgstr "Số phiên bản"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:327
 msgid "Page Id"
-msgstr "Mã số trang"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/PageComparator.java:419
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:370
 msgid "Redirect"
-msgstr "Trang đổi hướng"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L.java:77
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:79
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:87
 #, java-format
 msgid "Replace parameter {0} with {1}"
-msgstr "Thay thế tham số {0} bằng {1}"
+msgstr ""
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L2T.java:65
 #, java-format
 msgid "Link parameter {0} to"
-msgstr "Liên kết tham số {0} với"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
 msgid "Retrieving all links to page"
-msgstr "Đang truy xuất tất cả các liên kết đến trang"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
-msgstr "Đang truy xuất nội dung"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:49
 msgid "Retrieving disambiguation information"
-msgstr "Đang lấy thông tin tạo trang"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
 msgid "Retrieving page usage"
-msgstr "Đang truy xuất thông tin sử dụng trang"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:45
 msgid "Expanding templates"
-msgstr "Bung bản mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:55
 msgid "Retrieving page links"
-msgstr "Đang truy xuất các liên kết trang"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:45
 msgid "Parsing text"
-msgstr "Phân tích văn bản"
+msgstr ""
 
 #: org/wikipediacleaner/api/execution/TemplatesCallable.java:43
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:214
 msgid "Retrieving templates"
-msgstr "Đang truy xuất mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:695
 #, java-format
 msgid "URL {0} is blacklisted"
-msgstr "URL {0} bị đưa vào danh sách đen"
+msgstr ""
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1858
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
-msgstr "Hành động này được bảo vệ bởi CAPTCHA.\nCâu trả lời cho câu hỏi sau là gì?"
+msgstr ""
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1865
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
-msgstr "Thao tác này được bảo vệ bởi CAPTCHA\nCâu trả lời cho câu hỏi hiển thị trên trình duyệt của bạn là gì?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:62
 #: org/wikipediacleaner/gui/swing/MainWindow.java:514
 msgid "About"
-msgstr "Giới thiệu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:182
 msgid "Original text"
-msgstr "Văn bản gốc:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:184
 msgid "Replacement text"
-msgstr "Văn bản thay thế:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:186
 msgid "regex"
-msgstr "biểu thức chính quy"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:169
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:171
@@ -2479,354 +2479,354 @@ msgstr "biểu thức chính quy"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:757
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:268
 msgid "Automatic fixing"
-msgstr "Đệm tự động"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:235
 msgid "This feature may modify a lot of pages in a short period of time."
-msgstr "Tính năng này có thể chỉnh sửa rất nhiều trang trong một khoảng thời gian ngắn."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:236
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
-msgstr "Trên một số dự án Wikipedia, bạn có thể cần quyền bot để thực hiện việc này."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:237
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr "Vui lòng kiểm tra xem bạn có cần quyền bot hay không bằng cách đọc các quy tắc của Wikipedia."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
 msgid "Add"
-msgstr "Thêm"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:259
 msgid "Remove"
-msgstr "Loại bỏ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:265
 msgid "Modify"
-msgstr "thay đổi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:271
 msgid "Clear"
-msgstr "Xóa sạch"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:277
 msgid "Save"
-msgstr "Lưu tùy chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:284
 msgid "Fix selected pages"
-msgstr "Thêm các trang đã chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:290
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:390
 msgid "Test automatic replacements"
-msgstr "Kiểm tra các bộ phận thay thế tự động"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:296
 msgid "Load replacements"
-msgstr "Thay thế tải"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:302
 msgid "Save replacements"
-msgstr "Lưu lại các vật thay thế"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
 msgid "Automatic fixing for Check Wiki"
-msgstr "Tự động sửa lỗi cho Check Wiki"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:332
 msgid "Always apply automatic fixing for Check Wiki"
-msgstr "Luôn áp dụng tính năng tự động sửa lỗi cho Check Wiki."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:347
 msgid "Pause after each edit"
-msgstr "Tạm dừng sau mỗi lần chỉnh sửa"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:355
 msgid "Apply bot fixes"
-msgstr "Áp dụng các bản sửa lỗi cho bot"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:494
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:229
 msgid "No errors selected"
-msgstr "Không có mục nào được chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:641
 msgid "Text that should be replaced"
-msgstr "Văn bản cần được thay thế"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:652
 msgid "Text to be used as a replacement"
-msgstr "Văn bản được sử dụng để thay thế"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:663
 msgid "Use regular expressions"
-msgstr "Sử dụng biểu thức chính quy"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:735
 msgid "You must select the pages on which running automatic fixing."
-msgstr "Bạn phải chọn các trang mà bạn muốn chạy chức năng sửa lỗi tự động."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:743
 msgid "A comment is required for automatic fixing."
-msgstr "Cần có bình luận để hệ thống tự động sửa lỗi."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:753
 msgid "You must input the initial and destination texts."
-msgstr "Bạn phải nhập văn bản điểm xuất phát và điểm đến."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
 msgid "!!! WARNING !!!"
-msgstr "!!! CẢNH BÁO !!!"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:765
 msgid "This function will carry out all replacements on all selected pages."
-msgstr "Chức năng này sẽ thực hiện tất cả các thao tác thay thế trên tất cả các trang đã chọn."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:766
 msgid "It may modify a lot of pages in a short period of time."
-msgstr "Tính năng này có thể chỉnh sửa rất nhiều trang trong một khoảng thời gian ngắn."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:769
 msgid "Also, verify again the texts you have inputted before running this function."
-msgstr "Ngoài ra, hãy kiểm tra lại văn bản bạn đã nhập trước khi chạy chức năng này."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:770
 msgid "You can also test the modifications before actually doing them."
-msgstr "Bạn cũng có thể kiểm tra các thay đổi trước khi thực hiện chúng trên thực tế."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:771
 msgid "Do you want to proceed with the modifications ?"
-msgstr "Bạn có muốn tiếp tục chỉnh sửa không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:829
 msgid "The following replacements have been made:"
-msgstr "Các vị trí thay thế sau đây đã được thực hiện:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:840
 msgid "Do you want to test the replacements on the pages ?"
-msgstr "Bạn có muốn thử nghiệm các phần thay thế trên các trang đó không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:854
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:894
 msgid "XML files"
-msgstr "Tệp XML"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:909
 msgid "This file exists, do you want to overwrite it?"
-msgstr "Tệp này đã tồn tại, bạn có muốn ghi đè lên nó không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:977
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:358
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:613
 msgid "Select errors"
-msgstr "Chọn lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:985
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:362
 msgid "Select all errors"
-msgstr "Chọn tất cả các hàng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:992
 msgid "Select no errors"
-msgstr "Chọn lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:1017
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:415
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:470
 #, java-format
 msgid "Errors from {0} to {1}"
-msgstr "Lỗi từ {0} đến {1}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:301
 #, java-format
 msgid "Yes, {0} pages"
-msgstr "Vâng, {0} trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:302
 #, java-format
 msgid "No, {0} pages"
-msgstr "Không, {0} trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/Controller.java:307
 #, java-format
 msgid "You have selected {0} pages.\nWould you like to analyze more than {1} pages ?"
-msgstr "Bạn đã chọn {0} trang.\nBạn có muốn phân tích nhiều hơn {1} trang không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:138
 #, java-format
 msgid "Disambiguation - {0}"
-msgstr "Phân biệt nghĩa - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:292
 msgid "Select &next links"
-msgstr "Chọn các liên kết tiếp theo"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:317
 #: org/wikipediacleaner/gui/swing/menu/DisambiguationPageListMenuCreator.java:45
 msgid "Mark backlink as normal"
-msgstr "Đánh dấu backlink là bình thường"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:323
 #: org/wikipediacleaner/gui/swing/menu/DisambiguationPageListMenuCreator.java:50
 msgid "Mark backlink as needing help"
-msgstr "Đánh dấu backlink này cần được hỗ trợ."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:330
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:258
 msgid "Link count"
-msgstr "Liên kết tài khoản"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
-msgstr "Lọc theo không gian tên"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
 msgid "Sort"
-msgstr "Sắp xếp"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:545
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1416
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:537
 msgid "You must select pages on which running automatic fixing."
-msgstr "Bạn phải chọn các trang mà bạn muốn chạy chức năng sửa lỗi tự động."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:105
 msgid "Information"
-msgstr "Thông tin"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
 msgid "WPCleaner installer"
-msgstr "Trình cài đặt WPCleaner"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
 msgid "Configuration"
-msgstr "Cấu hình"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
 msgid "Installation folder"
-msgstr "Thư mục cài đặt"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
 msgid "Select installation folder"
-msgstr "Chọn thư mục cài đặt"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:318
 msgid "Create a desktop shortcut"
-msgstr "Tạo lối tắt trên màn hình"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:326
 msgid "Install beta version (only for experienced users)"
-msgstr "Cài đặt phiên bản beta (chỉ dành cho người dùng có kinh nghiệm)"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
-msgstr "Trên Windows và một số bản phân phối Linux, lối tắt trên màn hình có thể được tạo tự động."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
-msgstr "Nếu lối tắt trên màn hình không được tạo tự động, bạn vẫn có thể tạo thủ công."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
 #, java-format
 msgid "The working directory for the shortcut MUST be the installation folder ({0})."
-msgstr "Thư mục làm việc cho lối tắt PHẢI là thư mục cài đặt ({0})."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
 msgid "The command itself is dependent on the operating system you're using (see below)."
-msgstr "Bản thân lệnh này phụ thuộc vào hệ điều hành bạn đang sử dụng (xem bên dưới)."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
 msgid "Note: avoid having whitespace characters in the installation folder path, or you will need to adapt the commands."
-msgstr "Lưu ý: Tránh sử dụng ký tự khoảng trắng trong đường dẫn thư mục cài đặt, nếu không bạn sẽ cần phải điều chỉnh các lệnh."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:380
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
-msgstr "Nếu bạn muốn chạy WPCleaner thủ công, hãy mở cửa sổ dòng lệnh (terminal/command prompt) và thay đổi thư mục hiện tại thành thư mục cài đặt."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:385
 msgid "And then execute the command dependent on the operating system you're using (see below)."
-msgstr "Sau đó, thực thi lệnh tùy thuộc vào hệ điều hành bạn đang sử dụng (xem bên dưới)."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:388
 msgid "Under Windows, the command can be:"
-msgstr "Trên hệ điều hành Windows, lệnh có thể là:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:394
 msgid "Under Linux (or other systems working with .sh scripts), the command can be:"
-msgstr "Trên hệ điều hành Linux (hoặc các hệ thống khác sử dụng tập lệnh .sh), lệnh có thể là:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:400
 msgid "On any operating system, the command can be:"
-msgstr "Trên bất kỳ hệ điều hành nào, lệnh có thể là:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
 msgid "Install"
-msgstr "Cài đặt"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
 msgid "Operating system"
-msgstr "Hệ điều hành"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:655
 msgid "System information"
-msgstr "Thông tin thêm"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
 msgid "You must select an installation folder."
-msgstr "Bạn phải chọn thư mục cài đặt."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
 #, java-format
 msgid "The path {0} already exists but is not a folder."
-msgstr "Đường dẫn {0} đã tồn tại nhưng không phải là thư mục."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
-msgstr "Thư mục {0} đã tồn tại, bạn có muốn cài đặt WPCleaner vào đó không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:721
 msgid "Existing files may be deleted by the installation process."
-msgstr "Quá trình cài đặt có thể xóa các tập tin hiện có."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
 #, java-format
 msgid "Unable to create folder {0}"
-msgstr "Không thể tạo thư mục {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:745
 msgid "Desktop shortcut is only supported for the following operating systems:"
-msgstr "Phím tắt trên màn hình chỉ được hỗ trợ trên các hệ điều hành sau:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:806
 msgid "Installation was successful"
-msgstr "Quá trình cài đặt đã thành công."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:824
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:839
 #, java-format
 msgid "Downloading {0}"
-msgstr "Đang tải xuống {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
 #, java-format
 msgid "Creating {0}"
-msgstr "Đang tạo {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
 #, java-format
 msgid "Unable to create file {0}"
-msgstr "Không thể tạo thư mục {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:862
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:893
@@ -2835,108 +2835,108 @@ msgstr "Không thể tạo thư mục {0}"
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:997
 #, java-format
 msgid "Error: {0}"
-msgstr "Lỗi: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
 #, java-format
 msgid "Installing {0}"
-msgstr "Đang cài đặt {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
 msgid "Problem running getdown installer"
-msgstr "Lỗi khi chạy trình cài đặt getdown"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:887
 #, java-format
 msgid "Exit code: {0}"
-msgstr "Mã thoát: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:892
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:968
 #, java-format
 msgid "Problem running {0}"
-msgstr "Lỗi khi chạy {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:947
 msgid "Problem creating desktop file"
-msgstr "Sự cố khi tạo tệp trên màn hình"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:955
 #, java-format
 msgid "Running {0}"
-msgstr "Đang chạy {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:988
 #, java-format
 msgid "Unable to download file {0}."
-msgstr "Không thể tải xuống tệp {0}."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
 msgid "Certificate exception: old versions of Java may fail to validate recent certificates, try upgrading Java"
-msgstr "Lỗi chứng chỉ: các phiên bản Java cũ có thể không xác thực được các chứng chỉ mới, hãy thử nâng cấp Java."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:994
 msgid "Java version: {}"
-msgstr "Phiên bản Java: {}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:192
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:73
 msgid "Language"
-msgstr "Ngôn ngữ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:206
 msgid "Script"
-msgstr "Kịch bản"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:221
 msgid "Region"
-msgstr "Khu vực"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:240
 #, java-format
 msgid "Variant n°{0}"
-msgstr "Biến thể số {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:198
 #, java-format
 msgid "In the near future, WPCleaner will require Java {0} or above, but you''re currently using an older version ({1})."
-msgstr "Trong tương lai gần, WPCleaner sẽ yêu cầu Java {0} trở lên, nhưng hiện tại bạn đang sử dụng phiên bản cũ hơn ({1})."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:204
 msgid "Please, upgrade to a newer version of Java"
-msgstr "Vui lòng nâng cấp lên phiên bản Java mới hơn."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:205
 msgid "Obsolete Java version"
-msgstr "Phiên bản Java lỗi thời"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:251
 #, java-format
 msgid "{0} - Version {1} ({2})"
-msgstr "{0} - Phiên bản {1} ({2})"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:361
 msgid "Message"
-msgstr "Thông điệp"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:379
 #: org/wikipediacleaner/gui/swing/MainWindow.java:448
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:115
 msgid "Login"
-msgstr "Đăng nhập"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:454
 msgid "Demo"
-msgstr "Ví dụ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:460
 msgid "Wiki logout"
-msgstr "Đăng xuất Wiki"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:467
 msgid "WPC logout"
-msgstr "Đăng xuất WPC"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:486
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:565
@@ -2945,437 +2945,437 @@ msgstr "Đăng xuất WPC"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:64
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:165
 msgid "Options"
-msgstr "Tùy chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:493
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:185
 msgid "System options"
-msgstr "Tùy chọn hệ thống"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:500
 msgid "Reload system options"
-msgstr "Tải lại các tùy chọn hệ thống"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:506
 msgid "Check spelling options"
-msgstr "Kiểm tra các tùy chọn chính tả"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:528
 msgid "Save username and password"
-msgstr "Lưu tên người dùng và mật khẩu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:540
 msgid "Save username only"
-msgstr "Chỉ lưu tên người dùng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:550
 msgid "Save none of them"
-msgstr "Không cứu ai trong số họ cả."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:585
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:219
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:226
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:241
 msgid "Page"
-msgstr "Trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:627
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:170
 msgid "Random page"
-msgstr "Trang ngẫu nhiên"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:634
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:200
 msgid "Add to list"
-msgstr "Thêm vào danh sách"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:641
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:205
 msgid "Remove from list"
-msgstr "Xóa khỏi %s"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:667
 msgid "Search in titles"
-msgstr "Tìm kiếm thực thể"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:676
 msgid "Internal links"
-msgstr "Liên kết trong"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:685
 msgid "What links here"
-msgstr "Các liên kết đến đây"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:694
 msgid "Category members"
-msgstr "Tên thể loại"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:703
 msgid "Embedded in"
-msgstr "Chèn tập tin"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:729
 msgid "Load list from drive"
-msgstr "Tải danh sách từ ổ đĩa"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:738
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1234
 msgid "Your contributions"
-msgstr "Những đóng góp của tôi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:752
 msgid "Projects"
-msgstr "Dự án"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:770
 msgid "Preload disambiguations pages"
-msgstr "Trang tải trước các điểm không rõ ràng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:779
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1442
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:125
 msgid "Current disambiguation list"
-msgstr "Danh sách phân biệt hiện tại"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:789
 msgid "With many disambiguation links"
-msgstr "Với nhiều liên kết phân biệt nghĩa"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:798
 msgid "Project Check Wikipedia"
-msgstr "Dự án Kiểm tra Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:807
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1495
 msgid "Help requested on..."
-msgstr "Cần trợ giúp về..."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:816
 msgid "Abuse filters"
-msgstr "Bô lọc sai phph"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:825
 msgid "Special lists"
-msgstr "Danh sách đặc biệt"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:834
 msgid "Linter categories"
-msgstr "Thể loại cần thiết"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:843
 msgid "Generate lists"
-msgstr "Tạo danh sách"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:852
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1832
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:195
 msgid "Local Watchlist"
-msgstr "Danh sách theo dõi toàn cục"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:862
 msgid "Watchlist"
-msgstr "Danh sách theo dõi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:871
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1955
 #: org/wikipediacleaner/gui/swing/MainWindow.java:2020
 msgid "Random pages"
-msgstr "Trang ngẫu nhiên"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:880
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:61
 msgid "Bot tools"
-msgstr "Công cụ Bot"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:924
 msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
-msgstr "Chế độ Demo chỉ khả dụng để thử nghiệm WPCleaner.\nBạn sẽ không thể chỉnh sửa các trang trên Wikipedia ở chế độ Demo.\nBạn có muốn tiếp tục không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:943
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr "Bạn phải chọn Wikipedia mà bạn muốn làm việc trước khi đăng nhập."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:953
 msgid "You must select a language before login"
-msgstr "Bạn phải chọn ngôn ngữ trước khi đăng nhập."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:965
 msgid "You must input your username before login"
-msgstr "Bạn phải nhập tên người dùng trước khi đăng nhập."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:977
 msgid "You must input your password before login"
-msgstr "Bạn phải nhập mật khẩu trước khi đăng nhập."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1086
 #, java-format
 msgid "You can learn how to configure {0} at the following URL:"
-msgstr "Bạn có thể tìm hiểu cách cấu hình {0} tại URL sau:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1134
 msgid "Activate all"
-msgstr "Kích hoạt tất cc"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1139
 msgid "Deactivate all"
-msgstr "Vô hiệu thẻ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1246
 msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
-msgstr "Mật khẩu sẽ được lưu trên ổ đĩa của bạn, vì vậy bất kỳ ai có quyền truy cập vào máy tính của bạn đều có thể lấy được nó! Bạn có chắc chắn muốn lưu nó không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1313
 msgid "You must input a page name for retrieving the list of internal links"
-msgstr "Bạn phải nhập tên trang để truy xuất danh sách các liên kết nội bộ."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1327
 #, java-format
 msgid "Internal links in {0}"
-msgstr "Liên kết nội bộ trong {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1334
 msgid "You must input a page name"
-msgstr "Bạn phải nhập tên trang."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1342
 #, java-format
 msgid "Search results for {0}"
-msgstr "Kết quả tìm kiếm cho {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1350
 msgid "You must input a page name for retrieving the list of backlinks"
-msgstr "Bạn phải nhập tên trang để truy xuất danh sách các liên kết nội bộ."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1366
 #, java-format
 msgid "Links to {0}"
-msgstr "Liên kết đến {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1374
 msgid "You must input a page name for retrieving the list of category members"
-msgstr "Bạn phải nhập tên trang để truy xuất danh sách các liên kết nội bộ."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1392
 #, java-format
 msgid "Category members of {0}"
-msgstr "Các thành viên thuộc danh mục {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1400
 msgid "You must input a page name for retrieving the list of page in which it is embedded"
-msgstr "Bạn phải nhập tên trang để truy xuất danh sách các trang chứa trang đó."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1418
 #, java-format
 msgid "Template {0} embedded in"
-msgstr "Mẫu {0} được nhúng trong"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1467
 msgid "Pages with many disambiguation links"
-msgstr "Với nhiều liên kết phân biệt nghĩa"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1508
 msgid "What abuse filter are you interested in?"
-msgstr "Bạn quan tâm đến bộ lọc báo cáo lạm dụng nào?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1524
 #, java-format
 msgid "Hits for filter {0}"
-msgstr "Số lượt truy cập cho bộ lọc {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1597
 msgid "Without templates"
-msgstr "Không có bản mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1600
 msgid "With templates"
-msgstr "Với bản mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1618
 msgid "All namespaces"
-msgstr "Tất cả không gian tên"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1634
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:231
 msgid "Main"
-msgstr "Chính"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1690
 msgid "All disambiguations pages"
-msgstr "Trang tải trước các điểm không rõ ràng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1846
 msgid "Watch list"
-msgstr "Danh sách theo dõi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1876
 msgid "Unformatted list of page names"
-msgstr "Danh sách tên trang chưa được định dạng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1877
 msgid "Internal links in a formatted list"
-msgstr "Các liên kết nội bộ trong danh sách được định dạng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "The file must be encoded in UTF-8 to be read correctly."
-msgstr "Tệp tin phải được mã hóa bằng UTF-8 để có thể đọc đúng cách."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1881
 msgid "In which format is the file?"
-msgstr "Tệp tin này có định dạng gì?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1936
 msgid "List"
-msgstr "Danh sách:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1959
 msgid "Random redirect pages"
-msgstr "Hiện các trang đổi hướng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1991
 msgid "How many pages do you want?"
-msgstr "Bạn muốn bao nhiêu trang?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:2003
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
-msgstr "Số trang phải nằm trong khoảng từ {0} đến {1}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:109
 msgid "Recent changes monitoring"
-msgstr "Theo dõi những thay đổi gần đây"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:105
 #, java-format
 msgid "New section in {0}"
-msgstr "Phần mới trong {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:132
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:143
 msgid "&Title"
-msgstr "Tựa đề"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:144
 msgid "&Signature"
-msgstr "Chữ ký"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:151
 msgid "&Force watching page"
-msgstr "Trang theo dõi &Force"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:194
 msgid "Article contents"
-msgstr "Nội dung bài viết"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:202
 msgid "&Validate"
-msgstr "Xác nhận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:206
 msgid "&Cancel"
-msgstr "Hủy bỏ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:245
 #, java-format
 msgid "Analysis - {0}"
-msgstr "Phân tích - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:457
 msgid "Mark the selected text as being in a foreign language"
-msgstr "Đánh dấu đoạn văn đã chọn là văn bản tiếng nước ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:463
 msgid "Translation of an article copied from an other wiki"
-msgstr "Bản dịch một bài viết được sao chép từ một wiki khác"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:511
 msgid "&Options"
-msgstr "Tùy chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:513
 msgid "Show &disambiguation pages"
-msgstr "Trang tải trước các điểm không rõ ràng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:517
 msgid "Show &missing pages"
-msgstr "Hiển thị các trang bị thiếu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:521
 msgid "Show &redirect pages"
-msgstr "Hiện các trang đổi hướng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:525
 msgid "Show &other pages"
-msgstr "Hiển thị các trang khác"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:530
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:149
 msgid "Count disambiguation pages"
-msgstr "Trang tải trước các điểm không rõ ràng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:534
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:156
 msgid "Count missing pages"
-msgstr "Đếm số trang bị thiếu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:538
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:163
 msgid "Count redirect pages"
-msgstr "Hiện các trang đổi hướng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:542
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:170
 msgid "Count other pages"
-msgstr "Đếm số trang khác"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:579
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:76
 msgid "Remove all links"
-msgstr "Xóa tất cả các liên kết"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:641
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:153
 msgid "Check Wikipedia"
-msgstr "Wikipedia tiếng Séc"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:869
 #, java-format
 msgid "Page {0} doesn''t exist, do you want to load a similar page ?"
-msgstr "Trang {0} không tồn tại, bạn có muốn tải một trang tương tự không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:882
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
-msgstr "Trang {0} không tồn tại, bạn vẫn muốn phân tích nó chứ?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:933
 #, java-format
 msgid "\"{0}\" has been tagged with the following templates, be careful when editing:"
-msgstr "\"{0}\" đã được gắn thẻ với các mẫu sau, hãy cẩn thận khi chỉnh sửa:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:955
 msgid "Do you want to apply the automatic modifications?"
-msgstr "Bạn có muốn áp dụng các chỉnh sửa tự động không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1089
 msgid "You must select the text that is written in a foreign language"
-msgstr "Bạn phải chọn đoạn văn được viết bằng tiếng nước ngoài."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1098
 msgid "Foreign language"
-msgstr "Ngoại ngữ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1135
 msgid "From which Wikipedia is this text coming ?"
-msgstr "Văn bản này được lấy từ Wikipedia nào?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1234
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
 msgid "Translation"
-msgstr "Bản dịch"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:319
 msgid "&Page :"
-msgstr "&Trang :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:338
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:340
@@ -3383,88 +3383,88 @@ msgstr "&Trang :"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:130
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
 msgid "Disambiguation"
-msgstr "Định hướng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:401
 msgid "Reload (Alt + &R)"
-msgstr "Nạp đạn (Alt + &R)"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:403
 msgid "&Reload"
-msgstr "Tải lại"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:434
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
 msgid "Send"
-msgstr "Gửi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:451
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:453
 msgid "Undo"
-msgstr "Lùi lại"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:459
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:461
 msgid "Redo"
-msgstr "Làm lại"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:482
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:484
 msgid "Table of Contents"
-msgstr "Mục lục"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:502
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:190
 msgid "Validate"
-msgstr "Xác nhận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:550
 msgid "Automatic comment"
-msgstr "Bình luận tự động"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:576
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:266
 msgid "Mark edit as minor"
-msgstr "Đánh dấu sửa đổi nhỏ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:582
 msgid "Disable bot flag for this edit"
-msgstr "Vô hiệu hóa cờ bot cho lần chỉnh sửa này."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:586
 msgid "&Close after sending"
-msgstr "Đóng lại sau khi gửi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:592
 msgid "&Add a note on talk page"
-msgstr "&Thêm ghi chú vào trang thảo luận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:596
 msgid "Update disambiguation warning on talk page"
-msgstr "Cập nhật cảnh báo phân biệt nghĩa trên trang thảo luận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:601
 msgid "Create disambiguation warning on talk page"
-msgstr "Tạo cảnh báo phân biệt trên trang thảo luận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:625
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:206
 msgid "Check spelling and typography"
-msgstr "Kiểm tra chính tả và lỗi chính tả"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:627
 msgid "Spelling"
-msgstr "Chính tả"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:662
 msgid "Protection level for editing the page"
-msgstr "Mức độ bảo vệ khi chỉnh sửa trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:751
 #, java-format
 msgid "Last modified at {0}"
-msgstr "Lần sửa đổi cuối cùng lúc {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:759
 #, java-format
@@ -3474,28 +3474,28 @@ msgstr[0] ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:805
 msgid "Fix &redirects"
-msgstr "Sửa lỗi & chuyển hướng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:815
 #, java-format
 msgid "Link \"{0}\" to \"{1}\""
-msgstr "Liên kết \"{0}\" với \"{1}\""
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:832
 msgid "&Tools"
-msgstr "&Công cụ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:836
 msgid "&Preview"
-msgstr "Xem trước"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:841
 msgid "&Expand templates"
-msgstr "Bung bản mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:846
 msgid "Expand templates &and Preview"
-msgstr "Mở rộng mẫu và xem trước"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:941
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:51
@@ -3503,95 +3503,95 @@ msgstr "Mở rộng mẫu và xem trước"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:140
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:190
 msgid "Full analysis"
-msgstr "Phân tích đầy đủ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:947
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:266
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:271
 msgid "Disambiguation analysis"
-msgstr "Phân tích làm rõ nghĩa"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1037
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:721
 msgid "A comment is required for sending the page."
-msgstr "Cần phải thêm bình luận khi gửi trang."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1097
 #, java-format
 msgid "Sending {0}"
-msgstr "Đang gửi {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:101
 #, java-format
 msgid "Page comments - {0}"
-msgstr "Bình luận trang - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:122
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:185
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:237
 msgid "Comments"
-msgstr "Bình luận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:140
 msgid "Comments :"
-msgstr "Bình luận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:158
 msgid "Max backlinks in Main :"
-msgstr "Số lượng backlink tối đa trong Main:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:186
 msgid "Max backlinks in Template :"
-msgstr "Số lượng backlink tối đa trong mẫu:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:214
 msgid "Max backlinks in other namespaces :"
-msgstr "Số lượng backlink tối đa trong các namespace khác:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:272
 msgid "&OK"
-msgstr "&ĐƯỢC RỒI"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:278
 msgid "&Remove page comments"
-msgstr "&Xóa bình luận trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:113
 #, java-format
 msgid "Expand Templates and Preview - {0}"
-msgstr "Mở rộng mẫu và xem trước - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:114
 #, java-format
 msgid "Preview - {0}"
-msgstr "Xem trước - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:117
 #, java-format
 msgid "Expand Templates - {0}"
-msgstr "Mở rộng mẫu - {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:205
 msgid "&Update"
-msgstr "Cập nhật"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:253
 msgid "Id"
-msgstr "Nhận dạng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:259
 msgid "User"
-msgstr "Người dùng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:92
 #, java-format
 msgid "Templates in {0}"
-msgstr "Các mẫu trong {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:117
 #, java-format
 msgid "Templates used in {0}, linking to {1}"
-msgstr "Các mẫu được sử dụng trong {0}, liên kết tới {1}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:212
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
@@ -3603,55 +3603,55 @@ msgstr "Các mẫu được sử dụng trong {0}, liên kết tới {1}"
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:199
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:88
 msgid "Retrieving MediaWiki API"
-msgstr "Đang truy xuất API MediaWiki"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 msgid "Retrieving links in templates"
-msgstr "Truy xuất các liên kết trong mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:218
 msgid "Displaying templates found"
-msgstr "Hiển thị các mẫu đã tìm thấy"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
 msgid "Check article"
-msgstr "Kiểm tra bài viết"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
 msgid "You must input a page name for running a full analysis"
-msgstr "Bạn phải nhập tên trang để chạy phân tích đầy đủ."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
 msgid "Analysis"
-msgstr "Phân tích"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
 msgid "Check template"
-msgstr "Kiểm tra mẫu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCopyText.java:40
 msgid "Copy selected text"
-msgstr "Sao chép văn bản đã chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:41
 msgid "Delete page"
-msgstr "Xóa trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:130
 msgid "Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"
-msgstr "Bạn có muốn xóa trang này trên Wikipedia không?! Vui lòng nhập lý do xóa trang."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:250
 msgid "You must input a page name for running a disambiguation analysis"
-msgstr "Bạn phải nhập tên trang để chạy phân tích đầy đủ."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:120
 msgid "Close"
-msgstr "ĐónĐ"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionExternalViewer.java:55
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:91
@@ -3659,85 +3659,85 @@ msgstr "ĐónĐ"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:150
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:253
 msgid "History"
-msgstr "Lịch sử"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionInsertPredefinedText.java:60
 msgid "Insert text"
-msgstr "Chèn văn bản"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:51
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:66
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:220
 msgid "Next occurrence"
-msgstr "Lần xuất hiện tiếp theo"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:56
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:210
 msgid "First occurrence"
-msgstr "Lần xuất hiện đầu tiên"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:61
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:225
 msgid "Last occurrence"
-msgstr "Lần xuất hiện cuối cùng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:71
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:215
 msgid "Previous occurrence"
-msgstr "Sự việc trước đó"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionPasteText.java:46
 msgid "Paste"
-msgstr "Dán"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:61
 msgid "Add warnings on talk page"
-msgstr "Thêm cảnh báo vào trang thảo luận"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:258
 msgid "Add a warning about links to disambiguation pages"
-msgstr "Thêm cảnh báo về các liên kết đến trang giải thích nghĩa."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:265
 msgid "Add a warning about ISBN errors"
-msgstr "Thêm cảnh báo về lỗi ISBN."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:272
 msgid "Add a warning about duplicate arguments errors"
-msgstr "Thêm cảnh báo về lỗi đối số trùng lặp"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:279
 msgid "Add a warning about unknown parameter errors"
-msgstr "Thêm cảnh báo về lỗi tham số không xác định."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:319
 msgid "Do you want to update the disambiguation warning on talk page?"
-msgstr "Bạn có muốn cập nhật cảnh báo về sự mơ hồ thuật ngữ trên trang thảo luận không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:362
 msgid "Do you want to update the ISBN warning on talk page?"
-msgstr "Bạn có muốn cập nhật cảnh báo ISBN trên trang thảo luận không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:405
 msgid "Do you want to update the duplicate arguments warning on talk page?"
-msgstr "Bạn có muốn cập nhật cảnh báo về các lập luận trùng lặp trên trang thảo luận không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:448
 msgid "Do you want to update the unknown parameter warning on talk page?"
-msgstr "Bạn có muốn cập nhật cảnh báo về sự mơ hồ thuật ngữ trên trang thảo luận không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:493
 msgid "You must input a page name for updating warnings"
-msgstr "Bạn phải nhập tên trang để cập nhật cảnh báo."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:46
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:105
 msgid "Add to local watchlist"
-msgstr "Thêm danh sách theo dõi toàn cục"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
 msgid "You must select a page to add it on your local watchlist"
-msgstr "Bạn phải chọn một trang để thêm nó vào danh sách theo dõi cục bộ của mình."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
 #, java-format
@@ -3748,149 +3748,149 @@ msgstr[0] ""
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
 #, java-format
 msgid "Unable to find if category {0} exists in \"{1}\"."
-msgstr "Không thể tìm thấy liệu danh mục {0} có tồn tại trong \"{1}\" hay không."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:99
 #, java-format
 msgid "The category {0} exists in \"{1}\".\nDo you want to replace the category by [[{2}]] ?"
-msgstr "Danh mục {0} tồn tại trong \"{1}\".\nBạn có muốn thay thế danh mục bằng [[{2}]] không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:121
 #, java-format
 msgid "The category {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.\nIt doesn''t exist either in the {2} Wikipedia."
-msgstr "Danh mục {0} trong Wikipedia {1} không có liên kết ngôn ngữ tới Wikipedia {2}.\nNó cũng không tồn tại trong Wikipedia {2}."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:130
 #, java-format
 msgid "The category {0} doesn''t exist in the {2} Wikipedia.\nIn the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\nDo you want to replace the category by [[{3}]] ?"
-msgstr "Danh mục {0} không tồn tại trong Wikipedia {2}.\nTrong Wikipedia {1}, nó có liên kết ngôn ngữ tới Wikipedia {2}: {3}.\nBạn có muốn thay thế danh mục bằng [[{3}]] không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:85
 #, java-format
 msgid "The page {0} in \"{1}\" has a language link to \"{2}\": {3}."
-msgstr "Trang {0} trong \"{1}\" có liên kết ngôn ngữ tới \"{2}\": {3}."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:101
 #, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
-msgstr "Trang \"{0}\" trong \"{1}\" không có liên kết ngôn ngữ tới \"{2}\"."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:115
 #, java-format
 msgid "The page {0} doesn''t exist in \"{1}\"."
-msgstr "Trang {0} không tồn tại trong \"{1}\"."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:119
 #, java-format
 msgid "The page {0} exists in \"{1}\"."
-msgstr "Trang {0} tồn tại trong \"{1}\"."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:138
 msgid "What replacement do you want to use?"
-msgstr "Bạn muốn sử dụng sản phẩm thay thế nào?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:63
 msgid "String to find"
-msgstr "Chuỗi cần tìm"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:61
 msgid "Purging page cache"
-msgstr "Xóa bộ nhớ đệm trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:61
 msgid "Retrieving members of a category"
-msgstr "Truy xuất các thành viên của một danh mục"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
 msgid "Analyzing links for redirect pages"
-msgstr "Phân tích các liên kết cho các trang chuyển hướng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:70
 msgid "Analyzing links for disambiguation pages"
-msgstr "Phân tích các liên kết cho các trang làm rõ nghĩa"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:78
 #, java-format
 msgid "Retrieving possible disambiguations for {0}"
-msgstr "Khôi phục các sự phân biệt đối xử có thể cho {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceAllLinksAction.java:55
 msgid "Do you want to proceed with the replacement ?"
-msgstr "Bạn có muốn tiếp tục chỉnh sửa không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:233
 #, java-format
 msgid "The link can be extended to include text before or after the current link.\nWould you like to extend the link to \"{0}\"?"
-msgstr "Bạn có thể mở rộng liên kết để bao gồm văn bản trước hoặc sau liên kết hiện tại\nBạn có muốn mở rộng liên kết thành \"{0}\" không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:64
 #, java-format
 msgid "{0} is working..."
-msgstr "{0} đang hoạt động..."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:52
 msgid "Yes"
-msgstr "Có"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:53
 msgid "Yes to all"
-msgstr "Vâng, tất cả đều đúng."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:54
 msgid "No"
-msgstr "Không"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:55
 msgid "No to all"
-msgstr "Không với tất cả"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:122
 #, java-format
 msgid "An error occurred: {0}"
-msgstr "Đã xảy ra lỗi: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:127
 msgid "An unknown error occurred"
-msgstr "Đã xuất hiện lỗi bất ngờ."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:187
 #, java-format
 msgid "You need to define the {0} property in WPCleaner configuration."
-msgstr "Bạn cần định nghĩa thuộc tính {0} trong cấu hình WPCleaner."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:215
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
-msgstr "Bạn cần định nghĩa các thuộc tính {0} trong cấu hình WPCleaner."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
 msgid "This function requires some configuration."
-msgstr "Chức năng này yêu cầu một số cấu hình."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
 msgid "Do you want to display help on configuring WPCleaner ?"
-msgstr "Bạn có muốn xem hướng dẫn cấu hình WPCleaner không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:335
 msgid "Other..."
-msgstr "Khác..."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:99
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:76
 #, java-format
 msgid "Checking for errors n°{0}"
-msgstr "Kiểm tra lỗi số {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:202
 #, java-format
 msgid "Analyzing page {0}"
-msgstr "Phân tích trang {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:308
 #, java-format
 msgid "Fixing page {0}"
-msgstr "Đang sửa trang {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:386
 #, java-format
@@ -3912,161 +3912,161 @@ msgstr[0] ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:288
 msgid "Activate automatic fixing for all algorithms"
-msgstr "Kích hoạt tính năng tự động sửa lỗi cho tất cả các thuật toán."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:294
 msgid "Deactivate automatic fixing for all algorithms"
-msgstr "Tắt tính năng tự động sửa lỗi cho tất cả các thuật toán."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:300
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:323
 msgid "Reverse the selection"
-msgstr "Đảo ngược lựa chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:311
 msgid "Use the list of pages of each algorithm"
-msgstr "Sử dụng danh sách số trang của từng thuật toán."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:317
 msgid "Use no list of pages"
-msgstr "Không sử dụng danh sách trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:507
 msgid "Description"
-msgstr "Miêu tả"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:513
 msgid "N°"
-msgstr "Số"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:87
 msgid "Functions available here are considered as bot tools."
-msgstr "Các chức năng có sẵn ở đây được coi là công cụ bot."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:88
 msgid "They may modify a lot of pages in a short period of time."
-msgstr "Tính năng này có thể chỉnh sửa rất nhiều trang trong một khoảng thời gian ngắn."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:101
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:88
 msgid "General"
-msgstr "Tổng quát"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:104
 msgid "Check Wiki"
-msgstr "Kiểm tra Wiki"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:83
 #, java-format
 msgid "Checking whitelist for error {0}"
-msgstr "Kiểm tra danh sách trắng để tìm lỗi {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
 msgid "Regarding whitelist for error {0}:"
-msgstr "Về danh sách trắng cho lỗi {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
 msgid "Page {0} should be removed from the whitelist."
-msgstr "Trang {0} nên được xóa khỏi danh sách trắng."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
 #, java-format
 msgid "Page {0} should be kept in the whitelist."
-msgstr "Trang {0} nên được giữ trong danh sách trắng."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
 msgid "It doesn't exist on Wikipedia."
-msgstr "Thông tin đó không có trên Wikipedia."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
 msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
-msgstr "WPCleaner chưa phát hiện ra lỗi này và CheckWiki cũng không xử lý lỗi này."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
 msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
-msgstr "WPCleaner không phát hiện ra lỗi này nhưng CheckWiki vẫn phát hiện ra."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
 msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
-msgstr "Cả WPCleaner và CheckWiki đều không phát hiện ra lỗi này."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
 msgid "WPCleaner couldn't perform the removal."
-msgstr "WPCleaner không thể thực hiện thao tác xóa."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
-msgstr "Đã vào danh sách trắng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
 msgid "To use Check Wiki bot tools:"
-msgstr "Để sử dụng các công cụ bot Check Wiki:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
 msgid "Select algorithms for which automatic fixing will be applied"
-msgstr "Chọn các thuật toán mà việc sửa lỗi tự động sẽ được áp dụng."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
 msgid "Select algorithms that will be used to create a list of pages to work on"
-msgstr "Chọn các thuật toán sẽ được sử dụng để tạo danh sách các trang cần xử lý."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Run the tools below"
-msgstr "Chạy các công cụ bên dưới"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:149
 msgid "Analyze pages that couldn't be fixed by bot"
-msgstr "Phân tích các trang không thể sửa chữa bằng bot."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:156
 msgid "Ignore limit for errors not on Labs"
-msgstr "Bỏ qua giới hạn đối với các lỗi không thuộc Labs."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:164
 msgid "Number of pages:"
-msgstr "Số trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:254
 msgid "Comment:"
-msgstr "Lời nhắn:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
 msgid "Mark errors already fixed"
-msgstr "Đánh dấu các lỗi đã được khắc phục."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
 msgid "Check whitelists"
-msgstr "Kiểm tra danh sách trắng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
 msgid "Analyze dump file"
-msgstr "Phân tích tệp kết xuất"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:229
 msgid "Save selection"
-msgstr "Lưu dãy ẩn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:237
 msgid "Load selection"
-msgstr "Lựa chọn tải"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
 msgid "You must select at least one algorithm for fixing errors"
-msgstr "Bạn phải chọn ít nhất một thuật toán để sửa lỗi."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
 msgid "You must select at least one algorithm for listing errors"
-msgstr "Bạn phải chọn ít nhất một thuật toán để liệt kê lỗi."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:389
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1138
 msgid "What is the name of the selection?"
-msgstr "Tên của đoạn văn được chọn là gì?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:142
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:668
@@ -4079,73 +4079,73 @@ msgstr[0] ""
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:862
 #, java-format
 msgid "{0} pages processed"
-msgstr "{0} trang đã được xử lý"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:123
 msgid "Semi-automatic disambiguation fixing"
-msgstr "Sửa lỗi phân giải bán tự động"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:132
 msgid "Update existing disambiguation warning messages"
-msgstr "Cập nhật các thông báo cảnh báo phân biệt nghĩa hiện có"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:141
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:159
 #, java-format
 msgid "Update {0} warning messages"
-msgstr "Cập nhật {0} thông báo cảnh báo"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:150
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:168
 #, java-format
 msgid "List {0} errors"
-msgstr "Liệt kê {0} lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:177
 msgid "Update duplicate argument warning messages"
-msgstr "Cập nhật thông báo cảnh báo về đối số trùng lặp"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:186
 msgid "Update unknown parameter warning messages"
-msgstr "Cập nhật thông báo cảnh báo tham số không xác định"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:195
 msgid "Monitor recent changes"
-msgstr "Theo dõi những thay đổi gần đây"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:240
 msgid "At what page do you wish to start updating the warnings ?"
-msgstr "Bạn muốn bắt đầu cập nhật cảnh báo từ trang nào?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:96
 msgid "Dump file:"
-msgstr "Tệp kết xuất:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:100
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:251
 msgid "Dump file"
-msgstr "Tệp kết xuất"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:121
 msgid "Export directory:"
-msgstr "Thư mục xuất:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:127
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:276
 msgid "Export directory"
-msgstr "Xuất lịch sử"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:144
 msgid "Export pages:"
-msgstr "Xuất trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:159
 msgid "Check last version of article before reporting an error"
-msgstr "Vui lòng kiểm tra phiên bản bài viết mới nhất trước khi báo cáo lỗi."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWPanel.java:168
 msgid "Only check articles previously reported"
-msgstr "Chỉ kiểm tra các bài báo đã được đăng tải trước đó."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:676
 #, java-format
@@ -4155,48 +4155,48 @@ msgstr[0] ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:50
 msgid "Check article with CheckWiki"
-msgstr "Kiểm tra bài viết bằng CheckWiki"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:137
 msgid "Unable to retrieve analysis from CheckWiki."
-msgstr "Không thể truy xuất kết quả phân tích từ CheckWiki."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:143
 msgid "No errors are currently detected by CheckWiki."
-msgstr "CheckWiki hiện không phát hiện lỗi nào."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/ActionCheckArticle.java:149
 msgid "Detections"
-msgstr "Chỉ đường"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:231
 msgid "Mark as already fixed"
-msgstr "Đánh dấu các lỗi đã được khắc phục."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:346
 #, java-format
 msgid "The page {0} doesn''t exist on Wikipedia"
-msgstr "Trang {0} không tồn tại trên Wikipedia"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:449
 #, java-format
 msgid "The error n°{0} hasn''t been found on the page {1}.\nDo you want to mark it as fixed?"
-msgstr "Lỗi số {0} không được tìm thấy trên trang {1}.\nBạn có muốn đánh dấu là đã sửa không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:459
 #, java-format
 msgid "The error n°{0} hasn''t been detected in page {1}, but CheckWiki still reports it."
-msgstr "Lỗi số {0} chưa được phát hiện trên trang {1}, nhưng CheckWiki vẫn báo cáo lỗi này."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:468
 #, java-format
 msgid "The error n°{0} has already been fixed in page {1}."
-msgstr "Lỗi số {0} đã được sửa ở trang {1}."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:621
 #, java-format
 msgid "Do you want to mark {0} as fixed for error n°{1}?"
-msgstr "Bạn có muốn đánh dấu {0} là đã sửa lỗi số {1} không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:634
 #, java-format
@@ -4206,245 +4206,245 @@ msgstr[0] ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:639
 msgid "Are you really sure that you want to mark it as fixed ?"
-msgstr "Bạn có thực sự chắc chắn muốn đánh dấu nó là đã sửa xong không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:645
 #, java-format
 msgid "The error n°{0} is still found on the page.\nAre you really sure that you want to mark it as fixed ?"
-msgstr "Lỗi số {0} vẫn còn trên trang! Bạn có chắc chắn muốn đánh dấu nó là đã được sửa không?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:657
 msgid "You have already fixed this error by modifying the page.\nYou should send your modifications, the page will be marked as fixed."
-msgstr "Bạn đã sửa lỗi này bằng cách chỉnh sửa trang rồi! Bạn nên gửi các chỉnh sửa của mình, trang sẽ được đánh dấu là đã sửa."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:226
 msgid "No errors available"
-msgstr "Không có hình đại diện"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:288
 msgid "Load all errors"
-msgstr "Tải tất cả lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:293
 msgid "Load all high priority errors"
-msgstr "Tải tất cả các lỗi ưu tiên cao"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:298
 msgid "Load all high and middle priority errors"
-msgstr "Tải tất cả các lỗi ưu tiên cao và trung bình"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:303
 msgid "Load all middle priority errors"
-msgstr "Tải tất cả các lỗi có mức độ ưu tiên trung bình"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:308
 msgid "Load all high, middle and lowest priority errors"
-msgstr "Tải tất cả các lỗi có độ ưu tiên cao, trung bình và thấp nhất."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:313
 msgid "Load all high and lowest priority errors"
-msgstr "Tải tất cả các lỗi có độ ưu tiên cao và thấp nhất"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:318
 msgid "Load all middle and lowest priority errors"
-msgstr "Tải tất cả các lỗi có mức độ ưu tiên trung bình và thấp nhất."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:323
 msgid "Load all lowest priority errors"
-msgstr "Tải tất cả các lỗi ưu tiên cao"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:328
 msgid "Load all errors for bots"
-msgstr "Tải tất cả lỗi cho bot"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:351
 #, java-format
 msgid "Load errors {0}"
-msgstr "Lỗi tải {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:367
 msgid "Select high priority errors"
-msgstr "Chọn các lỗi có mức độ ưu tiên cao"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:372
 msgid "Select middle priority (and above) errors"
-msgstr "Chọn các lỗi có mức độ ưu tiên trung bình (và cao hơn)."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:377
 msgid "Select middle priority errors"
-msgstr "Chọn các lỗi có mức độ ưu tiên trung bình"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:382
 msgid "Select lowest priority (and above) errors"
-msgstr "Chọn các lỗi có mức độ ưu tiên thấp nhất (và cao hơn)"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:387
 msgid "Select lowest priority errors"
-msgstr "Chọn các lỗi có mức độ ưu tiên thấp nhất"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:468
 msgid "Select only"
-msgstr "Chọn một"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:498
 msgid "Save current selection"
-msgstr "Lưu lựa chọn hiện tại"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:502
 msgid "Use selection"
-msgstr "Đảo ngược lựa chọn"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:504
 msgid "Delete selection"
-msgstr "Xóa câu hỏh"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:603
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:104
 msgid "Maximum number of errors for Check Wiki :"
-msgstr "Số lỗi tối đa khi kiểm tra Wiki:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:625
 msgid "Right click to select errors"
-msgstr "Nhấp chuột phải để chọn lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:637
 msgid "List of errors detected :"
-msgstr "Danh sách các lỗi đã phát hiện:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:659
 msgid "Reload error"
-msgstr "Lỗi khi tải lên"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:665
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:117
 msgid "Detail"
-msgstr "Chi tiết"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:672
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:120
 #, java-format
 msgid "List on {0}"
-msgstr "Liệt kê trên {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:679
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:121
 msgid "View or edit whitelist"
-msgstr "Xem hoặc chỉnh sửa danh sách trắng"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:728
 msgid "Pages"
-msgstr "Trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:749
 msgid "&Load pages"
-msgstr "&Tải trang"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:854
 msgid "Pages with several errors"
-msgstr "Trang có lỗi chú thích"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1062
 #, java-format
 msgid "The error n°{0} can be configured with the following parameters in the <a href=\"{1}\">translation file</a> :"
-msgstr "Lỗi số {0} có thể được cấu hình với các tham số sau trong <a href=\"{1}\">tệp dịch</a> :"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1260
 #, java-format
 msgid "There''s no page defined for this error type.\nIf you want to define a page you need to add :\n  {0} = <page name> END\nto the translation page ({1}) on \"{2}\""
-msgstr "Không có trang nào được định nghĩa cho loại lỗi này.\nNếu bạn muốn định nghĩa một trang, bạn cần thêm :\n {0} =<page name> KẾT THÚC\nđến trang dịch ({1}) trên \"{2}\""
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1305
 #, java-format
 msgid "There''s no whitelist defined for this error type.\nIf you want to define a whitelist, you need to add:\n  {0} = <page name> END\nto the translation page ({1}) on \"{2}\""
-msgstr "Không có danh sách trắng nào được định nghĩa cho loại lỗi này.\nNếu bạn muốn định nghĩa danh sách trắng, bạn cần thêm:\n {0} =<page name> KẾT THÚC\nđến trang dịch ({1}) trên \"{2}\""
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:155
 msgid "Error"
-msgstr "Lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:159
 msgid "Location"
-msgstr "Nơi ở"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:163
 msgid "Notice"
-msgstr "Thông báo"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionPanel.java:74
 msgid "The following errors are currently detected by CheckWiki:"
-msgstr "CheckWiki hiện không phát hiện lỗi nào."
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:99
 #, java-format
 msgid "Error n°{0}"
-msgstr "Lỗi số {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/CloseTabComponent.java:79
 msgid "Close this tab"
-msgstr "Đóng tab này"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:251
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:283
 #, java-format
 msgid "Page: {0}"
-msgstr "Trang {0}:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:318
 #, java-format
 msgid "Interwiki: {0}"
-msgstr "Interwiki: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:391
 #, java-format
 msgid "Image: {0}"
-msgstr "Hình ảnh: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:428
 #, java-format
 msgid "Category: {0}"
-msgstr "Loại: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:456
 #, java-format
 msgid "External link: {0}"
-msgstr "Liên kết ngoài: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:490
 #, java-format
 msgid "Template: {0}"
-msgstr "Mẫu {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:537
 #, java-format
 msgid "Parameter: {0}"
-msgstr "Tham số: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:562
 #, java-format
 msgid "Function: {0}"
-msgstr "Chức năng: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:587
 #, java-format
 msgid "ISBN: {0}"
-msgstr "ISBN: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:618
 #, java-format
 msgid "ISSN: {0}"
-msgstr "ISSN: {0}"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:88
 msgid "Decrement title level"
-msgstr "Giảm cấp độ danh hiệu"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:94
 msgid "Increment title level"
-msgstr "Tăng cấp độ chức danh"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/MWPaneTitleTreeManager.java:100
 msgid "Validate the new table of contents"
-msgstr "Xác thực mục lục mới"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:358
 #, java-format
@@ -4461,41 +4461,41 @@ msgstr[0] ""
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:54
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:145
 msgid "Help"
-msgstr "Trợ giúp"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/HelpButton.java:84
 #, java-format
 msgid "You can read the help on {0} at the following URL:"
-msgstr "Bạn có thể đọc phần trợ giúp về {0} tại URL sau:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:48
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:115
 msgid "Idea? Bug?"
-msgstr "Ý tưởng? Lỗi phần mềm?"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:66
 msgid "Report bug"
-msgstr "Báo lỗi"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:70
 msgid "Request a new feature"
-msgstr "Đề xuất tính năng mới"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:112
 msgid "You can submit bug reports at the following URL:"
-msgstr "Bạn có thể gửi báo cáo lỗi tại địa chỉ URL sau:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:125
 msgid "You can submit feature requests at the following URL:"
-msgstr "Bạn có thể gửi yêu cầu tính năng tại URL sau:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:83
 msgid "Other Language"
-msgstr "Ngôn ngữ khác"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:141
 msgid "You can learn how to add other languages at the following URL:"
-msgstr "Bạn có thể tìm hiểu cách thêm các ngôn ngữ khác tại URL sau:"
+msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/PasswordInput.java:61
 msgid "Password:"

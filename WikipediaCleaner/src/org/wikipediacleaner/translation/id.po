@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-12-22 12:37:32+0000\n"
+"PO-Revision-Date: 2026-01-05 12:28:47+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -288,7 +288,7 @@ msgstr "Hapus namespace {0} dari nama templat"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
 msgid "Fix all incorrect tags"
-msgstr "Perbaiki semua tag yang salah"
+msgstr "Perbaiki semua tanda yang salah"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
@@ -348,7 +348,7 @@ msgstr "Nama parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:128
 msgid "Close tag"
-msgstr "Tutup tag"
+msgstr "Tutup tanda"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:383
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:386
@@ -614,7 +614,7 @@ msgstr "Lihat gambar"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:365
 #, java-format
 msgid "Templates that can be used to replace {0} tags"
-msgstr "Template yang dapat digunakan untuk mengganti tag {0}"
+msgstr "Templat yang dapat digunakan untuk mengganti tanda {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a033/CheckErrorAlgorithm033.java:147
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:519
@@ -622,7 +622,7 @@ msgstr "Template yang dapat digunakan untuk mengganti tag {0}"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:368
 #, java-format
 msgid "Template that can be used to replace {0} tags"
-msgstr "Template yang dapat digunakan untuk mengganti tag {0}"
+msgstr "Templat yang dapat digunakan untuk mengganti tanda {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:184
 msgid "Expand"
@@ -713,7 +713,7 @@ msgstr "Hapus jeda dalam daftar"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:244
 #, java-format
 msgid "Remove {0} tags"
-msgstr "Hapus {0} tag"
+msgstr "Hapus {0} tanda"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a05x/a057/CheckErrorAlgorithm057.java:34
 msgid "Fix all titles"
@@ -735,7 +735,7 @@ msgstr "Template yang harus diabaikan"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:507
 #, java-format
 msgid "To force the usage of the separator between consecutive {0} tags"
-msgstr "Untuk memaksa penggunaan pemisah antara tag {0} yang berurutan"
+msgstr "Untuk memaksa penggunaan pemisah antara tanda {0} yang berurutan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:510
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a061/CheckErrorAlgorithm061.java:513
@@ -748,7 +748,7 @@ msgstr "Untuk memaksa penggunaan pemisah antara tag {0} yang berurutan"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:362
 #, java-format
 msgid "Used as a separator between consecutive {0} tags"
-msgstr "Digunakan sebagai pemisah antara tag {0} yang berurutan"
+msgstr "Digunakan sebagai pemisah antara tanda {0} yang berurutan"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a062/CheckErrorAlgorithm062.java:152
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a084/CheckErrorAlgorithm084.java:102
@@ -767,7 +767,7 @@ msgstr "Ubah semua tautan internal"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a066/CheckErrorAlgorithm066.java:33
 msgid "Remove all <small> tags"
-msgstr "Hapus semua <small>tag</small>"
+msgstr "Hapus semua <small> tanda"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:536
 #, java-format
@@ -1646,7 +1646,7 @@ msgstr "disukai untuk variabel"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:375
 msgid "preferred for output, function and tag names, etc."
-msgstr "lebih disukai untuk keluaran, fungsi dan nama tag, dll."
+msgstr "lebih disukai untuk keluaran, fungsi dan nama tanda, dll."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:383
 msgid "preferred for everything else"

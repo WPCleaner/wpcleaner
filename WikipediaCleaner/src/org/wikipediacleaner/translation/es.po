@@ -4,6 +4,7 @@
 # Author: AVIADOR71
 # Author: Abijeet Patro
 # Author: Arelilm
+# Author: Avengium
 # Author: Danniel07
 # Author: Destinid10 2
 # Author: Dgstranz
@@ -26,7 +27,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-12-22 12:37:30+0000\n"
+"PO-Revision-Date: 2026-01-05 12:28:46+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Spanish\n"
 "MIME-Version: 1.0\n"
@@ -463,7 +464,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a010/CheckErrorAlgorithm010.java:203
 msgid "Remove surrounding brackets"
-msgstr ""
+msgstr "Eliminar los corchetes circundantes"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:283
