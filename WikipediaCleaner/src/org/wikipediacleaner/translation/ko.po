@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-01-05 12:28:49+0000\n"
+"PO-Revision-Date: 2026-01-15 12:41:21+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1334,9 +1334,8 @@ msgid "Name of a template that creates an external link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:929
-#, fuzzy
 msgid "Name of a parameter that is used to create the text of the external link"
-msgstr "틀"
+msgstr "외부 링크의 텍스트를 생성하는 데 사용되는 매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:932
 msgid "True if removing internal links in the text can be automatic"
@@ -1511,9 +1510,8 @@ msgid "A template that can replace a {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
-#, fuzzy
 msgid "Name of the parameter to be used for the anchor identifier"
-msgstr "틀"
+msgstr "앵커 식별자에 사용할 매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:239
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:585
