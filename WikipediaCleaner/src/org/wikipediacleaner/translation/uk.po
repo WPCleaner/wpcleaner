@@ -5,6 +5,7 @@
 # Author: DDPAT
 # Author: Ice bulldog
 # Author: MonX94
+# Author: Movses
 # Author: Ата
 # Author: Пан Хаунд
 # --
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-12-22 12:37:39+0000\n"
+"PO-Revision-Date: 2026-01-19 12:33:38+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1334,9 +1335,8 @@ msgid "Name of a template that creates an external link"
 msgstr "Назва шаблону, який створює зовнішнє посилання"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:929
-#, fuzzy
 msgid "Name of a parameter that is used to create the text of the external link"
-msgstr "Список шаблонів, що випливають з попереднього включення {0}"
+msgstr "Назва параметра, який використовується для створення тексту зовнішнього посилання"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:932
 msgid "True if removing internal links in the text can be automatic"
@@ -1700,7 +1700,6 @@ msgstr "Назва шаблону із застарілим параметром
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
-#, fuzzy
 msgid "Name of a deprecated parameter"
 msgstr "Назва застарілого параметра"
 
