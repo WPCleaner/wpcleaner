@@ -7,6 +7,7 @@
 # Author: McDutchie
 # Author: Romaine
 # Author: Rots61
+# Author: Siebrand
 # Author: Vistaus
 # Author: Xbaked potatox
 # --
@@ -18,7 +19,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2025-12-22 12:37:35+0000\n"
+"PO-Revision-Date: 2026-02-09 12:33:33+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1095,7 +1096,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:675
 msgid "Convert into an internal link"
-msgstr "Converteren naar een interne link"
+msgstr "Converteren naar een interne koppeling"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:839
 msgid "Templates to be used for linking to the history of an article"
@@ -1765,7 +1766,7 @@ msgstr "Links om te negeren"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:377
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:274
 msgid "Link to ignore"
-msgstr "Link om te negeren"
+msgstr "Koppeling om te negeren"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:284
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:236
@@ -3492,7 +3493,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:815
 #, java-format
 msgid "Link \"{0}\" to \"{1}\""
-msgstr "Link \"{0}\" naar \"{1}\""
+msgstr "koppeling \"{0}\" naar \"{1}\""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:832
 msgid "&Tools"
@@ -4427,7 +4428,7 @@ msgstr "Categorie: {0}"
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:456
 #, java-format
 msgid "External link: {0}"
-msgstr "Externe link: {0}"
+msgstr "Externe koppeling: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:490
 #, java-format
@@ -4558,7 +4559,7 @@ msgstr "Einde"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
 msgid "Link"
-msgstr "Link"
+msgstr "Koppeling"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
@@ -4641,7 +4642,7 @@ msgstr "Zoeken in sjablonen"
 #: org/wikipediacleaner/gui/swing/menu/AnalysisPageListMenuCreator.java:91
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:258
 msgid "Link to"
-msgstr "Link naar"
+msgstr "Koppeling naar"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:156
 msgid "Template External Viewer"
@@ -4669,7 +4670,7 @@ msgstr "Huidig hoofdstuk"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:351
 msgid "Remove link"
-msgstr "Link verwijderen"
+msgstr "Koppeling verwijderen"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:410
 msgid "Purge cache"
@@ -4872,7 +4873,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:191
 msgid "Internal link"
-msgstr "Interne link"
+msgstr "Interne koppeling"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:197
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:299
@@ -4902,11 +4903,11 @@ msgstr "Taalkoppeling"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:245
 msgid "External link"
-msgstr "Externe link"
+msgstr "Externe koppeling"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:251
 msgid "Interwiki link"
-msgstr "Interwiki-link"
+msgstr "Interwiki-koppeling"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:257
 msgid "Tag"

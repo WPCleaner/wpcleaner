@@ -5,6 +5,7 @@
 # Author: Bennylin
 # Author: David Wadie Fisher-Freberg
 # Author: Hidayatsrf
+# Author: HyperAnd
 # Author: Penyuwangi
 # Author: Veracious
 # Author: William Surya Permana
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-01-05 12:28:47+0000\n"
+"PO-Revision-Date: 2026-02-09 12:33:29+0000\n"
 "Last-Translator: iwean <iwan.novirion@gmail.com>\n"
 "Language-Team: Indonesian <id@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -218,7 +219,7 @@ msgstr "Atur ke benar untuk mencegah modifikasi otomatis untuk jenis kesalahan i
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:318
 msgid "List of false positives for this type of error"
-msgstr ""
+msgstr "Daftar positif palsu untuk jenis galat ini"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:321
 msgid "Page containing a false positive for this type of error"
