@@ -4,6 +4,7 @@
 # Author: ABPMAB
 # Author: Bas dehaan
 # Author: Dutchy45
+# Author: HanV
 # Author: McDutchie
 # Author: Romaine
 # Author: Rots61
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-02-09 12:33:33+0000\n"
+"PO-Revision-Date: 2026-03-12 12:31:24+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -384,22 +385,22 @@ msgstr "Sectiekop waar een {0} kan worden toegevoegd"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:410
 #, java-format
 msgid "Section headings where a {0} can be added before"
-msgstr ""
+msgstr "Sectiekoppen waar een {0} vooraan kan worden toegevoegd"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:413
 #, java-format
 msgid "Section heading where a {0} can be added before"
-msgstr ""
+msgstr "Sectiekop waar een {0} vooraan kan worden toegevoegd"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:417
 #, java-format
 msgid "Templates where a {0} can be added before"
-msgstr ""
+msgstr "Sjablonen waar een {0} vooraan kan worden toegevoegd"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:420
 #, java-format
 msgid "Template where a {0} can be added before"
-msgstr ""
+msgstr "Sjabloon waar een {0} vooraan kan worden toegevoegd"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a005/CheckErrorAlgorithm005.java:81
 msgid "Properly end the comment"
