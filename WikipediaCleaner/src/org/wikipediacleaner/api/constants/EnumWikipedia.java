@@ -115,6 +115,7 @@ public enum EnumWikipedia {
   TA(new Wikipedia("ta", "தமிழ் விக்கிப்பீடியா")),
   TE(new Wikipedia("te", "తెలుగు వికీపీడియా")),
   TR(new Wikipedia("tr", "Turkish Wikipedia")),
+  TT(new Wikipedia("tt", "Татар Википедиясе")),
   UK(new Wikipedia("uk", "Ukrainian Wikipedia")),
   UR(new Wikipedia("ur", "Urdu Wikipedia", ComponentOrientation.RIGHT_TO_LEFT)),
   UZ(new Wikipedia("uz", "Uzbek Wikipedia")),
@@ -193,7 +194,7 @@ public enum EnumWikipedia {
    */
   public static EnumWikipedia getDefaultWikipedia() {
     Locale locale = Locale.getDefault();
-    if ((locale != null) && (locale.getLanguage() != null)) {
+    if ((locale != null) && (!locale.getLanguage().isEmpty())) {
       for (EnumWikipedia e : EnumWikipedia.values()) {
         if (e.getSettings().getCode().equals(locale.getLanguage())) {
           return e;
@@ -328,7 +329,7 @@ public enum EnumWikipedia {
    * @return List of disambiguation pages
    * @throws APIException Exception thrown by the API.
    */
-  public List<Page> constuctDisambiguationPages(API api) throws APIException {
+  public List<Page> constructDisambiguationPages(API api) throws APIException {
 
     WPCConfiguration config = getConfiguration();
 
@@ -400,7 +401,7 @@ public enum EnumWikipedia {
    */
   public void loadDisambiguationPages(API api) throws APIException {
     try {
-      List<Page> tmpPages = constuctDisambiguationPages(api);
+      List<Page> tmpPages = constructDisambiguationPages(api);
       HashSet<String> tmpResult = new HashSet<>();
       for (Page page : tmpPages) {
         tmpResult.add(page.getTitle());

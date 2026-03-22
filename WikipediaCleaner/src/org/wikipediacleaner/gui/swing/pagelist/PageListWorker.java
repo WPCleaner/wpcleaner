@@ -317,7 +317,7 @@ public class PageListWorker extends BasicWorker {
   private void constructAllDab(List<Page> pages) throws APIException {
     final API api = APIFactory.getAPI();
     EnumWikipedia wiki = getWikipedia();
-    List<Page> tmpPages = wiki.constuctDisambiguationPages(api);
+    List<Page> tmpPages = wiki.constructDisambiguationPages(api);
     if (tmpPages != null) {
       pages.addAll(tmpPages);
     }
