@@ -17,6 +17,8 @@ import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTag.Parameter;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagBuilder;
+import org.wikipediacleaner.api.data.contents.tag.TagFormat;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
@@ -24,6 +26,7 @@ import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
  * Algorithm for analyzing error 104 of check wikipedia project.
  * Error 104: Unbalanced quotes in ref name
  */
+@SuppressWarnings("unused")
 public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm104() {
@@ -79,8 +82,13 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
       }
       boolean ok = true;
       Parameter paramName = tag.getParameter("name");
-      if ((paramName != null) && paramName.hasUnbalancedQuotes()) {
-        ok = false;
+      if (paramName != null) {
+        if (paramName.hasUnbalancedQuotes()) {
+          ok = false;
+        }
+        if (paramName.getValue() != null && paramName.getValue().isEmpty()) {
+          ok = false;
+        }
       }
       for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
         Parameter tmpParam = tag.getParameter(paramNum);
@@ -136,6 +144,17 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
     // Report error
     if (errors == null) {
       return true;
+    }
+
+    // Handle the special case of <ref name="">
+    if (tag != null && !tag.isEndTag() && !tag.isFullTag() && tag.getParametersCount() == 1) {
+      Parameter paramName = tag.getParameter("name");
+      if (paramName != null && paramName.getValue() != null && paramName.getValue().isEmpty()) {
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+        errorResult.addReplacement(TagBuilder.from(WikiTagType.REF, TagFormat.OPEN).toString(), true);
+        errors.add(errorResult);
+        return true;
+      }
     }
 
     // Compute possible end
@@ -208,7 +227,7 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
         tmpIndex++;
       }
       if (tmpIndex == fullEnd - 1) {
-        String replacement = null;
+        String replacement;
         boolean automatic = false;
         if (endName > startName) {
           String name = contents.substring(startName, endName);
@@ -274,9 +293,9 @@ public class CheckErrorAlgorithm104 extends CheckErrorAlgorithmBase {
             equalSign++;
           }
           StringBuilder replacement = new StringBuilder();
-          replacement.append(contents.substring(currentIndex, endIndex));
+          replacement.append(contents, currentIndex, endIndex);
           replacement.append("=\"");
-          replacement.append(contents.substring(equalSign, endValue));
+          replacement.append(contents, equalSign, endValue);
           replacement.append("\"");
           if (closing) {
             replacement.append(" /");

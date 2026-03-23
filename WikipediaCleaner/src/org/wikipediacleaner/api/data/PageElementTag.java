@@ -91,9 +91,6 @@ public class PageElementTag extends PageElement {
     }
 
     // Check for possible end tag
-    if (tmpIndex >= maxLength) {
-      return null;
-    }
     boolean endTag = false;
     if (contents.charAt(tmpIndex) == '/') {
       endTag = true;
@@ -241,7 +238,7 @@ public class PageElementTag extends PageElement {
     }
 
     // Find parameter value
-    String value = null;
+    String value;
     int endValueIndex = startValueIndex;
     char startValueChar = paramString.charAt(startValueIndex);
     String beforeMarker = null;
@@ -250,7 +247,7 @@ public class PageElementTag extends PageElement {
       beforeMarker = "\"";
       preferredAfterMarker = beforeMarker;
     } else if (startValueChar == '\'') {
-      beforeMarker = "\'";
+      beforeMarker = "'";
       preferredAfterMarker = beforeMarker;
     } else if (startValueChar == '«') {
       beforeMarker = "«";
@@ -465,7 +462,7 @@ public class PageElementTag extends PageElement {
    * @param parameters Parameters.
    * @param endTag Is it a closing tag ?
    * @param fullTag Is it a full tag ?
-   * @param Extra white space characters at the end ?
+   * @param endWithSpace Extra white space characters at the end ?
    */
   private PageElementTag(
       int beginIndex, int endIndex,
@@ -577,7 +574,7 @@ public class PageElementTag extends PageElement {
       tagIndex = getMatchingTagIndex(tags, tagIndex);
       int endIndex = tags.get(tagIndex).getEndIndex();
       tagIndex++;
-      buffer.append(contents.substring(beginIndex, endIndex));
+      buffer.append(contents, beginIndex, endIndex);
     }
     return buffer.toString();
   }
