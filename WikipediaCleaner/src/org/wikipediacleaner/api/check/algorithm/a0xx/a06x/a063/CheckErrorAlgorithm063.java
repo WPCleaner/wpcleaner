@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a063;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
@@ -30,8 +31,10 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     super("HTML text style element <small>, <sub> or <sup> in ref, small, sub or sup");
   }
 
-  private static final List<TagType> ANALYZED_TAGS = List.of(HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP);
-  private static final List<TagType> SURROUNDING_TAGS = List.of(WikiTagType.REF, HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP);
+  private static final List<TagType> ANALYZED_TAGS = List.of(WikiTagType.REF, HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP);
+  private static final Map<TagType, List<TagType>> REMOVE_SURROUNDING = Map.ofEntries(
+      Map.entry(WikiTagType.REF, List.of(HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP))
+  );
 
   /**
    * Analyze a page to check if errors are present.
@@ -72,7 +75,7 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     // Find closest surrounding tag
     final int index = tag.getBeginIndex();
     PageElementTag surroundingTag = null;
-    for (TagType type : SURROUNDING_TAGS) {
+    for (TagType type : ANALYZED_TAGS) {
       PageElementTag currentTag = analysis.getSurroundingTag(type, index);
       if (currentTag != null) {
         if (surroundingTag == null || surroundingTag.getBeginIndex() < currentTag.getBeginIndex()) {
@@ -88,14 +91,31 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     if (tag.getType() == HtmlTagType.SMALL && surroundingTag.getType() == HtmlTagType.SMALL) {
       return false;
     }
+    // Ignore ref inside ref (detected by #531)
+    if (tag.getType() == WikiTagType.REF && surroundingTag.getType() == WikiTagType.REF) {
+      return false;
+    }
 
     // Report error
     if (errors == null) {
       return true;
     }
+    if (!surroundingTag.isComplete() || !tag.isComplete()) {
+      CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
+      errors.add(errorResult);
+      return true;
+    }
+
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
-        tag.getBeginIndex(), tag.getEndIndex());
+        surroundingTag.getCompleteBeginIndex(), surroundingTag.getCompleteEndIndex());
+    if (surroundingTag.getValueBeginIndex() == tag.getCompleteBeginIndex() &&
+        surroundingTag.getValueEndIndex() == tag.getCompleteEndIndex()) {
+      if (REMOVE_SURROUNDING.getOrDefault(tag.getType(), List.of()).contains(surroundingTag.getType())) {
+        errorResult.addReplacement(
+            analysis.getContents().substring(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex()));
+      }
+    }
     errors.add(errorResult);
     return true;
   }
