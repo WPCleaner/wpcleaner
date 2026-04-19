@@ -15,6 +15,7 @@ import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.tag.HtmlTagType;
+import org.wikipediacleaner.api.data.contents.tag.TagType;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 
 
@@ -22,11 +23,15 @@ import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
  * Algorithm for analyzing error 63 of check wikipedia project.
  * Error 63: HTML text style element &lt;small&gt; in ref, sub or sup
  */
+@SuppressWarnings("unused")
 public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
 
   public CheckErrorAlgorithm063() {
-    super("HTML text style element <small> in ref, sub or sup");
+    super("HTML text style element <small>, <sub> or <sup> in ref, small, sub or sup");
   }
+
+  private static final List<TagType> ANALYZED_TAGS = List.of(HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP);
+  private static final List<TagType> SURROUNDING_TAGS = List.of(WikiTagType.REF, HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP);
 
   /**
    * Analyze a page to check if errors are present.
@@ -38,8 +43,8 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
    */
   @Override
   public boolean analyze(
-      PageAnalysis analysis,
-      Collection<CheckErrorResult> errors, boolean onlyAutomatic) {
+      final PageAnalysis analysis,
+      final Collection<CheckErrorResult> errors, final boolean onlyAutomatic) {
     if (analysis == null) {
       return false;
     }
@@ -47,26 +52,51 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyze each <small> tag
+    // Analyze each tag
     boolean result = false;
-    List<PageElementTag> smallTags = analysis.getTags(HtmlTagType.SMALL);
-    for (PageElementTag smallTag : smallTags) {
-      int index = smallTag.getBeginIndex();
-      PageElementTag refTag = analysis.getSurroundingTag(WikiTagType.REF, index);
-      PageElementTag subTag = analysis.getSurroundingTag(HtmlTagType.SUB, index);
-      PageElementTag supTag = analysis.getSurroundingTag(HtmlTagType.SUP, index);
-      if ((refTag != null) || (subTag != null) || (supTag != null)) {
-        if (errors == null) {
-          return true;
-        }
-        result = true;
-        CheckErrorResult errorResult = createCheckErrorResult(
-            analysis,
-            smallTag.getBeginIndex(), smallTag.getEndIndex());
-        errors.add(errorResult);
+    for (TagType analyzed : ANALYZED_TAGS) {
+      List<PageElementTag> tags = analysis.getTags(analyzed);
+      for (PageElementTag tag : tags) {
+        result |= analyzeTag(analysis, errors, tag);
       }
     }
 
     return result;
+  }
+
+  private boolean analyzeTag(
+      final PageAnalysis analysis,
+      final Collection<CheckErrorResult> errors,
+      final PageElementTag tag) {
+
+    // Find closest surrounding tag
+    final int index = tag.getBeginIndex();
+    PageElementTag surroundingTag = null;
+    for (TagType type : SURROUNDING_TAGS) {
+      PageElementTag currentTag = analysis.getSurroundingTag(type, index);
+      if (currentTag != null) {
+        if (surroundingTag == null || surroundingTag.getBeginIndex() < currentTag.getBeginIndex()) {
+          surroundingTag = currentTag;
+        }
+      }
+    }
+    if (surroundingTag == null) {
+      return false;
+    }
+
+    // Ignore small inside small (detected by #055)
+    if (tag.getType() == HtmlTagType.SMALL && surroundingTag.getType() == HtmlTagType.SMALL) {
+      return false;
+    }
+
+    // Report error
+    if (errors == null) {
+      return true;
+    }
+    CheckErrorResult errorResult = createCheckErrorResult(
+        analysis,
+        tag.getBeginIndex(), tag.getEndIndex());
+    errors.add(errorResult);
+    return true;
   }
 }
