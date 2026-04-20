@@ -47,7 +47,7 @@ import org.wikipediacleaner.gui.swing.bot.AutomaticFileCWWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticLintErrorWorker;
 import org.wikipediacleaner.gui.swing.bot.AutomaticListCWWorker;
 import org.wikipediacleaner.gui.swing.bot.FixDumpWorker;
-import org.wikipediacleaner.gui.swing.bot.ListCWWorker;
+import org.wikipediacleaner.gui.swing.bot.listcw.ListCWWorker;
 import org.wikipediacleaner.gui.swing.worker.LoginWorker;
 import org.wikipediacleaner.gui.swing.worker.warning.UpdateDabWarningWorker;
 import org.wikipediacleaner.gui.swing.worker.warning.UpdateDuplicateArgsWarningWorker;
