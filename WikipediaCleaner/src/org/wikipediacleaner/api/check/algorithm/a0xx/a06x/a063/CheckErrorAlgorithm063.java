@@ -90,9 +90,9 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     }
 
     final boolean allComplete = surroundingTag.isComplete() && tag.isComplete();
-    final boolean hasMargin = allComplete &&
-        surroundingTag.getValueBeginIndex() == tag.getCompleteBeginIndex() &&
-        surroundingTag.getValueEndIndex() == tag.getCompleteEndIndex();
+    final boolean hasMargin = !allComplete ||
+        surroundingTag.getValueBeginIndex() < tag.getCompleteBeginIndex() ||
+        surroundingTag.getValueEndIndex() > tag.getCompleteEndIndex();
     if (hasMargin && !marginAllowed) {
       return false;
     }
