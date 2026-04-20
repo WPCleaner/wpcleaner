@@ -13,13 +13,14 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.commons.httpclient.Header;
@@ -293,16 +294,13 @@ public class MediaWikiAPI implements API {
       log.error("Error retrieving page content", e);
       throw new APIException("Error parsing XML", e);
     } catch (APIException e) {
-      switch (e.getQueryResult()) {
-      case RV_NO_SUCH_SECTION:
+      if (Objects.requireNonNull(e.getQueryResult()) == EnumQueryResult.RV_NO_SUCH_SECTION) {
         // API Bug https://bugzilla.wikimedia.org/show_bug.cgi?id=26627
         page.setExisting(Boolean.FALSE);
         page.setContents(null);
         return;
-
-      default:
-        throw e;
       }
+      throw e;
     }
   }
 
@@ -376,85 +374,7 @@ public class MediaWikiAPI implements API {
         (connection.getLgUserName() == null)){
       throw new APIException("You must be logged in to update pages");
     }
-    int attemptNumber = 0;
-    QueryResult result = null;
-    do {
-      attemptNumber++;
-      Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
-      properties.put("assert", "user");
-      if (page.getContentsTimestamp() != null) {
-        properties.put("basetimestamp", page.getContentsTimestamp());
-      }
-      if (bot) {
-        properties.put("bot", "");
-      }
-      if (minor) {
-        properties.put("minor", "");
-      }
-      if (page.getStartTimestamp() != null) {
-        properties.put("starttimestamp", page.getStartTimestamp());
-      }
-      properties.put("summary", comment);
-      properties.put("text", newContents);
-      properties.put("title", page.getTitle());
-      if (wikipedia.getConnection().getEditToken() != null) {
-        properties.put("token", wikipedia.getConnection().getEditToken());
-      }
-      properties.put("watchlist", forceWatch ? "watch" : "nochange");
-      CommentManager.manageComment(wikipedia.getConfiguration(), properties, "summary", "tags", automatic);
-      checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
-      try {
-        boolean hasCaptcha;
-        do {
-          hasCaptcha = false;
-          try {
-            result = constructEdit(
-                getRoot(wikipedia, properties, 3),
-                "/api/edit");
-          } catch (CaptchaException e) {
-            String captchaAnswer = getCaptchaAnswer(wikipedia, e);
-            if (captchaAnswer != null) {
-              properties.put("captchaid", e.getId());
-              properties.put("captchaword", captchaAnswer);
-              hasCaptcha = true;
-            } else {
-              throw new APIException("CAPTCHA", e);
-            }
-          }
-        } while (hasCaptcha);
-      } catch (APIException e) {
-        if (e.getHttpStatus() == HttpStatus.SC_GATEWAY_TIMEOUT) {
-          log.warn("Gateway timeout, waiting to see if modification has been taken into account");
-          waitBeforeRetrying();
-          Page tmpPage = page.replicatePage();
-          retrieveContents(wikipedia, Collections.singletonList(tmpPage), false, false);
-          String tmpContents = tmpPage.getContents();
-          if ((tmpContents != null) &&
-              (tmpContents.equals(newContents))) {
-            return QueryResult.createCorrectQuery(
-                tmpPage.getPageId(), tmpPage.getTitle(),
-                page.getPageId(), tmpPage.getPageId());
-          }
-        }
-        if (attemptNumber > 1) {
-          log.warn("Error updating page {}", page.getTitle());
-          throw e;
-        }
-        EnumQueryResult queryResult = e.getQueryResult();
-        if (queryResult == EnumQueryResult.BAD_TOKEN) {
-          waitBeforeRetrying();
-          log.warn("Retrieving tokens after a BAD_TOKEN answer");
-          retrieveTokens(wikipedia);
-        } else if ((queryResult != null) && (!queryResult.shouldRetry())) {
-          log.warn("Error updating page {}", page.getTitle());
-          throw e;
-        }
-      } catch (JDOMParseException e) {
-        log.error("Error updating page: {}", e.getMessage());
-        throw new APIException("Error parsing XML", e);
-      }
-    } while (result == null);
-    return result;
+    return internalUpdate(wikipedia, page, newContents, comment, bot, minor, automatic, forceWatch, properties -> {}, true, 3);
   }
 
   /**
@@ -540,68 +460,88 @@ public class MediaWikiAPI implements API {
         (connection.getLgUserName() == null)){
       throw new APIException("You must be logged in to update pages");
     }
+    return internalUpdate(
+        wikipedia, page, contents, title, bot, minor, automatic, forceWatch,
+        properties -> {
+          properties.put("section", section);
+          properties.put("sectiontitle", title);
+        },
+        false, 1);
+  }
+
+  private QueryResult internalUpdate(
+      EnumWikipedia wiki, Page page,
+      String newContents, String comment,
+      boolean bot, boolean minor,
+      boolean automatic, boolean forceWatch,
+      Consumer<Map<String, String>> extraProperties,
+      boolean handleGatewayTimeout, int maxTry) throws APIException {
     int attemptNumber = 0;
-    QueryResult result = null;
     do {
       attemptNumber++;
       Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
       properties.put("assert", "user");
-      if (page.getContentsTimestamp() != null) {
-        properties.put("basetimestamp", page.getContentsTimestamp());
-      }
+      Optional.ofNullable(page.getContentsTimestamp()).ifPresent(value -> properties.put("basetimestamp", value));
       if (bot) {
         properties.put("bot", "");
       }
       if (minor) {
         properties.put("minor", "");
       }
-      properties.put("section", section);
-      properties.put("sectiontitle", title);
-      String startTimestamp = page.getStartTimestamp();
-      if ((startTimestamp != null) && !startTimestamp.isEmpty()) {
-        properties.put("starttimestamp", startTimestamp);
-      }
-      properties.put("summary", title);
-      properties.put("text", contents);
+      extraProperties.accept(properties);
+      Optional.ofNullable(page.getStartTimestamp()).ifPresent(value -> properties.put("starttimestamp", value));
+      properties.put("summary", comment);
+      properties.put("text", newContents);
       properties.put("title", page.getTitle());
-      properties.put("token", wikipedia.getConnection().getEditToken());
+      Optional.ofNullable(wiki.getConnection().getEditToken()).ifPresent(value -> properties.put("token", value));
       properties.put("watchlist", forceWatch ? "watch" : "nochange");
-      CommentManager.manageComment(wikipedia.getConfiguration(), properties, "summary", "tags", automatic);
-      checkTimeForEdit(wikipedia.getConnection().getUser(), page.getNamespace());
+      CommentManager.manageComment(wiki.getConfiguration(), properties, "summary", "tags", automatic);
+      checkTimeForEdit(wiki.getConnection().getUser(), page.getNamespace());
       try {
-        boolean hasCaptcha;
         do {
-          hasCaptcha = false;
           try {
-            result = constructEdit(
-                getRoot(wikipedia, properties, 1),
-                "/api/edit");
+            return constructEdit(getRoot(wiki, properties, maxTry));
           } catch (CaptchaException e) {
-            String captchaAnswer = getCaptchaAnswer(wikipedia, e);
+            String captchaAnswer = getCaptchaAnswer(wiki, e);
             if (captchaAnswer != null) {
               properties.put("captchaid", e.getId());
               properties.put("captchaword", captchaAnswer);
-              hasCaptcha = true;
             } else {
               throw new APIException("CAPTCHA", e);
             }
           }
-        } while (hasCaptcha);
+        } while (true);
       } catch (APIException e) {
+        if (handleGatewayTimeout && e.getHttpStatus() == HttpStatus.SC_GATEWAY_TIMEOUT) {
+          log.warn("Gateway timeout, waiting to see if modification has been taken into account");
+          waitBeforeRetrying();
+          Page tmpPage = page.replicatePage();
+          retrieveContents(wiki, List.of(tmpPage), false, false);
+          String tmpContents = tmpPage.getContents();
+          if (tmpContents != null && tmpContents.equals(newContents)) {
+            return QueryResult.createCorrectQuery(
+                tmpPage.getPageId(), tmpPage.getTitle(),
+                page.getPageId(), tmpPage.getPageId());
+          }
+        }
         if (attemptNumber > 1) {
+          log.warn("Error updating page {}", page.getTitle());
           throw e;
         }
-        if (e.getQueryResult() == EnumQueryResult.BAD_TOKEN) {
+        EnumQueryResult queryResult = e.getQueryResult();
+        if (queryResult == EnumQueryResult.BAD_TOKEN || queryResult == EnumQueryResult.ASSERT_USER_FAILED) {
           waitBeforeRetrying();
-          log.warn("Retrieving tokens after a BAD_TOKEN answer");
-          retrieveTokens(wikipedia);
+          log.warn("Retrieving tokens after a {} answer", queryResult.getCode());
+          retrieveTokens(wiki);
+        } else if (queryResult != null && !queryResult.shouldRetry()) {
+          log.warn("Error updating page {}", page.getTitle());
+          throw e;
         }
       } catch (JDOMParseException e) {
-        log.error("Error updating page: {}", e.getMessage());
+        log.error("Error updating page {}: {}", page.getTitle(), e.getMessage());
         throw new APIException("Error parsing XML", e);
       }
-    } while (result == null);
-    return result;
+    } while (true);
   }
 
   /**
@@ -643,17 +583,15 @@ public class MediaWikiAPI implements API {
 
   /**
    * @param root Root element in MediaWiki answer.
-   * 
-   * @param query Path to the answer.
    * @return Result of the query.
-   * @throws APIException Exception thrown by the API.
+   * @throws APIException     Exception thrown by the API.
    * @throws CaptchaException Captcha.
    */
-  private QueryResult constructEdit(Element root, String query)
+  private QueryResult constructEdit(Element root)
       throws APIException, CaptchaException {
 
     XPathExpression<Element> xpa = XPathFactory.instance().compile(
-        query, Filters.element());
+        "/api/edit", Filters.element());
     Element node = xpa.evaluateFirst(root);
     if (node != null) {
       String result = node.getAttributeValue("result");
@@ -959,7 +897,7 @@ public class MediaWikiAPI implements API {
   }
 
   /**
-   * Retrieves the informations of a list of pages.
+   * Retrieves the information of a list of pages.
    * (<code>action=query</code>, <code>prop=info</code>).
    * 
    * @param wiki Wiki.
@@ -1563,7 +1501,7 @@ public class MediaWikiAPI implements API {
   // ==========================================================================
 
   /**
-   * Recent changes manager.
+   * Manager for recent changes.
    */
   private final Map<EnumWikipedia, RecentChangesManager> rcManagers = new Hashtable<>();
 
@@ -1571,7 +1509,7 @@ public class MediaWikiAPI implements API {
    * Adds a <code>RecentChangesListener</code> to the API.
    *
    * @param wiki Wiki.
-   * @param listener Recent changes listener.
+   * @param listener Listener for recent changes.
    */
   @Override
   public void addRecentChangesListener(
@@ -1589,7 +1527,7 @@ public class MediaWikiAPI implements API {
    * Removes a <code>RecentChangesListener</code> from the API.
    * 
    * @param wiki Wiki.
-   * @param listener Recent changes listener.
+   * @param listener Listener for recent changes.
    */
   @Override
   public void removeRecentChangesListener(
