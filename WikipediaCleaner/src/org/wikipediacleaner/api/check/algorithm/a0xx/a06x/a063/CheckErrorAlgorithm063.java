@@ -31,7 +31,8 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     super("HTML text style element <small>, <sub> or <sup> in ref, small, sub or sup");
   }
 
-  private static final List<TagType> ANALYZED_TAGS = List.of(WikiTagType.REF, HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP);
+  private static final List<TagType> SURROUNDING_REF = List.of(HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP);
+  private static final List<TagType> SURROUNDING_SMALL = List.of(WikiTagType.REF, HtmlTagType.SUB, HtmlTagType.SUP);
   private static final Map<TagType, List<TagType>> REMOVE_SURROUNDING = Map.ofEntries(
       Map.entry(WikiTagType.REF, List.of(HtmlTagType.SMALL, HtmlTagType.SUB, HtmlTagType.SUP))
   );
@@ -56,26 +57,27 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each tag
-    boolean result = false;
-    for (TagType analyzed : ANALYZED_TAGS) {
-      List<PageElementTag> tags = analysis.getTags(analyzed);
-      for (PageElementTag tag : tags) {
-        result |= analyzeTag(analysis, errors, tag);
-      }
-    }
-
+    boolean result;
+    result = analysis.getTags(HtmlTagType.SMALL).stream()
+        .map(tag -> analyzeTag(analysis, errors, tag, SURROUNDING_SMALL, true))
+        .reduce(false, Boolean::logicalOr);
+    result |= analysis.getTags(WikiTagType.REF).stream()
+        .map(tag -> analyzeTag(analysis, errors, tag, SURROUNDING_REF, false))
+        .reduce(false, Boolean::logicalOr);
     return result;
   }
 
   private boolean analyzeTag(
       final PageAnalysis analysis,
       final Collection<CheckErrorResult> errors,
-      final PageElementTag tag) {
+      final PageElementTag tag,
+      final List<TagType> surrounding,
+      final boolean marginAllowed) {
 
     // Find closest surrounding tag
     final int index = tag.getBeginIndex();
     PageElementTag surroundingTag = null;
-    for (TagType type : ANALYZED_TAGS) {
+    for (TagType type : surrounding) {
       PageElementTag currentTag = analysis.getSurroundingTag(type, index);
       if (currentTag != null) {
         if (surroundingTag == null || surroundingTag.getBeginIndex() < currentTag.getBeginIndex()) {
@@ -87,12 +89,11 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Ignore small inside small (detected by #055)
-    if (tag.getType() == HtmlTagType.SMALL && surroundingTag.getType() == HtmlTagType.SMALL) {
-      return false;
-    }
-    // Ignore ref inside ref (detected by #531)
-    if (tag.getType() == WikiTagType.REF && surroundingTag.getType() == WikiTagType.REF) {
+    final boolean allComplete = surroundingTag.isComplete() && tag.isComplete();
+    final boolean hasMargin = allComplete &&
+        surroundingTag.getValueBeginIndex() == tag.getCompleteBeginIndex() &&
+        surroundingTag.getValueEndIndex() == tag.getCompleteEndIndex();
+    if (hasMargin && !marginAllowed) {
       return false;
     }
 
@@ -100,7 +101,7 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     if (errors == null) {
       return true;
     }
-    if (!surroundingTag.isComplete() || !tag.isComplete()) {
+    if (!allComplete) {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, tag.getBeginIndex(), tag.getEndIndex());
       errors.add(errorResult);
       return true;
@@ -109,12 +110,10 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
         surroundingTag.getCompleteBeginIndex(), surroundingTag.getCompleteEndIndex());
-    if (surroundingTag.getValueBeginIndex() == tag.getCompleteBeginIndex() &&
-        surroundingTag.getValueEndIndex() == tag.getCompleteEndIndex()) {
-      if (REMOVE_SURROUNDING.getOrDefault(tag.getType(), List.of()).contains(surroundingTag.getType())) {
-        errorResult.addReplacement(
-            analysis.getContents().substring(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex()));
-      }
+    if (!hasMargin &&
+        REMOVE_SURROUNDING.getOrDefault(tag.getType(), List.of()).contains(surroundingTag.getType())) {
+      errorResult.addReplacement(
+          analysis.getContents().substring(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex()));
     }
     errors.add(errorResult);
     return true;
