@@ -30,6 +30,7 @@ import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
 import org.wikipediacleaner.api.configuration.WikiConfiguration;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.Login;
 import org.wikipediacleaner.api.data.LinterCategory;
 import org.wikipediacleaner.api.data.LoginResult;
 import org.wikipediacleaner.api.data.User;
@@ -119,6 +120,7 @@ public class LoginWorker extends BasicWorker {
           if ((result == null) || (!result.isLoginSuccessful())) {
             throw new APIException("Login unsuccessful: " + ((result != null) ? result.toString() : ""));
           }
+          wiki.getConnection().setLogin(new Login(fullUsername, new String(password)));
         }
         User user = api.retrieveUser(wiki, compactUsername);
         compactUsername = (user != null) ? user.getName() : null;

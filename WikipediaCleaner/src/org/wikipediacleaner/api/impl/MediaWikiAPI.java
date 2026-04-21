@@ -49,6 +49,7 @@ import org.wikipediacleaner.api.constants.ConnectionInformation;
 import org.wikipediacleaner.api.constants.EnumQueryPage;
 import org.wikipediacleaner.api.constants.EnumQueryResult;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
+import org.wikipediacleaner.api.constants.Login;
 import org.wikipediacleaner.api.data.AbuseFilter;
 import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.LoginResult;
@@ -278,7 +279,7 @@ public class MediaWikiAPI implements API {
   @Override
   public void retrieveSectionContents(EnumWikipedia wikipedia, Page page, int section)
     throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
+    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY);
     properties.put("prop", "revisions|info");
     properties.put("continue", "");
     properties.put("titles", page.getTitle());
@@ -288,8 +289,8 @@ public class MediaWikiAPI implements API {
     try {
       constructContents(
           page,
-          getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS),
-          "/api/query/pages/page");
+          getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS)
+      );
     } catch (JDOMParseException e) {
       log.error("Error retrieving page content", e);
       throw new APIException("Error parsing XML", e);
@@ -311,7 +312,7 @@ public class MediaWikiAPI implements API {
    */
   public void retrieveContentsWithoutRedirects(EnumWikipedia wikipedia, List<Page> pages)
       throws APIException {
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
+    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY);
     properties.put("prop", "revisions");
     properties.put("continue", "");
     properties.put("rvprop", "content");
@@ -330,8 +331,8 @@ public class MediaWikiAPI implements API {
       try {
         constructContents(
             pages,
-            getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS),
-            "/api/query/pages/page");
+            getRoot(wikipedia, properties, ApiRequest.MAX_ATTEMPTS)
+        );
       } catch (JDOMParseException e) {
         log.error("Error retrieving redirects", e);
         throw new APIException("Error parsing XML", e);
@@ -479,7 +480,7 @@ public class MediaWikiAPI implements API {
     int attemptNumber = 0;
     do {
       attemptNumber++;
-      Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT, true);
+      Map<String, String> properties = getProperties(ApiRequest.ACTION_EDIT);
       properties.put("assert", "user");
       Optional.ofNullable(page.getContentsTimestamp()).ifPresent(value -> properties.put("basetimestamp", value));
       if (bot) {
@@ -529,7 +530,12 @@ public class MediaWikiAPI implements API {
           throw e;
         }
         EnumQueryResult queryResult = e.getQueryResult();
-        if (queryResult == EnumQueryResult.BAD_TOKEN || queryResult == EnumQueryResult.ASSERT_USER_FAILED) {
+        if (queryResult == EnumQueryResult.ASSERT_USER_FAILED && wiki.getConnection().getLogin() != null) {
+          waitBeforeRetrying();
+          log.warn("Trying to login again after a {} answer", queryResult.getCode());
+          final Login login = wiki.getConnection().getLogin();
+          login(wiki, login.username(), login.password(), true);
+        } else if (queryResult == EnumQueryResult.BAD_TOKEN) {
           waitBeforeRetrying();
           log.warn("Retrieving tokens after a {} answer", queryResult.getCode());
           retrieveTokens(wiki);
@@ -557,7 +563,7 @@ public class MediaWikiAPI implements API {
     if ((pages == null) || (pages.isEmpty())) {
       return;
     }
-    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY, true);
+    Map<String, String> properties = getProperties(ApiRequest.ACTION_QUERY);
     properties.put("redirects", "");
     StringBuilder titles = new StringBuilder();
     for (int i = 0; i < pages.size();) {
@@ -644,23 +650,20 @@ public class MediaWikiAPI implements API {
   /**
    * @param page Page.
    * @param root Root element.
-   * @param query XPath query to retrieve the contents 
    * @throws APIException Exception thrown by the API.
    */
-  private boolean constructContents(Page page, Element root, String query)
+  private void constructContents(Page page, Element root)
       throws APIException {
     if (page == null) {
       throw new APIException("Page is null");
     }
-    boolean redirect = false;
 
     XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
-        query, Filters.element());
+        "/api/query/pages/page", Filters.element());
     Element node = xpaPage.evaluateFirst(root);
     if (node != null) {
       page.setNamespace(node.getAttributeValue("ns"));
       if (node.getAttribute("redirect") != null) {
-        redirect = true;
         page.getRedirects().isRedirect(true);
       }
       if (node.getAttribute("missing") != null) {
@@ -670,7 +673,7 @@ public class MediaWikiAPI implements API {
       Optional.ofNullable(node.getAttributeValue("starttimestamp")).ifPresent(page::setStartTimestamp);
     }
     XPathExpression<Element> xpa = XPathFactory.instance().compile(
-        query + "/revisions/rev", Filters.element());
+        "/api/query/pages/page" + "/revisions/rev", Filters.element());
     node = xpa.evaluateFirst(root);
     if (node != null) {
       XPathExpression<Element> xpaSlot = XPathFactory.instance().compile(
@@ -681,30 +684,28 @@ public class MediaWikiAPI implements API {
       page.setRevisionId(node.getAttributeValue("revid"));
       page.setContentsTimestamp(node.getAttributeValue("timestamp"));
     }
-    xpa = XPathFactory.instance().compile(query + "/protection/pr", Filters.element());
+    xpa = XPathFactory.instance().compile("/api/query/pages/page" + "/protection/pr", Filters.element());
     for (Element prNode : xpa.evaluate(root)) {
       if ("edit".equals(prNode.getAttributeValue("type"))) {
         page.setEditProtectionLevel(prNode.getAttributeValue("level"));
       }
     }
 
-    return redirect;
   }
 
   /**
    * @param pages Pages.
-   * @param root Root element.
-   * @param query XPath query to retrieve the contents 
+   * @param root  Root element.
    * @throws APIException Exception thrown by the API.
    */
-  private void constructContents(List<Page> pages, Element root, String query)
+  private void constructContents(List<Page> pages, Element root)
       throws APIException {
     if (pages == null) {
       throw new APIException("Pages is null");
     }
 
     XPathExpression<Element> xpaPage = XPathFactory.instance().compile(
-        query, Filters.element());
+        "/api/query/pages/page", Filters.element());
     XPathExpression<Element> xpaRev = XPathFactory.instance().compile(
         "./revisions/rev", Filters.element());
     XPathExpression<Element> xpaSlot = XPathFactory.instance().compile(
@@ -1545,16 +1546,13 @@ public class MediaWikiAPI implements API {
 
   /**
    * Returns an initialized set of properties.
-   * 
+   *
    * @param action Action called in the MediaWiki API.
-   * @param newApi New API (api.php) or not (query.php).
    * @return Properties.
    */
-  private Map<String, String> getProperties(
-      String action,
-      boolean newApi) {
+  private Map<String, String> getProperties(String action) {
     Map<String, String> properties = new HashMap<>();
-    properties.put(newApi ? "action" : "what", action);
+    properties.put("action", action);
     properties.put("format", "xml");
     return properties;
   }
@@ -1667,7 +1665,7 @@ public class MediaWikiAPI implements API {
     int minimumTime = config.getInt(null, ConfigurationValueInteger.TIME_BETWEEN_EDIT);
     int maxEdits = 0;
     if ((namespace == null) || (namespace % 2 == 0)) {
-      config.getInt(null, ConfigurationValueInteger.MAX_EDITS_PER_MINUTE);
+      maxEdits = config.getInt(null, ConfigurationValueInteger.MAX_EDITS_PER_MINUTE);
       if ((maxEdits > ConfigurationValueInteger.MAX_EDITS_PER_MINUTE_NORMAL) ||
           (maxEdits <= 0)) {
         if (!user.isMemberOf("admin") &&

@@ -255,18 +255,17 @@ public class ListCWWorker extends BasicWorker {
   }
 
   /**
-   * @param pages List of detections.
+   * @param pages   List of detections.
    * @param maxSize Maximum size.
-   * @param result Formatted result.
-   * @return True if result was saved completely.
+   * @param result  Formatted result.
    */
-  private boolean appendResult(
+  private void appendResult(
       List<Detection> pages, long maxSize,
       StringBuilder result,
       List<Detection> pagesLeftToSave) {
     pagesLeftToSave.clear();
     StringBuilder buffer = new StringBuilder();
-    buffer.append(CommentBuilder.from("Generated using " + dumpFile.getName()).toString());
+    buffer.append(CommentBuilder.from("Generated using " + dumpFile.getName()));
     buffer.append("\n");
     long currentLength = buffer.toString().getBytes(StandardCharsets.UTF_8).length;
     ErrorLevel lastLevel = null;
@@ -279,7 +278,7 @@ public class ListCWWorker extends BasicWorker {
       if ((detection.maxLevel != null) &&
           !detection.maxLevel.equals(lastLevel)) {
         lastLevel = detection.maxLevel;
-        line.append(CommentBuilder.from(lastLevel.toString()).toString());
+        line.append(CommentBuilder.from(lastLevel.toString()));
         line.append("\n");
       }
       if (pages.size() > 1000) {
@@ -308,7 +307,7 @@ public class ListCWWorker extends BasicWorker {
         }
         if (appendTitle) {
           line.append("\n");
-          line.append(TitleBuilder.from(3, "" + prefix).toString());
+          line.append(TitleBuilder.from(3, prefix));
           line.append("\n");
         }
       }
@@ -320,13 +319,12 @@ public class ListCWWorker extends BasicWorker {
           pagesLeftToSave.add(pages.remove(pages.size() - 1));
         }
         Collections.sort(pagesLeftToSave);
-        return false;
+        return;
       }
       buffer.append(line);
       currentLength += lineLength;
     }
     result.append(buffer);
-    return true;
   }
 
   /**
@@ -353,7 +351,7 @@ public class ListCWWorker extends BasicWorker {
             line.append("&amp;");
             break;
           case '\n': // Replace \n by a visual character
-            line.append('\u21b5');
+            line.append('↵');
             break;
           case '<': // Replace "<" by its HTML element
             line.append("&lt;");
@@ -454,7 +452,7 @@ public class ListCWWorker extends BasicWorker {
 
     // Output to a page
     boolean fullySaved = true;
-    boolean tryNextPage = true;
+    boolean tryNextPage;
     try {
       List<Detection> pagesToSave = tmpPages;
       int pageNumber = 0;
@@ -515,10 +513,10 @@ public class ListCWWorker extends BasicWorker {
         (initialRevisionId == null)) {
       throw new APIException("Unable to read page " + truePageName);
     }
-    logCW.info("Writing dump analysis results for error " + algorithm.getErrorNumberString() + " to page " + truePageName);
+    logCW.info("Writing dump analysis results for error {} to page {}", algorithm.getErrorNumberString(), truePageName);
 
     // Generate result
-    logCW.info("Preparing results of dump analysis for error " + algorithm.getErrorNumberString());
+    logCW.info("Preparing results of dump analysis for error {}", algorithm.getErrorNumberString());
     int nbPages = pages.size();
     final Long maxSize = getWikipedia().getWikiConfiguration().getMaxArticleSize();
     final List<Detection> tmpPages = new ArrayList<>(pages);
@@ -538,7 +536,7 @@ public class ListCWWorker extends BasicWorker {
         throw new APIException("Page " + truePageName + " has been modified");
       }
 
-      // Find place holders in the page
+      // Find placeholders in the page
       int begin = -1;
       int end = -1;
       for (ContentsComment comment : page.getAnalysis(contents, true).comments().getAll()) {
@@ -621,7 +619,7 @@ public class ListCWWorker extends BasicWorker {
     if (outputPath == null) {
       return;
     }
-    File outputFile = null;
+    File outputFile;
     if (!outputPath.getName().contains("{0}")) {
       outputFile = new File(
           outputPath,
@@ -706,7 +704,7 @@ public class ListCWWorker extends BasicWorker {
      * @return Analysis.
      */
     private PageAnalysis performFullPageAnalysis(Page analyzedPage) {
-      PageAnalysis analysis = null;
+      PageAnalysis analysis;
       try {
         analysis = analyzedPage.getAnalysis(analyzedPage.getContents(), false);
         analysis.performFullPageAnalysis(analysisTime);
@@ -721,7 +719,7 @@ public class ListCWWorker extends BasicWorker {
      * @see java.util.concurrent.Callable#call()
      */
     @Override
-    public Page call() throws APIException {
+    public Page call() {
       EnumWikipedia wiki = getWikipedia();
       PageAnalysis analysis = performFullPageAnalysis(page);
       Page currentPage = null;

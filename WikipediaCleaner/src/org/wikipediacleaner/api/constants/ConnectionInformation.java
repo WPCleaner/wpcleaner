@@ -15,6 +15,8 @@ import org.wikipediacleaner.api.data.User;
  */
 public class ConnectionInformation {
 
+  private Login login;
+
   /** Parameter <code>lgToken</code> for API calls */
   private String lgToken;
 
@@ -47,6 +49,7 @@ public class ConnectionInformation {
    * Clean-up connection information.
    */
   public void clean() {
+    login = null;
     lgToken = null;
     lgUserName = null;
     lgUserId = null;
@@ -60,6 +63,14 @@ public class ConnectionInformation {
    */
   public boolean isClean() {
     return (lgToken == null) && (lgUserName == null) && (lgUserId == null);
+  }
+
+  public Login getLogin() {
+    return login;
+  }
+
+  public void setLogin(final Login login) {
+    this.login = login;
   }
 
   /**
