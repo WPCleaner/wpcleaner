@@ -535,6 +535,7 @@ public class MediaWikiAPI implements API {
           log.warn("Trying to login again after a {} answer", queryResult.getCode());
           final Login login = wiki.getConnection().getLogin();
           login(wiki, login.username(), login.password(), true);
+          retrieveTokens(wiki);
         } else if (queryResult == EnumQueryResult.BAD_TOKEN) {
           waitBeforeRetrying();
           log.warn("Retrieving tokens after a {} answer", queryResult.getCode());
