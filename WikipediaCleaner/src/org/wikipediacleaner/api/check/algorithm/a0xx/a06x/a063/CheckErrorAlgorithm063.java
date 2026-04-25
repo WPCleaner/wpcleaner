@@ -110,12 +110,26 @@ public class CheckErrorAlgorithm063 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
         surroundingTag.getCompleteBeginIndex(), surroundingTag.getCompleteEndIndex());
-    if (!hasMargin &&
+    final boolean correctlyOrdered = surroundingTag.getCompleteBeginIndex() < tag.getCompleteBeginIndex() &&
+        surroundingTag.getCompleteEndIndex() > tag.getCompleteEndIndex();
+    if (!hasMargin && correctlyOrdered &&
         REMOVE_SURROUNDING.getOrDefault(tag.getType(), List.of()).contains(surroundingTag.getType())) {
       errorResult.addReplacement(
-          analysis.getContents().substring(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex()));
+          analysis.getContents().substring(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex()),
+          true);
     }
     errors.add(errorResult);
     return true;
+  }
+
+  /**
+   * Automatic fixing of all the errors in the page.
+   *
+   * @param analysis Page analysis.
+   * @return Page contents after fix.
+   */
+  @Override
+  protected String internalAutomaticFix(PageAnalysis analysis) {
+    return fixUsingAutomaticReplacement(analysis);
   }
 }
