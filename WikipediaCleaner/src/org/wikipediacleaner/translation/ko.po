@@ -4,6 +4,7 @@
 # Author: Ellif
 # Author: Sadopaul
 # Author: Suleiman the Magnificent Television
+# Author: Tensama0415
 # Author: YeBoy371
 # Author: Ykhwong
 # Author: 밝은소년
@@ -16,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-02-26 12:26:09+0000\n"
+"PO-Revision-Date: 2026-04-27 12:38:35+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -343,7 +344,7 @@ msgstr "틀 이름"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:243
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:238
 msgid "Name of the parameter"
-msgstr "변수 이름"
+msgstr "매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:128
 msgid "Close tag"
@@ -869,7 +870,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a068/CheckErrorAlgorithm068.java:433
 msgid "Parameter name for the displayed text"
-msgstr "표시된 텍스트의 변수 이름"
+msgstr "표시된 텍스트의 매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:933
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:936
@@ -1085,7 +1086,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:366
 msgid "Name of the parameter to use"
-msgstr "사용할 변수 이름"
+msgstr "사용할 매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:670
 msgid "What text should be displayed by the link?"
@@ -1695,7 +1696,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:315
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:331
 msgid "Name of a template with deprecated parameter"
-msgstr "구식 변수가 포함된 틀 이름"
+msgstr "구식 매개변수가 포함된 틀 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
@@ -1882,7 +1883,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:237
 msgid "Set to true to automatically remove unused parameters"
-msgstr "사용되지 않는 변수를 자동으로 제거하려면 true로 설정합니다"
+msgstr "사용되지 않는 매개변수를 자동으로 제거하려면 true로 설정합니다"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:248
 msgid "Parameters that should be ignored"
@@ -1909,17 +1910,17 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:375
 msgid "Name of parameter"
-msgstr "변수 이름"
+msgstr "매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:382
 msgid "Template parameters which can be safely deleted if they have a given value"
-msgstr "주어진 값이 있는 경우 안전하게 삭제할 수 있는 틀 변수"
+msgstr "주어진 값이 있는 경우 안전하게 삭제할 수 있는 틀 매개변수"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:389
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:328
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:363
 msgid "Value of the parameter"
-msgstr "변수 값"
+msgstr "매개변수 값"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:399
 msgid "Template parameters which can be safely commented"
@@ -2021,15 +2022,15 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:265
 msgid "Template parameters that should only contain numeric arguments"
-msgstr "숫자 인수만 포함해야 하는 틀 변수"
+msgstr "숫자 인수만 포함해야 하는 틀 매개변수"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:268
 msgid "If parameters accept only integer values"
-msgstr "변수가 정수값만 허용하는 경우"
+msgstr "매개변수가 정수값만 허용하는 경우"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:269
 msgid "Parameter name"
-msgstr "변수 이름"
+msgstr "매개변수 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:274
 msgid "Template parameters that can contain a reference"
@@ -4427,7 +4428,7 @@ msgstr "틀: {0}"
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:537
 #, java-format
 msgid "Parameter: {0}"
-msgstr "변수: {0}"
+msgstr "매개변수: {0}"
 
 #: org/wikipediacleaner/gui/swing/component/MWPanePopupListener.java:562
 #, java-format
@@ -4600,7 +4601,7 @@ msgstr "여러 틀"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
-msgstr "변수"
+msgstr "매개변수"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:236
 msgid "Type"
