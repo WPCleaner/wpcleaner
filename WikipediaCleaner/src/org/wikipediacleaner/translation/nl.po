@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-04-16 12:31:52+0000\n"
+"PO-Revision-Date: 2026-04-27 12:38:37+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -526,7 +526,7 @@ msgstr "Inbedding van links naar rechts"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:423
 msgid "Right-to-left embedding"
-msgstr ""
+msgstr "Rechts-naar-links inbedding"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:424
 msgid "Pop directional formatting"
@@ -1360,86 +1360,86 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:949
 msgid "Text that can be before the internal link"
-msgstr ""
+msgstr "Tekst die vóór de interne koppeling kan staan"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:952
 msgid "True if finding this text means that the replacement can be automatic"
-msgstr ""
+msgstr "Waar als het vinden van deze tekst betekent dat de vervanging automatisch kan plaatsvinden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:188
 msgid "References defined by templates."
-msgstr ""
+msgstr "Referenties gedefinieerd door sjablonen."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:192
 msgid "Name of a template which defines references"
-msgstr ""
+msgstr "Naam van een sjabloon dat verwijzingen definieert"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:195
 msgid "Name of the reference defined by the template"
-msgstr ""
+msgstr "Naam van de referentie gedefinieerd door het sjabloon"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:404
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
-msgstr ""
+msgstr "Een identificatiecode van een misbruikfilter die wordt geactiveerd door {0} tags."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:414
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:417
 msgid "A template that can be used instead of an apostrophe."
-msgstr ""
+msgstr "Een sjabloon dat in plaats van een apostrof gebruikt kan worden."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:420
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:423
 msgid "A template that can be used instead of an asterisk."
-msgstr ""
+msgstr "Een sjabloon dat in plaats van een asterisk gebruikt kan worden."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:426
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:429
 msgid "A template that can be used instead of a closing square bracket."
-msgstr ""
+msgstr "Een sjabloon dat in plaats van een sluitende vierkante haak gebruikt kan worden."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:432
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:435
 msgid "A template that can be used instead of an opening square bracket."
-msgstr ""
+msgstr "Een sjabloon dat in plaats van een openende vierkante haak gebruikt kan worden."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:150
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:153
 msgid "An identifier of an abuse filter that is triggered by weird characters."
-msgstr ""
+msgstr "Een identificatiecode voor een misbruikfilter die wordt geactiveerd door vreemde tekens."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:468
 msgid "A list of templates and parameters in which format should be checked"
-msgstr ""
+msgstr "Een lijst met sjablonen en parameters waarin het formaat gecontroleerd moet worden."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:472
 msgid "The name of a template in which format should be checked"
-msgstr ""
+msgstr "De naam van een sjabloon waarvan het formaat gecontroleerd moet worden."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:475
 msgid "The name of a parameter in which format should be checked"
-msgstr ""
+msgstr "De naam van een parameter waarvan het formaat gecontroleerd moet worden."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:478
 msgid "A correct format for the date"
-msgstr ""
+msgstr "Een correct formaat voor de datum"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:484
 msgid "A list of text values for months"
-msgstr ""
+msgstr "Een lijst met tekstwaarden voor maanden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:487
 msgid "A text value for a month"
-msgstr ""
+msgstr "Een tekstwaarde voor een maand"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:223
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:226
 msgid "The size below which images are not reported as duplicates"
-msgstr ""
+msgstr "De grootte waaronder afbeeldingen niet als duplicaten worden gerapporteerd."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:146
 msgid "Both values are equal"
-msgstr ""
+msgstr "Beide waarden zijn gelijk"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:148
 msgid "Other value is empty"
@@ -1447,7 +1447,7 @@ msgstr "De andere waarde is leeg"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr ""
+msgstr "Beide waarden zijn identiek"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
@@ -1471,39 +1471,39 @@ msgstr "Opmerking"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:258
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:261
 msgid "A category containing the list of pages in error"
-msgstr ""
+msgstr "Een categorie met een lijst van pagina's die een fout bevatten"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
 msgid "Values that are to be considered identical"
-msgstr ""
+msgstr "Waarden die als identiek moeten worden beschouwd"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
 msgid "Comma separated list of template names"
-msgstr ""
+msgstr "Door komma's gescheiden lijst met sjabloonnamen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
 msgid "Comma separated list of parameter names"
-msgstr ""
+msgstr "Door komma's gescheiden lijst met parameternamen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr ""
+msgstr "Parameterwaarde"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
-msgstr ""
+msgstr "Waarden die veilig genegeerd kunnen worden voor een gegeven sjabloon en argument"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:459
 msgid "Name of the template in which some values can be safely ignored"
-msgstr ""
+msgstr "Naam van het sjabloon waarin sommige waarden veilig genegeerd kunnen worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:462
 msgid "Name of the parameter for which some values can be safely ignored"
-msgstr ""
+msgstr "Naam van de parameter waarvan sommige waarden veilig genegeerd kunnen worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:465
 msgid "Value of the parameter which can be safely ignored"
-msgstr ""
+msgstr "Waarde van de parameter die veilig genegeerd kan worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:136
 msgid "Use an anchor template?"
@@ -1528,12 +1528,12 @@ msgstr "Of de vervanging automatisch kan zijn"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:424
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:427
 msgid "An identifier of an abuse filter that is triggered by incorrect year links."
-msgstr ""
+msgstr "Een identificatiecode voor een misbruikfilter die wordt geactiveerd door onjuiste jaartallenkoppelingen."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:430
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:437
 msgid "Text added after the link to ask for help."
-msgstr ""
+msgstr "Tekst toegevoegd na de koppeling om hulp te vragen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:434
 msgid "Description of the action"
@@ -1546,7 +1546,7 @@ msgstr "Beschrijving van de handeling"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:295
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:298
 msgid "A page containing a dump analysis for this error."
-msgstr ""
+msgstr "Een pagina met een dumpanalyse voor deze fout."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:448
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:451
@@ -1561,44 +1561,44 @@ msgstr "Maximumaantal cijfers voor het jaar"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:460
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:463
 msgid "Minimum difference between the year displayed and the year linked"
-msgstr ""
+msgstr "Minimale verschil tussen het weergegeven jaar en het gekoppelde jaar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:466
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:469
 msgid "Minimum difference between the year linked and the year displayed"
-msgstr ""
+msgstr "Minimale verschil tussen het gekoppelde jaar en het weergegeven jaar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
 msgid "Trim text"
-msgstr ""
+msgstr "Tekst trimmen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:412
 msgid "Automatic replacements of ISBN"
-msgstr ""
+msgstr "Automatische vervanging van ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:416
 msgid "Name of the template to use for ISBN"
-msgstr ""
+msgstr "Naam van het sjabloon dat gebruikt moet worden voor ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:419
 msgid "Text before the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "De tekst vóór het ISBN moet in de vervangende versie worden verwijderd"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:422
 msgid "Text after the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "De tekst na het ISBN moet in de vervangende versie worden verwijderd"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
-msgstr ""
+msgstr "RFC bekijken"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:131
 msgid "A list of templates that can't be used inside a reference"
-msgstr ""
+msgstr "Een lijst met sjablonen die niet binnen een referentie gebruikt kunnen worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:135
 msgid "Name of a template that can't be used inside a reference"
-msgstr ""
+msgstr "Naam van een sjabloon dat niet binnen een referentie gebruikt kan worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a532/CheckErrorAlgorithm532.java:46
 msgid "Fix tags"
@@ -1606,7 +1606,7 @@ msgstr "Tags repareren"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a538/CheckErrorAlgorithm538.java:29
 msgid "Remove whitespace characters"
-msgstr ""
+msgstr "Witruimtetekens verwijderen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
 msgid "Fix bold and italic"
@@ -1615,7 +1615,7 @@ msgstr "Vet en cursief corrigeren"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:237
 #, java-format
 msgid "Remove {0} tag"
-msgstr ""
+msgstr "Label {0} verwijderen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:335
 msgid "for marking an edit"
@@ -1627,11 +1627,11 @@ msgstr "voor iets anders"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:360
 msgid "preferred for source code"
-msgstr ""
+msgstr "voorkeur voor broncode"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:365
 msgid "preferred for user input"
-msgstr ""
+msgstr "voorkeur voor gebruikersinvoer"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:370
 msgid "preferred for variables"
@@ -1639,126 +1639,126 @@ msgstr "heeft de voorkeur voor variabelen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:375
 msgid "preferred for output, function and tag names, etc."
-msgstr ""
+msgstr "voorkeur voor uitvoer, functie- en tagnamen, enz."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:383
 msgid "preferred for everything else"
-msgstr ""
+msgstr "voorkeur voor alle andere doeleinden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:574
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:595
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:616
 #, java-format
 msgid "Possible replacements for {0} tags"
-msgstr ""
+msgstr "Mogelijke vervangingen voor {0}-tags"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:578
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:599
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:620
 #, java-format
 msgid "Template for replacing {0} tag"
-msgstr ""
+msgstr "Sjabloon voor het vervangen van het label {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:581
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:602
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:623
 msgid "Parameter to use in the template for the text"
-msgstr ""
+msgstr "In het sjabloon te gebruiken parameter voor de tekst"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:589
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:610
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:631
 msgid "Description of the template"
-msgstr ""
+msgstr "Beschrijving van het sjabloon"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
-msgstr ""
+msgstr "Paren van sjablonen: voor elk openingssjabloon, alle mogelijke sluitingssjablonen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:220
 msgid "Name of the opening template in the pair"
-msgstr ""
+msgstr "Naam van het openingssjabloon in het paar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:223
 msgid "Name of a closing template in the pair"
-msgstr ""
+msgstr "Naam van een afsluitend sjabloon in het paar"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:274
 msgid "Categories listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "Categorieën met met pagina's die sjablonen gebruiken met verouderde parameters"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:277
 msgid "Name of a category listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "Naam van een categorie met pagina's die sjablonen gebruiken met verouderde parameters"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:295
 msgid "Templates with deprecated parameters"
-msgstr ""
+msgstr "Sjablonen met verouderde parameters"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:299
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:315
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:331
 msgid "Name of a template with deprecated parameter"
-msgstr ""
+msgstr "Naam van een sjabloon met een verouderde parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
 msgid "Name of a deprecated parameter"
-msgstr ""
+msgstr "Naam van een verouderde parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 msgid "Textual explanation about the deprecated parameter"
-msgstr ""
+msgstr "Tekstuele uitleg over de verouderde parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:311
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:327
 msgid "Replacements of deprecated parameters"
-msgstr ""
+msgstr "Vervanging van verouderde parameters"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:321
 msgid "Name of a replacement parameter"
-msgstr ""
+msgstr "Naam van een vervangende parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:337
 msgid "Value of the deprecated parameter"
-msgstr ""
+msgstr "Waarde van de verouderde parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:340
 msgid "Name of the replacement parameter"
-msgstr ""
+msgstr "Naam van de vervangingsparameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:343
 msgid "Value of the replacement parameter"
-msgstr ""
+msgstr "Waarde van de vervangingsparameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:151
 msgid "List of categorizing templates"
-msgstr ""
+msgstr "Lijst met categoriseringssjablonen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:155
 msgid "Name of a template that categorizes articles"
-msgstr ""
+msgstr "Naam van een sjabloon waarmee pagina's worden gecategoriseerd"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:158
 msgid "Name of the parameter that triggers the categorization"
-msgstr ""
+msgstr "Naam van de parameter die de categorisatie activeert"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:162
 msgid "Value of the parameter that triggers the categorization"
-msgstr ""
+msgstr "Waarde van de parameter die de categorisatie activeert"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:260
 msgid "Templates in which empty list items should be ignored"
-msgstr ""
+msgstr "Sjablonen waarin lege lijstitems genegeerd moeten worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:264
 msgid "Template in which empty list items should be ignored"
-msgstr ""
+msgstr "Sjabloon waarin lege lijstitems genegeerd moeten worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:267
 msgid "Template parameter in which empty list items should be ignored"
-msgstr ""
+msgstr "Sjabloonparameter waarin lege lijstitems moeten worden genegeerd"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:374
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:271
@@ -1781,19 +1781,19 @@ msgstr "Sjabloon om te negeren"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:435
 msgid "Acceptable suffixes"
-msgstr ""
+msgstr "Aanvaardbare achtervoegsels"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:438
 msgid "Acceptable suffix"
-msgstr ""
+msgstr "Aanvaardbaar achtervoegsel"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:442
 msgid "Words that should be separated from the link"
-msgstr ""
+msgstr "Woorden die van de koppeling gescheiden moeten worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:445
 msgid "Word that should be separated from the link by a whitespace"
-msgstr ""
+msgstr "Woord dat door een spatie van de koppeling gescheiden moet worden"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:156
 #, java-format
