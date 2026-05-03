@@ -12,15 +12,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Nonnull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
+import org.wikipediacleaner.api.check.algorithm.a5xx.TemplateConfigurationGroup;
 import org.wikipediacleaner.api.configuration.WPCConfiguration;
+import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementListItem;
 import org.wikipediacleaner.api.data.PageElementTemplate;
@@ -35,8 +33,6 @@ import org.wikipediacleaner.i18n.GT;
  * Error 578: Template in list.
  */
 public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
-
-  @Nonnull private static final Logger log = LoggerFactory.getLogger(CheckErrorAlgorithm578.class);
 
   public CheckErrorAlgorithm578() {
     super("Template in list");
@@ -60,7 +56,7 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
 
     // Check each template
     boolean result = false;
-    for (Map.Entry<String, Boolean> templateConfiguration : templateNames.entrySet()) {
+    for (Map.Entry<String, TemplateConfiguration> templateConfiguration : templateNames.entrySet()) {
       List<PageElementTemplate> currentTemplates = analysis.getTemplates(templateConfiguration.getKey());
       for (PageElementTemplate template : currentTemplates) {
         result |= analyzeTemplate(analysis, errors, template, templateConfiguration.getValue());
@@ -76,14 +72,14 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param template Template.
-   * @param ignoreAfter True if text after should be ignored.
+   * @param templateConfiguration Configuration for the template.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTemplate(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       PageElementTemplate template,
-      Boolean ignoreAfter) {
+      TemplateConfiguration templateConfiguration) {
 
     // Check if template is in list item
     PageElementListItem listItem = analysis.isInListItem(template.getBeginIndex());
@@ -106,14 +102,13 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     int tmpBeginIndex = ContentsUtil.moveIndexAfterWhitespace(contents, beginIndex + listItem.getDepth());
     boolean automatic = true;
+    boolean hasTextBefore = false;
     if (tmpBeginIndex < template.getBeginIndex()) {
-      automatic = false;
+      hasTextBefore = true;
+      automatic &= templateConfiguration.ignoreBefore;
     }
-    if (Boolean.FALSE.equals(ignoreAfter) &&
+    if (!templateConfiguration.ignoreAfter &&
         (listItem.getEndIndex() > ContentsUtil.moveIndexAfterWhitespace(contents, template.getEndIndex()))) {
-      automatic = false;
-    }
-    if (listItem.getDepth() > 1) {
       automatic = false;
     }
     if (automatic && (beginIndex > 0)) {
@@ -122,7 +117,25 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
         automatic = false;
       }
     }
-    errorResult.addReplacement(contents.substring(tmpBeginIndex, endIndex), automatic);
+    final String replacement;
+    if (hasTextBefore) {
+      replacement =
+          contents.substring(beginIndex, template.getBeginIndex()) +
+          "\n" +
+          contents.substring(template.getBeginIndex(), endIndex);
+      if (listItem.getDepth() > 1) {
+        int nextIndex = ContentsUtil.moveIndexForwardWhileFound(contents, listItem.getEndIndex(), " \n");
+        if (nextIndex < contents.length() && PageElementListItem.isListIndicator(contents.charAt(nextIndex))) {
+          automatic = false;
+        }
+      }
+    } else {
+      replacement = contents.substring(tmpBeginIndex, endIndex);
+      if (listItem.getDepth() > 1) {
+        automatic = false;
+      }
+    }
+    errorResult.addReplacement(replacement, automatic);
     errors.add(errorResult);
 
     return true;
@@ -159,16 +172,28 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     templateNames.clear();
     if (tmp != null) {
+      TemplateConfigurationGroup group = new TemplateConfigurationGroup();
+      List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
+      if (generalList != null) {
+        group.addGroups(generalList);
+      }
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
-      for (String[] tmpElement : tmpList) {
-        Boolean ignoreAfter = tmpElement.length > 1 ? Boolean.valueOf(tmpElement[1]) : Boolean.FALSE;
-        templateNames.put(Page.normalizeTitle(tmpElement[0]), ignoreAfter);
+      if (tmpList != null) {
+        for (String[] tmpElement : tmpList) {
+          boolean ignoreBefore = tmpElement.length > 2 && Boolean.parseBoolean(tmpElement[2]);
+          boolean ignoreAfter = tmpElement.length > 1 && Boolean.parseBoolean(tmpElement[1]);
+          for (String templateName : group.getTemplateNames(tmpElement[0])) {
+            templateNames.put(
+                Page.normalizeTitle(templateName),
+                new TemplateConfiguration(ignoreBefore, ignoreAfter));
+          }
+        }
       }
     }
   }
 
   /** Templates that shouldn't be used in list item */
-  private final Map<String, Boolean> templateNames = new HashMap<>();
+  private final Map<String, TemplateConfiguration> templateNames = new HashMap<>();
 
   /**
    * Build the list of parameters for this algorithm.
@@ -186,4 +211,6 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
         },
         true));
   }
+
+  private record TemplateConfiguration(boolean ignoreBefore, boolean ignoreAfter) {}
 }
