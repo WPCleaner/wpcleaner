@@ -55,12 +55,14 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     }
 
     // Check each template
+    List<PageElementListItem> listItems = analysis.getListItems();
+    if (listItems == null || listItems.isEmpty()) {
+      return false;
+    }
     boolean result = false;
-    for (Map.Entry<String, TemplateConfiguration> templateConfiguration : templateNames.entrySet()) {
-      List<PageElementTemplate> currentTemplates = analysis.getTemplates(templateConfiguration.getKey());
-      for (PageElementTemplate template : currentTemplates) {
-        result |= analyzeTemplate(analysis, errors, template, templateConfiguration.getValue());
-      }
+    ListItemsProgress progress = new ListItemsProgress(listItems);
+    for (PageElementTemplate template : analysis.getTemplates()) {
+      result |= analyzeTemplate(analysis, errors, template, progress);
     }
 
     return result;
@@ -72,17 +74,25 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param template Template.
-   * @param templateConfiguration Configuration for the template.
+   * @param progress Current progress in list items
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTemplate(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       PageElementTemplate template,
-      TemplateConfiguration templateConfiguration) {
+      ListItemsProgress progress) {
 
-    // Check if template is in list item
-    PageElementListItem listItem = analysis.isInListItem(template.getBeginIndex());
+    // Check if template is to be reported
+    TemplateConfiguration templateConfiguration = templateNames.get(template.getTemplateName());
+    if (templateConfiguration == null) {
+      return false;
+    }
+    int currentListItem = progress.findListItemAtPosition(template.getBeginIndex());
+    if (currentListItem < 0) {
+      return false;
+    }
+    PageElementListItem listItem = progress.items.get(currentListItem);
     if (listItem == null) {
       return false;
     }
@@ -94,9 +104,9 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     int beginIndex = listItem.getBeginIndex();
     int endIndex;
     if (template.getParameterCount() == 0) {
-      endIndex = template.getEndIndex() - 2;
+      endIndex = template.getEndIndex();
     } else {
-      endIndex = template.getParameterPipeIndex(0);
+      endIndex = template.getParameterPipeIndex(0) + 1;
     }
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     String contents = analysis.getContents();
@@ -111,9 +121,9 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
         (listItem.getEndIndex() > ContentsUtil.moveIndexAfterWhitespace(contents, template.getEndIndex()))) {
       automatic = false;
     }
-    if (automatic && (beginIndex > 0)) {
-      PageElementListItem previousItem = analysis.isInListItem(beginIndex - 1);
-      if (previousItem != null) {
+    if (automatic && (beginIndex > 0) && currentListItem > 0) {
+      PageElementListItem previousItem = progress.items.get(currentListItem - 1);
+      if (previousItem != null && previousItem.containsIndex(beginIndex - 1)) {
         automatic = false;
       }
     }
@@ -123,10 +133,13 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
           contents.substring(beginIndex, template.getBeginIndex()) +
           "\n" +
           contents.substring(template.getBeginIndex(), endIndex);
-      if (listItem.getDepth() > 1) {
+      if (listItem.getDepth() > 1 && currentListItem < progress.items.size() - 1) {
         int nextIndex = ContentsUtil.moveIndexForwardWhileFound(contents, listItem.getEndIndex(), " \n");
-        if (nextIndex < contents.length() && PageElementListItem.isListIndicator(contents.charAt(nextIndex))) {
-          automatic = false;
+        if (nextIndex < contents.length()) {
+          PageElementListItem nextItem = progress.items.get(currentListItem + 1);
+          if (nextItem.containsIndex(nextIndex)) {
+            automatic = false;
+          }
         }
       }
     } else {
@@ -213,4 +226,28 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
   }
 
   private record TemplateConfiguration(boolean ignoreBefore, boolean ignoreAfter) {}
+
+  private static class ListItemsProgress {
+    private final List<PageElementListItem> items;
+    private int currentPos;
+
+    public ListItemsProgress(List<PageElementListItem> items) {
+      this.items = items;
+      this.currentPos = 0;
+    }
+
+    public int findListItemAtPosition(final int position) {
+      while (currentPos < items.size()) {
+        PageElementListItem currentItem = items.get(currentPos);
+        if (currentItem.getBeginIndex() > position) {
+          return -1;
+        }
+        if (position < currentItem.getEndIndex()) {
+          return currentPos;
+        }
+        currentPos++;
+      }
+      return -1;
+    }
+  }
 }
