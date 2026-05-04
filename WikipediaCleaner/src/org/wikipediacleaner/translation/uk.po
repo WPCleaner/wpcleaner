@@ -6,6 +6,7 @@
 # Author: Ice bulldog
 # Author: MonX94
 # Author: Movses
+# Author: Repakr
 # Author: Ата
 # Author: Пан Хаунд
 # --
@@ -17,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-01-19 12:33:38+0000\n"
+"PO-Revision-Date: 2026-05-04 12:23:02+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -626,7 +627,7 @@ msgstr "Шаблон, який можна використовувати для 
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:184
 msgid "Expand"
-msgstr ""
+msgstr "Розгорнути"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:163
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:99
