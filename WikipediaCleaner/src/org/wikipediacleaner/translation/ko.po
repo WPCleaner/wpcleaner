@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-04-27 12:38:35+0000\n"
+"PO-Revision-Date: 2026-05-04 12:22:57+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3754,7 +3754,7 @@ msgstr "주시문서 목록에 추가할 문서를 선택해야 합니다."
 #, java-format
 msgid "Would you like to add the page {0} on your local watchlist?"
 msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
-msgstr[0] "주시하는 문서에 {0} 페이지를 추가하시겠습니까?"
+msgstr[0] "주시중인 문서에 {0} 페이지를 추가하시겠습니까?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:90
 #, java-format
