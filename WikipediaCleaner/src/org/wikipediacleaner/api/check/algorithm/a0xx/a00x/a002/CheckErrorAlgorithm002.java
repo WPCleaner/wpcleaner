@@ -9,7 +9,6 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a00x.a002;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -49,58 +48,52 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   };
 
   /**
-   * List of non self closing tags that should be verified.
-   * 
+   * List of non-self-closing tags that should be verified.
    * Valid HTML tags are only: area, base, br, col, embed, hr, img, input, keygen, link, meta, param, source, track, wbr
    */
-  private final static Set<TagType> nonSelfClosingTags = new HashSet<>();
+  // TODO: Use HtmlTagType attributes for filtering the list of all tags who can't be self closed
+  private final static Set<TagType> nonSelfClosingTags = Set.of(
+      HtmlTagType.ABBR,
+      HtmlTagType.B,
+      HtmlTagType.BIG,
+      HtmlTagType.BLOCKQUOTE,
+      HtmlTagType.CENTER,
+      HtmlTagType.CITE,
+      HtmlTagType.CODE,
+      HtmlTagType.DEL,
+      HtmlTagType.DFN,
+      HtmlTagType.DIV,
+      HtmlTagType.EM,
+      HtmlTagType.FONT,
+      HtmlTagType.H1,
+      HtmlTagType.H2,
+      HtmlTagType.H3,
+      HtmlTagType.H4,
+      HtmlTagType.H5,
+      HtmlTagType.H6,
+      HtmlTagType.H7,
+      HtmlTagType.H8,
+      HtmlTagType.H9,
+      HtmlTagType.I,
+      HtmlTagType.P,
+      HtmlTagType.S,
+      HtmlTagType.SMALL,
+      HtmlTagType.SPAN,
+      HtmlTagType.STRIKE,
+      HtmlTagType.SUB,
+      HtmlTagType.SUP,
+      HtmlTagType.TABLE,
+      HtmlTagType.TD,
+      HtmlTagType.TH,
+      HtmlTagType.TR,
+      HtmlTagType.TT,
+      HtmlTagType.U,
+      HtmlTagType.UL);
 
   /**
    * Known erroneous tags that can be replaced automatically.
    */
-  private final static Set<String> erroneousTags = new HashSet<>();
-
-  static {
-      // TODO: Use HtmlTagType attributes for filtering the list of all tags who can't be self closed
-      nonSelfClosingTags.add(HtmlTagType.ABBR);
-      nonSelfClosingTags.add(HtmlTagType.B);
-      nonSelfClosingTags.add(HtmlTagType.BIG);
-      nonSelfClosingTags.add(HtmlTagType.BLOCKQUOTE);
-      nonSelfClosingTags.add(HtmlTagType.CENTER);
-      nonSelfClosingTags.add(HtmlTagType.CITE);
-      nonSelfClosingTags.add(HtmlTagType.CODE);
-      nonSelfClosingTags.add(HtmlTagType.DEL);
-      nonSelfClosingTags.add(HtmlTagType.DFN);
-      nonSelfClosingTags.add(HtmlTagType.DIV);
-      nonSelfClosingTags.add(HtmlTagType.EM);
-      nonSelfClosingTags.add(HtmlTagType.FONT);
-      nonSelfClosingTags.add(HtmlTagType.H1);
-      nonSelfClosingTags.add(HtmlTagType.H2);
-      nonSelfClosingTags.add(HtmlTagType.H3);
-      nonSelfClosingTags.add(HtmlTagType.H4);
-      nonSelfClosingTags.add(HtmlTagType.H5);
-      nonSelfClosingTags.add(HtmlTagType.H6);
-      nonSelfClosingTags.add(HtmlTagType.H7);
-      nonSelfClosingTags.add(HtmlTagType.H8);
-      nonSelfClosingTags.add(HtmlTagType.H9);
-      nonSelfClosingTags.add(HtmlTagType.I);
-      nonSelfClosingTags.add(HtmlTagType.P);
-      nonSelfClosingTags.add(HtmlTagType.S);
-      nonSelfClosingTags.add(HtmlTagType.SMALL);
-      nonSelfClosingTags.add(HtmlTagType.SPAN);
-      nonSelfClosingTags.add(HtmlTagType.STRIKE);
-      nonSelfClosingTags.add(HtmlTagType.SUB);
-      nonSelfClosingTags.add(HtmlTagType.SUP);
-      nonSelfClosingTags.add(HtmlTagType.TABLE);
-      nonSelfClosingTags.add(HtmlTagType.TD);
-      nonSelfClosingTags.add(HtmlTagType.TH);
-      nonSelfClosingTags.add(HtmlTagType.TR);
-      nonSelfClosingTags.add(HtmlTagType.TT);
-      nonSelfClosingTags.add(HtmlTagType.U);
-      nonSelfClosingTags.add(HtmlTagType.UL);
-
-      erroneousTags.add("</br>");
-  }
+  private final static Set<String> erroneousTags = Set.of("</br>");
 
   public CheckErrorAlgorithm002() {
     super("Article with incorrect tags");
@@ -122,16 +115,16 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Check for true self closing tags
+    // Check for true self-closing tags
     boolean result = false;
     result |= analyzeSelfClosingTags(analysis, errors, HtmlTagType.BR);
     result |= analyzeSelfClosingTags(analysis, errors, HtmlTagType.HR);
 
-    // Check for tags that should not be self closing
+    // Check for tags that should not be self-closing
     result |= analyzeNonFullTags(analysis, errors);
 
     // Check for incorrectly written tags
-    result |= analyzeIncorrectTags(analysis, errors, nonSelfClosingTags);
+    result |= analyzeIncorrectTags(analysis, errors);
 
     return result;
   }
@@ -141,7 +134,6 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param tagName Tag name.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeNonFullTags(
@@ -161,7 +153,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param tagName Tag name.
+   * @param tag Tag.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeNonFullTag(
@@ -251,9 +243,9 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           }
         }
       }
-      if ((idAttribute != null) && (idAttribute.length() > 0) && !hasOtherAttribute) {
+      if ((idAttribute != null) && !idAttribute.isEmpty() && !hasOtherAttribute) {
         for (String[] anchorTemplate : tmpAnchorTemplates) {
-          if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
+          if ((anchorTemplate.length > 0) && !anchorTemplate[0].isEmpty()) {
             TemplateBuilder builder = TemplateBuilder.from(anchorTemplate[0]);
             builder.addParam(
                 ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) ? anchorTemplate[1] : null,
@@ -272,16 +264,14 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
 
   /**
    * Analyze a page to check for incorrectly written tags.
-   * 
+   *
    * @param analysis Page analysis.
-   * @param errors Errors found in the page.
-   * @param tagTypes Tag types.
+   * @param errors   Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeIncorrectTags(
       PageAnalysis analysis,
-      Collection<CheckErrorResult> errors,
-      Set<TagType> tagTypes) {
+      Collection<CheckErrorResult> errors) {
 
     boolean result = false;
 
@@ -294,66 +284,64 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       if (currentIndex < 0) {
         return result;
       }
-      if (currentIndex >= 0) {
-        int beginIndex = currentIndex;
-        boolean ok = true;
-        currentIndex++;
-        if (ok) {
-          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
-          if ((currentIndex < contents.length()) &&
-              contents.charAt(currentIndex) == '/') {
-            currentIndex++;
-          } else {
-            ok = false;
+      int beginIndex = currentIndex;
+      boolean ok = true;
+      currentIndex++;
+      if (ok) {
+        currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
+        if ((currentIndex < contents.length()) &&
+            contents.charAt(currentIndex) == '/') {
+          currentIndex++;
+        } else {
+          ok = false;
+        }
+      }
+      if (ok &&
+          (currentIndex < contents.length())) {
+        currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
+      }
+      if (ok) {
+        for (TagType tagType : CheckErrorAlgorithm002.nonSelfClosingTags) {
+          int length = tagType.getNormalizedName().length();
+          if ((selectedTagName == null) &&
+              (currentIndex + length < contents.length()) &&
+              ContentsUtil.startsWithIgnoreCase(contents, tagType.getNormalizedName(), currentIndex) &&
+              !Character.isLetterOrDigit(contents.charAt(currentIndex + length))) {
+            currentIndex += length;
+            selectedTagName = tagType.getNormalizedName();
           }
         }
-        if (ok &&
-            (currentIndex < contents.length())) {
-          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
+        if (selectedTagName == null) {
+          ok = false;
         }
-        if (ok) {
-          for (TagType tagType : tagTypes) {
-            int length = tagType.getNormalizedName().length();
-            if ((selectedTagName == null) &&
-                (currentIndex + length < contents.length()) &&
-                ContentsUtil.startsWithIgnoreCase(contents, tagType.getNormalizedName(), currentIndex) &&
-                !Character.isLetterOrDigit(contents.charAt(currentIndex + length))) {
-              currentIndex += length;
-              selectedTagName = tagType.getNormalizedName();
-            }
-          }
-          if (selectedTagName == null) {
-            ok = false;
-          }
+      }
+      if (ok) {
+        currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
+        if ((currentIndex < contents.length()) &&
+            contents.charAt(currentIndex) == '/') {
+          currentIndex++;
+        } else {
+          ok = false;
         }
-        if (ok) {
-          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
-          if ((currentIndex < contents.length()) &&
-              contents.charAt(currentIndex) == '/') {
-            currentIndex++;
-          } else {
-            ok = false;
-          }
+      }
+      if (ok) {
+        currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
+        if ((currentIndex < contents.length()) &&
+            contents.charAt(currentIndex) == '>') {
+          currentIndex++;
+        } else {
+          ok = false;
         }
-        if (ok) {
-          currentIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex);
-          if ((currentIndex < contents.length()) &&
-              contents.charAt(currentIndex) == '>') {
-            currentIndex++;
-          } else {
-            ok = false;
-          }
+      }
+      if (ok) {
+        if (errors == null) {
+          return true;
         }
-        if (ok) {
-          if (errors == null) {
-            return true;
-          }
-          result = true;
-          CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, currentIndex);
-          errorResult.addReplacement(
-              TagBuilder.from(selectedTagName, TagFormat.CLOSE).toString());
-          errors.add(errorResult);
-        }
+        result = true;
+        CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, currentIndex);
+        errorResult.addReplacement(
+            TagBuilder.from(selectedTagName, TagFormat.CLOSE).toString());
+        errors.add(errorResult);
       }
     }
 
@@ -361,7 +349,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Analyze a page to check if errors are present in self closing tags.
+   * Analyze a page to check if errors are present in self-closing tags.
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
@@ -373,7 +361,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       Collection<CheckErrorResult> errors,
       TagType tagType) {
 
-    // Check for incorrect self closing tags
+    // Check for incorrect self-closing tags
     String tagName = tagType.getNormalizedName();
     boolean result = false;
     int currentIndex = 0;
@@ -388,7 +376,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         shouldCheck = false;
       }
 
-      // Check if this is a self closing tag for the given name
+      // Check if this is a self-closing tag for the given name
       if (shouldCheck) {
         int tmpIndex = ContentsUtil.moveIndexAfterWhitespace(contents, currentIndex + 1);
         boolean incorrectChar = false;
@@ -457,7 +445,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
               boolean automatic = endsWithGT && incorrectChar && analysis.getPage().isArticle();
               if (!automatic) {
                 String text = contents.substring(currentIndex, tmpIndex);
-                automatic |= erroneousTags.contains(text);
+                automatic = erroneousTags.contains(text);
               }
               boolean close = analysis.getWPCConfiguration().getBoolean(
                   WPCConfigurationBoolean.CLOSE_SELF_CLOSING_TAGS);
@@ -476,7 +464,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       currentIndex = nextIndex;
     }
 
-    // Check for self closing tags with extra characters
+    // Check for self-closing tags with extra characters
     if (HtmlTagType.BR.equals(tagType)) {
       List<PageElementTag> tags = analysis.getTags(tagType);
       for (PageElementTag tag : tags) {
@@ -484,7 +472,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
         // Check for "clear" attribute
         String clearValue = getClearValue(tag);
   
-        // Check for extra characters before the self closing tag
+        // Check for extra characters before the self-closing tag
         boolean extra = false;
         int beginIndex = tag.getBeginIndex();
         while ((beginIndex > 0) && (contents.charAt(beginIndex - 1) == '<')) {
@@ -492,7 +480,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
           extra = true;
         }
   
-        // Check for extra characters after the self closing tag
+        // Check for extra characters after the self-closing tag
         int endIndex = tag.getEndIndex();
         while ((endIndex < contents.length()) && (contents.charAt(endIndex) == '>')) {
           endIndex++;
@@ -551,7 +539,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
       final String prefix = "clear:";
       if ((styleValue != null) && styleValue.startsWith(prefix)) {
         String clearValue = styleValue.substring(prefix.length()).trim();
-        while ((clearValue.length() > 0) && (clearValue.endsWith(";"))) {
+        while (clearValue.endsWith(";")) {
           clearValue = clearValue.substring(0, clearValue.length() - 1);
         }
         return clearValue;
@@ -596,7 +584,7 @@ public class CheckErrorAlgorithm002 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {
