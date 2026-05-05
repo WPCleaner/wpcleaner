@@ -129,6 +129,10 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     }
     final String replacement;
     if (hasTextBefore) {
+      PageElementTemplate surroundingTemplate = analysis.isInTemplate(template.getBeginIndex() - 1);
+      if (surroundingTemplate != null && surroundingTemplate.getBeginIndex() > listItem.getBeginIndex()) {
+        automatic = false;
+      }
       replacement =
           contents.substring(beginIndex, template.getBeginIndex()) +
           "\n" +
