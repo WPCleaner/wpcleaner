@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-05-04 12:22:57+0000\n"
+"PO-Revision-Date: 2026-05-07 12:28:06+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1669,16 +1669,15 @@ msgstr "틀에 관한 설명"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
-msgstr ""
+msgstr "틀 쌍: 모든 여는 틀에 대한 모든 가능한 닫는 틀"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:220
-#, fuzzy
 msgid "Name of the opening template in the pair"
-msgstr "틀"
+msgstr "해당 쌍의 여는 틀의 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:223
 msgid "Name of a closing template in the pair"
-msgstr ""
+msgstr "해당 쌍의 닫는 틀의 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:274
 msgid "Categories listing pages using templates with deprecated parameters"
@@ -1738,13 +1737,12 @@ msgid "Name of a template that categorizes articles"
 msgstr "문서를 분류하는 틀의 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:158
-#, fuzzy
 msgid "Name of the parameter that triggers the categorization"
-msgstr "틀"
+msgstr "분류를 유발하는 매개변수의 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:162
 msgid "Value of the parameter that triggers the categorization"
-msgstr ""
+msgstr "분류를 유발하는 매개변수의 값"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:260
 msgid "Templates in which empty list items should be ignored"
@@ -2420,9 +2418,8 @@ msgid "Link parameter {0} to"
 msgstr ""
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
-#, fuzzy
 msgid "Retrieving all links to page"
-msgstr "페이지 사용량을 가져오는 중"
+msgstr "페이지로의 모든 링크를 가져오는 중"
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
