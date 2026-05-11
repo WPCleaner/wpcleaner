@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: ArticleEditor404
+# Author: Kelly Hsueh
 # Author: Kly
 # Author: StarrySky
 # Author: TongcyDai
@@ -15,7 +16,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2025-12-22 12:37:40+0000\n"
+"PO-Revision-Date: 2026-05-11 12:30:24+0000\n"
 "X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5097,7 +5098,7 @@ msgstr "最大詢問執行緒數目："
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:190
 msgid "Size limit for syntax highlighting"
-msgstr "語法突顯的大小限制"
+msgstr "語法醒目標示的大小限制"
 
 #: org/wikipediacleaner/gui/swing/options/LimitOptionsPanel.java:207
 msgid "Threshold for slow regular expressions (ms)"
