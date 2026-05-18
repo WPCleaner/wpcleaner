@@ -11,12 +11,12 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-04-23 12:33:23+0000\n"
+"PO-Revision-Date: 2026-05-18 13:02:00+0000\n"
 "X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: lb\n"
-"X-Generator: MediaWiki 1.46.0-alpha; Translate 2025-07-31\n"
+"X-Generator: MediaWiki 1.47.0-alpha; Translate 2025-07-31\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
@@ -98,7 +98,7 @@ msgstr "Et definéiert dat neit magescht Wuert __DISAMBIG__."
 
 #: org/wikipediacleaner/Version.java:56
 msgid "This magic word should be added to all disambiguation pages (either through templates or directly)."
-msgstr "Dëst magescht Wuert soll op all Homonymie-Säiten derbäigesat ginn (entweder mat Schablounen oder direkt)."
+msgstr "Dëst magescht Wuert soll op all Homonymiesäiten derbäigesat ginn (entweeder mat Schablounen oder direkt)."
 
 #: org/wikipediacleaner/Version.java:57
 msgid "WPCleaner v1.28 also uses this as the default system."
@@ -3204,7 +3204,7 @@ msgstr "Haapt"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1690
 msgid "All disambiguations pages"
-msgstr "All Homonymie-Säiten"
+msgstr "All Homonymiesäiten"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1846
 msgid "Watch list"
