@@ -4076,12 +4076,12 @@ msgstr "Selectie laden"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
 msgid "You must select at least one algorithm for fixing errors"
-msgstr "U moet ten minste één algoritme selecteren voor het repareren van fouten"
+msgstr "U moet ten minste Ã©Ã©n algoritme selecteren voor het repareren van fouten"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
 msgid "You must select at least one algorithm for listing errors"
-msgstr "U moet ten minste één algoritme selecteren voor het weergeven van fouten"
+msgstr "U moet ten minste Ã©Ã©n algoritme selecteren voor het weergeven van fouten"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:389
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1138
