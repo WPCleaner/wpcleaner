@@ -5060,7 +5060,7 @@ msgstr "Alle bewerkte pagina's volgen"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:215
 msgid "Copy/paste in popup menu"
-msgstr "Kopiëren/plakken in pop-upmenu"
+msgstr "KopiÃ«ren/plakken in pop-upmenu"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:224
 msgid "Act as user:"
