@@ -251,7 +251,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
         tag.getCompleteBeginIndex(), tag.getCompleteEndIndex());
-    errorResult.addText("Both tags are unnamed");
+    errorResult.addText(GT._T("Both tags are unnamed"));
     errors.add(errorResult);
     if (!firstTag) {
       return;
