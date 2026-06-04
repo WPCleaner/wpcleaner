@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-05-18 13:02:00+0000\n"
+"PO-Revision-Date: 2026-06-04 12:28:54+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2017-03-22 17:48+0000\n"
 "X-Generator: MediaWiki 1.47.0-alpha; Translate 2025-07-31\n"
 "Language: it\n"
-"X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
+"X-POT-Import-Date: 2026-06-03 10:30:33+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -289,23 +289,23 @@ msgstr "Un elenco di modelli che comporta l'inclusione di un indice"
 msgid "Remove {0} namespace from template name"
 msgstr "Rimuovi {0} namespace dal nome del modello"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:47
 msgid "Fix all incorrect tags"
 msgstr "Correggi tutti i tag errati"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:669
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:677
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:680
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:686
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:692
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:695
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:698
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:701
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:704
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Un sostituto per {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:671
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:551
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:943
@@ -330,7 +330,7 @@ msgstr "Un sostituto per {0}"
 msgid "Name of the template"
 msgstr "Nome del template"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:672
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:506
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:153
@@ -975,11 +975,11 @@ msgstr "Sostituisci tutto %20 col carattere spazio"
 msgid "Replace %20 by space character"
 msgstr "Sostituisci %20 col carattere spazio"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:192
 msgid "A list of regular expressions to find templates replacing <references> tags"
 msgstr "Un elenco di espressioni regolari per trovare i modelli sostitutivi <references> etichette"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:205
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:195
 msgid "A regular expression to find templates replacing <references> tags"
 msgstr "Un'espressione regolare per trovare i modelli sostitutivi<references> etichette"
 
@@ -1012,6 +1012,10 @@ msgstr "Entrambi i tag hanno già lo stesso nome"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:211
 msgid "Tags have different names"
 msgstr "I tag hanno nomi diversi"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:254
+msgid "Both tags are unnamed"
+msgstr "Entrambe le etichette non hanno nome"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:297
 msgid "Name the reference from template parameter"
@@ -2102,11 +2106,11 @@ msgstr "Prefissi che possono essere cancellati in modo sicuro"
 msgid "Prefix that can be safely deleted"
 msgstr "Prefisso che può essere eliminato in modo sicuro"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:181
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:225
 msgid "Templates that shouldn't be used in list item"
 msgstr "Modelli che non dovrebbero essere utilizzati nell'elemento elenco"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:185
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:229
 msgid "Template that shouldn't be used in list item"
 msgstr "Modello che non dovrebbe essere utilizzato nell'elemento dell'elenco"
 
@@ -2456,16 +2460,16 @@ msgstr "Analisi testo"
 msgid "Retrieving templates"
 msgstr "Recupero template"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:695
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:640
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "L'URL {0} è nella blacklist"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1858
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1795
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
 msgstr "Questa azione è protetta da CAPTCHA.\nQual è la risposta alla seguente domanda?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1865
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1802
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
 msgstr "Quest'azione è protetta da un CAPTCHA.\nQual è la risposta alla domanda visualizzata nel tuo browser ?"
 
@@ -2550,8 +2554,8 @@ msgid "Save replacements"
 msgstr "Salva sostituzioni"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:116
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:198
 msgid "Automatic fixing for Check Wiki"
 msgstr "Correzione automatica per Check Wiki"
 
@@ -2718,178 +2722,178 @@ msgstr "Devi selezionare delle pagine su cui applicare la correzione automatica.
 msgid "Information"
 msgstr "Informazione"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:121
 msgid "WPCleaner installer"
 msgstr "Programma di installazione di WPCleaner"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:180
 msgid "Configuration"
 msgstr "Configurazione"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:243
 msgid "Installation folder"
 msgstr "Cartella di installazione"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:251
 msgid "Select installation folder"
 msgstr "Seleziona cartella di installazione"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:318
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:316
 msgid "Create a desktop shortcut"
 msgstr "Crea un collegamento sul desktop"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:326
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:324
 msgid "Install beta version (only for experienced users)"
 msgstr "Installa la versione beta (solo per utenti esperti)"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:366
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
 msgstr "Su Windows e alcune versioni di Linux è possibile creare automaticamente un collegamento sul desktop."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:369
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
 msgstr "Se il collegamento sul desktop non viene creato automaticamente, è comunque possibile crearlo manualmente."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 #, java-format
 msgid "The working directory for the shortcut MUST be the installation folder ({0})."
 msgstr "La directory di lavoro per il collegamento DEVE essere la cartella di installazione ({0})."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
 msgid "The command itself is dependent on the operating system you're using (see below)."
 msgstr "Il comando stesso dipende dal sistema operativo utilizzato (vedere sotto)."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
 msgid "Note: avoid having whitespace characters in the installation folder path, or you will need to adapt the commands."
 msgstr "Nota: evitare di inserire spazi vuoti nel percorso della cartella di installazione, altrimenti sarà necessario adattare i comandi."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:380
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:378
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
 msgstr "Se vuoi eseguire WPCleaner manualmente, apri un terminale/prompt dei comandi/... e cambia la directory corrente nella cartella di installazione."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:385
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:383
 msgid "And then execute the command dependent on the operating system you're using (see below)."
 msgstr "Quindi esegui il comando in base al sistema operativo che stai utilizzando (vedi sotto)."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:388
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:386
 msgid "Under Windows, the command can be:"
 msgstr "In Windows, il comando potrebbe essere:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:394
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:392
 msgid "Under Linux (or other systems working with .sh scripts), the command can be:"
 msgstr "Su Linux (o altri sistemi che funzionano con script .sh), il comando può essere:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:400
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:398
 msgid "On any operating system, the command can be:"
 msgstr "Su qualsiasi sistema operativo, il comando può essere:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:417
 msgid "Install"
 msgstr "Installa"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:446
 msgid "Operating system"
 msgstr "Sistema operativo"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:655
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:653
 msgid "System information"
 msgstr "Informazioni di sistema"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:702
 msgid "You must select an installation folder."
 msgstr "Devi selezionare una cartella di installazione."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:709
 #, java-format
 msgid "The path {0} already exists but is not a folder."
 msgstr "Il percorso {0} esiste già ma non è una cartella."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:717
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
 msgstr "La cartella {0} esiste già, vuoi installare WPCleaner lì?"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:721
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
 msgid "Existing files may be deleted by the installation process."
 msgstr "I file esistenti potrebbero essere eliminati durante il processo di installazione."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:727
 #, java-format
 msgid "Unable to create folder {0}"
 msgstr "Impossibile creare la cartella {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:745
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:743
 msgid "Desktop shortcut is only supported for the following operating systems:"
 msgstr "Il collegamento sul desktop è supportato solo per i seguenti sistemi operativi:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:806
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:804
 msgid "Installation was successful"
 msgstr "L'installazione è riuscita"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:824
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:839
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:822
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:837
 #, java-format
 msgid "Downloading {0}"
 msgstr "Scaricando {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:852
 #, java-format
 msgid "Creating {0}"
 msgstr "Creando {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:859
 #, java-format
 msgid "Unable to create file {0}"
 msgstr "Impossibile creare il file {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:862
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:893
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:948
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:969
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:997
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:860
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:891
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:946
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:967
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:995
 #, java-format
 msgid "Error: {0}"
 msgstr "Errore: {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:869
 #, java-format
 msgid "Installing {0}"
 msgstr "Installando {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:884
 msgid "Problem running getdown installer"
 msgstr "Problema nell'esecuzione del programma di installazione GetDown"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:887
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:885
 #, java-format
 msgid "Exit code: {0}"
 msgstr "Codice di uscita: {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:892
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:968
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:890
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:966
 #, java-format
 msgid "Problem running {0}"
 msgstr "Problemi in esecuzione {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:947
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:945
 msgid "Problem creating desktop file"
 msgstr "Problema nella creazione del file desktop"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:955
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:953
 #, java-format
 msgid "Running {0}"
 msgstr "Eseguendo {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:988
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:986
 #, java-format
 msgid "Unable to download file {0}."
 msgstr "Impossibile scaricare il file {0}."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:990
 msgid "Certificate exception: old versions of Java may fail to validate recent certificates, try upgrading Java"
 msgstr "Eccezione del certificato: le vecchie versioni di Java potrebbero non riuscire a convalidare i certificati recenti, provare ad aggiornare Java"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:994
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
 msgid "Java version: {}"
 msgstr "Versione Java: {}"
 
@@ -2936,7 +2940,7 @@ msgstr "Messaggio"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:379
 #: org/wikipediacleaner/gui/swing/MainWindow.java:448
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:115
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:117
 msgid "Login"
 msgstr "Login"
 
@@ -3612,7 +3616,7 @@ msgstr "Template usati in {0}, Collegati a {1}"
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:60
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:109
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:110
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:199
@@ -4019,76 +4023,76 @@ msgstr ""
 msgid "Whitelists"
 msgstr "Liste bianche"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
 msgid "To use Check Wiki bot tools:"
 msgstr "Per utilizzare gli strumenti del bot Check Wiki:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
 msgid "Select algorithms for which automatic fixing will be applied"
 msgstr "Seleziona gli algoritmi per i quali verrà applicata la correzione automatica"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Select algorithms that will be used to create a list of pages to work on"
 msgstr "Seleziona gli algoritmi che verranno utilizzati per creare un elenco di pagine su cui lavorare"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:141
 msgid "Run the tools below"
 msgstr "Esegui gli strumenti qui sotto"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:149
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:150
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "Analizza pagine che non possono essere corrette dai bot"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:156
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:157
 msgid "Ignore limit for errors not on Labs"
 msgstr "Ignora limite per errori non su Labs"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:164
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:165
 msgid "Number of pages:"
 msgstr "Numero di pagine:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:179
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:254
 msgid "Comment:"
 msgstr "Commento:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:206
 msgid "Mark errors already fixed"
 msgstr "Segnala gli errori già risolti"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:214
 msgid "Check whitelists"
 msgstr "Controlla le whitelist"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:222
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:351
 msgid "Analyze dump file"
 msgstr "Analizza il file dump"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:229
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:230
 msgid "Save selection"
 msgstr "Salva la selezione"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:237
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:238
 msgid "Load selection"
 msgstr "Selezione del carico"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:279
 msgid "You must select at least one algorithm for fixing errors"
 msgstr "Scegli almeno un algoritmo per correggere gli errori"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:284
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:334
 msgid "You must select at least one algorithm for listing errors"
 msgstr "Scegli almeno un algoritmo per correggere gli errori"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:389
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:390
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1138
 msgid "What is the name of the selection?"
 msgstr "Come si chiama la selezione?"
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:142
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:668
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:654
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
@@ -4096,7 +4100,7 @@ msgstr[0] " {0} pagina è stata analizzata"
 msgstr[1] "{0} pagine sono state analizzate"
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:265
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:862
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:793
 #, java-format
 msgid "{0} pages processed"
 msgstr "{0} pagine elaborate"
@@ -4167,7 +4171,7 @@ msgstr "Controlla l'ultima versione della voce prima di segnalare un errore"
 msgid "Only check articles previously reported"
 msgstr "Controlla solo le voci segnalate in precedenza"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:676
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:662
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
@@ -5410,19 +5414,19 @@ msgstr[1] "Sono stati rilevati i seguenti problemi:"
 msgid "Sorting errors by priority"
 msgstr "Ordinamento errori per priorità"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:130
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:133
 msgid "Loading configuration"
 msgstr "Caricamento della configurazione"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:160
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:163
 msgid "Retrieving disambiguation templates"
 msgstr "Recupero dei template di disambiguazione"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:165
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:168
 msgid "Retrieving suggestions for text replacements"
 msgstr "Recupero dei suggerimenti per le sostituzioni di testo"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:169
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:172
 msgid "Retrieving Check Wiki configuration"
 msgstr "Recupero della configurazione di Check Wiki"
 
@@ -5539,8 +5543,8 @@ msgstr "L'analisi ha trovato {0} voci da controllare per errori di parametri sco
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
 msgstr "Si è verificato un errore durante l'aggiornamento degli avvisi sui parametri sconosciuti. Vuoi continuare?\n\nErrore: {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:326
-#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:341
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:322
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:337
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Recupero contenuti pagina - {0}"

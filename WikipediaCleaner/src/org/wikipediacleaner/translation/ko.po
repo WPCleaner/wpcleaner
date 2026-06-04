@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-01 12:47:41+0000\n"
+"PO-Revision-Date: 2026-06-04 12:28:54+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,7 +27,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
 "X-Generator: MediaWiki 1.47.0-alpha; Translate 2025-07-31\n"
 "Language: ko\n"
-"X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
+"X-POT-Import-Date: 2026-06-03 10:30:33+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -286,23 +286,23 @@ msgstr "결과로써 목차를 끼워넣게 되는 틀 목록"
 msgid "Remove {0} namespace from template name"
 msgstr "틀 이름에서 {0} 이름공간을 제거"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:47
 msgid "Fix all incorrect tags"
 msgstr "유효하지 않은 모든 태그 수정"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:669
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:677
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:680
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:686
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:692
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:695
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:698
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:701
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:704
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
 msgstr "{0}의 교체"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:671
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:551
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:943
@@ -327,7 +327,7 @@ msgstr "{0}의 교체"
 msgid "Name of the template"
 msgstr "틀 이름"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:672
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:506
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:153
@@ -972,11 +972,11 @@ msgstr "%20을 모두 공백 문자로 교체"
 msgid "Replace %20 by space character"
 msgstr "%20을 공백 문자로 교체"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:192
 msgid "A list of regular expressions to find templates replacing <references> tags"
 msgstr "<references> 태그를 대체하는 틀을 찾기 위한 정규 표현식 목록"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:205
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:195
 msgid "A regular expression to find templates replacing <references> tags"
 msgstr "<references> 태그를 대체하는 틀을 찾기 위한 정규 표현식"
 
@@ -1009,6 +1009,10 @@ msgstr "두 태그 모두 이미 동일한 이름이 있음"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:211
 msgid "Tags have different names"
 msgstr "태그에 여러 이름이 있음"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:254
+msgid "Both tags are unnamed"
+msgstr "두 태그 모두 이름이 지정되지 않았습니다"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:297
 msgid "Name the reference from template parameter"
@@ -2099,11 +2103,11 @@ msgstr "안전하게 삭제할 수 있는 접두사"
 msgid "Prefix that can be safely deleted"
 msgstr "안전하게 삭제할 수 있는 접두사"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:181
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:225
 msgid "Templates that shouldn't be used in list item"
 msgstr "목록 항목에 사용해서는 안 되는 틀"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:185
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:229
 msgid "Template that shouldn't be used in list item"
 msgstr "목록 항목에 사용해서는 안 되는 틀"
 
@@ -2450,16 +2454,16 @@ msgstr "텍스트 구문 분석"
 msgid "Retrieving templates"
 msgstr "틀 가져오기"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:695
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:640
 #, java-format
 msgid "URL {0} is blacklisted"
 msgstr "URL {0}은(는) 차단 목록에 등록되어 있습니다"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1858
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1795
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
 msgstr "이 작업은 CAPTCHA로 보호됩니다.\n다음 질문에 대한 답은 무엇입니까?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1865
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1802
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
 msgstr "이 작업은 CAPTCHA로 보호됩니다.\n브라우저에 표시된 질문에 대한 답은 무엇입니까?"
 
@@ -2544,8 +2548,8 @@ msgid "Save replacements"
 msgstr "교체 저장하기"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:116
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:198
 msgid "Automatic fixing for Check Wiki"
 msgstr "Check Wiki를 위한 자동 수정"
 
@@ -2712,178 +2716,178 @@ msgstr "자동 수정을 실행할 문서를 선택해야 합니다."
 msgid "Information"
 msgstr "정보"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:121
 msgid "WPCleaner installer"
 msgstr "WPCleaner 인스톨러"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:180
 msgid "Configuration"
 msgstr "구성"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:243
 msgid "Installation folder"
 msgstr "설치 폴더"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:251
 msgid "Select installation folder"
 msgstr "설치 폴더 선택"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:318
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:316
 msgid "Create a desktop shortcut"
 msgstr "바탕 화면 바로 가기 만들기"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:326
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:324
 msgid "Install beta version (only for experienced users)"
 msgstr "베타 버전을 설치 (숙련된 사용자만 해당)"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:366
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
 msgstr "윈도우 및 일부 리눅스 배포판에서는 바탕 화면 바로 가기가 자동으로 생성됩니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:369
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
 msgstr "바탕화면 바로가기가 자동으로 생성되지 않으면 수동으로 생성할 수 있습니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 #, java-format
 msgid "The working directory for the shortcut MUST be the installation folder ({0})."
 msgstr "바로가기의 작업 디렉터리는 '반드시' 설치 폴더({0})여야 합니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
 msgid "The command itself is dependent on the operating system you're using (see below)."
 msgstr "명령어 자체는 사용 중인 운영 체제에 따라 다릅니다(아래 참조)."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
 msgid "Note: avoid having whitespace characters in the installation folder path, or you will need to adapt the commands."
 msgstr "참고: 설치 폴더 경로에 공백 문자가 포함되지 않도록 하세요. 그렇지 않으면 명령어를 수정해야 할 수 있습니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:380
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:378
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
 msgstr "WPCleaner를 수동으로 실행하려면 터미널/명령 프롬프트 등을 열고 현재 디렉토리를 설치 폴더로 변경하세요."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:385
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:383
 msgid "And then execute the command dependent on the operating system you're using (see below)."
 msgstr "그런 다음 사용 중인 운영 체제에 따라 해당 명령을 실행하세요(아래 참조)."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:388
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:386
 msgid "Under Windows, the command can be:"
 msgstr "Windows에서의 명령어는 다음과 같습니다:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:394
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:392
 msgid "Under Linux (or other systems working with .sh scripts), the command can be:"
 msgstr "리눅스(또는 .sh 스크립트를 사용하는 다른 시스템)에서 명령어는 다음과 같습니다:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:400
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:398
 msgid "On any operating system, the command can be:"
 msgstr "모든 운영 체제에서 명령어는 다음과 같습니다:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:417
 msgid "Install"
 msgstr "설치"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:446
 msgid "Operating system"
 msgstr "운영 체제"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:655
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:653
 msgid "System information"
 msgstr "시스템 정보"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:702
 msgid "You must select an installation folder."
 msgstr "설치 폴더를 선택해야 합니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:709
 #, java-format
 msgid "The path {0} already exists but is not a folder."
 msgstr "경로 {0}이(가) 이미 존재하지만 폴더가 아닙니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:717
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
 msgstr "폴더 {0}이(가) 이미 존재합니다. WPCleaner를 해당 위치에 설치하시겠습니까?"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:721
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
 msgid "Existing files may be deleted by the installation process."
 msgstr "설치 과정 중에 기존 파일은 삭제될 수 있습니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:727
 #, java-format
 msgid "Unable to create folder {0}"
 msgstr "{0} 폴더를 만들 수 없습니다"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:745
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:743
 msgid "Desktop shortcut is only supported for the following operating systems:"
 msgstr "바탕화면 바로가기는 다음 운영 체제에서만 지원됩니다:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:806
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:804
 msgid "Installation was successful"
 msgstr "설치를 성공했습니다"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:824
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:839
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:822
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:837
 #, java-format
 msgid "Downloading {0}"
 msgstr "{0} 다운로드 중"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:852
 #, java-format
 msgid "Creating {0}"
 msgstr "{0} 만드는 중"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:859
 #, java-format
 msgid "Unable to create file {0}"
 msgstr "{0} 파일을 만들 수 없습니다"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:862
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:893
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:948
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:969
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:997
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:860
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:891
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:946
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:967
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:995
 #, java-format
 msgid "Error: {0}"
 msgstr "오류: {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:869
 #, java-format
 msgid "Installing {0}"
 msgstr "{0} 설치 중"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:884
 msgid "Problem running getdown installer"
 msgstr "getdown 설치 프로그램 실행 중 문제 발생"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:887
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:885
 #, java-format
 msgid "Exit code: {0}"
 msgstr "종료 코드: {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:892
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:968
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:890
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:966
 #, java-format
 msgid "Problem running {0}"
 msgstr "{0} 실행에 문제 있음"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:947
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:945
 msgid "Problem creating desktop file"
 msgstr "바탕화면 파일 생성 중 문제 발생"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:955
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:953
 #, java-format
 msgid "Running {0}"
 msgstr "{0} 실행 중"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:988
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:986
 #, java-format
 msgid "Unable to download file {0}."
 msgstr "{0} 파일을 다운로드할 수 없습니다."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:990
 msgid "Certificate exception: old versions of Java may fail to validate recent certificates, try upgrading Java"
 msgstr "인증서 예외: 이전 버전의 자바는 최신 인증서 유효성 검사에 실패할 수 있습니다. 자바를 업그레이드해 보세요"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:994
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
 msgid "Java version: {}"
 msgstr "자바 버전: {}"
 
@@ -2930,7 +2934,7 @@ msgstr "메시지"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:379
 #: org/wikipediacleaner/gui/swing/MainWindow.java:448
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:115
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:117
 msgid "Login"
 msgstr "로그인"
 
@@ -3605,7 +3609,7 @@ msgstr "{0}에 사용되고 {1}(으)로 연결되는 틀"
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:60
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:109
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:110
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:199
@@ -4008,83 +4012,83 @@ msgstr "WPCleaner가 제거를 수행할 수 없습니다."
 msgid "Whitelists"
 msgstr "허용 목록"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
 msgid "To use Check Wiki bot tools:"
 msgstr "Check Wiki 봇 도구를 사용하기 위해:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
 msgid "Select algorithms for which automatic fixing will be applied"
 msgstr "자동 수정이 적용될 알고리즘 선택"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Select algorithms that will be used to create a list of pages to work on"
 msgstr "작업할 문서 목록을 만드는 데 사용할 알고리즘 선택"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:141
 msgid "Run the tools below"
 msgstr "아래의 도구를 실행하십시오"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:149
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:150
 msgid "Analyze pages that couldn't be fixed by bot"
 msgstr "봇으로 수정할 수 없었던 문서 분석"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:156
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:157
 msgid "Ignore limit for errors not on Labs"
 msgstr "Labs에 없는 오류의 제한 무시"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:164
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:165
 msgid "Number of pages:"
 msgstr "문서 수:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:179
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:254
 msgid "Comment:"
 msgstr "주석:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:206
 msgid "Mark errors already fixed"
 msgstr "오류를 이미 수정한 것으로 표시"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:214
 msgid "Check whitelists"
 msgstr "허용 목록 확인"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:222
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:351
 msgid "Analyze dump file"
 msgstr "덤프 파일 분석"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:229
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:230
 msgid "Save selection"
 msgstr "선택 저장하기"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:237
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:238
 msgid "Load selection"
 msgstr "선택 불러오기"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:279
 msgid "You must select at least one algorithm for fixing errors"
 msgstr "오류를 수정하기 위한 알고리즘을 최소 하나 이상 선택해야 합니다"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:284
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:334
 msgid "You must select at least one algorithm for listing errors"
 msgstr "오류를 나열하기 위한 알고리즘을 최소 하나 이상 선택해야 합니다"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:389
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:390
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1138
 msgid "What is the name of the selection?"
 msgstr "선택 항목의 이름은 무엇입니까?"
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:142
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:668
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:654
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
 msgstr[0] "{0}개 문서가 분석되었습니다"
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:265
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:862
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:793
 #, java-format
 msgid "{0} pages processed"
 msgstr "{0}개 문서 처리됨"
@@ -4155,7 +4159,7 @@ msgstr "오류를 신고하기 전에 문서의 최신 버전을 확인"
 msgid "Only check articles previously reported"
 msgstr "이전에 보고된 문서만 확인"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:676
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:662
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
@@ -5391,19 +5395,19 @@ msgstr[0] "다음과 같은 문제가 감지되었습니다:"
 msgid "Sorting errors by priority"
 msgstr "우선 순위별 오류 정렬"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:130
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:133
 msgid "Loading configuration"
 msgstr "구성 로딩 중"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:160
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:163
 msgid "Retrieving disambiguation templates"
 msgstr "동음이의 틀 검색"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:165
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:168
 msgid "Retrieving suggestions for text replacements"
 msgstr "텍스트 교체에 대한 제안을 불러오는 중"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:169
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:172
 msgid "Retrieving Check Wiki configuration"
 msgstr "Check Wiki 구성 가져오기"
 
@@ -5520,8 +5524,8 @@ msgstr "분석 결과 알 수 없는 매개변수 오류를 확인해야 할 문
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
 msgstr "알 수 없는 매개변수 경고를 업데이트하는 동안 오류가 발생했습니다. 계속하시겠습니까?\n\n오류: {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:326
-#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:341
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:322
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:337
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "문서 내용 불러오는 중 - {0}"
