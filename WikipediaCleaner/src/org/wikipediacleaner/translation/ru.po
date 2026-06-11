@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Abijeet Patro
+# Author: Amire80
 # Author: DDPAT
 # Author: Facenapalm
 # Author: Ice bulldog
@@ -28,7 +29,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-04 12:28:58+0000\n"
+"PO-Revision-Date: 2026-06-11 12:31:04+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Russian <ru@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3171,7 +3172,7 @@ msgstr "Вы должны ввести название страницы"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1342
 #, java-format
 msgid "Search results for {0}"
-msgstr "Результаты поиска для {0}"
+msgstr "Результаты поиска {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1350
 msgid "You must input a page name for retrieving the list of backlinks"
