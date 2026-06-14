@@ -21,9 +21,11 @@ import org.wikipediacleaner.api.configuration.WPCConfiguration;
 import org.wikipediacleaner.api.configuration.WPCConfigurationStringList;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageElementListItem;
+import org.wikipediacleaner.api.data.PageElementTag;
 import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.i18n.GT;
 
 
@@ -96,12 +98,16 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
     if (listItem == null) {
       return false;
     }
+    int beginIndex = listItem.getBeginIndex();
+    PageElementTag refTag = analysis.getSurroundingTag(WikiTagType.REF, template.getBeginIndex());
+    if (refTag != null && refTag.getCompleteBeginIndex() > beginIndex) {
+      return false;
+    }
 
     // Report error
     if (errors == null) {
       return true;
     }
-    int beginIndex = listItem.getBeginIndex();
     int endIndex;
     if (template.getParameterCount() == 0) {
       endIndex = template.getEndIndex();
