@@ -9,8 +9,10 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a578;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -104,6 +106,21 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
       return false;
     }
 
+    if (!ignoreTemplateNames.isEmpty()) {
+      int currentIndex = template.getBeginIndex();
+      while (currentIndex > beginIndex) {
+        PageElementTemplate surroundingTemplate = analysis.isInTemplate(currentIndex - 1);
+        if (surroundingTemplate != null) {
+          if (ignoreTemplateNames.contains(surroundingTemplate.getTemplateName())) {
+            return false;
+          }
+          currentIndex = surroundingTemplate.getBeginIndex();
+        } else {
+          currentIndex = -1;
+        }
+      }
+    }
+
     // Report error
     if (errors == null) {
       return true;
@@ -187,6 +204,9 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
   /** Templates that shouldn't be used in list item */
   private static final String PARAMETER_TEMPLATES = "templates";
 
+  /** Templates that can cause false positives */
+  private static final String PARAMETER_IGNORE_TEMPLATES = "ignore_templates";
+
   /**
    * Initialize settings for the algorithm.
    * 
@@ -194,14 +214,15 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
+    TemplateConfigurationGroup group = new TemplateConfigurationGroup();
+    List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
+    if (generalList != null) {
+      group.addGroups(generalList);
+    }
+
     String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     templateNames.clear();
     if (tmp != null) {
-      TemplateConfigurationGroup group = new TemplateConfigurationGroup();
-      List<String[]> generalList = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.TEMPLATE_GROUPS);
-      if (generalList != null) {
-        group.addGroups(generalList);
-      }
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
         for (String[] tmpElement : tmpList) {
@@ -215,10 +236,22 @@ public class CheckErrorAlgorithm578 extends CheckErrorAlgorithmBase {
         }
       }
     }
+
+    tmp = getSpecificProperty(PARAMETER_IGNORE_TEMPLATES, true, true, false);
+    ignoreTemplateNames.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        tmpList.forEach(item -> ignoreTemplateNames.addAll(group.getTemplateNames(item)));
+      }
+    }
   }
 
   /** Templates that shouldn't be used in list item */
   private final Map<String, TemplateConfiguration> templateNames = new HashMap<>();
+
+  /** Templates that can cause false positives */
+  private final Set<String> ignoreTemplateNames = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.
