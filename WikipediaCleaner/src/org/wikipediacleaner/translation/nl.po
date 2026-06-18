@@ -21,7 +21,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-05-21 12:24:07+0000\n"
+"PO-Revision-Date: 2026-06-18 12:28:28+0000\n"
 "Last-Translator: SubjectIsDead <Unknown>\n"
 "Language-Team: Dutch <nl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -31,7 +31,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2018-01-31 07:40+0000\n"
 "X-Generator: MediaWiki 1.47.0-alpha; Translate 2025-07-31\n"
 "Language: nl\n"
-"X-POT-Import-Date: 2025-12-20 20:30:47+0000\n"
+"X-POT-Import-Date: 2026-06-03 10:30:33+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -222,7 +222,7 @@ msgstr "Stel in op waar om automatische wijzigingen voor dit type fout te voorko
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:318
 msgid "List of false positives for this type of error"
-msgstr "Lijst van valse positieven voor dit soort fouten"
+msgstr "Lijst van foutpositieven voor dit soort fouten"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:321
 msgid "Page containing a false positive for this type of error"
@@ -231,7 +231,7 @@ msgstr "Pagina met een foutpositief voor dit soort fouten"
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:325
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmBase.java:328
 msgid "Page containing the list of false positives for this type of error"
-msgstr "Pagina met de lijst met valse positieven voor dit soort fouten"
+msgstr "Pagina met de lijst met foutpositieven voor dit soort fouten"
 
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISBN.java:370
 #: org/wikipediacleaner/api/check/algorithm/CheckErrorAlgorithmISSN.java:320
@@ -290,23 +290,23 @@ msgstr "Een lijst met sjablonen die een inhoudsopgave doen verschijnen"
 msgid "Remove {0} namespace from template name"
 msgstr "De naamruimte {0} uit de sjabloonnaam verwijderen"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:48
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:47
 msgid "Fix all incorrect tags"
 msgstr "Alle onjuiste tags repareren"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:681
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:669
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:677
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:680
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:686
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:689
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:692
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:695
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:698
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:701
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:704
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:228
 #, java-format
 msgid "A replacement for {0}"
 msgstr "Vervanging voor {0}"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:683
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:671
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:198
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:551
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:943
@@ -331,7 +331,7 @@ msgstr "Vervanging voor {0}"
 msgid "Name of the template"
 msgstr "Sjabloonnaam"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:684
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a002/CheckErrorAlgorithm002.java:672
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a060/CheckErrorAlgorithm060.java:201
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:506
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a504/CheckErrorAlgorithm504.java:153
@@ -466,7 +466,7 @@ msgstr "Alle besturingstekens verwijderen"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:394
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:397
 msgid "To report control characters only in templates"
-msgstr "Besturingstekens alleen in sjablonen rapporteren"
+msgstr "Besturingstekens alleen in sjablonen melden"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:400
 msgid "To ignore some control characters"
@@ -676,7 +676,7 @@ msgstr "Naam van het sjabloon waarin de fout moet worden genegeerd"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:438
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:441
 msgid "Set to true to report also links in <imagemap>"
-msgstr "Stel dit in op 'true' om ook koppelingen te rapporteren in <imagemap>"
+msgstr "Stel dit in op 'true' om ook koppelingen te melden in <imagemap>"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a04x/a048/CheckErrorAlgorithm048.java:444
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:454
@@ -776,12 +776,12 @@ msgstr "Alle <small>-tags verwijderen"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:536
 #, java-format
 msgid "A list of abbreviations that generate false positives when placed before {0}"
-msgstr "Een lijst met afkortingen die valse positieven genereren wanneer ze vóór {0} worden geplaatst"
+msgstr "Een lijst met afkortingen die foutpositieven genereren wanneer ze vóór {0} worden geplaatst"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:539
 #, java-format
 msgid "An abbreviation that generate false positives when placed before {0}"
-msgstr "Een afkorting die valse positieven genereert wanneer deze vóór {0} wordt geplaatst"
+msgstr "Een afkorting die foutpositieven genereert wanneer deze vóór {0} wordt geplaatst"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a067/CheckErrorAlgorithm067.java:549
 msgid "A list of templates in which the punctuation can be safely moved after the reference"
@@ -976,11 +976,11 @@ msgstr "Alle %20 vervangen door spaties"
 msgid "Replace %20 by space character"
 msgstr "Vervang %20 door een spatie"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:202
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:192
 msgid "A list of regular expressions to find templates replacing <references> tags"
 msgstr "Een lijst met reguliere expressies om sjablonen te vinden die <references>-tags vervangen"
 
-#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:205
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a078/CheckErrorAlgorithm078.java:195
 msgid "A regular expression to find templates replacing <references> tags"
 msgstr "Een reguliere expressie om sjablonen te vinden die <references>-tags vervangen"
 
@@ -1013,6 +1013,10 @@ msgstr "Beide tags hebben al dezelfde naam"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:211
 msgid "Tags have different names"
 msgstr "Tags hebben verschillende namen"
+
+#: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:254
+msgid "Both tags are unnamed"
+msgstr "Beide labels hebben geen naam."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:297
 msgid "Name the reference from template parameter"
@@ -1158,22 +1162,22 @@ msgstr "Parameter om te gebruiken voor de koppeling"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:441
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:444
 msgid "To report only links to other languages"
-msgstr "Alleen koppelingen naar andere talen rapporteren"
+msgstr "Alleen koppelingen naar andere talen melden"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:447
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091.java:450
 msgid "To report only links to local wikis"
-msgstr "Alleen koppelingen naar lokale wiki's rapporteren"
+msgstr "Alleen koppelingen naar lokale wiki's melden"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:311
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:314
 msgid "Maximum level of titles to report"
-msgstr "Maximaal titelniveau om te rapporteren"
+msgstr "Maximaal titelniveau om te vmelden"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:317
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a092/CheckErrorAlgorithm092.java:320
 msgid "To report only consecutive titles"
-msgstr "Alleen opeenvolgende titels rapporteren"
+msgstr "Alleen opeenvolgende titels melden"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:250
 msgid "Templates that should be ignored"
@@ -2103,11 +2107,11 @@ msgstr "Voorvoegsels die veilig verwijderd kunnen worden"
 msgid "Prefix that can be safely deleted"
 msgstr "Voorvoegsel dat veilig verwijderd kan worden"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:181
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:225
 msgid "Templates that shouldn't be used in list item"
 msgstr "Sjablonen die niet in een lijstitem gebruikt mogen worden"
 
-#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:185
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:229
 msgid "Template that shouldn't be used in list item"
 msgstr "Sjabloon dat niet in een lijstitem gebruikt mag worden"
 
@@ -2457,16 +2461,16 @@ msgstr "Tekst wordt ontleed"
 msgid "Retrieving templates"
 msgstr "Sjablonen ophalen"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:695
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:640
 #, java-format
 msgid "URL {0} is blacklisted"
-msgstr "URL {0} staat op de zwarte lijst"
+msgstr "Url {0} staat op de blokkeerlijst"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1858
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1795
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
 msgstr "Deze handeling is beschermd door een CAPTCHA.\nWat is het antwoord op de volgende vraag?"
 
-#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1865
+#: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1802
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
 msgstr "Deze handeling is beschermd door een CAPTCHA.\nWat is het antwoord op de vraag die in uw browser wordt weergegeven?"
 
@@ -2504,13 +2508,13 @@ msgstr "Deze functie kan in korte tijd veel pagina's wijzigen."
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:89
 msgid "On some Wikipedia projects, you may need the bot status for doing this."
-msgstr "Op enkele Wikipedia-projecten moet u misschien de bot-status gebruiken om dit te doen."
+msgstr "Op enkele Wikipedia-projecten moet u misschien de robot-status gebruiken om dit te doen."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:237
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:90
 msgid "Please, check if you need the bot status by reading the rules of Wikipedia."
-msgstr "Controleer of u de bot-status nodig hebt door de regels van Wikipedia te lezen."
+msgstr "Controleer of u de robot-status nodig hebt door de regels van Wikipedia te lezen."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:253
 #: org/wikipediacleaner/gui/swing/options/SortingOptionsPanel.java:110
@@ -2551,8 +2555,8 @@ msgid "Save replacements"
 msgstr "Vervangingen opslaan"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:315
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:115
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:197
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:116
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:198
 msgid "Automatic fixing for Check Wiki"
 msgstr "Automatische correctie voor Check Wiki"
 
@@ -2719,178 +2723,178 @@ msgstr "U moet pagina's selecteren waarop automatische correctie moet worden uit
 msgid "Information"
 msgstr "Informatie"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:123
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:121
 msgid "WPCleaner installer"
 msgstr "WPCleaner-installatieprogramma"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:182
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:180
 msgid "Configuration"
 msgstr "Configuratie"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:245
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:243
 msgid "Installation folder"
 msgstr "Installatiemap"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:253
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:251
 msgid "Select installation folder"
 msgstr "Installatiemap selecteren"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:318
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:316
 msgid "Create a desktop shortcut"
 msgstr "Een snelkoppeling op het bureaublad maken"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:326
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:324
 msgid "Install beta version (only for experienced users)"
 msgstr "Beta-versie installeren (alleen voor ervaren gebruikers)"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:366
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
 msgstr "Een snelkoppeling op het bureaublad kan automatisch worden aangemaakt onder Windows en sommige Linux-varianten."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:369
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
 msgstr "Als de snelkoppeling op het bureaublad niet automatisch wordt aangemaakt, kunt u deze nog steeds handmatig aanmaken."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:371
 #, java-format
 msgid "The working directory for the shortcut MUST be the installation folder ({0})."
 msgstr "De werkmap voor de snelkoppeling MOET de installatiemap zijn ({0})."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:373
 msgid "The command itself is dependent on the operating system you're using (see below)."
 msgstr "De opdracht zelf is afhankelijk van het besturingssysteem dat u gebruikt (zie hieronder)."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:375
 msgid "Note: avoid having whitespace characters in the installation folder path, or you will need to adapt the commands."
 msgstr "Let op: vermijd spaties in het pad van de installatiemap, anders moet u de opdrachten aanpassen."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:380
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:378
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
 msgstr "Als u WPCleaner handmatig wilt uitvoeren, open dan een terminal/opdrachtprompt/... en wijzig de huidige map naar de installatiemap."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:385
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:383
 msgid "And then execute the command dependent on the operating system you're using (see below)."
 msgstr "Voer vervolgens de opdracht uit die afhankelijk is van het besturingssysteem dat u gebruikt (zie hieronder)."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:388
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:386
 msgid "Under Windows, the command can be:"
 msgstr "Onder Windows kan de opdracht zijn:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:394
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:392
 msgid "Under Linux (or other systems working with .sh scripts), the command can be:"
 msgstr "Onder Linux (of andere systemen die met .sh-scripts werken) kan de opdracht zijn:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:400
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:398
 msgid "On any operating system, the command can be:"
 msgstr "Op elk besturingssysteem kan de opdracht zijn:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:419
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:417
 msgid "Install"
 msgstr "Installeren"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:448
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:446
 msgid "Operating system"
 msgstr "Besturingssysteem"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:655
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:653
 msgid "System information"
 msgstr "Systeeminformatie"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:704
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:702
 msgid "You must select an installation folder."
 msgstr "U moet een installatiemap selecteren."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:711
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:709
 #, java-format
 msgid "The path {0} already exists but is not a folder."
 msgstr "Het pad {0} bestaat al, maar is geen map."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:717
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
 msgstr "De map {0} bestaat al. Wilt u WPCleaner daar installeren?"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:721
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:719
 msgid "Existing files may be deleted by the installation process."
 msgstr "Bestaande bestanden kunnen worden verwijderd door het installatieproces."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:729
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:727
 #, java-format
 msgid "Unable to create folder {0}"
 msgstr "Kan map {0} niet aanmaken"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:745
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:743
 msgid "Desktop shortcut is only supported for the following operating systems:"
 msgstr "Snelkoppeling op het bureaublad wordt alleen ondersteund voor de volgende besturingssystemen:"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:806
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:804
 msgid "Installation was successful"
 msgstr "De installatie is geslaagd"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:824
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:839
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:822
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:837
 #, java-format
 msgid "Downloading {0}"
 msgstr "{0} downloaden"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:854
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:852
 #, java-format
 msgid "Creating {0}"
 msgstr "{0} aanmaken"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:861
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:859
 #, java-format
 msgid "Unable to create file {0}"
 msgstr "Kan bestand {0} niet aanmaken"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:862
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:893
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:948
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:969
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:997
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:860
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:891
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:946
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:967
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:995
 #, java-format
 msgid "Error: {0}"
 msgstr "Fout: {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:871
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:869
 #, java-format
 msgid "Installing {0}"
 msgstr "{0} wordt geïnstalleerd"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:886
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:884
 msgid "Problem running getdown installer"
 msgstr "Probleem bij het uitvoeren van het getdown-installatieprogramma"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:887
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:885
 #, java-format
 msgid "Exit code: {0}"
 msgstr "Afsluitcode: {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:892
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:968
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:890
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:966
 #, java-format
 msgid "Problem running {0}"
 msgstr "Probleem bij het uitvoeren van {0}"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:947
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:945
 msgid "Problem creating desktop file"
 msgstr "Probleem bij het aanmaken van het bureaubladbestand"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:955
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:953
 #, java-format
 msgid "Running {0}"
 msgstr "{0} uitvoeren"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:988
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:986
 #, java-format
 msgid "Unable to download file {0}."
 msgstr "Kan bestand {0} niet downloaden."
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:990
 msgid "Certificate exception: old versions of Java may fail to validate recent certificates, try upgrading Java"
 msgstr "Certificaatfout: oude versies van Java kunnen recente certificaten mogelijk niet valideren, probeer Java bij te werken"
 
-#: org/wikipediacleaner/gui/swing/InstallerWindow.java:994
+#: org/wikipediacleaner/gui/swing/InstallerWindow.java:992
 msgid "Java version: {}"
 msgstr "Java-versie: {}"
 
@@ -2915,7 +2919,7 @@ msgstr "Variant nr. {0}"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:198
 #, java-format
 msgid "In the near future, WPCleaner will require Java {0} or above, but you''re currently using an older version ({1})."
-msgstr "In de nabije toekomst zal WPCleaner Java {0} of hoger vereisen, maar u gebruikt momenteel een oudere versie ({1})."
+msgstr "In de nabije toekomst vereist WPCleaner Java {0} of hoger, maar u gebruikt momenteel een oudere versie ({1})."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:204
 msgid "Please, upgrade to a newer version of Java"
@@ -2937,7 +2941,7 @@ msgstr "Bericht"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:379
 #: org/wikipediacleaner/gui/swing/MainWindow.java:448
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:155
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:115
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:117
 msgid "Login"
 msgstr "Aanmelden"
 
@@ -3402,11 +3406,11 @@ msgstr "Doorverwijzing"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:401
 msgid "Reload (Alt + &R)"
-msgstr "Herladen (Alt + &R)"
+msgstr "Vernieuwen (Alt + &R)"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:403
 msgid "&Reload"
-msgstr "&Herladen"
+msgstr "&Vernieuwen"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:434
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:180
@@ -3613,7 +3617,7 @@ msgstr "Sjablonen gebruikt in {0}, verwijzend naar {1}"
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:57
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:60
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:109
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:110
 #: org/wikipediacleaner/gui/swing/worker/NewSectionWorker.java:62
 #: org/wikipediacleaner/gui/swing/worker/RandomPageWorker.java:49
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:199
@@ -3979,22 +3983,22 @@ msgstr "Check Wiki"
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:83
 #, java-format
 msgid "Checking whitelist for error {0}"
-msgstr "Witte lijst controleren voor fout {0}"
+msgstr "Toelatingslijst controleren voor fout {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
 msgid "Regarding whitelist for error {0}:"
-msgstr "Betreffende de witte lijst voor fout {0}:"
+msgstr "Betreffende de toelatingslijst voor fout {0}:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
 msgid "Page {0} should be removed from the whitelist."
-msgstr "Pagina {0} moet van de witte lijst worden verwijderd."
+msgstr "Pagina {0} moet van de toelatingslijst worden verwijderd."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
 #, java-format
 msgid "Page {0} should be kept in the whitelist."
-msgstr "Pagina {0} moet op de witte lijst blijven."
+msgstr "Pagina {0} moet op de toelatingslijst blijven."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
 msgid "It doesn't exist on Wikipedia."
@@ -4018,78 +4022,78 @@ msgstr "WPCleaner kon de verwijdering niet uitvoeren."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
-msgstr "Witte lijsten"
-
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:137
-msgid "To use Check Wiki bot tools:"
-msgstr "Om Check Wiki bot-tools te gebruiken:"
+msgstr "Toelatingslijsten"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:138
+msgid "To use Check Wiki bot tools:"
+msgstr "Om Check Wiki robothulpmiddelen te gebruiken:"
+
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
 msgid "Select algorithms for which automatic fixing will be applied"
 msgstr "Selecteer algoritmen waarvoor automatische correctie wordt toegepast"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:139
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
 msgid "Select algorithms that will be used to create a list of pages to work on"
 msgstr "Selecteer algoritmen die worden gebruikt om een lijst met te bewerken pagina's aan te maken"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:140
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:141
 msgid "Run the tools below"
 msgstr "Voer de onderstaande tools uit"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:149
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:150
 msgid "Analyze pages that couldn't be fixed by bot"
-msgstr "Pagina's analyseren die niet door een bot gerepareerd konden worden"
+msgstr "Pagina's analyseren die niet door een robot gerepareerd konden worden"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:156
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:157
 msgid "Ignore limit for errors not on Labs"
 msgstr "Limiet negeren voor fouten die niet op Labs staan"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:164
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:165
 msgid "Number of pages:"
 msgstr "Aantal pagina's:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:178
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:179
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:254
 msgid "Comment:"
 msgstr "Opmerking:"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:205
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:206
 msgid "Mark errors already fixed"
 msgstr "De fouten die al zijn opgelost markeren"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:213
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:214
 msgid "Check whitelists"
 msgstr "Toelatingslijsten controleren"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:221
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:350
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:222
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:351
 msgid "Analyze dump file"
 msgstr "Dumpbestand analyseren"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:229
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:230
 msgid "Save selection"
 msgstr "Selectie opslaan"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:237
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:238
 msgid "Load selection"
 msgstr "Selectie laden"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:278
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:279
 msgid "You must select at least one algorithm for fixing errors"
 msgstr "U moet ten minste één algoritme selecteren voor het repareren van fouten"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:283
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:333
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:284
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:334
 msgid "You must select at least one algorithm for listing errors"
 msgstr "U moet ten minste één algoritme selecteren voor het weergeven van fouten"
 
-#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:389
+#: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:390
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1138
 msgid "What is the name of the selection?"
 msgstr "Wat is de naam van de selectie?"
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:142
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:668
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:654
 #, java-format
 msgid "{0} page has been analyzed"
 msgid_plural "{0} pages have been analyzed"
@@ -4097,7 +4101,7 @@ msgstr[0] "{0} pagina is geanalyseerd"
 msgstr[1] "{0} pagina's zijn geanalyseerd"
 
 #: org/wikipediacleaner/gui/swing/bot/FixDumpWorker.java:265
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:862
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:793
 #, java-format
 msgid "{0} pages processed"
 msgstr "{0} pagina's verwerkt"
@@ -4168,7 +4172,7 @@ msgstr "Laatste versie van pagina controleren voordat een fout wordt gemeld"
 msgid "Only check articles previously reported"
 msgstr "Alleen eerder gemelde pagina's controleren"
 
-#: org/wikipediacleaner/gui/swing/bot/ListCWWorker.java:676
+#: org/wikipediacleaner/gui/swing/bot/listcw/ListCWWorker.java:662
 #, java-format
 msgid "{0} page has been detected for algorithm {1}"
 msgid_plural "{0} pages have been detected for algorithm {1}"
@@ -4336,7 +4340,7 @@ msgstr "Lijst met ontdekte fouten:"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:659
 msgid "Reload error"
-msgstr "Fout herladen"
+msgstr "Fout opnieuw laden"
 
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:665
 #: org/wikipediacleaner/gui/swing/component/CheckErrorPageListPopupListener.java:117
@@ -4379,7 +4383,7 @@ msgstr "Er is geen pagina gedefinieerd voor dit fouttype.\nAls u een pagina wilt
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1305
 #, java-format
 msgid "There''s no whitelist defined for this error type.\nIf you want to define a whitelist, you need to add:\n  {0} = <page name> END\nto the translation page ({1}) on \"{2}\""
-msgstr "Er is geen witte lijst gedefinieerd voor dit fouttype.\nAls u een witte lijst wilt definiëren, moet u het volgende toevoegen:\n  {0} = <paginanaam> END\naan de vertaalpagina ({1}) op \"{2}\""
+msgstr "Er is geen toelatingslijst gedefinieerd voor dit fouttype.\nAls u een toelatingslijst wilt definiëren, moet u het volgende toevoegen:\n  {0} = <paginanaam> END\naan de vertaalpagina ({1}) op \"{2}\""
 
 #: org/wikipediacleaner/gui/swing/checkwiki/DetectionListTableModel.java:155
 msgid "Error"
@@ -4680,7 +4684,7 @@ msgstr "Cache opschonen"
 
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:429
 msgid "Reload links"
-msgstr "Koppelingen herladen"
+msgstr "Koppelingen vernieuwen"
 
 #: org/wikipediacleaner/gui/swing/menu/DisambiguationPageListMenuCreator.java:56
 msgid "Remove mark on backlink"
@@ -4739,7 +4743,7 @@ msgstr "Ve&rvangen door {0}"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:411
 msgid "Reload category members"
-msgstr "Categorieleden herladen"
+msgstr "Categorieleden vernieuwen"
 
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:500
 msgid "Add other preferred disambiguation..."
@@ -5411,19 +5415,19 @@ msgstr[1] "De volgende problemen zijn gedetecteerd:"
 msgid "Sorting errors by priority"
 msgstr "Fouten sorteren op prioriteit"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:130
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:133
 msgid "Loading configuration"
 msgstr "Configuratie laden"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:160
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:163
 msgid "Retrieving disambiguation templates"
 msgstr "Doorverwijssjablonen ophalen"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:165
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:168
 msgid "Retrieving suggestions for text replacements"
 msgstr "Suggesties voor tekstvervangingen ophalen"
 
-#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:169
+#: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:172
 msgid "Retrieving Check Wiki configuration"
 msgstr "Check Wiki-configuratie ophalen"
 
@@ -5540,8 +5544,8 @@ msgstr "Analyse heeft {0} pagina's gevonden om te controleren op onbekende param
 msgid "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\nError: {0}"
 msgstr "Er is een fout opgetreden bij het bijwerken van waarschuwingen over onbekende parameters. Wilt u verdergaan?\n\nFout: {0}"
 
-#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:326
-#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:341
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:322
+#: org/wikipediacleaner/gui/swing/worker/warning/UpdateWarningTools.java:337
 #, java-format
 msgid "Retrieving page contents - {0}"
 msgstr "Pagina-inhoud ophalen - {0}"
