@@ -9,6 +9,7 @@
 # Author: Florian COLLIN
 # Author: Gomoko
 # Author: LD
+# Author: Maxime2024
 # Author: McDutchie
 # Author: Méthodes Bulebe Hangi
 # Author: NicoV
@@ -28,7 +29,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-04 12:28:52+0000\n"
+"PO-Revision-Date: 2026-06-22 12:30:39+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: French <fr@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1023,7 +1024,7 @@ msgstr "Les balises ont des noms différents"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:254
 msgid "Both tags are unnamed"
-msgstr ""
+msgstr "Les deux étiquettes sont sans nom."
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:297
 msgid "Name the reference from template parameter"
