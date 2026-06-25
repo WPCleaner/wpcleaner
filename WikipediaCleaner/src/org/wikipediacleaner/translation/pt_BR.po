@@ -3,6 +3,7 @@
 #
 # Author: Abijeet Patro
 # Author: Diegobiavati
+# Author: EGobi
 # Author: Eduardo Addad de Oliveira
 # Author: Eduardo Addad de Oliveira
 # Author: Eduardoaddad
@@ -22,7 +23,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-04 12:28:57+0000\n"
+"PO-Revision-Date: 2026-06-25 12:29:53+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2396,7 +2397,7 @@ msgstr "ISBN está em uma faixa reservada {0}"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:198
 msgid "Namespace"
-msgstr "Namespace"
+msgstr "Espaço nominal"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:241
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:257
@@ -2707,7 +2708,7 @@ msgstr "Contador de vínculo"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:378
 msgid "Filter namespaces"
-msgstr "Filtrar namespaces"
+msgstr "Filtrar espaços nominais"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:446
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:497
@@ -3355,7 +3356,7 @@ msgstr "Remover todos os vínculos"
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:641
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:153
 msgid "Check Wikipedia"
-msgstr "Check Wikipedia"
+msgstr "Conferir a Wikipédia"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:869
 #, java-format
@@ -3567,7 +3568,7 @@ msgstr "Máximo de backlinks na predefinição:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:214
 msgid "Max backlinks in other namespaces :"
-msgstr "Máximo de backlinks em outros namespaces:"
+msgstr "Máximo de retroligações em outros espaços nominais:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:272
 msgid "&OK"
@@ -4478,8 +4479,8 @@ msgstr "Validar a nova tabela de conteúdos"
 #, java-format
 msgid "{0} link in Main Namespace"
 msgid_plural "{0} links in Main Namespace"
-msgstr[0] "{0} link em Main Namespace"
-msgstr[1] "{0} links em Main Namespace"
+msgstr[0] "{0} ligação no espaço nominal principal"
+msgstr[1] "{0} ligações no espaço nominal principal"
 
 #: org/wikipediacleaner/gui/swing/component/PageListModel.java:362
 #, java-format
@@ -4775,27 +4776,27 @@ msgstr "Fechar a janela de análise completa após o envio"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:79
 msgid "Create disambiguation warning on talk page (in main namespace)"
-msgstr "Criar aviso de desambiguação na página de discussão (no namespace principal)"
+msgstr "Criar aviso de desambiguação na página de discussão (no espaço nominal principal)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:86
 msgid "Create disambiguation warning on talk page (in encyclopedic namespaces)"
-msgstr "Criar aviso de desambiguação na página de discussão (no namespace enciclopédico)"
+msgstr "Criar aviso de desambiguação na página de discussão (nos espaços nominais enciclopédicos)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:93
 msgid "Create disambiguation warning on talk page (in other namespaces)"
-msgstr "Criar aviso de desambiguação na página de discussão (em outro namespace)"
+msgstr "Criar aviso de desambiguação na página de discussão (em outros espaços nominais)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:100
 msgid "Update disambiguation warning on talk page (in main namespace)"
-msgstr "Atualizar aviso de desambiguação na página de discussão (no namespace principal)"
+msgstr "Atualizar aviso de desambiguação na página de discussão (no espaço nominal principal)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:107
 msgid "Update disambiguation warning on talk page (in encyclopedic namespaces)"
-msgstr "Atualizar aviso de desambiguação na página de discussão (no namespace enciclopédico)"
+msgstr "Atualizar aviso de desambiguação na página de discussão (nos espaços nominais enciclopédicos)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:114
 msgid "Update disambiguation warning on talk page (in other namespaces)"
-msgstr "Atualizar aviso de desambiguação na página de discussão (em outro namespace)"
+msgstr "Atualizar aviso de desambiguação na página de discussão (em outros espaços nominais)"
 
 #: org/wikipediacleaner/gui/swing/options/AnalysisOptionsPanel.java:121
 msgid "Show disambiguation pages"
@@ -5028,7 +5029,7 @@ msgstr "Adicionar uma nota na página de discussão para pedir ajuda"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:125
 msgid "Ignore disambiguation links from User namespace"
-msgstr "Ignorar links de desambiguação do namespace do usuário"
+msgstr "Ignorar ligações de desambiguação do espaço nominal “User”"
 
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:134
 msgid "Restore window position"
@@ -5282,7 +5283,7 @@ msgstr[1] "{0} páginas"
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:593
 #, java-format
 msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
-msgstr "Backlinks - Main namespace: {0}, Todos os namespaces: {1}"
+msgstr "Retroligações - Espaço nominal padrão: {0}, Todos os espaços nominais: {1}"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
 msgid "All articles"
@@ -5290,7 +5291,7 @@ msgstr "Todos os artigos"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
-msgstr "Artigos no namespace principal"
+msgstr "Artigos no espaço nominal principal"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:89
 msgid "Articles associated to talk pages"
