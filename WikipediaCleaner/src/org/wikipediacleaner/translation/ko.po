@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-04 12:28:54+0000\n"
+"PO-Revision-Date: 2026-06-29 12:40:10+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2763,7 +2763,7 @@ msgstr "참고: 설치 폴더 경로에 공백 문자가 포함되지 않도록 
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:378
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
-msgstr "WPCleaner를 수동으로 실행하려면 터미널/명령 프롬프트 등을 열고 현재 디렉토리를 설치 폴더로 변경하세요."
+msgstr "WPCleaner를 수동으로 실행하려면 터미널/명령 프롬프트 등을 열고 현재 디렉터리를 설치 폴더로 변경하세요."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:383
 msgid "And then execute the command dependent on the operating system you're using (see below)."
@@ -3623,7 +3623,7 @@ msgstr "틀에서 링크 가져오기"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:218
 msgid "Displaying templates found"
-msgstr "찾은 템플릿을 표시하기"
+msgstr "찾은 틀을 표시하기"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
 msgid "Check article"

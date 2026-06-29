@@ -7,6 +7,7 @@
 # Author: MathXplore
 # Author: Omotecho
 # Author: Shirayuki
+# Author: Tensama0415
 # Author: Tmv
 # Author: Yusuke1109
 # Author: もなー(偽物)
@@ -19,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-04 12:28:54+0000\n"
+"PO-Revision-Date: 2026-06-29 12:40:10+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -467,9 +468,8 @@ msgid "To report control characters only in templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:400
-#, fuzzy
 msgid "To ignore some control characters"
-msgstr "すべてのコントロール文字を除去する"
+msgstr "一部の制御文字を無視するためには"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:403
 msgid "To ignore control character with hexadecimal code equal to XX"
@@ -1784,26 +1784,22 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:374
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:271
-#, fuzzy
 msgid "Links to ignore"
-msgstr "リンク先"
+msgstr "無視するリンク"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:377
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:274
-#, fuzzy
 msgid "Link to ignore"
-msgstr "リンク先"
+msgstr "無視するリンク"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:284
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a573/CheckErrorAlgorithm573.java:236
-#, fuzzy
 msgid "Templates to ignore"
-msgstr "テンプレート"
+msgstr "無視するテンプレート"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a552/CheckErrorAlgorithm552.java:287
-#, fuzzy
 msgid "Template to ignore"
-msgstr "テンプレート"
+msgstr "無視するテンプレート"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:435
 msgid "Acceptable suffixes"
@@ -3234,9 +3230,8 @@ msgid "With templates"
 msgstr "テンプレートを解析"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1618
-#, fuzzy
 msgid "All namespaces"
-msgstr "名前空間"
+msgstr "すべての名前空間"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1634
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:231
@@ -3670,9 +3665,8 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleWorker.java:52
-#, fuzzy
 msgid "Analysis"
-msgstr "解析 - {0}"
+msgstr "解析"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
 #, fuzzy
@@ -4097,14 +4091,12 @@ msgid "Analyze dump file"
 msgstr "テンプレートを解析"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:230
-#, fuzzy
 msgid "Save selection"
-msgstr "現在の選択を保存"
+msgstr "選択を保存"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:238
-#, fuzzy
 msgid "Load selection"
-msgstr "現在の選択を保存"
+msgstr "選択をロード"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:279
 msgid "You must select at least one algorithm for fixing errors"
@@ -4587,9 +4579,8 @@ msgid "End"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:214
-#, fuzzy
 msgid "Link"
-msgstr "リンク先"
+msgstr "リンク"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
@@ -4956,9 +4947,8 @@ msgid "List items"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:269
-#, fuzzy
 msgid "Table"
-msgstr "タイトル"
+msgstr "テーブル"
 
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:275
 msgid "Reference"
@@ -5316,9 +5306,8 @@ msgid "Backlinks - Main namespace: {0}, All namespaces: {1}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:87
-#, fuzzy
 msgid "All articles"
-msgstr "テンプレートを解析"
+msgstr "すべての記事"
 
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWorker.java:88
 msgid "Articles in main namespace"
