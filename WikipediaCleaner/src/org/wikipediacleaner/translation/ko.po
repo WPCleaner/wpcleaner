@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-29 12:40:10+0000\n"
+"PO-Revision-Date: 2026-07-02 12:40:09+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1582,11 +1582,11 @@ msgstr "ISBN에 사용할 틀 이름"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:419
 msgid "Text before the ISBN to be removed in the replacement"
-msgstr "교체에서 삭제될 ISBN 앞의 텍스트"
+msgstr "교체에서 제거될 ISBN 앞의 텍스트"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:422
 msgid "Text after the ISBN to be removed in the replacement"
-msgstr "교체에서 삭제될 ISBN 뒤의 텍스트"
+msgstr "교체에서 제거될 ISBN 뒤의 텍스트"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
@@ -5454,13 +5454,13 @@ msgstr "중복 인수 업데이트 경고 - {0}"
 #: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:208
 #, java-format
 msgid "Removing {1} warning - {0}"
-msgstr "{1} 경고 제거 - {0}"
+msgstr "{1} 제거 경고 - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/ISBNWarningProcessor.java:221
 #: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:217
 #, java-format
 msgid "Updating {1} warning - {0}"
-msgstr "{1} 경고 업데이트 중 - {0}"
+msgstr "{1} 업데이트 경고 - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UnknownParameterWarningProcessor.java:193
 #, java-format
