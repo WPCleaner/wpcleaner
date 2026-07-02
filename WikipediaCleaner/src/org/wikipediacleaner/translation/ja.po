@@ -20,7 +20,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-06-29 12:40:10+0000\n"
+"PO-Revision-Date: 2026-07-02 12:40:08+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Japanese <ja@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -496,14 +496,12 @@ msgid "Six-per-em space"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:416
-#, fuzzy
 msgid "Figure space"
-msgstr "キャッシュ破棄"
+msgstr "Figure 空白"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:417
-#, fuzzy
 msgid "Punctuation space"
-msgstr "曖昧さ回避へのリンク数をカウント"
+msgstr "句読点空白"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:418
 msgid "Zero-width space"
@@ -546,9 +544,8 @@ msgid "Byte order mark"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:428
-#, fuzzy
 msgid "Object replacement character"
-msgstr "文字列 [{0}] を置換できません"
+msgstr "Object replacement character"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:429
 msgid "Private use area"
@@ -1082,9 +1079,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:645
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:214
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:171
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0}"
-msgstr "ページ {0}:"
+msgstr "{0} を使用"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:359
 msgid "A list of templates that can be used to replace &lt;center&gt; tags"
@@ -1095,9 +1092,8 @@ msgid "Template that can be used to replace &lt;center&gt; tags"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a085/CheckErrorAlgorithm085.java:366
-#, fuzzy
 msgid "Name of the parameter to use"
-msgstr "テンプレートを解析"
+msgstr "使用するパラメータの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a090/CheckErrorAlgorithm090.java:670
 msgid "What text should be displayed by the link?"
@@ -1211,9 +1207,8 @@ msgid "A possible replacemement for one suffix"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a103/CheckErrorAlgorithm103.java:31
-#, fuzzy
 msgid "Replace all pipe templates"
-msgstr "テンプレート内を検索"
+msgstr "すべてのパイプテンプレートを置換"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a107/CheckErrorAlgorithm107.java:119
 #, java-format
@@ -1242,9 +1237,9 @@ msgid "Parameter for the name of the group"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a11x/a112/CheckErrorAlgorithm112.java:629
-#, fuzzy, java-format
+#, java-format
 msgid "Use {0} and {1}"
-msgstr "ページ {0}:"
+msgstr "{0} と {1} を使用"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a50x/a501/CheckErrorAlgorithm501.java:158
 msgid "Restore original text"
@@ -1347,9 +1342,8 @@ msgid "Name of a template that creates an external link"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:929
-#, fuzzy
 msgid "Name of a parameter that is used to create the text of the external link"
-msgstr "テンプレートを解析"
+msgstr "外部のリンクのテキストを作成するために使用されるパラメータの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:932
 msgid "True if removing internal links in the text can be automatic"
@@ -1451,18 +1445,17 @@ msgid "Both values are equal"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:148
-#, fuzzy
 msgid "Other value is empty"
-msgstr "その他の言語"
+msgstr "その他の値が空です"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
-#, fuzzy, java-format
+#, java-format
 msgid "Other value: {0}"
-msgstr "その他の言語"
+msgstr "その他の値：{0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:249
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:115
@@ -1516,9 +1509,8 @@ msgid "Value of the parameter which can be safely ignored"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:136
-#, fuzzy
 msgid "Use an anchor template?"
-msgstr "テンプレート内を検索"
+msgstr "アンカーテンプレートを使用してますか？"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:232
 #, java-format
@@ -1526,9 +1518,8 @@ msgid "A template that can replace a {0}"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
-#, fuzzy
 msgid "Name of the parameter to be used for the anchor identifier"
-msgstr "テンプレートを解析"
+msgstr "アンカー識別子に使用されるパラメータの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:239
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:585
@@ -1581,19 +1572,16 @@ msgid "Minimum difference between the year linked and the year displayed"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:130
-#, fuzzy
 msgid "Trim text"
-msgstr "テキストを検索"
+msgstr "テキストの両端のスペースを取り除く"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:412
-#, fuzzy
 msgid "Automatic replacements of ISBN"
-msgstr "ページを読み込み(&L)"
+msgstr "ISBNの自動置換"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:416
-#, fuzzy
 msgid "Name of the template to use for ISBN"
-msgstr "テンプレートを解析"
+msgstr "ISBNに使うテンプレートの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:419
 msgid "Text before the ISBN to be removed in the replacement"
@@ -1616,14 +1604,12 @@ msgid "Name of a template that can't be used inside a reference"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a532/CheckErrorAlgorithm532.java:46
-#, fuzzy
 msgid "Fix tags"
-msgstr "カテゴリを修正"
+msgstr "タグを修正"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a538/CheckErrorAlgorithm538.java:29
-#, fuzzy
 msgid "Remove whitespace characters"
-msgstr "すべてのコントロール文字を除去する"
+msgstr "白空文字を除去"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
 msgid "Fix bold and italic"
@@ -1672,9 +1658,9 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:578
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:599
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:620
-#, fuzzy, java-format
+#, java-format
 msgid "Template for replacing {0} tag"
-msgstr "{0}内のテンプレート"
+msgstr "{0} タグ置換のためのテンプレート"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:581
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:602
@@ -1685,18 +1671,16 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:589
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:610
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:631
-#, fuzzy
 msgid "Description of the template"
-msgstr "テンプレートを解析"
+msgstr "テンプレートの説明"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Pairs of templates: for each opening template, all possible closing templates"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:220
-#, fuzzy
 msgid "Name of the opening template in the pair"
-msgstr "テンプレートを解析"
+msgstr "ペアのテンプレートの開始テンプレートの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:223
 msgid "Name of a closing template in the pair"
@@ -1723,9 +1707,8 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:334
-#, fuzzy
 msgid "Name of a deprecated parameter"
-msgstr "テンプレートを解析"
+msgstr "非推奨パラメータの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 msgid "Textual explanation about the deprecated parameter"
@@ -1753,18 +1736,16 @@ msgid "Value of the replacement parameter"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:151
-#, fuzzy
 msgid "List of categorizing templates"
-msgstr "テンプレートを取得"
+msgstr "カテゴリ化するテンプレートの一覧"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:155
 msgid "Name of a template that categorizes articles"
 msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:158
-#, fuzzy
 msgid "Name of the parameter that triggers the categorization"
-msgstr "テンプレートを解析"
+msgstr "カテゴリ化を誘発するパラメータの名前"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:162
 msgid "Value of the parameter that triggers the categorization"
@@ -2444,9 +2425,8 @@ msgid "Link parameter {0} to"
 msgstr ""
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
-#, fuzzy
 msgid "Retrieving all links to page"
-msgstr "テンプレート内のリンクを取得"
+msgstr "ページ内のすべてのリンクを取得"
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
@@ -2563,9 +2543,8 @@ msgid "Test automatic replacements"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:296
-#, fuzzy
 msgid "Load replacements"
-msgstr "ページを読み込み(&L)"
+msgstr "置換を読み込み"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:302
 msgid "Save replacements"
@@ -2836,9 +2815,9 @@ msgid "Existing files may be deleted by the installation process."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:727
-#, fuzzy, java-format
+#, java-format
 msgid "Unable to create folder {0}"
-msgstr "文字列 [{0}] を置換できません"
+msgstr "フォルダ {0} を作成できません"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:743
 msgid "Desktop shortcut is only supported for the following operating systems:"
@@ -2850,19 +2829,19 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:822
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:837
-#, fuzzy, java-format
+#, java-format
 msgid "Downloading {0}"
-msgstr "{0} を投稿しています"
+msgstr "{0} をダウンロードしています"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:852
-#, fuzzy, java-format
+#, java-format
 msgid "Creating {0}"
-msgstr "{0} を投稿しています"
+msgstr "{0} を作成しています"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:859
-#, fuzzy, java-format
+#, java-format
 msgid "Unable to create file {0}"
-msgstr "文字列 [{0}] を置換できません"
+msgstr "ファイル {0} を作成できません"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:860
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:891
@@ -2874,9 +2853,9 @@ msgid "Error: {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:869
-#, fuzzy, java-format
+#, java-format
 msgid "Installing {0}"
-msgstr "{0} を投稿しています"
+msgstr "{0} をインストールしています"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:884
 msgid "Problem running getdown installer"
@@ -2889,18 +2868,18 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:890
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:966
-#, fuzzy, java-format
+#, java-format
 msgid "Problem running {0}"
-msgstr "{0} を投稿しています"
+msgstr "{0} の実行に問題が存在します"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:945
 msgid "Problem creating desktop file"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:953
-#, fuzzy, java-format
+#, java-format
 msgid "Running {0}"
-msgstr "{0} を投稿しています"
+msgstr "{0} を実行しています"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:986
 #, java-format
@@ -3095,9 +3074,8 @@ msgid "Special lists"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:834
-#, fuzzy
 msgid "Linter categories"
-msgstr "カテゴリを修正"
+msgstr "Linter カテゴリ"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:843
 msgid "Generate lists"
@@ -3220,14 +3198,12 @@ msgid "Hits for filter {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1597
-#, fuzzy
 msgid "Without templates"
-msgstr "テンプレートを取得"
+msgstr "テンプレートなし"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1600
-#, fuzzy
 msgid "With templates"
-msgstr "テンプレートを解析"
+msgstr "テンプレートあり"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1618
 msgid "All namespaces"
@@ -3653,9 +3629,8 @@ msgid "Displaying templates found"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
-#, fuzzy
 msgid "Check article"
-msgstr "テンプレートを解析"
+msgstr "記事をチェック"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
@@ -3669,9 +3644,8 @@ msgid "Analysis"
 msgstr "解析"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckTemplate.java:41
-#, fuzzy
 msgid "Check template"
-msgstr "テンプレートを解析"
+msgstr "テンプレートをチェック"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCopyText.java:40
 msgid "Copy selected text"
@@ -3728,9 +3702,8 @@ msgid "Previous occurrence"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/action/ActionPasteText.java:46
-#, fuzzy
 msgid "Paste"
-msgstr "ページ"
+msgstr "貼り付け"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:61
 msgid "Add warnings on talk page"
@@ -3962,9 +3935,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:300
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:323
-#, fuzzy
 msgid "Reverse the selection"
-msgstr "現在の選択を保存"
+msgstr "選択を反転"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:311
 msgid "Use the list of pages of each algorithm"
@@ -4086,9 +4058,8 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:222
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:351
-#, fuzzy
 msgid "Analyze dump file"
-msgstr "テンプレートを解析"
+msgstr "ダンプファイルを解析"
 
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:230
 msgid "Save selection"
@@ -4141,9 +4112,9 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:150
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:168
-#, fuzzy, java-format
+#, java-format
 msgid "List {0} errors"
-msgstr "すべてのエラーをロード"
+msgstr "{0} エラーの一覧"
 
 #: org/wikipediacleaner/gui/swing/bot/GeneralToolsPanel.java:177
 msgid "Update duplicate argument warning messages"
@@ -4584,24 +4555,20 @@ msgstr "リンク"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:221
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:232
-#, fuzzy
 msgid "Start"
-msgstr "並べ替え"
+msgstr "開始"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:225
-#, fuzzy
 msgid "Status"
-msgstr "並べ替え"
+msgstr "状態"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkPanel.java:80
-#, fuzzy
 msgid "The following links seem to be dead:"
-msgstr "未知のエラーが発生しました"
+msgstr "次のリンクは切れたようです："
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWindow.java:37
-#, fuzzy
 msgid "Dead links"
-msgstr "リンクを再読み込み"
+msgstr "リンク切れ"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:83
 msgid "No dead links were found."
@@ -4609,16 +4576,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:98
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:85
-#, fuzzy
 msgid "Retrieving page contents"
-msgstr "内容を取得"
+msgstr "ページ内容を取得"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:112
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:124
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:93
-#, fuzzy, java-format
+#, java-format
 msgid "Analyzing {0}"
-msgstr "解析 - {0}"
+msgstr "{0} を解析しています"
 
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkWorker.java:153
 #, java-format
@@ -4626,18 +4592,16 @@ msgid "Unknown host {0}"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:49
-#, fuzzy
 msgid "Check article with Linter"
-msgstr "テンプレートを解析"
+msgstr "Linterで記事をチェック"
 
 #: org/wikipediacleaner/gui/swing/linter/ActionLinter.java:203
 msgid "You need to select pages to check for linter errors"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:186
-#, fuzzy
 msgid "Multiple templates"
-msgstr "テンプレートを取得"
+msgstr "複数のテンプレート"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:228
 msgid "Parameters"
@@ -4652,9 +4616,8 @@ msgid "The following errors are currently detected by Linter:"
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorWindow.java:38
-#, fuzzy
 msgid "Linter errors"
-msgstr "カテゴリを修正"
+msgstr "Linter エラー"
 
 #: org/wikipediacleaner/gui/swing/linter/LinterWorker.java:70
 msgid "No linter errors were found."
@@ -5371,9 +5334,9 @@ msgid "Template \"{0}\" has no {1} block defined."
 msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:195
-#, fuzzy, java-format
+#, java-format
 msgid "Template \"{0}\" ({1}-{2})"
-msgstr "{0}内のテンプレート"
+msgstr "テンプレート 「{0}」 ({1}-{2})"
 
 #: org/wikipediacleaner/gui/swing/worker/CheckArticleTools.java:226
 #, java-format
@@ -5492,15 +5455,15 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/worker/warning/ISBNWarningProcessor.java:212
 #: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:208
-#, fuzzy, java-format
+#, java-format
 msgid "Removing {1} warning - {0}"
-msgstr "ページ {0} を更新"
+msgstr "{1} を除去、警告 - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/ISBNWarningProcessor.java:221
 #: org/wikipediacleaner/gui/swing/worker/warning/ISSNWarningProcessor.java:217
-#, fuzzy, java-format
+#, java-format
 msgid "Updating {1} warning - {0}"
-msgstr "ページ {0} を更新"
+msgstr "{1} を更新、警告 - {0}"
 
 #: org/wikipediacleaner/gui/swing/worker/warning/UnknownParameterWarningProcessor.java:193
 #, java-format
