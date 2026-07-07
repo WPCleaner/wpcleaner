@@ -130,6 +130,7 @@ public enum EnumWikipedia {
   WIKTIONARY_BN(new Wiktionary("bn", "Bengali Wiktionary")),
   WIKTIONARY_EN(new Wiktionary("en", "English Wiktionary")),
   WIKTIONARY_FR(new Wiktionary("fr", "Wiktionnaire en français")),
+  WIKTIONARY_PT(new Wiktionary("pr", "Portuguese Wiktionary")),
   WIKTIONARY_SV(new Wiktionary("sv", "Swedish Wiktionary")),
 
   WIKIBOOKS_BN(new Wikibooks("bn", "Bengali Wikibooks")),
