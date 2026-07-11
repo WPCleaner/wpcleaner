@@ -160,52 +160,74 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     replacementText.append(contents.substring(
         tag.getValueEndIndex(), tag.getCompleteEndIndex()));
 
-    // Check if tag has arguments
-    boolean hasUnsafeArguments = false;
-    if (tag.getParametersCount() > 0) {
-      if (WikiTagType.REF.equals(tag.getType())) {
-        return false;
-      } else if (HtmlTagType.SPAN.equals(tag.getType())) {
-        for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
-          Parameter param = tag.getParameter(paramNum);
-          if (param != null) {
-            String paramName = param.getName();
-            if (!"contenteditable".equals(paramName)) {
-              hasUnsafeArguments = true;
-            }
+ // Check if tag has arguments
+boolean hasUnsafeArguments = false;
+if (tag.getParametersCount() > 0) {
+
+  if (WikiTagType.REF.equals(tag.getType())) {
+    return false;
+
+  } else if (HtmlTagType.SPAN.equals(tag.getType())) {
+
+    // Allow empty anchor spans:
+    // <span class="anchor"></span>
+    Parameter classParam = tag.getParameter("class");
+    if (classParam != null) {
+      String value = classParam.getValue();
+      if (value != null) {
+        for (String cls : value.split("\\s+")) {
+          if ("anchor".equals(cls)) {
+            return false;
           }
         }
-      } else if (HtmlTagType.DIV.equals(tag.getType())) {
-        if ((tag.getParametersCount() == 1) && (tag.getParameter("id") != null)) {
-          return false;
-        }
-        for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
-          hasUnsafeArguments = true;
-          Parameter param = tag.getParameter("style");
-          if (param != null) {
-            String paramValue = param.getValue();
-            if (paramValue != null) {
-              String[] styles = paramValue.split(";");
-              for (String style : styles) {
-                int colonIndex = style.indexOf(':');
-                if ((colonIndex > 0) &&
-                    ("clear".equalsIgnoreCase(style.substring(0, colonIndex).trim()))) {
-                  return false;
-                }
-              }
-            }
-          }
-        }
-      } else {
-        hasUnsafeArguments = true;
       }
     }
 
-    // Report error
-    if (errors == null) {
-      return true;
+    for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+      Parameter param = tag.getParameter(paramNum);
+      if (param != null) {
+        String paramName = param.getName();
+        if (!"contenteditable".equals(paramName)) {
+          hasUnsafeArguments = true;
+        }
+      }
     }
 
+  } else if (HtmlTagType.DIV.equals(tag.getType())) {
+
+    if ((tag.getParametersCount() == 1) && (tag.getParameter("id") != null)) {
+      return false;
+    }
+
+    for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
+      hasUnsafeArguments = true;
+
+      Parameter param = tag.getParameter("style");
+      if (param != null) {
+        String paramValue = param.getValue();
+        if (paramValue != null) {
+          String[] styles = paramValue.split(";");
+          for (String style : styles) {
+            int colonIndex = style.indexOf(':');
+            if ((colonIndex > 0) &&
+                ("clear".equalsIgnoreCase(style.substring(0, colonIndex).trim()))) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+
+  } else {
+    hasUnsafeArguments = true;
+  }
+
+} // <-- THIS BRACE IS MISSING
+
+// Report error
+if (errors == null) {
+    return true;
+}
     // Check if special characters are around the tag
     int beginIndex = tag.getCompleteBeginIndex();
     int endIndex = tag.getCompleteEndIndex();
