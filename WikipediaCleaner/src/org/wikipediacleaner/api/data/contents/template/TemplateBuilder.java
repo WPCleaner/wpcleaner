@@ -50,8 +50,7 @@ public class TemplateBuilder {
    * @return Builder initialized with the name of the template.
    */
   public static @Nonnull TemplateBuilder from(@Nullable String name) {
-    TemplateBuilder builder = new TemplateBuilder(StringUtils.defaultIfEmpty(name, StringUtils.EMPTY));
-    return builder;
+    return new TemplateBuilder(StringUtils.defaultIfEmpty(name, StringUtils.EMPTY));
   }
 
   /**
@@ -178,18 +177,17 @@ public class TemplateBuilder {
     String beforeParamName = StringUtils.repeat(' ', spaceBeforeName);
     String beforeParamValue = StringUtils.repeat(' ', spaceBeforeValue);
     name = name.trim() + (params.isEmpty() ? "" : beforePipe);
-    for (int paramNum = 0; paramNum < params.size(); paramNum++) {
-      Parameter param = params.get(paramNum);
+    for (Parameter param : params) {
       if (param.name != null) {
         param.name =
             beforeParamName +
-            param.name.trim() +
-            StringUtils.repeat(' ', spaceBeforeEquals);
+                param.name.trim() +
+                StringUtils.repeat(' ', spaceBeforeEquals);
       }
       param.value =
           beforeParamValue +
-          param.value.trim() +
-          beforePipe;
+              param.value.trim() +
+              beforePipe;
     }
     return this;
   }
@@ -207,7 +205,7 @@ public class TemplateBuilder {
     sb.append(name);
     for (Parameter param : params) {
       sb.append('|');
-      if ((param.name != null) && (param.name.trim().length() > 0)) {
+      if ((param.name != null) && (!param.name.trim().isEmpty())) {
         boolean addName = true;
         if (StringUtils.equals(Integer.toString(nextParameter), param.name)) {
           nextParameter++;

@@ -96,7 +96,7 @@ public abstract class AlgorithmBase implements Algorithm {
   private CWConfiguration cwConfiguration;
 
   /** List of parameters for the algorithm */
-  private Map<String, AlgorithmParameter> params = new HashMap<>();
+  private final Map<String, AlgorithmParameter> params = new HashMap<>();
 
   /**
    * @param wikiConfiguration Configuration for the wiki.

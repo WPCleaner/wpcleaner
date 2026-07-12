@@ -7,13 +7,11 @@
 
 package org.wikipediacleaner.api.request.query.list;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -55,46 +53,39 @@ public class ApiXmlLintErrorsResult extends ApiXmlResult implements ApiLintError
       Map<String, String> properties,
       List<Page> list,
       String category, boolean withTemplates) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve lint errors
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/linterrors/_v", Filters.element());
-      List<Element> results = xpa.evaluate(root);
-      Iterator<Element> iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        Page page = DataManager.getPage(
-            getWiki(), currentNode.getAttributeValue("title"), null, null, null);
-        if (!list.contains(page)) {
-          list.add(page);
-        }
-        if (withTemplates) {
-          Element templateInfo = currentNode.getChild("templateInfo");
-          if (templateInfo != null) {
-            String templateName = templateInfo.getAttributeValue("name");
-            if ((templateName != null) &&
-                !templateName.startsWith("{") &&
-                !templateName.startsWith("#")) {
-              templateName = Page.normalizeTitle(templateName);
-              page = DataManager.getPage(
-                  getWiki(), templateName, null, null, null);
-              if (!list.contains(page)) {
-                list.add(page);
-              }
+    // Retrieve lint errors
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/linterrors/_v", Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    for (Element currentNode : results) {
+      Page page = DataManager.getPage(
+          getWiki(), currentNode.getAttributeValue("title"), null, null, null);
+      if (!list.contains(page)) {
+        list.add(page);
+      }
+      if (withTemplates) {
+        Element templateInfo = currentNode.getChild("templateInfo");
+        if (templateInfo != null) {
+          String templateName = templateInfo.getAttributeValue("name");
+          if ((templateName != null) &&
+              !templateName.startsWith("{") &&
+              !templateName.startsWith("#")) {
+            templateName = Page.normalizeTitle(templateName);
+            page = DataManager.getPage(
+                getWiki(), templateName, null, null, null);
+            if (!list.contains(page)) {
+              list.add(page);
             }
           }
         }
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/continue",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading category members list", e);
-      throw new APIException("Error parsing XML", e);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/continue",
+        properties);
   }
 }

@@ -137,10 +137,9 @@ public class ActionInsertPredefinedText implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     if ((e == null) ||
         (e.getSource() == null) ||
-        (!(e.getSource() instanceof Component))) {
+        (!(e.getSource() instanceof Component source))) {
       return;
     }
-    Component source = (Component) e.getSource();
     if ((pane == null) || (pageProvider == null)) {
       return;
     }
@@ -344,7 +343,7 @@ public class ActionInsertPredefinedText implements ActionListener {
     // Add the category
     StringBuilder newContents = new StringBuilder();
     if (index > 0) {
-      newContents.append(contents.substring(0, index));
+      newContents.append(contents, 0, index);
     }
     newContents.append("\n");
     newContents.append(PageElementCategory.createCategory(
@@ -416,15 +415,11 @@ public class ActionInsertPredefinedText implements ActionListener {
     // Add the template
     StringBuilder newContents = new StringBuilder();
     if (index > 0) {
-      newContents.append(contents.substring(0, index));
+      newContents.append(contents, 0, index);
     }
-    for (int i = 0; i < crBefore; i++) {
-      newContents.append("\n");
-    }
-    newContents.append(TemplateBuilder.from(templateName).toString());
-    for (int i = 0; i < crAfter; i++) {
-      newContents.append("\n");
-    }
+    newContents.append("\n".repeat(crBefore));
+    newContents.append(TemplateBuilder.from(templateName));
+    newContents.append("\n".repeat(crAfter));
     if (index < contents.length()) {
       newContents.append(contents.substring(index));
     }

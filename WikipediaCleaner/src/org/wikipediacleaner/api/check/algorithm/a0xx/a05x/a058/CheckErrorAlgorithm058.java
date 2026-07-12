@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm058 extends CheckErrorAlgorithmBase {
         int lowerCaseFound = 0;
         int index = 0;
         while ((lowerCaseFound == 0) && (index < text.length())) {
-          Character currentChar = text.charAt(index);
+          char currentChar = text.charAt(index);
           if (Character.isUpperCase(currentChar)) {
             upperCaseFound++;
           }

@@ -14,7 +14,6 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -57,50 +56,39 @@ public class ApiXmlLinksHereResult extends ApiXmlResult implements ApiLinksHereR
       Map<String, String> properties,
       Page page,
       Map<String, List<Page>> lists) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve links to page
-      // TODO
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/pages/page", Filters.element());
-      List<Element> listPages = xpa.evaluate(root);
-      Iterator<Element> itPages = listPages.iterator();
-      XPathExpression<Element> xpaLinksHere = XPathFactory.instance().compile(
-          "./linkshere/lh", Filters.element());
-      while (itPages.hasNext()) {
-        Element currentPage = itPages.next();
-        String title = currentPage.getAttributeValue("title");
-        List<Page> list = lists.get(title);
-        if (list == null) {
-          list = new ArrayList<>();
-          lists.put(title, list);
+    // Retrieve links to page
+    // TODO
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/pages/page", Filters.element());
+    List<Element> listPages = xpa.evaluate(root);
+    Iterator<Element> itPages = listPages.iterator();
+    XPathExpression<Element> xpaLinksHere = XPathFactory.instance().compile(
+        "./linkshere/lh", Filters.element());
+    while (itPages.hasNext()) {
+      Element currentPage = itPages.next();
+      String title = currentPage.getAttributeValue("title");
+      List<Page> list = lists.computeIfAbsent(title, k -> new ArrayList<>());
+      List<Element> listLinks = xpaLinksHere.evaluate(currentPage);
+      for (Element currentLink : listLinks) {
+        Page link = DataManager.getPage(
+            getWiki(), currentLink.getAttributeValue("title"),
+            null, null, page.getRelatedPages(RelatedPages.REDIRECTS));
+        link.setNamespace(currentLink.getAttributeValue("ns"));
+        link.setPageId(currentLink.getAttributeValue("pageid"));
+        if (currentLink.getAttribute("redirect") != null) {
+          link.getRedirects().isRedirect(true);
         }
-        List<Element> listLinks = xpaLinksHere.evaluate(currentPage);
-        Iterator<Element> itLinks = listLinks.iterator();
-        while (itLinks.hasNext()) {
-          Element currentLink = itLinks.next();
-          Page link = DataManager.getPage(
-              getWiki(), currentLink.getAttributeValue("title"),
-              null, null, page.getRelatedPages(RelatedPages.REDIRECTS));
-          link.setNamespace(currentLink.getAttributeValue("ns"));
-          link.setPageId(currentLink.getAttributeValue("pageid"));
-          if (currentLink.getAttribute("redirect") != null) {
-            link.getRedirects().isRedirect(true);
-          }
-          if (!list.contains(link)) {
-            list.add(link);
-          }
+        if (!list.contains(link)) {
+          list.add(link);
         }
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/linkshere",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading links here", e);
-      throw new APIException("Error parsing XML", e);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/linkshere",
+        properties);
   }
 }

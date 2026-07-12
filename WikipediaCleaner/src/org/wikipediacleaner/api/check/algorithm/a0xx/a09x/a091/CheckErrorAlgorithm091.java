@@ -102,7 +102,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
         try {
           URL url = new URL(linkDest);
           String query = url.getQuery();
-          if ((query != null) && (query.length() > 0)) {
+          if ((query != null) && (!query.isEmpty())) {
             String[] elements = query.split("\\&");
             for (String element : elements) {
               String[] parts = element.split("\\=");
@@ -148,13 +148,13 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           }
         }
         boolean isError = true;
-        if (isError && (article.length() == 0) && (!local || link.getText() == null)) {
+        if (isError && (article.isEmpty()) && (!local || link.getText() == null)) {
           isError = false;
         }
         if (fromWiki == wiki) {
           isError = false;
         }
-        if ((prefix == null) || (prefix.length() == 0)) {
+        if ((prefix == null) || (prefix.isEmpty())) {
           isError = false;
         }
         if (onlyLanguage && (language == null)) {
@@ -202,7 +202,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, beginIndex, endIndex,
               fullLink ? ErrorLevel.ERROR : ErrorLevel.WARNING);
-          if ((fromWiki != null) && (articleName.length() >0)) {
+          if ((fromWiki != null) && (!articleName.isEmpty())) {
             errorResult.addPossibleAction(
                 GT._T("Check language links"),
                 new CheckLanguageLinkActionProvider(
@@ -212,8 +212,8 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   
           // Use templates
           if ((templatesList != null) &&
-              (templatesList.size() > 0) &&
-              (articleName.length() > 0) &&
+              (!templatesList.isEmpty()) &&
+              (!articleName.isEmpty()) &&
               (language != null)) {
             for (String template : templatesList) {
               String[] templateArgs = template.split("\\|");
@@ -267,7 +267,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
           }
   
           // Create internal link
-          if (articleName.length() > 0) {
+          if (!articleName.isEmpty()) {
             if (!link.hasSquare() || link.hasSecondSquare()) {
               int lastSure = article.length();
               while ((lastSure > 0) &&
@@ -336,7 +336,7 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {
@@ -377,10 +377,10 @@ public class CheckErrorAlgorithm091 extends CheckErrorAlgorithmBase {
   @Override
   protected void initializeSettings() {
     String tmp = getSpecificProperty(PARAMETER_ONLY_LANGUAGE, true, true, false);
-    onlyLanguage = (tmp != null) ? Boolean.valueOf(tmp) : true;
+    onlyLanguage = tmp == null || Boolean.parseBoolean(tmp);
 
     tmp = getSpecificProperty(PARAMETER_ONLY_LOCAL, true, false, false);
-    onlyLocal = (tmp != null) ? Boolean.valueOf(tmp) : true;
+    onlyLocal = tmp == null || Boolean.parseBoolean(tmp);
 
     tmp = getSpecificProperty(PARAMETER_LINK_TEMPLATES, true,  true,  false);
     linkTemplates.clear();

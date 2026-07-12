@@ -10,6 +10,7 @@ package org.wikipediacleaner.utils;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.logging.Logger;
@@ -67,13 +68,13 @@ public class TextProviderUrlTitle implements TextProvider {
           is = method.getResponseBodyAsStream();
           byte[] tmpBytes = new byte[MAXIMUM_SIZE];
           int size = is.read(tmpBytes);
-          Charset utf8 = Charset.forName("UTF8");
+          Charset utf8 = StandardCharsets.UTF_8;
           String text = new String(tmpBytes, 0, size, utf8).replaceAll("\\s", " ");
           Pattern pCharset = Pattern.compile(
               "<meta http-equiv=\"Content-Type\" content=\"text/html; charset=([^\"]+?)\"",
               Pattern.CASE_INSENSITIVE);
           Matcher m = pCharset.matcher(text);
-          if (m.find() == true) {
+          if (m.find()) {
             String charsetName = m.group(1).trim();
             try {
               Charset charset = Charset.forName(charsetName);
@@ -91,7 +92,7 @@ public class TextProviderUrlTitle implements TextProvider {
           };
           for (Pattern pTitle : pTitles) {
             m = pTitle.matcher(text);
-            if (m.find() == true) {
+            if (m.find()) {
               String title = m.group(1).trim();
               for (HtmlCharacters htmlChar : HtmlCharacters.values()) {
                 if (!HtmlCharacters.SYMBOL_AMPERSAND.equals(htmlChar)) {

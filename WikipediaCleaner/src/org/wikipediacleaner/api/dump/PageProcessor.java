@@ -20,7 +20,7 @@ public interface PageProcessor {
   /**
    * @return Wiki.
    */
-  public EnumWikipedia getWiki();
+  EnumWikipedia getWiki();
 
   /**
    * Tells if the processor should work on a namespace.
@@ -28,12 +28,12 @@ public interface PageProcessor {
    * @param namespace Namespace.
    * @return True if the processor should work on the namespace.
    */
-  public boolean isForNamespace(Integer namespace);
+  boolean isForNamespace(Integer namespace);
 
   /**
    * Process a page.
    * 
    * @param page Page to be processed.
    */
-  public void processPage(Page page);
+  void processPage(Page page);
 }

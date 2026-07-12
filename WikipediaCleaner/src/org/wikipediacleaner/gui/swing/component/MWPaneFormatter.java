@@ -274,15 +274,13 @@ public abstract class MWPaneFormatter {
       style = getInternalLinkStyle(doc, analysis, (PageElementInternalLink) element);
     } else if (element instanceof PageElementLanguageLink) {
       style = doc.getStyle(ConfigurationValueStyle.LANGUAGE_LINK.getName());
-    } else if (element instanceof PageElementListItem) {
-      PageElementListItem item = (PageElementListItem) element;
+    } else if (element instanceof PageElementListItem item) {
       beginIndex = item.getBeginIndex();
       endIndex = item.getBeginIndex() + item.getDepth();
       style = doc.getStyle(ConfigurationValueStyle.LIST_ITEM.getName());
     } else if (element instanceof PageElementParameter) {
       style = doc.getStyle(ConfigurationValueStyle.PROGRAMMING.getName());
-    } else if (element instanceof PageElementTable) {
-      PageElementTable table = (PageElementTable) element;
+    } else if (element instanceof PageElementTable table) {
       formatElementDirectly(doc, analysis, table.getTableStart());
       formatElementDirectly(doc, analysis, table.getTableCaption());
       List<PageElementTable.TableLine> lines = table.getTableLines();
@@ -294,15 +292,13 @@ public abstract class MWPaneFormatter {
       formatElementDirectly(doc, analysis, table.getTableEnd());
     } else if (element instanceof PageElementTable.TableCaption) {
       style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
-    } else if (element instanceof PageElementTable.TableCell) {
-      PageElementTable.TableCell cell = (PageElementTable.TableCell) element;
+    } else if (element instanceof PageElementTable.TableCell cell) {
       beginIndex = cell.getBeginIndex();
       endIndex = cell.getEndOptionsIndex();
       style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
     } else if (element instanceof PageElementTable.TableEnd) {
       style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
-    } else if (element instanceof PageElementTable.TableLine) {
-      PageElementTable.TableLine line = (PageElementTable.TableLine) element;
+    } else if (element instanceof PageElementTable.TableLine line) {
       List<PageElementTable.TableCell> cells = line.getCells();
       if (cells != null) {
         for (PageElementTable.TableCell cell: cells) {
@@ -314,8 +310,7 @@ public abstract class MWPaneFormatter {
       style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
     } else if (element instanceof PageElementTable.TableStart) {
       style = doc.getStyle(ConfigurationValueStyle.TABLE.getName());
-    } else if (element instanceof PageElementTag) {
-      PageElementTag tag = (PageElementTag) element;
+    } else if (element instanceof PageElementTag tag) {
       if (WikiTagType.REF.equals(tag.getType()) ||
           WikiTagType.REFERENCES.equals(tag.getType())) {
         style = doc.getStyle(ConfigurationValueStyle.REFERENCE.getName());
@@ -484,8 +479,7 @@ public abstract class MWPaneFormatter {
    */
   public static StyledDocument createDocument() {
     initializeStyles();
-    StyledDocument document = new DefaultStyledDocument(styleContext);
-    return document;
+    return new DefaultStyledDocument(styleContext);
   }
 
   // ==========================================================================

@@ -50,8 +50,7 @@ public class MediaWiki extends MediaWikiController {
    * @return Access to MediaWiki.
    */
   static public MediaWiki getMediaWikiAccess(MediaWikiListener listener) {
-    MediaWiki mw = new MediaWiki(listener);
-    return mw;
+    return new MediaWiki(listener);
   }
 
   /**
@@ -156,7 +155,7 @@ public class MediaWiki extends MediaWikiController {
       addTask(new ContentsCallable(
           wikipedia, this, api,
           page, null,
-          false, false, Integer.valueOf(section),
+          false, false, section,
           false));
     }
     block(block);
@@ -190,7 +189,7 @@ public class MediaWiki extends MediaWikiController {
       Collection<CheckErrorAlgorithm> automaticCW, Collection<CheckErrorAlgorithm> forceCW,
       boolean save, boolean updateDabWarning, boolean minor,
       boolean pauseAfterEachEdit, boolean botFix, Component parent) throws APIException {
-    if ((pages == null) || (replacements == null) || (replacements.size() == 0)) {
+    if ((pages == null) || (replacements == null) || (replacements.isEmpty())) {
       return 0;
     }
 
@@ -220,9 +219,8 @@ public class MediaWiki extends MediaWikiController {
         pages[currentPage] = null; // To release memory
         currentPage++;
       }
-      if ((result != null) && (result instanceof Page)) {
+      if ((result != null) && (result instanceof Page page)) {
         List<String> replacementsDone = new ArrayList<>();
-        Page page = (Page) result;
         String oldContents = page.getContents();
         if (oldContents != null) {
           String newContents = oldContents;
@@ -247,8 +245,8 @@ public class MediaWiki extends MediaWikiController {
               }
 
               // Memorize replacement
-              if ((replacement.getKey() != null) && (replacement.getKey().length() > 0)) {
-                if (details.length() > 0) {
+              if ((replacement.getKey() != null) && (!replacement.getKey().isEmpty())) {
+                if (!details.isEmpty()) {
                   details.append(", ");
                 }
                 details.append(replacement.getKey());
@@ -271,6 +269,7 @@ public class MediaWiki extends MediaWikiController {
               for (AlgorithmError.Progress progress : usedAlgorithms) {
                 if (forceCW.contains(progress.algorithm)) {
                   shouldKeep = true;
+                  break;
                 }
               }
             }
@@ -487,7 +486,7 @@ public class MediaWiki extends MediaWikiController {
   public void retrieveAllLinksToPages(
       EnumWikipedia wikipedia,
       Collection<Page> pageList, boolean block) throws APIException {
-    if ((pageList == null) || (pageList.size() == 0)) {
+    if ((pageList == null) || (pageList.isEmpty())) {
       return;
     }
     final API api = APIFactory.getAPI();
@@ -512,7 +511,7 @@ public class MediaWiki extends MediaWikiController {
       EnumWikipedia wikipedia, List<Page> pageList,
       List<Integer> namespaces,
       boolean limit) throws APIException {
-    if ((pageList == null) || (pageList.size() == 0)) {
+    if ((pageList == null) || (pageList.isEmpty())) {
       return null;
     }
     final API api = APIFactory.getAPI();
@@ -524,9 +523,7 @@ public class MediaWiki extends MediaWikiController {
       Object result = getNextResult();
       if (result instanceof List<?>) {
         List<Page> pageResult = (List<Page>) result;
-        for (Page page : pageResult) {
-          resultList.add(page);
-        }
+        resultList.addAll(pageResult);
       }
     }
     Collections.sort(resultList);
@@ -595,7 +592,7 @@ public class MediaWiki extends MediaWikiController {
           if ((Boolean.TRUE.equals(p.isDisambiguationPage())) &&
               (!p.getRedirects().isRedirect())) {
             List<Page> links = p.getLinks();
-            if ((links == null) || (links.size() == 0)) {
+            if ((links == null) || (links.isEmpty())) {
               addTask(new LinksWRCallable(wikipedia, this, api, p, null, null, false));
             }
           }

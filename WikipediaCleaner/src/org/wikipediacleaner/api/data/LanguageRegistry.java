@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.zip.GZIPInputStream;
 
 /**
  * A registry for languages.
- * 
+ * <p>
  * This is based on the data file <code>language-subtag-registry.txt.tgz</code>.
  * This file is retrieved from <a href="http://www.iana.org/assignments/language-subtag-registry">IANA</a>
  * and compressed with gzip.
@@ -173,7 +174,6 @@ public class LanguageRegistry {
 
   /**
    * Initialize registry.
-   * @throws IOException 
    */
   private static void initializeRegistry() throws IOException {
     synchronized (lock) {
@@ -185,7 +185,7 @@ public class LanguageRegistry {
           return;
         }
         BufferedReader reader = new BufferedReader(new InputStreamReader(
-            new GZIPInputStream(url.openStream()), "UTF8"));
+            new GZIPInputStream(url.openStream()), StandardCharsets.UTF_8));
 
         List<LanguageRegistry.Language> tmpLanguages = new ArrayList<>();
         List<LanguageRegistry.Script> tmpScripts = new ArrayList<>();
@@ -334,14 +334,14 @@ public class LanguageRegistry {
     if (colonIndex <= 0) {
       return null;
     }
-    String value = line.substring(colonIndex + 1).trim();
+    StringBuilder value = new StringBuilder(line.substring(colonIndex + 1).trim());
     while ((lineNum + 1 < lines.size()) &&
            (lines.get(lineNum + 1).startsWith(" "))) {
       lineNum++;
-      value += " " + lines.get(lineNum).trim();
+      value.append(" ").append(lines.get(lineNum).trim());
     }
     // TODO: Manage values on several lines
-    return value;
+    return value.toString();
   }
 
   /**

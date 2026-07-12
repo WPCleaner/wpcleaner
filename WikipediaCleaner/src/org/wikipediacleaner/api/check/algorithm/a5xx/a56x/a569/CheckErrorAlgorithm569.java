@@ -75,7 +75,6 @@ public class CheckErrorAlgorithm569 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param template Template to check.
-   * @param param Parameter to check.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTemplateParam(

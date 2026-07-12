@@ -44,7 +44,7 @@ class RefTagsCollector {
 
         // Retrieve references with the same text
         String text = contents.substring(valueBeginIndex, valueEndIndex).trim();
-        if (text.length() > 0) {
+        if (!text.isEmpty()) {
           groupRefs.computeIfAbsent(text, value -> new ArrayList<>()).add(tag);
         }
       }

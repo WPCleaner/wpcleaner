@@ -122,7 +122,6 @@ public class CheckErrorAlgorithm565 extends CheckErrorAlgorithmBase {
    * 
    * @param countBefore Number of apostrophes before.
    * @param countAfter Number of apostrophes after.
-   * @param contents Page contents.
    * @param firstIndex First index.
    * @param lastIndex Last index.
    * @return True if the replacement can be automatic.

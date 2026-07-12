@@ -23,7 +23,7 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
  */
 public interface CheckErrorAlgorithm extends Algorithm {
 
-  public final static int MAX_ERROR_NUMBER_WITH_LIST = 500;
+  int MAX_ERROR_NUMBER_WITH_LIST = 500;
 
   /**
    * Tell if a page is among the white list.
@@ -31,39 +31,39 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param title Page title.
    * @return Page among the white list ?
    */
-  public boolean isInWhiteList(String title);
+  boolean isInWhiteList(String title);
 
   /**
    * @return White list page name.
    */
-  public String getWhiteListPageName();
+  String getWhiteListPageName();
 
   /**
    * @return Priority.
    */
-  public int getPriority();
+  int getPriority();
 
   /**
    * @return Error number.
    * (See Check Wikipedia project for the description of errors)
    */
-  public String getErrorNumberString();
+  String getErrorNumberString();
 
   /**
    * @return Error number.
    * (See Check Wikipedia project for the description of errors)
    */
-  public int getErrorNumber();
+  int getErrorNumber();
 
   /**
    * @return True if the error has a list of pages.
    */
-  public boolean hasList();
+  boolean hasList();
 
   /**
    * @return True if the error has a special list of pages.
    */
-  public boolean hasSpecialList();
+  boolean hasSpecialList();
 
   /**
    * Retrieve the list of pages in error.
@@ -72,7 +72,7 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param limit Maximum number of pages to retrieve.
    * @return List of pages in error.
    */
-  public List<Page> getSpecialList(EnumWikipedia wiki, int limit);
+  List<Page> getSpecialList(EnumWikipedia wiki, int limit);
 
   /**
    * @param name Property name.
@@ -81,7 +81,7 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param acceptEmpty Flag indicating if empty strings are accepted.
    * @return Property value.
    */
-  public String getSpecificProperty(
+  String getSpecificProperty(
       String name,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty);
 
@@ -93,7 +93,7 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param acceptEmpty Flag indicating if empty strings are accepted.
    * @return Property value.
    */
-  public String getSpecificProperty(
+  String getSpecificProperty(
       int errorNumber, String name,
       boolean useWiki, boolean useGeneral, boolean acceptEmpty);
 
@@ -105,7 +105,7 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
-  public boolean analyze(PageAnalysis analysis, Collection<CheckErrorResult> errors, boolean onlyAutomatic);
+  boolean analyze(PageAnalysis analysis, Collection<CheckErrorResult> errors, boolean onlyAutomatic);
 
   /**
    * Automatic fixing of all the errors in the page.
@@ -113,7 +113,7 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String automaticFix(PageAnalysis analysis);
+  String automaticFix(PageAnalysis analysis);
 
   /**
    * Bot fixing of all the errors in the page.
@@ -121,12 +121,12 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param analysis Page analysis.
    * @return Page contents after fix.
    */
-  public String botFix(PageAnalysis analysis);
+  String botFix(PageAnalysis analysis);
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
-  public String[] getGlobalFixes();
+  String[] getGlobalFixes();
 
   /**
    * Fix all the errors in the page.
@@ -136,5 +136,5 @@ public interface CheckErrorAlgorithm extends Algorithm {
    * @param textPane Text pane.
    * @return Page contents after fix.
    */
-  public String fix(String fixName, PageAnalysis analysis, MWPane textPane);
+  String fix(String fixName, PageAnalysis analysis, MWPane textPane);
 }

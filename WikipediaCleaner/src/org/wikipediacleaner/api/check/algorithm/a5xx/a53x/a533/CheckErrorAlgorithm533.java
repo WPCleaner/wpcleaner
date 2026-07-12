@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm533 extends CheckErrorAlgorithmBase {
         int endIndex = link.getEndIndex();
         int tmpIndex = beginIndex + 2;
         StringBuilder buffer = new StringBuilder();
-        buffer.append(contents.substring(beginIndex, tmpIndex));
+        buffer.append(contents, beginIndex, tmpIndex);
         while ((tmpIndex < endIndex) && (contents.charAt(tmpIndex) == ' ')) {
           tmpIndex++;
         }
@@ -72,7 +72,7 @@ public class CheckErrorAlgorithm533 extends CheckErrorAlgorithmBase {
           tmpIndex++;
         }
         buffer.append(':');
-        buffer.append(contents.substring(tmpIndex, endIndex));
+        buffer.append(contents, tmpIndex, endIndex);
         CheckErrorResult error = createCheckErrorResult(analysis, beginIndex, endIndex);
         error.addReplacement(buffer.toString(), true);
         errors.add(error);

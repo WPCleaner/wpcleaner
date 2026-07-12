@@ -13,8 +13,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -41,9 +41,7 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class BotCWTableModel extends AbstractTableModel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = 1124626680835189828L;
 
   /**
@@ -250,15 +248,11 @@ public class BotCWTableModel extends AbstractTableModel {
       int count, int modelRow, int modelColumn) {
     if (count == 1) {
       CheckErrorAlgorithm algorithm = getAlgorithm(modelRow);
-      List<CheckErrorAlgorithm> list = null;
-      switch (modelColumn) {
-      case COLUMN_FIX:
-        list = fixAlgorithms;
-        break;
-      case COLUMN_LIST:
-        list = listAlgorithms;
-        break;
-      }
+      List<CheckErrorAlgorithm> list = switch (modelColumn) {
+        case COLUMN_FIX -> fixAlgorithms;
+        case COLUMN_LIST -> listAlgorithms;
+        default -> null;
+      };
       if (list != null) {
         if (list.contains(algorithm)) {
           list.remove(algorithm);
@@ -395,7 +389,7 @@ public class BotCWTableModel extends AbstractTableModel {
    */
   public List<CheckErrorAlgorithm> getFixAlgorithms() {
     if (fixAlgorithms != null) {
-      Collections.sort(fixAlgorithms, new CheckErrorAlgorithmComparator());
+      fixAlgorithms.sort(new CheckErrorAlgorithmComparator());
     }
     return fixAlgorithms;
   }
@@ -416,7 +410,7 @@ public class BotCWTableModel extends AbstractTableModel {
    */
   public List<CheckErrorAlgorithm> getListAlgorithms() {
     if (listAlgorithms != null) {
-      Collections.sort(listAlgorithms, new CheckErrorAlgorithmComparator());
+      listAlgorithms.sort(new CheckErrorAlgorithmComparator());
     }
     return listAlgorithms;
   }
@@ -479,15 +473,15 @@ public class BotCWTableModel extends AbstractTableModel {
       CheckErrorAlgorithm algorithm = algorithms.get(rowIndex);
       switch (columnIndex) {
       case COLUMN_BOT:
-        return Boolean.valueOf(botAlgorithms.contains(algorithm));
+        return botAlgorithms.contains(algorithm);
       case COLUMN_DESCRIPTION:
         return algorithm.getShortDescriptionReplaced();
       case COLUMN_FIX:
-        return Boolean.valueOf(fixAlgorithms.contains(algorithm));
+        return fixAlgorithms.contains(algorithm);
       case COLUMN_LIST:
-        return Boolean.valueOf(listAlgorithms.contains(algorithm));
+        return listAlgorithms.contains(algorithm);
       case COLUMN_NUMBER:
-        return Integer.valueOf(algorithm.getErrorNumber());
+        return algorithm.getErrorNumber();
       }
     }
     return null;
@@ -500,19 +494,14 @@ public class BotCWTableModel extends AbstractTableModel {
    */
   @Override
   public String getColumnName(int column) {
-    switch (column) {
-    case COLUMN_BOT:
-      return "Bot";
-    case COLUMN_DESCRIPTION:
-      return GT._T("Description");
-    case COLUMN_FIX:
-      return "Fix";
-    case COLUMN_LIST:
-      return "List";
-    case COLUMN_NUMBER:
-      return GT._T("N°");
-    }
-    return super.getColumnName(column);
+    return switch (column) {
+      case COLUMN_BOT -> "Bot";
+      case COLUMN_DESCRIPTION -> GT._T("Description");
+      case COLUMN_FIX -> "Fix";
+      case COLUMN_LIST -> "List";
+      case COLUMN_NUMBER -> GT._T("N°");
+      default -> super.getColumnName(column);
+    };
   }
 
   /**
@@ -522,18 +511,11 @@ public class BotCWTableModel extends AbstractTableModel {
    */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    switch (columnIndex) {
-    case COLUMN_BOT:
-      return Boolean.class;
-    case COLUMN_DESCRIPTION:
-      return String.class;
-    case COLUMN_FIX:
-      return Boolean.class;
-    case COLUMN_LIST:
-      return Boolean.class;
-    case COLUMN_NUMBER:
-      return Integer.class;
-    }
-    return super.getColumnClass(columnIndex);
+    return switch (columnIndex) {
+      case COLUMN_BOT, COLUMN_FIX, COLUMN_LIST -> Boolean.class;
+      case COLUMN_DESCRIPTION -> String.class;
+      case COLUMN_NUMBER -> Integer.class;
+      default -> super.getColumnClass(columnIndex);
+    };
   }
 }

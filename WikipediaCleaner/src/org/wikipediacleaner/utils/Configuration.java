@@ -237,7 +237,6 @@ public class Configuration implements WindowListener {
    * @param newParent New parent node.
    * @param childName Child name.
    * @return True if the child has been completely moved.
-   * @throws BackingStoreException
    */
   private boolean moveChild(
       Preferences oldParent, Preferences newParent, String childName)
@@ -298,14 +297,15 @@ public class Configuration implements WindowListener {
     Object result = JOptionPane.showInputDialog(
         parent,
         GT._T(
-            "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\n" +
-            "Previously, options were global for every Wikipedia.\n" +
-            "The current options will be saved as the options for your preferred Wikipedia.\n" +
-            "What is your preferred Wikipedia ?"),
+            """
+            Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.
+            Previously, options were global for every Wikipedia.
+            The current options will be saved as the options for your preferred Wikipedia.
+            What is your preferred Wikipedia ?"""),
         "Wikipedia Cleaner", JOptionPane.QUESTION_MESSAGE,
         null, EnumWikipedia.values(), getWikipedia());
-    if ((result != null) && (result instanceof EnumWikipedia)) {
-      return (EnumWikipedia) result;
+    if (result instanceof EnumWikipedia wiki) {
+      return wiki;
     }
     return null;
   }
@@ -529,8 +529,8 @@ public class Configuration implements WindowListener {
       try {
         Preferences node = getPreferences(wikipedia).node(property);
         String[] children = node.keys();
-        for (int i = 0; i < children.length; i++) {
-          result.add(node.get(children[i], ""));
+        for (String child : children) {
+          result.add(node.get(child, ""));
         }
       } catch (BackingStoreException e) {
         //
@@ -581,8 +581,8 @@ public class Configuration implements WindowListener {
         }
         Preferences node = getPreferences(wikipedia).node(nodeName);
         String[] children = node.keys();
-        for (int i = 0; i < children.length; i++) {
-          result.add(node.get(children[i], ""));
+        for (String child : children) {
+          result.add(node.get(child, ""));
         }
       } catch (BackingStoreException e) {
         //
@@ -654,13 +654,13 @@ public class Configuration implements WindowListener {
       EnumWikipedia wikipedia,
       String property,
       String name,
-      @Nonnull Class valueClass) {
+      @Nonnull Class<?> valueClass) {
     return getPojo(
         wikipedia, property, name,
         () -> { 
           try {
-            return valueClass.newInstance();
-          } catch (IllegalAccessException|InstantiationException e) {
+            return valueClass.getDeclaredConstructor().newInstance();
+          } catch (IllegalAccessException | InstantiationException | InvocationTargetException | NoSuchMethodException e) {
             return null;
           }
         });
@@ -708,15 +708,16 @@ public class Configuration implements WindowListener {
         if (Modifier.isPublic(m.getModifiers()) &&
             m.getName().startsWith("set") &&
             (m.getGenericParameterTypes().length == 1)) {
-          String parameterName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+          String parameterName = Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
           boolean exist = false;
           for (String key : node.keys()) {
             if (parameterName.equals(key)) {
               exist = true;
+              break;
             }
           }
           if (exist) {
-            Class parameterType = m.getParameterTypes()[0];
+            Class<?> parameterType = m.getParameterTypes()[0];
             if (String.class.isAssignableFrom(parameterType)) {
               m.invoke(result, node.get(parameterName, null));
             } else if (Integer.class.isAssignableFrom(parameterType)) {
@@ -739,11 +740,7 @@ public class Configuration implements WindowListener {
         fixValuesMethod.invoke(result);
       }
       return result;
-    } catch (BackingStoreException e) {
-      //
-    } catch (IllegalAccessException e) {
-      //
-    } catch (InvocationTargetException e) {
+    } catch (BackingStoreException | IllegalAccessException | InvocationTargetException e) {
       //
     } catch (IllegalArgumentException e) {
       // Happens with names ending with a slash
@@ -795,8 +792,8 @@ public class Configuration implements WindowListener {
           if (Modifier.isPublic(m.getModifiers()) &&
               m.getName().startsWith("get") &&
               (m.getGenericParameterTypes().length == 0)) {
-            String attributeName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
-            Class returnType = m.getReturnType();
+            String attributeName = Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+            Class<?> returnType = m.getReturnType();
             Object attrib = m.invoke(value, (Object[]) null);
             if (attrib == null) {
               node.remove(attributeName);
@@ -817,11 +814,7 @@ public class Configuration implements WindowListener {
             }
           }
         }
-      } catch (IllegalAccessException e) {
-        //
-      } catch (InvocationTargetException e) {
-        //
-      } catch (ClassCastException e) {
+      } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
         //
       }
     }
@@ -835,7 +828,7 @@ public class Configuration implements WindowListener {
    * @return Pojo.
    */
   public Object[] getPojoArray(
-      EnumWikipedia wikipedia, String property, String name, Class valueClass) {
+      EnumWikipedia wikipedia, String property, String name, Class<?> valueClass) {
     try {
       if ((getPreferences(wikipedia) != null) &&
           (property != null) &&
@@ -853,7 +846,7 @@ public class Configuration implements WindowListener {
         int i = 0;
         while (pageNode.nodeExists(Integer.toString(i))) {
           Preferences node = pageNode.node(Integer.toString(i));
-          Object result = valueClass.newInstance();
+          Object result = valueClass.getDeclaredConstructor().newInstance();
           Method[] methods = valueClass.getMethods();
           Method fixValuesMethod = null;
           for (Method m : methods) {
@@ -865,15 +858,16 @@ public class Configuration implements WindowListener {
             if (Modifier.isPublic(m.getModifiers()) &&
                 m.getName().startsWith("set") &&
                 (m.getGenericParameterTypes().length == 1)) {
-              String parameterName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+              String parameterName = Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
               boolean exist = false;
               for (String key : node.keys()) {
                 if (parameterName.equals(key)) {
                   exist = true;
+                  break;
                 }
               }
               if (exist) {
-                Class parameterType = m.getParameterTypes()[0];
+                Class<?> parameterType = m.getParameterTypes()[0];
                 if (String.class.isAssignableFrom(parameterType)) {
                   m.invoke(result, node.get(parameterName, null));
                 } else if (Integer.class.isAssignableFrom(parameterType)) {
@@ -900,13 +894,8 @@ public class Configuration implements WindowListener {
         }
         return results.toArray();
       }
-    } catch (BackingStoreException e) {
-      //
-    } catch (InstantiationException e) {
-      //
-    } catch (IllegalAccessException e) {
-      //
-    } catch (InvocationTargetException e) {
+    } catch (BackingStoreException | InstantiationException | IllegalAccessException | InvocationTargetException |
+             NoSuchMethodException e) {
       //
     } catch (IllegalArgumentException e) {
       // Happens with names ending with a slash
@@ -941,8 +930,8 @@ public class Configuration implements WindowListener {
             if (Modifier.isPublic(m.getModifiers()) &&
                 m.getName().startsWith("get") &&
                 (m.getGenericParameterTypes().length == 0)) {
-              String attributeName = "" + Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
-              Class returnType = m.getReturnType();
+              String attributeName = Character.toLowerCase(m.getName().charAt(3)) + m.getName().substring(4);
+              Class<?> returnType = m.getReturnType();
               Object attrib = m.invoke(value, (Object[]) null);
               if (attrib == null) {
                 node.remove(attributeName);
@@ -964,11 +953,7 @@ public class Configuration implements WindowListener {
             }
           }
         }
-      } catch (IllegalAccessException e) {
-        //
-      } catch (InvocationTargetException e) {
-        //
-      } catch (ClassCastException e) {
+      } catch (IllegalAccessException | InvocationTargetException | ClassCastException e) {
         //
       }
     }
@@ -1187,11 +1172,11 @@ public class Configuration implements WindowListener {
             node.getInt(PROPERTY_WINDOW_X, 0),
             node.getInt(PROPERTY_WINDOW_Y, 0));
         boolean restoreSize = true;
-        if (window instanceof Versionned) {
-          Integer version = ((Versionned) window).getVersion();
+        if (window instanceof Versioned) {
+          Integer version = ((Versioned) window).getVersion();
           if (version != null) {
             int storedVersion = node.getInt(PROPERTY_WINDOW_VERSION, 1);
-            if (version.intValue() > storedVersion) {
+            if (version > storedVersion) {
               restoreSize = false;
             }
           }
@@ -1223,11 +1208,11 @@ public class Configuration implements WindowListener {
       node.putInt(PROPERTY_WINDOW_W, window.getWidth());
       node.putInt(PROPERTY_WINDOW_H, window.getHeight());
       Integer version = null;
-      if (window instanceof Versionned) {
-        version = ((Versionned) window).getVersion();
+      if (window instanceof Versioned) {
+        version = ((Versioned) window).getVersion();
       }
       if (version != null) {
-        node.putInt(PROPERTY_WINDOW_VERSION, version.intValue());
+        node.putInt(PROPERTY_WINDOW_VERSION, version);
       } else {
         node.remove(PROPERTY_WINDOW_VERSION);
       }

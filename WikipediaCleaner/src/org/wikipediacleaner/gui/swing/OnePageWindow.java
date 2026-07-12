@@ -17,7 +17,6 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.EventHandler;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -693,19 +692,12 @@ public abstract class OnePageWindow
             null,
             ConfigurationValueInteger.ANALYSIS_UNDO_LVL));
       }
+      /* (non-Javadoc)
+       * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+       */
       textPane.addPropertyChangeListener(
           MWPane.PROPERTY_MODIFIED,
-          new PropertyChangeListener() {
-  
-            /* (non-Javadoc)
-             * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
-             */
-            @Override
-            public void propertyChange(@SuppressWarnings("unused") PropertyChangeEvent evt) {
-              updateComponentState();
-            }
-            
-          });
+          evt -> updateComponentState());
       JComponent scrollContents = MWPane.createComplexPane(textPane);
       scrollContents.setMinimumSize(new Dimension(100, 100));
       scrollContents.setPreferredSize(new Dimension(1000, 500));
@@ -742,10 +734,10 @@ public abstract class OnePageWindow
         getTextContents().setText(page.getContents());
       }
       if (lblLastModified != null) {
-        if ((page.getContentsTimestamp() != null) && (!page.getContentsTimestamp().equals(""))) {
+        if ((page.getContentsTimestamp() != null) && (!page.getContentsTimestamp().isEmpty())) {
           Long duration = page.getContentsAge();
           if (duration != null) {
-            long minutes = duration.longValue() / 60 + 1;
+            long minutes = duration / 60 + 1;
             if (minutes > 60) {
               lblLastModified.setToolTipText(GT._T(
                   "Last modified at {0}", page.getContentsTimestamp()));
@@ -759,7 +751,7 @@ public abstract class OnePageWindow
                   "Last modified at {0}. It was modified less than {1} minute ago.",
                   "Last modified at {0}. It was modified less than {1} minutes ago.",
                   minutes,
-                  new Object[] { page.getContentsTimestamp(), Long.valueOf(minutes) } ));
+                  new Object[] { page.getContentsTimestamp(), minutes} ));
             }
           }
           lblLastModified.setText(page.getContentsTimestamp());
@@ -769,7 +761,7 @@ public abstract class OnePageWindow
         }
       }
       if (lblEditProtectionLevel != null) {
-        if ((page.getEditProtectionLevel() != null) && (!page.getEditProtectionLevel().equals(""))) {
+        if ((page.getEditProtectionLevel() != null) && (!page.getEditProtectionLevel().isEmpty())) {
           if ("sysop".equals(page.getEditProtectionLevel())) {
             lblEditProtectionLevel.setForeground(Color.RED);
           } else {
@@ -782,12 +774,7 @@ public abstract class OnePageWindow
       }
       updateComponentState();
     } else {
-      SwingUtilities.invokeLater(new Runnable() {
-        @Override
-        public void run() {
-          setContents();
-        }
-      });
+      SwingUtilities.invokeLater(this::setContents);
     }
   }
 
@@ -1032,7 +1019,7 @@ public abstract class OnePageWindow
 
     // Check that a comment is available
     if ((textComment != null) &&
-        (textComment.getText().trim().length() == 0)) {
+        (textComment.getText().trim().isEmpty())) {
       Utilities.displayWarning(getParentComponent(), GT._T(
           "A comment is required for sending the page."));
       return;
@@ -1171,9 +1158,7 @@ public abstract class OnePageWindow
           algorithms, pageAnalysis, false);
       initialErrors = new ArrayList<>();
       if (errorsFound != null) {
-        for (CheckErrorPage tmpError : errorsFound) {
-          initialErrors.add(tmpError);
-        }
+        initialErrors.addAll(errorsFound);
       }
     }
   }
@@ -1211,17 +1196,13 @@ public abstract class OnePageWindow
   static public void markPageAsFixed(
       final String errorNumber, final Page pageFixed) {
     if (pageFixed != null) {
-      MediaWikiController.addSimpleTask(new Callable<Page>() {
-  
-        @Override
-        public Page call() throws Exception
-        {
-          CheckWiki checkWiki = APIFactory.getCheckWiki();
-          if (checkWiki != null) {
-            checkWiki.markAsFixed(pageFixed, errorNumber);
-          }
-          return pageFixed;
-        }});
+      MediaWikiController.addSimpleTask((Callable<Page>) () -> {
+        CheckWiki checkWiki = APIFactory.getCheckWiki();
+        if (checkWiki != null) {
+          checkWiki.markAsFixed(pageFixed, errorNumber);
+        }
+        return pageFixed;
+      });
     }
   }
 

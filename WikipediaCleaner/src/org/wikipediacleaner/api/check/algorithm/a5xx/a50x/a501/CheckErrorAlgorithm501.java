@@ -103,7 +103,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     Collections.sort(replacements);
     while (!replacements.isEmpty()) {
       List<Replacement> group = getFirstGroup(replacements);
-      Collections.sort(group, comparator);
+      group.sort(comparator);
       groups.add(new ReplacementGroup(group, contents));
     }
 
@@ -185,32 +185,32 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
     boolean result = false;
 
     // Check spelling in templates
-    if ((result == false) || full) {
+    if ((!result) || full) {
       result |= analyzeTemplates(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in titles
-    if ((result == false) || full) {
+    if ((!result) || full) {
       result |= analyzeTitles(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in internal links
-    if ((result == false) || full) {
+    if ((!result) || full) {
       result |= analyzeInternalLinks(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in tags
-    if ((result == false) || full) {
+    if ((!result) || full) {
       result |= analyzeTags(analysis, activeSuggestions, replacements);
     }
 
-    // Check spelling in normal text with non native regular expressions
-    if ((result == false) || full) {
+    // Check spelling in normal text with non-native regular expressions
+    if ((!result) || full) {
       result |= analyzeNonNativeText(analysis, activeSuggestions, replacements);
     }
 
     // Check spelling in normal text with native regular expressions
-    if ((result == false) || full) {
+    if ((!result) || full) {
       result |= analyzeNativeText(analysis, activeSuggestions, replacements);
     }
 
@@ -772,7 +772,7 @@ public class CheckErrorAlgorithm501 extends CheckErrorAlgorithmBase {
   }
 
   /** Regular expressions to be disabled */
-  private List<String> disableRegexp = new ArrayList<>();
+  private final List<String> disableRegexp = new ArrayList<>();
 
   /** Active suggestions */
   @Nonnull

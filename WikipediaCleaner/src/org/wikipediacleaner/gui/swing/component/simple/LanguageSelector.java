@@ -34,7 +34,7 @@ import org.wikipediacleaner.utils.Configuration;
 public class LanguageSelector {
 
   /** URL for other languages than the defined ones */
-  private final static String URL_OTHER_LANGUAGE  = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Languages";
+  private final static String URL_OTHER_LANGUAGE  = "https://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Languages";
 
   /** Parent component */
   private final Component parentComponent;

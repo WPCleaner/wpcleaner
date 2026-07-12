@@ -79,7 +79,7 @@ public class PageElementPMID extends PageElement {
                 }
               }
               for (String param : params) {
-                if ((param != null) && (param.length() > 0)) {
+                if ((param != null) && (!param.isEmpty())) {
                   analyzeTemplateParams(
                       analysis, pmids, pmidIgnoreTemplates,
                       template, param,
@@ -103,7 +103,7 @@ public class PageElementPMID extends PageElement {
               analyzeTemplateParams(
                   analysis, pmids, pmidIgnoreTemplates,
                   template,
-                  ((pmidTemplate.length > 1) && (pmidTemplate[1].length() > 0)) ? pmidTemplate[1] : "1",
+                  ((pmidTemplate.length > 1) && (!pmidTemplate[1].isEmpty())) ? pmidTemplate[1] : "1",
                   false, false, false, true);
             }
           }
@@ -508,13 +508,13 @@ public class PageElementPMID extends PageElement {
         }
         if (ok) {
           String value = analysis.getContents().substring(beginIndex, endIndex);
-          if (paramValue.length() > 0) {
+          if (!paramValue.isEmpty()) {
             pmids.add(new PageElementPMID(
                 beginIndex, endIndex, analysis, value,
                 true, correct, helpRequested, template));
           }
         } else if (acceptAllValues) {
-          if (paramValue.length() > 0) {
+          if (!paramValue.isEmpty()) {
             pmids.add(new PageElementPMID(
                 template.getParameterValueStartIndex(paramNum),
                 template.getParameterValueStartIndex(paramNum) + paramValue.length(),
@@ -668,8 +668,8 @@ public class PageElementPMID extends PageElement {
         for (String[] pmidTemplate : pmidTemplates) {
           if (pmidTemplate.length > 2) {
             String[] params = pmidTemplate[1].split(",");
-            Boolean suggested = Boolean.valueOf(pmidTemplate[2]);
-            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+            boolean suggested = Boolean.parseBoolean(pmidTemplate[2]);
+            if ((params.length > 0) && (suggested)) {
               TemplateBuilder builder = TemplateBuilder.from(pmidTemplate[0]);
               builder.addParam(
                   !"1".equals(params[0]) ? params[0] : null,
@@ -722,7 +722,7 @@ public class PageElementPMID extends PageElement {
     // Reason
     if ((reason != null) &&
         (helpNeededTemplate.length > 2) &&
-        (helpNeededTemplate[2].length() > 0)) {
+        (!helpNeededTemplate[2].isEmpty())) {
       builder.addParam(helpNeededTemplate[2], reason);
     }
 
@@ -742,12 +742,12 @@ public class PageElementPMID extends PageElement {
   public String askForHelp(
       String comment, String reason) {
     if ((comment == null) ||
-        (comment.trim().length() == 0)) {
+        (comment.trim().isEmpty())) {
       return null;
     }
     StringBuilder replacement = new StringBuilder();
     replacement.append(comment);
-    if ((reason != null) && (reason.trim().length() > 0)) {
+    if ((reason != null) && (!reason.trim().isEmpty())) {
       replacement.append(" - ");
       replacement.append(reason);
     }
@@ -763,7 +763,7 @@ public class PageElementPMID extends PageElement {
       return null;
     }
     pmid = pmid.trim();
-    if (pmid.length() == 0) {
+    if (pmid.isEmpty()) {
       return pmid;
     }
     PageAnalysis analysis = new PageAnalysis(null, pmid);
@@ -798,7 +798,7 @@ public class PageElementPMID extends PageElement {
       return false;
     }
     pmidValue = cleanPMID(pmidValue);
-    if (pmidValue.length() == 0) {
+    if (pmidValue.isEmpty()) {
       return false;
     }
     return true;

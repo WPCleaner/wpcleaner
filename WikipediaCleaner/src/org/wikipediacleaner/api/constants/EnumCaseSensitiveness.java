@@ -44,7 +44,7 @@ public enum EnumCaseSensitiveness {
   /**
    * @param code Code representing the case sensitiveness.
    */
-  private EnumCaseSensitiveness(
+  EnumCaseSensitiveness(
       @Nonnull String code,
       @Nonnull StringTransformer normalizer) {
     this.code = code;

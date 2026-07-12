@@ -64,10 +64,10 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
       boolean lowerCaseNamespace = false;
       if (namespace == null) {
         namespace = categoryNamespace.getTitle();
-      } else if ((namespace.length() > 0) &&
+      } else if ((!namespace.isEmpty()) &&
                  (Character.isLowerCase(namespace.charAt(0)))) {
         lowerCaseNamespace = true;
-        namespace = "" + Character.toUpperCase(namespace.charAt(0)) + namespace.substring(1);
+        namespace = Character.toUpperCase(namespace.charAt(0)) + namespace.substring(1);
       }
       String categoryName = category.getNameNotTrimmed();
       if (categoryName != null) {
@@ -75,10 +75,10 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
       }
       boolean lowerCaseName = false;
       if ((categoryName != null) &&
-          (categoryName.length() > 0) &&
+          (!categoryName.isEmpty()) &&
           (Character.isLowerCase(categoryName.charAt(0)))) {
         lowerCaseName = true;
-        categoryName = "" + Character.toUpperCase(categoryName.charAt(0)) + categoryName.substring(1);
+        categoryName = Character.toUpperCase(categoryName.charAt(0)) + categoryName.substring(1);
       }
       String categorySort = category.getSort();
       if ("".equals(categorySort)) {
@@ -135,7 +135,7 @@ public class CheckErrorAlgorithm018 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

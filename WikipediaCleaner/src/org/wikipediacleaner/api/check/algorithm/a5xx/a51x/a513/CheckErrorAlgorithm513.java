@@ -60,7 +60,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
   private static final String AUTOMATIC_PUNCTUATION_BEFORE = ",-–—:(";
 
   /** Punctuation characters before the internal link */
-  private static final String PUNCTUATION_BEFORE = "" + AUTOMATIC_PUNCTUATION_BEFORE;
+  private static final String PUNCTUATION_BEFORE = AUTOMATIC_PUNCTUATION_BEFORE;
 
   /** Punctuation characters before the internal link that are excluded but trigger automatic replacement */
   private static final String PUNCTUATION_BEFORE_EXCLUDED = "\".;";
@@ -200,10 +200,9 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
               contents.substring(param.getBeginIndex(), link.getBeginIndex()) +
               link.getDisplayedTextNotTrimmed() +
               contents.substring(link.getEndIndex(), param.getEndIndex());
-          boolean automatic = (paramConfig.length > 2) ?
-              Boolean.valueOf(paramConfig[2]) : false;
+          boolean automatic = paramConfig.length > 2 && Boolean.parseBoolean(paramConfig[2]);
           automatic &= (template == analysis.isInTemplate(tmpIndex));
-          errorResult.addReplacement(replacement, automatic && !closeBracket);
+          errorResult.addReplacement(replacement, automatic);
           errors.add(errorResult);
           return true;
         }
@@ -437,7 +436,6 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
             beginExtra = tmpIndex;
             automatic |= text.length > 1 && Boolean.parseBoolean(text[1]);
             checkTexts = true;
-            continue;
           }
         }
       }
@@ -779,11 +777,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
       if (tmpList != null) {
         for (String[] tmpElement : tmpList) {
           if ((tmpElement != null) && (tmpElement.length > 1)) {
-            List<String[]> values = templateParams.get(tmpElement[0]);
-            if (values == null) {
-              values = new ArrayList<>();
-              templateParams.put(tmpElement[0], values);
-            }
+            List<String[]> values = templateParams.computeIfAbsent(tmpElement[0], k -> new ArrayList<>());
             values.add(tmpElement);
           }
         }
@@ -820,11 +814,7 @@ public class CheckErrorAlgorithm513 extends CheckErrorAlgorithmBase {
         for (String[] tmpElement : tmpList) {
           if (tmpElement.length > 0) {
             String pageName = tmpElement[0];
-            List<String> internalList = linksFull.get(pageName);
-            if (internalList == null) {
-              internalList = new ArrayList<>();
-              linksFull.put(pageName, internalList);
-            }
+            List<String> internalList = linksFull.computeIfAbsent(pageName, k -> new ArrayList<>());
             if (tmpElement.length > 1) {
               internalList.add(tmpElement[1]);
             }

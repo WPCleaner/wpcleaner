@@ -132,7 +132,7 @@ class TemplateConfiguration {
     if ((rawConfiguration == null) || (rawConfiguration.length < 1)) {
       return;
     }
-    Boolean automatic = (rawConfiguration.length > 1) ? Boolean.valueOf(rawConfiguration[1]) : Boolean.FALSE;
+    boolean automatic = (rawConfiguration.length > 1) ? Boolean.valueOf(rawConfiguration[1]) : Boolean.FALSE;
     for (String templateName : configurationGroup.getTemplateNames(rawConfiguration[0])) {
       TemplateConfiguration templateConfig = configuration.computeIfAbsent(
           templateName,

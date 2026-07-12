@@ -101,11 +101,11 @@ public class CheckErrorAlgorithm562 extends CheckErrorAlgorithmBase {
     } else {
       StringBuilder inside = new StringBuilder();
       if (!previousTag.isFullTag()) {
-        inside.append(contents.substring(previousTag.getValueBeginIndex(), previousTag.getValueEndIndex()));
+        inside.append(contents, previousTag.getValueBeginIndex(), previousTag.getValueEndIndex());
       }
-      inside.append(contents.substring(previousTag.getCompleteEndIndex(), tag.getCompleteBeginIndex()));
+      inside.append(contents, previousTag.getCompleteEndIndex(), tag.getCompleteBeginIndex());
       if (!tag.isFullTag()) {
-        inside.append(contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex()));
+        inside.append(contents, tag.getValueBeginIndex(), tag.getValueEndIndex());
       }
       errorResult.addReplacement(CompleteTagBuilder.from(WikiTagType.NOWIKI, inside.toString()).toString());
     }

@@ -316,7 +316,7 @@ public class PageElementExternalLink extends PageElement {
     this.link = tmpLink;
     this.linkBeginIndex = linkBeginIndex;
     this.linkEndIndex = linkEndIndex;
-    if ((text != null) && (text.trim().length() > 0)) {
+    if ((text != null) && (!text.trim().isEmpty())) {
       this.textNotTrimmed = text;
       this.text = text.trim();
     } else {

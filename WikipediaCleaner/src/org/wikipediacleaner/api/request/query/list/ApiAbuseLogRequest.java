@@ -165,7 +165,7 @@ public class ApiAbuseLogRequest extends ApiListRequest {
     }
     if (maxDuration != null) {
       Calendar calendar = new GregorianCalendar();
-      calendar.add(Calendar.DAY_OF_MONTH, -maxDuration.intValue());
+      calendar.add(Calendar.DAY_OF_MONTH, -maxDuration);
       SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
       String formattedDate = df.format(new Date(calendar.getTimeInMillis()));
       properties.put(PROPERTY_END, formattedDate);

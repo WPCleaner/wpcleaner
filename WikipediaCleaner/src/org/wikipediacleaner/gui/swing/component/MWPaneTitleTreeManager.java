@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -211,8 +212,7 @@ public class MWPaneTitleTreeManager {
       return;
     }
     Object nodeInfo = treeNode.getUserObject();
-    if (nodeInfo instanceof PageElementTitle) {
-      PageElementTitle title = (PageElementTitle) nodeInfo;
+    if (nodeInfo instanceof PageElementTitle title) {
       try {
         textPane.setCaretPosition(title.getBeginIndex());
         textPane.moveCaretPosition(title.getEndIndex());
@@ -379,7 +379,7 @@ public class MWPaneTitleTreeManager {
       MWPaneTitleTreeNode newNode = new MWPaneTitleTreeNode(currentNode.getTitle());
       newNode.setCurrentTitleLevel(currentNode.getCurrentTitleLevel());
       MWPaneTitleTreeNode parentNode = (MWPaneTitleTreeNode) rootNode2.getLastLeaf();
-      while ((parentNode.isRoot() == false) &&
+      while ((!parentNode.isRoot()) &&
              (parentNode.getCurrentTitleLevel() >= newNode.getCurrentTitleLevel())) {
         parentNode = (MWPaneTitleTreeNode) parentNode.getParent();
       }
@@ -416,24 +416,19 @@ public class MWPaneTitleTreeManager {
     if ((contents == null) || (node == null)) {
       return;
     }
-    if (!(node instanceof MWPaneTitleTreeNode)) {
+    if (!(node instanceof MWPaneTitleTreeNode treeNode)) {
       return;
     }
-    MWPaneTitleTreeNode treeNode = (MWPaneTitleTreeNode) node;
     for (int i = treeNode.getChildCount(); i > 0; i--) {
       applyChanges(contents, treeNode.getChildAt(i - 1));
     }
     if (treeNode.getCurrentTitleLevel() != treeNode.getInitialTitleLevel()) {
       StringBuilder newTitle = new StringBuilder();
-      for (int i = 0; i < treeNode.getCurrentTitleLevel(); i++) {
-        newTitle.append("=");
-      }
+      newTitle.append("=".repeat(Math.max(0, treeNode.getCurrentTitleLevel())));
       newTitle.append(" ");
       newTitle.append(treeNode.getTitle().getTitle());
       newTitle.append(" ");
-      for (int i = 0; i < treeNode.getCurrentTitleLevel(); i++) {
-        newTitle.append("=");
-      }
+      newTitle.append("=".repeat(Math.max(0, treeNode.getCurrentTitleLevel())));
       contents.replace(
           treeNode.getTitle().getBeginIndex(),
           treeNode.getTitle().getEndIndex(),
@@ -450,6 +445,7 @@ public class MWPaneTitleTreeManager {
  */
 class MWPaneTitleTreeNode extends DefaultMutableTreeNode {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   private final PageElementTitle title;

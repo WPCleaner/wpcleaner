@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.http.hc5;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -76,9 +75,7 @@ public class Hc5HttpUtils extends HttpUtils {
     if (properties != null) {
       boolean first = true;
       List<org.apache.hc.core5.http.NameValuePair> params = new ArrayList<>();
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
+      for (Map.Entry<String, String> property : properties.entrySet()) {
         String key = property.getKey();
         String value = property.getValue();
         params.add(new BasicNameValuePair(key, value));
@@ -110,9 +107,7 @@ public class Hc5HttpUtils extends HttpUtils {
     URIBuilder uriBuilder = new URIBuilder(url, StandardCharsets.UTF_8);
     if (properties != null) {
       boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
+      for (Map.Entry<String, String> property : properties.entrySet()) {
         String key = property.getKey();
         String value = property.getValue();
         uriBuilder.addParameter(key, value);

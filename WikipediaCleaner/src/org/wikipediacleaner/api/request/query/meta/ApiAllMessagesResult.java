@@ -25,7 +25,7 @@ public interface ApiAllMessagesResult extends ApiResult {
    * @return Message.
    * @throws APIException Exception thrown by the API.
    */
-  public String executeMessage(Map<String, String> properties) throws APIException;
+  String executeMessage(Map<String, String> properties) throws APIException;
 
   /**
    * Execute messages request.
@@ -35,7 +35,7 @@ public interface ApiAllMessagesResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeMessages(
+  boolean executeMessages(
       Map<String, String> properties,
       Map<String, String> messages) throws APIException;
 }

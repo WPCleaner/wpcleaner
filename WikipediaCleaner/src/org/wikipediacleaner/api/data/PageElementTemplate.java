@@ -203,7 +203,7 @@ public class PageElementTemplate extends PageElement {
       return null;
     }
     String templateName = contents.substring(startTemplateName, tmpIndex).trim();
-    if (templateName.length() == 0) {
+    if (templateName.isEmpty()) {
       return null;
     }
 
@@ -403,7 +403,7 @@ public class PageElementTemplate extends PageElement {
             equalDone = false;
           } else if ((currentChar == '=') &&
                      (equalIndex < 0) &&
-                     (equalDone == false)) {
+                     (!equalDone)) {
             /*int i = parameterBeginIndex;
             while ((i < tmpIndex) &&
                    ((contents.charAt(i) == ' ') || (contents.charAt(i) == '\n'))) {
@@ -470,7 +470,7 @@ public class PageElementTemplate extends PageElement {
       int paramNum = 1;
       for (Parameter param : parameters) {
         String paramName = param.getName();
-        if ((paramName == null) || ("".equals(paramName))) {
+        if ((paramName == null) || (paramName.isEmpty())) {
           paramNum++;
         }
       }
@@ -535,7 +535,7 @@ public class PageElementTemplate extends PageElement {
     int paramNum = 1;
     while (index < parameters.size()) {
       String parameterName = parameters.get(index).name;
-      if ((parameterName == null) || (parameterName.length() == 0)) {
+      if ((parameterName == null) || (parameterName.isEmpty())) {
         parameterName = Integer.toString(paramNum);
       }
       if (parameterName.equals(Integer.toString(paramNum))) {
@@ -693,6 +693,7 @@ public class PageElementTemplate extends PageElement {
       for (Parameter parameter : parameters) {
         if (parameter.name.equals(parameterName)) {
           parameterExist = true;
+          break;
         }
       }
     }
@@ -710,7 +711,7 @@ public class PageElementTemplate extends PageElement {
         // Manage whitespace characters before/after name/value
         tmpParameterName = parameterName;
         tmpParameterValue = parameterValue;
-        if ((parameter.name != null) && (parameter.name.length() > 0)) {
+        if ((parameter.name != null) && (!parameter.name.isEmpty())) {
           // Whitespace characters before name
           int spaces = 0;
           while ((spaces < parameter.nameNotTrimmed.length()) &&
@@ -822,7 +823,7 @@ public class PageElementTemplate extends PageElement {
       // Manage whitespace characters before/after name/value
       tmpParameterName1 = parameterName1;
       tmpParameterValue1 = parameterValue1;
-      if ((parameter.name != null) && (parameter.name.length() > 0)) {
+      if ((parameter.name != null) && (!parameter.name.isEmpty())) {
         // Whitespace characters before name
         int spaces = 0;
         while ((spaces < parameter.nameNotTrimmed.length()) &&

@@ -47,10 +47,10 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   };
 
   /** Possible actions when a tag is alone. */
-  private static enum ActionAlone {
+  private enum ActionAlone {
     ALONE_DELETE,
     ALONE_CLOSE,
-    ALONE_NOTHING;
+    ALONE_NOTHING
   }
 
   public CheckErrorAlgorithm532() {
@@ -247,7 +247,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex);
     errorResult.addReplacement(
         contents.substring(beginIndex, endIndex) +
-        TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString(),
+        TagBuilder.from(tag.getName(), TagFormat.CLOSE),
         true);
     errors.add(errorResult);
     return true;
@@ -837,7 +837,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Check namespace
     Integer namespace = analysis.getPage().getNamespace();
-    if ((namespace == null) || (namespace.intValue() == Namespace.TEMPLATE)) {
+    if ((namespace == null) || (namespace == Namespace.TEMPLATE)) {
       return false;
     }
 
@@ -958,7 +958,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
 
     // Check namespace
     Integer namespace = analysis.getPage().getNamespace();
-    if ((namespace == null) || (namespace.intValue() == Namespace.TEMPLATE)) {
+    if ((namespace == null) || (namespace == Namespace.TEMPLATE)) {
       return false;
     }
 
@@ -1106,11 +1106,13 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         for (int tmpIndex = endIndex - length; tmpIndex < endIndex; tmpIndex++) {
           if (contents.charAt(tmpIndex) != '\'') {
             ok = false;
+            break;
           }
         }
         for (int tmpIndex = beginIndex + length; tmpIndex < endIndex - length; tmpIndex++) {
           if (contents.startsWith("''", tmpIndex)) {
             ok = false;
+            break;
           }
         }
         if (ok) {
@@ -1165,7 +1167,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
           case ALONE_CLOSE:
             errorResult.addReplacement(
                 contents.substring(tagBeginIndex, tagEndIndex) +
-                TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString(),
+                TagBuilder.from(tag.getName(), TagFormat.CLOSE),
                 automatic);
             break;
           }
@@ -1173,7 +1175,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
           errorResult.addReplacement("", false);
           errorResult.addReplacement(
               contents.substring(tagBeginIndex, tagEndIndex) +
-              TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString(),
+              TagBuilder.from(tag.getName(), TagFormat.CLOSE),
               false);
         }
         return errorResult;
@@ -1191,11 +1193,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, tagEndIndex);
       String replacement =
           contents.substring(beginIndex, tagBeginIndex) +
-          TagBuilder.from(previousTag.getName(), TagFormat.CLOSE).toString();
+          TagBuilder.from(previousTag.getName(), TagFormat.CLOSE);
       String text =
           contents.substring(beginIndex, previousTag.getEndIndex()) +
           "..." +
-          TagBuilder.from(previousTag.getName(), TagFormat.CLOSE).toString();
+          TagBuilder.from(previousTag.getName(), TagFormat.CLOSE);
       errorResult.addReplacement(replacement, text, automatic);
       return errorResult;
     }
@@ -1294,11 +1296,11 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
       String replacement =
           contents.substring(beginIndex, selfClosedTag.getBeginIndex()) +
-          TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString();
+          TagBuilder.from(tag.getName(), TagFormat.CLOSE);
       String text =
           contents.substring(beginIndex, tag.getEndIndex()) +
           "..." +
-          TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString();
+          TagBuilder.from(tag.getName(), TagFormat.CLOSE);
       errorResult.addReplacement(replacement, text, false);
       return errorResult;
     }
@@ -1332,12 +1334,12 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
         replacement =
             contents.substring(beginIndex, endIndex) +
             contents.substring(contentBegin, contentBegin + countApostrophe) +
-            TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString();
+            TagBuilder.from(tag.getName(), TagFormat.CLOSE);
         text =
             contents.substring(beginIndex, tag.getEndIndex()) +
             "..." +
             contents.substring(contentBegin, contentBegin + countApostrophe) +
-            TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString();
+            TagBuilder.from(tag.getName(), TagFormat.CLOSE);
         errorResult.addReplacement(replacement, text, false);
       }
     }
@@ -1365,7 +1367,7 @@ public class CheckErrorAlgorithm532 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

@@ -9,8 +9,6 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -32,10 +30,7 @@ public abstract class CheckErrorAlgorithmTags extends CheckErrorAlgorithmBase {
   private final static @Nonnull Set<TagType> IGNORED_TAGS;
 
   static {
-    Set<TagType> tmpSet = new HashSet<>();
-    tmpSet.add(WikiTagType.SOURCE);
-    tmpSet.add(WikiTagType.SYNTAXHIGHLIGHT);
-    IGNORED_TAGS = Collections.unmodifiableSet(tmpSet);
+    IGNORED_TAGS = Set.of(WikiTagType.SOURCE, WikiTagType.SYNTAXHIGHLIGHT);
   }
 
   /**

@@ -26,27 +26,27 @@ public interface Algorithm {
   /**
    * @return Short description of the error.
    */
-  public String getShortDescription();
+  String getShortDescription();
 
   /**
    * @return Short description of the error, stripped text.
    */
-  public String getShortDescriptionReplaced();
+  String getShortDescriptionReplaced();
 
   /**
    * @return Long description of the error.
    */
-  public String getLongDescription();
+  String getLongDescription();
 
   /**
    * @return Link to error description.
    */
-  public String getLink();
+  String getLink();
 
   /**
    * @return Flag indicating if this algorithm is available.
    */
-  public boolean isAvailable();
+  boolean isAvailable();
 
   /* ========================================================================== */
   /* Analysis                                                                   */
@@ -61,7 +61,7 @@ public interface Algorithm {
    * @param cwConfiguration Configuration for Check Wiki.
    * @param wpcConfiguration Configuration for WPCleaner.
    */
-  public void setConfiguration(
+  void setConfiguration(
       WikiConfiguration wikiConfiguration,
       CWConfiguration cwConfiguration,
       WPCConfiguration wpcConfiguration);
@@ -71,5 +71,5 @@ public interface Algorithm {
    * 
    * @return Map of parameters (key=name, value=description).
    */
-  public Map<String, AlgorithmParameter> getParameters();
+  Map<String, AlgorithmParameter> getParameters();
 }

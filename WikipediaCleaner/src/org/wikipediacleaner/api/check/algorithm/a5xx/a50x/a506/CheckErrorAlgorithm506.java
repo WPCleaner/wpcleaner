@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm506 extends CheckErrorAlgorithmBase {
       PageElementTag.Parameter paramName = refTag.getParameter("name");
       if ((paramName != null) &&
           (paramName.getTrimmedValue() != null) &&
-          (paramName.getTrimmedValue().length() > 0)) {
+          (!paramName.getTrimmedValue().isEmpty())) {
         String name = paramName.getTrimmedValue();
         boolean hasNonNumericCharacter = false;
         int index = name.length();

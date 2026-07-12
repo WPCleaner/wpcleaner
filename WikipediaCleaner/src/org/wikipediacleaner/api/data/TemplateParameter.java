@@ -13,8 +13,8 @@ package org.wikipediacleaner.api.data;
  */
 public class TemplateParameter {
 
-  private String name;
-  private String value;
+  private final String name;
+  private final String value;
   private boolean relevant;
 
   /**

@@ -45,8 +45,7 @@ public class PageUtilities {
                         ")*?" +
                       "))?"); // Possible parameters
     expression.append(")\\}\\}"); // }}
-    Pattern pattern = Pattern.compile(expression.toString());
-    return pattern;
+    return Pattern.compile(expression.toString());
   }
 
   /**
@@ -117,7 +116,7 @@ public class PageUtilities {
    * @param title Page title.
    */
   public static void addPatternForTitle(StringBuilder expression, String title) {
-    if ((title == null) || (title.length() == 0)) {
+    if ((title == null) || (title.isEmpty())) {
       return;
     }
     int begin = 0;

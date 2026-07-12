@@ -45,9 +45,9 @@ public final class CommentManager {
 
     // Tag the modification
     boolean tagUsed = false;
-    if ((propertyTag != null) && (propertyTag.trim().length() > 0)) {
+    if ((propertyTag != null) && (!propertyTag.trim().isEmpty())) {
       String tag = configuration.getString(WPCConfigurationString.TAG);
-      if ((tag != null) && (tag.length() > 0)) {
+      if ((tag != null) && (!tag.isEmpty())) {
         properties.put(propertyTag.trim(), tag);
         tagUsed = true;
       }
@@ -57,9 +57,9 @@ public final class CommentManager {
 
     // Add the information about the program name in the comment
     String programName = Version.PROGRAM;
-    if (!tagUsed && (programName != null) && (programName.trim().length() > 0)) {
+    if (!tagUsed && (programName != null) && (!programName.trim().isEmpty())) {
       String link = configuration.getString(WPCConfigurationString.HELP_PAGE);
-      if ((link != null) && (link.trim().length() > 0)) {
+      if ((link != null) && (!link.trim().isEmpty())) {
         updatedComment.append(InternalLinkBuilder.from(link.trim()).withText(programName.trim()).toString());
       } else {
         updatedComment.append(programName.trim());
@@ -68,8 +68,8 @@ public final class CommentManager {
 
     // Add the information about the version of the program in the comment
     String version = Version.VERSION;
-    if ((version != null) && (version.trim().length() > 0)) {
-      if (updatedComment.length() > 0) {
+    if ((version != null) && (!version.trim().isEmpty())) {
+      if (!updatedComment.isEmpty()) {
         updatedComment.append(" ");
       }
       updatedComment.append("v");
@@ -80,8 +80,8 @@ public final class CommentManager {
     }
 
     // Add a supplementary text in the comment
-    if ((extraText != null) && (extraText.trim().length() > 0)) {
-      if (updatedComment.length() > 0) {
+    if ((extraText != null) && (!extraText.trim().isEmpty())) {
+      if (!updatedComment.isEmpty()) {
         updatedComment.append(" - ");
       }
       updatedComment.append(extraText.trim());
@@ -89,13 +89,13 @@ public final class CommentManager {
 
     // Add the actual comment
     String comment = properties.get(propertyComment);
-    if ((comment != null) && (comment.trim().length() > 0)) {
-      if (updatedComment.length() > 0) {
+    if ((comment != null) && (!comment.trim().isEmpty())) {
+      if (!updatedComment.isEmpty()) {
         updatedComment.append(" - ");
       }
       updatedComment.append(comment);
     }
-    if (updatedComment.length() > 0) {
+    if (!updatedComment.isEmpty()) {
       properties.put(propertyComment, updatedComment.toString());
     }
   }

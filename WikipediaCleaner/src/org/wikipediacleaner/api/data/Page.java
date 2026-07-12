@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -38,17 +39,17 @@ public class Page implements Comparable<Page> {
   /**
    * Kinds of related pages.
    */
-  public static enum RelatedPages {
+  public enum RelatedPages {
     @Deprecated BACKLINKS, // Replaced by LINKS_HERE (back links notion is too problematic in API)
     CATEGORIES,
     CATEGORY_MEMBERS,
     EMBEDDED_IN,
     LINKS_HERE,
     REDIRECTS,
-    SIMILAR_PAGES;
+    SIMILAR_PAGES
   }
 
-  private EnumWikipedia wikipedia;
+  private final EnumWikipedia wikipedia;
   private Integer pageId;
   private Integer namespace;
   private String  title;
@@ -78,7 +79,7 @@ public class Page implements Comparable<Page> {
   Page(EnumWikipedia wikipedia, String title) {
     this.wikipedia = wikipedia;
     if (title != null) {
-      while ((title.length() > 0) && (title.charAt(title.length() - 1) == 0x200E)) {
+      while ((!title.isEmpty()) && (title.charAt(title.length() - 1) == 0x200E)) {
         title = title.substring(0, title.length() - 1);
       }
     }
@@ -161,7 +162,7 @@ public class Page implements Comparable<Page> {
     try {
       this.pageId = Integer.valueOf(pageId);
     } catch (NumberFormatException e) {
-      this.pageId = Integer.valueOf(-1);
+      this.pageId = -1;
     }
   }
 
@@ -208,7 +209,7 @@ public class Page implements Comparable<Page> {
    * @return Value for {{PAGENAME}} magic word.
    */
   public String getValuePAGENAME() {
-    if ((title == null) || (namespace == null) || (Namespace.MAIN == namespace.intValue())) {
+    if ((title == null) || (namespace == null) || (Namespace.MAIN == namespace)) {
       return title;
     }
     int colonIndex = title.indexOf(':');
@@ -229,8 +230,8 @@ public class Page implements Comparable<Page> {
    * @return Title with first letter as lower case
    */
   public String getTitleLcFirst() {
-    if ((title != null) && (title.length() > 0) && (Character.isUpperCase(title.charAt(0)))) {
-      return "" + Character.toLowerCase(title.charAt(0)) + title.substring(1);
+    if ((title != null) && (!title.isEmpty()) && (Character.isUpperCase(title.charAt(0)))) {
+      return Character.toLowerCase(title.charAt(0)) + title.substring(1);
     }
     return title;
   }
@@ -267,7 +268,7 @@ public class Page implements Comparable<Page> {
    * @param revisionId Revision id. 
    */
   public void setRevisionId(String revisionId) {
-    this.revisionId = Integer.valueOf(-1);
+    this.revisionId = -1;
     if (revisionId == null) {
       return;
     }
@@ -308,8 +309,7 @@ public class Page implements Comparable<Page> {
     try {
       Date dateContents = DataManager.convertIso8601DateTime(contentsTimestamp);
       Date dateStart = DataManager.convertIso8601DateTime(startTimestamp);
-      long duration = (dateStart.getTime() - dateContents.getTime()) / 1000;
-      return Long.valueOf(duration);
+      return (dateStart.getTime() - dateContents.getTime()) / 1000;
     } catch (ParseException e) {
       //
     }
@@ -385,7 +385,7 @@ public class Page implements Comparable<Page> {
    */
   public boolean hasWiktionaryTemplate() {
     if (wiktionaryLink != null) {
-      return wiktionaryLink.booleanValue();
+      return wiktionaryLink;
     }
     if ((templates == null) ||
         (wikipedia == null) ||
@@ -437,21 +437,21 @@ public class Page implements Comparable<Page> {
    * @return Flag indicating if the page is an article (not a talk page).
    */
   public boolean isArticle() {
-    return (namespace != null) && (namespace.intValue() % 2 == 0);
+    return (namespace != null) && (namespace % 2 == 0);
   }
 
   /**
    * @return Flag indicating if the page is in the main namespace.
    */
   public boolean isInMainNamespace() {
-    return (namespace != null) && (namespace.intValue() == Namespace.MAIN);
+    return (namespace != null) && (namespace == Namespace.MAIN);
   }
 
   /**
    * @return Flag indicating if the page is in the template namespace.
    */
   public boolean isInTemplateNamespace() {
-    return (namespace != null) && (namespace.intValue() == Namespace.TEMPLATE);
+    return (namespace != null) && (namespace == Namespace.TEMPLATE);
   }
 
   /**
@@ -459,7 +459,7 @@ public class Page implements Comparable<Page> {
    */
   public boolean isInUserNamespace() {
     return (namespace != null) &&
-        ((namespace.intValue() == Namespace.USER) || (namespace.intValue() == Namespace.USER_TALK));
+        ((namespace == Namespace.USER) || (namespace == Namespace.USER_TALK));
   }
 
   /**
@@ -473,9 +473,8 @@ public class Page implements Comparable<Page> {
     if (articlePageName == null) {
       return null;
     }
-    Page articlePage = DataManager.createSimplePage(
+    return DataManager.createSimplePage(
         getWikipedia(), articlePageName, null, null, null);
-    return articlePage;
   }
 
   /**
@@ -493,14 +492,14 @@ public class Page implements Comparable<Page> {
     if (namespaces == null) {
       return null;
     }
-    if (Namespace.MAIN_TALK == namespace.intValue()) {
+    if (Namespace.MAIN_TALK == namespace) {
       int colonIndex = title.indexOf(':');
       if ((colonIndex >= 0) && (colonIndex + 1 < title.length())) {
         return title.substring(colonIndex + 1);
       }
       return title;
     }
-    Namespace n = wikiConfiguration.getNamespace(namespace.intValue() - 1);
+    Namespace n = wikiConfiguration.getNamespace(namespace - 1);
     int firstColon = title.indexOf(':');
     if ((firstColon >= 0) && (n != null)) {
       return n.getTitle() + ":" + title.substring(firstColon + 1);
@@ -516,9 +515,8 @@ public class Page implements Comparable<Page> {
     if (talkPageName == null) {
       return null;
     }
-    Page talkPage = DataManager.createSimplePage(
+    return DataManager.createSimplePage(
         getWikipedia(), talkPageName, null, null, null);
-    return talkPage;
   }
 
   /**
@@ -535,14 +533,14 @@ public class Page implements Comparable<Page> {
     if (namespaces == null) {
       return null;
     }
-    if (Namespace.MAIN == namespace.intValue()) {
+    if (Namespace.MAIN == namespace) {
       Namespace n = wikiConfiguration.getNamespace(Namespace.MAIN_TALK);
       if (n != null) {
         return n.getTitle() + ":" + title;
       }
       return "Talk:" + title;
     }
-    Namespace n = wikiConfiguration.getNamespace(namespace.intValue() + 1);
+    Namespace n = wikiConfiguration.getNamespace(namespace + 1);
     int firstColon = title.indexOf(':');
     if ((firstColon >= 0) && (n != null)) {
       return n.getTitle() + ":" + title.substring(firstColon + 1);
@@ -555,10 +553,9 @@ public class Page implements Comparable<Page> {
    * @return Subpage.
    */
   public Page getSubPage(String subpage) {
-    Page subPage = DataManager.createSimplePage(
+    return DataManager.createSimplePage(
         getWikipedia(), getTitle() + "/" + subpage,
         null, null, getNamespace());
-    return subPage;
   }
 
   /**
@@ -622,8 +619,7 @@ public class Page implements Comparable<Page> {
    * @return Links to the page (including through redirects).
    */
   public List<Page> getAllLinksToPage() {
-    List<Page> linksHere = getRelatedPages(RelatedPages.LINKS_HERE);
-    List<Page> result = linksHere;
+    List<Page> result = getRelatedPages(RelatedPages.LINKS_HERE);
     boolean originalList = true;
     List<Page> tmpRedirects = getRelatedPages(RelatedPages.REDIRECTS);
     if (tmpRedirects != null) {
@@ -669,12 +665,12 @@ public class Page implements Comparable<Page> {
     List<Page> backlinks = getAllLinksToPage();
     if (backlinks != null) {
       int count = 0;
-      for (int i = 0; i < backlinks.size(); i++) {
-        if (backlinks.get(i).isInMainNamespace()) {
+      for (Page backlink : backlinks) {
+        if (backlink.isInMainNamespace()) {
           count++;
         }
       }
-      return Integer.valueOf(count);
+      return count;
     }
     return null;
   }
@@ -686,12 +682,12 @@ public class Page implements Comparable<Page> {
     List<Page> backlinks = getAllLinksToPage();
     if (backlinks != null) {
       int count = 0;
-      for (int i = 0; i < backlinks.size(); i++) {
-        if (backlinks.get(i).isInTemplateNamespace()) {
+      for (Page backlink : backlinks) {
+        if (backlink.isInTemplateNamespace()) {
           count++;
         }
       }
-      return Integer.valueOf(count);
+      return count;
     }
     return null;
   }
@@ -732,14 +728,14 @@ public class Page implements Comparable<Page> {
     }
     Integer current = null;
     if (getBacklinksCount() != null) {
-      int tmp = getBacklinksCount().intValue();
+      int tmp = getBacklinksCount();
       if (getBacklinksCountInMainNamespace() != null) {
-        tmp -= getBacklinksCountInMainNamespace().intValue();
+        tmp -= getBacklinksCountInMainNamespace();
       }
       if (getBacklinksCountInTemplateNamespace() != null) {
-        tmp -= getBacklinksCountInTemplateNamespace().intValue();
+        tmp -= getBacklinksCountInTemplateNamespace();
       }
-      current = Integer.valueOf(tmp);
+      current = tmp;
     }
     backLinksOtherProgression.setCurrent(current);
     backLinksOtherProgression.setGoal(Optional.ofNullable(comment).map(PageComment::getMaxOtherArticles).orElse(null));
@@ -939,9 +935,9 @@ public class Page implements Comparable<Page> {
     }
     Page bl = (Page) o;
     boolean equals = true;
-    equals &= (pageId == null) ? (bl.pageId == null) : pageId.equals(bl.pageId);
-    equals &= (namespace == null) ? (bl.namespace == null) : namespace.equals(bl.namespace);
-    equals &= (title == null) ? (bl.title == null) : title.equals(bl.title);
+    equals &= Objects.equals(pageId, bl.pageId);
+    equals &= Objects.equals(namespace, bl.namespace);
+    equals &= Objects.equals(title, bl.title);
     return equals;
   }
 

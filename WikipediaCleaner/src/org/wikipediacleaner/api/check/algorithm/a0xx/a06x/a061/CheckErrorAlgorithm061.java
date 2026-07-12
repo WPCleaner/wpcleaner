@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a061;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -167,7 +166,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     // Check if error is found
     boolean punctuationFound = false;
     int tmpIndex = previousRef.getEndIndex();
-    boolean separatorFound = (separator.length() == 0);
+    boolean separatorFound = (separator.isEmpty());
     while ((tmpIndex < nextRef.getBeginIndex()) && !punctuationFound) {
       if (PUNCTUATION.indexOf(contents.charAt(tmpIndex)) >= 0) {
         if (!separatorFound && contents.startsWith(separator, tmpIndex)) {
@@ -398,7 +397,7 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
       }
     }
 
-    Collections.sort(refs, new IntervalComparator());
+    refs.sort(new IntervalComparator());
     return refs;
   }
 
@@ -474,9 +473,9 @@ public class CheckErrorAlgorithm061 extends CheckErrorAlgorithmBase {
     }
 
     tmp = getSpecificProperty(PARAMETER_FORCE_SEPARATOR, true, true, false);
-    forceSeparator = Boolean.valueOf(tmp);
+    forceSeparator = Boolean.parseBoolean(tmp);
 
-    grouper = new PageElementGrouper(",;.\'′’-&", separators, TAG_SEPARATORS);
+    grouper = new PageElementGrouper(",;.'′’-&", separators, TAG_SEPARATORS);
   }
 
   /** Valid separator between consecutive tags */

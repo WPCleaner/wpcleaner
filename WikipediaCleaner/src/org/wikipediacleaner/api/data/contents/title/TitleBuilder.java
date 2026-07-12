@@ -59,8 +59,7 @@ public class TitleBuilder {
    * @return Builder initialized with the level and text of the title.
    */
   public static @Nonnull TitleBuilder from(int level, @Nullable String title) {
-    TitleBuilder builder = new TitleBuilder(level, StringUtils.defaultIfEmpty(title, StringUtils.EMPTY));
-    return builder;
+    return new TitleBuilder(level, StringUtils.defaultIfEmpty(title, StringUtils.EMPTY));
   }
 
   /**
@@ -110,7 +109,7 @@ public class TitleBuilder {
     if (trimTitle) {
       sb.append(' ');
       sb.append(title.trim());
-      if (title.trim().length() > 0) {
+      if (!title.trim().isEmpty()) {
         sb.append(' ');
       }
     } else {

@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a573;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -214,9 +215,7 @@ public class CheckErrorAlgorithm573 extends CheckErrorAlgorithmBase {
       for (String[] template : tmpList) {
         if (template.length > 0) {
           Set<String> parameters = ignoreTemplates.computeIfAbsent(template[0], key -> new HashSet<>());
-          for (int index = 1; index < template.length; index++) {
-            parameters.add(template[index]);
-          }
+          parameters.addAll(Arrays.asList(template).subList(1, template.length));
         }
       }
     }

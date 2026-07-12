@@ -247,10 +247,9 @@ public class ActionUpdateWarning implements ActionListener {
   public void actionPerformed(ActionEvent e) {
     if ((e == null) ||
         (e.getSource() == null) ||
-        (!(e.getSource() instanceof Component))) {
+        (!(e.getSource() instanceof Component source))) {
       return;
     }
-    Component source = (Component) e.getSource();
 
     // Display menu
     JPopupMenu menuWarning = new JPopupMenu();
@@ -306,7 +305,7 @@ public class ActionUpdateWarning implements ActionListener {
     // Check configuration
     WPCConfiguration wpcConfig = wiki.getConfiguration();
     String template = wpcConfig.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
+    if ((template == null) || (template.trim().isEmpty())) {
       Utilities.displayMessageForMissingConfiguration(
           parent,
           WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
@@ -349,7 +348,7 @@ public class ActionUpdateWarning implements ActionListener {
     // Check configuration
     WPCConfiguration wpcConfig = wiki.getConfiguration();
     String template = wpcConfig.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
+    if ((template == null) || (template.trim().isEmpty())) {
       Utilities.displayMessageForMissingConfiguration(
           parent,
           WPCConfigurationString.ISBN_WARNING_TEMPLATE.getAttributeName());
@@ -392,7 +391,7 @@ public class ActionUpdateWarning implements ActionListener {
     // Check configuration
     WPCConfiguration wpcConfig = wiki.getConfiguration();
     String template = wpcConfig.getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
+    if ((template == null) || (template.trim().isEmpty())) {
       Utilities.displayMessageForMissingConfiguration(
           parent,
           WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE.getAttributeName());
@@ -435,7 +434,7 @@ public class ActionUpdateWarning implements ActionListener {
     // Check configuration
     WPCConfiguration wpcConfig = wiki.getConfiguration();
     String template = wpcConfig.getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
+    if ((template == null) || (template.trim().isEmpty())) {
       Utilities.displayMessageForMissingConfiguration(
           parent,
           WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE.getAttributeName());
@@ -487,7 +486,7 @@ public class ActionUpdateWarning implements ActionListener {
           tmp = select.toString();
         }
       }
-      if ((tmp == null) || (tmp.trim().length() == 0)) {
+      if ((tmp == null) || (tmp.trim().isEmpty())) {
         Utilities.displayWarning(
             parent,
             GT._T("You must input a page name for updating warnings"),

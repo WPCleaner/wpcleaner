@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.List;
 import java.util.Vector;
 
@@ -39,9 +40,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class LanguageSelectionPanel extends JPanel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -3237387577277476620L;
 
   /**
@@ -57,7 +56,7 @@ public class LanguageSelectionPanel extends JPanel {
   /**
    * Language registry.
    */
-  private LanguageRegistry registry;
+  private final LanguageRegistry registry;
 
   /**
    * Button for selecting the language.
@@ -179,7 +178,7 @@ public class LanguageSelectionPanel extends JPanel {
         new Insets(0, 0, 0, 0), 0, 0);
 
     // Text
-    if ((text != null) && (text.trim().length() > 0)) {
+    if ((text != null) && (!text.trim().isEmpty())) {
       JLabel label = new JLabel(text, SwingConstants.LEFT);
       constraints.gridwidth = 2;
       add(label, constraints);
@@ -273,7 +272,7 @@ public class LanguageSelectionPanel extends JPanel {
     // Common languages
     WPCConfiguration config = wiki.getConfiguration();
     List<String> commonLanguages = config.getStringList(WPCConfigurationStringList.COMMON_LANGUAGES);
-    if ((commonLanguages != null) && (commonLanguages.size() > 0)) {
+    if ((commonLanguages != null) && (!commonLanguages.isEmpty())) {
       for (String commonLanguage : commonLanguages) {
         LanguageRegistry.Language tmpLanguage = registry.getLanguage(commonLanguage);
         if (tmpLanguage != null) {
@@ -409,19 +408,19 @@ public class LanguageSelectionPanel extends JPanel {
   public void actionVariant(String number) {
     JPopupMenu menu = new JPopupMenu();
     int variantNumber = Integer.parseInt(number);
-    String prefix = language.getCode();
+    StringBuilder prefix = new StringBuilder(language.getCode());
     if (script != null) {
-      prefix += "-" + script.getCode();
+      prefix.append("-").append(script.getCode());
     }
     if (region != null) {
-      prefix += "-" + region.getCode();
+      prefix.append("-").append(region.getCode());
     }
     for (int i = 0; i < variantNumber; i++) {
       if (variant.get(i) != null) {
-        prefix += "-" + variant.get(i).getCode();
+        prefix.append("-").append(variant.get(i).getCode());
       }
     }
-    List<LanguageRegistry.Variant> variants = registry.getVariants(prefix);
+    List<LanguageRegistry.Variant> variants = registry.getVariants(prefix.toString());
     for (LanguageRegistry.Variant tmpVariant : variants) {
       JMenuItem item = new JMenuItem(tmpVariant.toString());
       item.setActionCommand(number + ";" + tmpVariant.getCode());

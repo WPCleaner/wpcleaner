@@ -41,7 +41,7 @@ import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 public class Areas {
 
   /** Flag to activate areas checking */
-  private static boolean CHECK_AREAS = false;
+  private static final boolean CHECK_AREAS = false;
 
   /** List of non wiki text areas */
   private final List<Area> areas;
@@ -264,8 +264,7 @@ public class Areas {
           }
           for (int numParam = 0; numParam < template.getParameterCount(); numParam++) {
             String paramName = template.getParameterName(numParam);
-            if ((paramName != null) &&
-                (paramName.length() > 0)) {
+            if ((paramName != null) && (!paramName.isEmpty())) {
               addArea(
                   template.getParameterPipeIndex(numParam),
                   template.getParameterValueStartIndex(numParam));

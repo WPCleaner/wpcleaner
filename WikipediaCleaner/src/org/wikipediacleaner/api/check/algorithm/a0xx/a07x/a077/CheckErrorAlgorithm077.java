@@ -83,7 +83,7 @@ public class CheckErrorAlgorithm077 extends CheckErrorAlgorithmBase {
             int lastIndex = 0;
             for (PageElementTag smallTag : smallTags) {
               if (smallTag.getBeginIndex() > lastIndex) {
-                replacement.append(description.substring(lastIndex, smallTag.getBeginIndex()));
+                replacement.append(description, lastIndex, smallTag.getBeginIndex());
               }
               lastIndex = smallTag.getEndIndex();
             }

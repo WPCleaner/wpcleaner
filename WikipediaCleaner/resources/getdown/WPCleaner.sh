@@ -43,7 +43,7 @@
 # one parameter per line. For example, to allow 8G of RAM, the line would read:
 #   -Xmx=8192M
 
-JAVA_APP_DIR="$(cd "$(dirname "$0")"; pwd -P)"
+JAVA_APP_DIR="$(cd "$(dirname "$0")" || exit; pwd -P)"
 JAVA_LIB_DIR="${JAVA_APP_DIR}/libs"
 cd "$JAVA_APP_DIR" || ( echo "Unable to open install directory." >&2; exit 1; )
 
@@ -54,8 +54,8 @@ if [ -f credentials.txt ]; then
 fi
 
 case $# in
-  0) java ${JAVA_PARAMS}
+  0) java "${JAVA_PARAMS}"
   ;;
-  *) java ${JAVA_PARAMS} $@
+  *) java "${JAVA_PARAMS}" "$@"
   ;;
 esac

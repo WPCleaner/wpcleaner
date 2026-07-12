@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a060;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -165,16 +166,10 @@ public class CheckErrorAlgorithm060 extends CheckErrorAlgorithmBase {
     if (tmp != null) {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       if (tmpList != null) {
-        for (String tmpElement[] : tmpList) {
+        for (String[] tmpElement : tmpList) {
           String templateName = Page.normalizeTitle(tmpElement[0]);
-          Set<String> parameters = ignoreTemplates.get(templateName);
-          if (parameters == null) {
-            parameters = new HashSet<>();
-            ignoreTemplates.put(templateName, parameters);
-          }
-          for (int elementNum = 1; elementNum < tmpElement.length; elementNum++) {
-            parameters.add(tmpElement[elementNum]);
-          }
+          Set<String> parameters = ignoreTemplates.computeIfAbsent(templateName, k -> new HashSet<>());
+          parameters.addAll(Arrays.asList(tmpElement).subList(1, tmpElement.length));
         }
       }
     }

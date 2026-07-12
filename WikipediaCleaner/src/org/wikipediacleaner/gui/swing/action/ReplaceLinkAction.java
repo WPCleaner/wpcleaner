@@ -29,7 +29,6 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 /**
  * An action listener for replacing internal links.
  */
-@SuppressWarnings("serial")
 public class ReplaceLinkAction extends TextAction {
 
   private final String oldTitle;
@@ -113,13 +112,13 @@ public class ReplaceLinkAction extends TextAction {
     if ((localElement != null) &&
         (localTextPane != null) &&
         (localNewTitle != null) &&
-        (localNewTitle.length() > 0)) {
+        (!localNewTitle.isEmpty())) {
       localTextPane.setCaretPosition(MWPaneFormatter.getUUIDStartOffset(localTextPane, localElement));
       localTextPane.moveCaretPosition(MWPaneFormatter.getUUIDEndOffet(localTextPane, localElement));
       String newText = null;
       if ((localText != null) &&
-          (localText.length() > 0) &&
-          (localNewTitle.length() > 0) &&
+          (!localText.isEmpty()) &&
+          (!localNewTitle.isEmpty()) &&
           (localText.charAt(0) != localNewTitle.charAt(0)) &&
           (Character.toUpperCase(localText.charAt(0)) == Character.toUpperCase(localNewTitle.charAt(0)))) {
         newText = "[[" + localText.charAt(0) + localNewTitle.substring(1) + "]]";
@@ -142,8 +141,8 @@ public class ReplaceLinkAction extends TextAction {
       JTextPane localTextPane) {
     if ((localElement == null) ||
         (localTextPane == null) ||
-        (localNewTitle == null) || (localNewTitle.length() == 0) ||
-        (localText == null) || (localText.length() == 0)) {
+        (localNewTitle == null) || (localNewTitle.isEmpty()) ||
+        (localText == null) || (localText.isEmpty())) {
       return;
     }
 
@@ -158,7 +157,7 @@ public class ReplaceLinkAction extends TextAction {
     String text2 = localText.substring(1);
     String originalNewTitle = localNewTitle;
     if (firstCharEqual && (localNewTitle.charAt(0) != localText.charAt(0))) {
-      localNewTitle = "" + localText.charAt(0) + title2;
+      localNewTitle = localText.charAt(0) + title2;
     }
 
     // Check for equality between title and text

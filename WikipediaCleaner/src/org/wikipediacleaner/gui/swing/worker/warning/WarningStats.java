@@ -27,7 +27,7 @@ public class WarningStats {
   /**
    * List of updated pages.
    */
-  private List<Page> updatedPages;
+  private final List<Page> updatedPages;
 
   /**
    * Count of warnings that have been removed.

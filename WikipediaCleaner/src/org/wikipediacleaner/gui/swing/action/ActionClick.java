@@ -9,6 +9,7 @@
 package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 
 import javax.swing.AbstractAction;
 import javax.swing.AbstractButton;
@@ -19,9 +20,7 @@ import javax.swing.AbstractButton;
  */
 public class ActionClick extends AbstractAction {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -1854239918495666556L;
 
   /**

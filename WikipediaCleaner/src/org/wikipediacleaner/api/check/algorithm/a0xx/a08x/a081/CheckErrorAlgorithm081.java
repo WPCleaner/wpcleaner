@@ -97,8 +97,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze tags having the same group and value
-    List<ContentsElement> referencesElements = new ArrayList<>();
-    referencesElements.addAll(analysis.getTags(WikiTagType.REFERENCES));
+    List<ContentsElement> referencesElements = new ArrayList<>(analysis.getTags(WikiTagType.REFERENCES));
     referenceTemplates.forEach(referencesTemplate -> referencesElements.addAll(analysis.getTemplates(referencesTemplate[0])));
     List<String> addedNames = new ArrayList<>();
     boolean result = false;
@@ -190,7 +189,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     if (nameValue == null) {
       errorResult.addText(GT._T("Tag is unnamed"));
       automatic = true;
-    } else if (selectedName.equals(nameValue)) {
+    } else if (Objects.equals(selectedName, nameValue)) {
       errorResult.addText(GT._T("Both tags have already the same name"));
       automatic = true;
     } else {
@@ -239,13 +238,13 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     List<PageElementExternalLink> links = analysis.getExternalLinks().stream()
         .filter(link -> link.getBeginIndex() >= valueBeginIndex)
         .filter(link -> link.getEndIndex() <= valueEndIndex)
-        .collect(Collectors.toList());
+        .toList();
 
     // Find templates in the reference tag
     List<PageElementTemplate> templates = analysis.getTemplates().stream()
         .filter(template -> template.getBeginIndex() >= valueBeginIndex)
         .filter(template -> template.getEndIndex() <= valueEndIndex)
-        .collect(Collectors.toList());
+        .toList();
 
     // Register error
     CheckErrorResult errorResult = createCheckErrorResult(
@@ -262,15 +261,15 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     List<TextProvider> providers = new ArrayList<>();
     links
         .stream()
-        .map(link -> link.getLink())
-        .map(link -> new TextProviderUrlTitle(link))
-        .forEach(provider -> providers.add(provider));
+        .map(PageElementExternalLink::getLink)
+        .map(TextProviderUrlTitle::new)
+        .forEach(providers::add);
     links.stream()
-        .filter(link -> link.hasSquare())
-        .filter(link -> link.getText() != null)
-        .map(link -> link.getText())
-        .map(text -> new SimpleTextProvider(text))
-        .forEach(provider -> providers.add(provider));
+        .filter(PageElementExternalLink::hasSquare)
+        .map(PageElementExternalLink::getText)
+        .filter(Objects::nonNull)
+        .map(SimpleTextProvider::new)
+        .forEach(providers::add);
     List<TextProvider> templateTextProviders = new ArrayList<>();
     for (PageElementTemplate template : templates) {
       TemplateConfiguration config = configurationByTemplateName.get(template.getTemplateName());
@@ -285,7 +284,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
         .flatMap(Collection::stream)
         .filter(text -> (text != null) && !text.isEmpty())
         .map(this::cleanName)
-        .filter(text -> text != null)
+        .filter(Objects::nonNull)
         .findFirst();
     if (optionalName.isPresent()) {
       final String suggestedName = optionalName.get();
@@ -375,10 +374,10 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   private String getOpenRefTag(String groupName, String tagName, String value) {
     TagBuilder builder = TagBuilder.from(WikiTagType.REF, TagFormat.OPEN);
-    if ((groupName != null) && (groupName.trim().length() > 0)) {
+    if ((groupName != null) && (!groupName.trim().isEmpty())) {
       builder.addAttribute("group", groupName.trim());
     }
-    if ((tagName != null) && (tagName.trim().length() > 0)) {
+    if ((tagName != null) && (!tagName.trim().isEmpty())) {
       builder.addAttribute("name", tagName.trim());
     }
     return builder.toString();
@@ -394,10 +393,10 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
    */
   private String getClosedRefTag(String groupName, String tagName, String value) {
     CompleteTagBuilder builder = CompleteTagBuilder.from(WikiTagType.REF, StringUtils.trim(value));
-    if ((groupName != null) && (groupName.trim().length() > 0)) {
+    if ((groupName != null) && (!groupName.trim().isEmpty())) {
       builder.addAttribute("group", groupName.trim());
     }
-    if ((tagName != null) && (tagName.trim().length() > 0)) {
+    if ((tagName != null) && (!tagName.trim().isEmpty())) {
       builder.addAttribute("name", tagName.trim());
     }
     return builder.toString();
@@ -464,7 +463,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
     tmp = getSpecificProperty(PARAMETER_AUTOMATIC_TITLE, true, true, false);
     automaticTitle = false;
     if (tmp != null) {
-      automaticTitle = Boolean.valueOf(tmp);
+      automaticTitle = Boolean.parseBoolean(tmp);
     }
 
     tmp = getSpecificProperty(PARAMETER_NAME_PREFIX, true, true, false);
@@ -483,7 +482,7 @@ public class CheckErrorAlgorithm081 extends CheckErrorAlgorithmBase {
   private String namePrefix = "";
 
   /** Hint for a maximum length of the reference name */
-  private int maxLength = Integer.MAX_VALUE;
+  private final int maxLength = Integer.MAX_VALUE;
 
   /** Configuration by template */
   private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();

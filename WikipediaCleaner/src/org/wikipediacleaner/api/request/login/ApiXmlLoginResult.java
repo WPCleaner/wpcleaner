@@ -12,7 +12,6 @@ import java.util.Map;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
 import org.jdom2.filter.Filters;
-import org.jdom2.input.JDOMParseException;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
 import org.wikipediacleaner.api.APIException;
@@ -48,17 +47,12 @@ public class ApiXmlLoginResult extends ApiXmlResult implements ApiLoginResult {
   public LoginResult executeLogin(
       Map<String, String> properties)
           throws APIException {
-    try {
-      LoginResult result = constructLogin(getRoot(properties, 1));
-      if ((result != null) && (result.isTokenNeeded())) {
-        properties.put(ApiLoginRequest.PROPERTY_TOKEN, result.getDetails());
-        result = constructLogin(getRoot(properties, 1));
-      }
-      return result;
-    } catch (JDOMParseException e) {
-      log.error("Exception in MediaWikiAPI.login()", e);
-      throw new APIException("Couldn't login");
+    LoginResult result = constructLogin(getRoot(properties, 1));
+    if ((result != null) && (result.isTokenNeeded())) {
+      properties.put(ApiLoginRequest.PROPERTY_TOKEN, result.getDetails());
+      result = constructLogin(getRoot(properties, 1));
     }
+    return result;
   }
 
   /**

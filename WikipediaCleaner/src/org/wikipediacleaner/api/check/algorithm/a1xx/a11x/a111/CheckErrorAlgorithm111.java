@@ -53,7 +53,7 @@ public class CheckErrorAlgorithm111 extends CheckErrorAlgorithmBase {
     // Analyzing text for <ref> tags
     PageElementTag lastRefTag = null;
     List<PageElementTag> refTags = analysis.getTags(WikiTagType.REF);
-    if ((refTags != null) && (refTags.size() > 0)) {
+    if ((refTags != null) && (!refTags.isEmpty())) {
       for (int numTag = refTags.size() - 1; (numTag >= 0) && (lastRefTag == null); numTag--) {
         boolean usefulRef = true;
         PageElementTag refTag = refTags.get(numTag);

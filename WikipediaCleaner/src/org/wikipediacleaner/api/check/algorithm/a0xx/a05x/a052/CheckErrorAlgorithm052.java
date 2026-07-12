@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a05x.a052;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -347,9 +348,7 @@ public class CheckErrorAlgorithm052 extends CheckErrorAlgorithmBase {
             Set<String> parameters = ignoreTemplates.computeIfAbsent(
                 Page.normalizeTitle(tmpElement[0]),
                 k -> new HashSet<>());
-            for (int elementNum = 1; elementNum < tmpElement.length; elementNum++) {
-              parameters.add(tmpElement[elementNum]);
-            }
+            parameters.addAll(Arrays.asList(tmpElement).subList(1, tmpElement.length));
           }
         }
       }

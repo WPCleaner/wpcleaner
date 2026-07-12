@@ -71,7 +71,7 @@ public class BasicWorker extends SwingWorker implements MediaWikiListener {
    */
   public boolean shouldContinue() {
     if (timeLimit != null) {
-      if (System.currentTimeMillis() > timeLimit.longValue()) {
+      if (System.currentTimeMillis() > timeLimit) {
         return false;
       }
     }

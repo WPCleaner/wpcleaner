@@ -24,5 +24,5 @@ public interface RecentChangesListener {
    * @param rc Recent changes.
    * @param currentTime Current time.
    */
-  public void recentChanges(List<RecentChange> rc, Date currentTime);
+  void recentChanges(List<RecentChange> rc, Date currentTime);
 }

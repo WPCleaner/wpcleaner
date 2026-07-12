@@ -165,7 +165,7 @@ public abstract class CheckErrorAlgorithmHtmlNamedEntities extends CheckErrorAlg
           shouldReplaceAutomatically(analysis, ampersandIndex, htmlCharacter));
       if (endIndex > colonIndex + 1) {
         errorResult.addReplacement(
-            "" + htmlCharacter.getValue() +
+            htmlCharacter.getValue() +
             contents.substring(colonIndex + 1, endIndex));
       }
       if (!useSemiColon()) {

@@ -79,19 +79,17 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     if (!e.isPopupTrigger()) {
       return;
     }
-    if (!(e.getComponent() instanceof JList)) {
+    if (!(e.getComponent() instanceof JList list)) {
       return;
     }
-    JList list = (JList) e.getComponent();
     int position = list.locationToIndex(e.getPoint());
     if (position < 0) {
       return;
     }
     Object object = list.getModel().getElementAt(position);
-    if (!(object instanceof CheckErrorPage)) {
+    if (!(object instanceof CheckErrorPage error)) {
       return;
     }
-    CheckErrorPage error = (CheckErrorPage) object;
     CheckErrorAlgorithm algorithm = error.getAlgorithm();
 
     // Menu name
@@ -103,10 +101,10 @@ public class CheckErrorPageListPopupListener extends MouseAdapter {
     String[] fixes = algorithm.getGlobalFixes();
     if ((fixes != null) && (fixes.length > 0)) {
       menu.addSeparator(popup);
-      for (int i = 0; i < fixes.length; i++) {
-        menuItem = new JMenuItem(fixes[i]);
+      for (String fix : fixes) {
+        menuItem = new JMenuItem(fix);
         ActionListener action = new CheckErrorGlobalFixAction(
-            algorithm, fixes[i], error.getPage(), textComponent, button);
+            algorithm, fix, error.getPage(), textComponent, button);
         menuItem.addActionListener(action);
         popup.add(menuItem);
       }

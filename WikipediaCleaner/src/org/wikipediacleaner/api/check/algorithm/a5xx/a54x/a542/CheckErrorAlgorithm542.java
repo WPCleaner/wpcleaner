@@ -59,7 +59,7 @@ public class CheckErrorAlgorithm542 extends CheckErrorAlgorithmBase {
 
       // Group tags separated only by punctuation characters
       int firstTagIndex = tagIndex;
-      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, ",;.\'", separator);
+      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, ",;.'", separator);
       tagIndex = lastTagIndex + 1;
 
       // Check for empty ref tags in the group

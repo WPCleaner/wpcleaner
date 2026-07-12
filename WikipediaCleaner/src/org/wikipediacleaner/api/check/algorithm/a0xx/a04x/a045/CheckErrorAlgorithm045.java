@@ -68,11 +68,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
     Map<String, List<PageElementLanguageLink>> groupedLinks = new HashMap<>();
     for (PageElementLanguageLink link : links) {
       String index = link.getLanguage() + ":" + link.getLink();
-      List<PageElementLanguageLink> groupLink = groupedLinks.get(index);
-      if (groupLink == null) {
-        groupLink = new ArrayList<>();
-        groupedLinks.put(index, groupLink);
-      }
+      List<PageElementLanguageLink> groupLink = groupedLinks.computeIfAbsent(index, k -> new ArrayList<>());
       groupLink.add(link);
     }
 
@@ -168,7 +164,7 @@ public class CheckErrorAlgorithm045 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

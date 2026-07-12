@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm507 extends CheckErrorAlgorithmBase {
         Parameter description = galleryTag.getParameter("caption");
         if ((description == null) ||
             (description.getTrimmedValue() == null) ||
-            (description.getTrimmedValue().length() == 0)) {
+            (description.getTrimmedValue().isEmpty())) {
           if (errors == null) {
             return true;
           }

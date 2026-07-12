@@ -26,7 +26,7 @@ public interface HttpServer {
    * @param manager Response manager.
    * @throws APIException Exception thrown by the API.
    */
-  public void sendPost(
+  void sendPost(
       String              path,
       Map<String, String> properties,
       ResponseManager     manager) throws APIException;
@@ -38,12 +38,12 @@ public interface HttpServer {
    * @param manager Response manager.
    * @throws APIException Exception thrown by the API.
    */
-  public void sendGet(
+  void sendGet(
       String          path,
       ResponseManager manager) throws APIException;
 
   /**
    * @return Base URL.
    */
-  public String getBaseUrl();
+  String getBaseUrl();
 }

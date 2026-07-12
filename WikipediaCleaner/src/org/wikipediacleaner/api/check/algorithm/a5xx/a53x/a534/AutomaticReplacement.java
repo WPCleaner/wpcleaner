@@ -68,7 +68,7 @@ class AutomaticReplacement {
   /**
    * Extra characters that can be added to the parameter
    */
-  private static String EXTRA_CHARACTERS = "abcdefghijklmnopqrstuvwxyz=";
+  private static final String EXTRA_CHARACTERS = "abcdefghijklmnopqrstuvwxyz=";
 
   /**
    * @param initialText Initial text.
@@ -232,7 +232,7 @@ class AutomaticReplacement {
                   alias.substring(0, variablePos) +
                   initialText.substring(0, countNumeric) +
                   alias.substring(variablePos + 2);
-              boolean automatic = (countNumeric > 2) && (countNumeric < 4);
+              boolean automatic = countNumeric == 3;
               automatic |= (countNumeric == 2) && (suffix.length() >= 2);
               return new AutomaticReplacement(
                   initialText, ImageMagicWordType.IMG_WIDTH, newText,
@@ -259,7 +259,7 @@ class AutomaticReplacement {
       for (int letter = 0; letter < EXTRA_CHARACTERS.length(); letter++) {
         modified.setLength(0);
         if (letterIndex > 0) {
-          modified.append(initialText.substring(0, letterIndex));
+          modified.append(initialText, 0, letterIndex);
         }
         modified.append(EXTRA_CHARACTERS.charAt(letter));
         if (letterIndex < initialText.length()) {
@@ -275,7 +275,7 @@ class AutomaticReplacement {
       for (int letter = 0; letter < EXTRA_CHARACTERS.length(); letter++) {
         modified.setLength(0);
         if (letterIndex > 0) {
-          modified.append(initialText.substring(0, letterIndex));
+          modified.append(initialText, 0, letterIndex);
         }
         modified.append(EXTRA_CHARACTERS.charAt(letter));
         if (letterIndex < initialText.length()) {
@@ -291,7 +291,7 @@ class AutomaticReplacement {
       if (variablePos > 1) {
         modified.setLength(0);
         if (letterIndex > 0) {
-          modified.append(initialText.substring(0, letterIndex));
+          modified.append(initialText, 0, letterIndex);
         }
         if (letterIndex + 1 < initialText.length()) {
           modified.append(initialText.substring(letterIndex + 1));

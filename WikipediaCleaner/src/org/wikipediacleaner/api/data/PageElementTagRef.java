@@ -95,7 +95,7 @@ public final class PageElementTagRef {
   }
 
   private static String formatGroupName(final String groupName) {
-    if ((groupName == null) || (groupName.trim().length() == 0)) {
+    if ((groupName == null) || (groupName.trim().isEmpty())) {
       return null;
     }
     return groupName.trim();

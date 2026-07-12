@@ -122,7 +122,7 @@ public class UnknownParameterWarningProcessor extends WarningProcessor {
               .replaceAll("\\|", "&#124;")
               .replaceAll("\\}", "&#125;")
               .replaceAll("\\~", "&#126;")
-              .replaceAll("\n", "\u21b5")
+              .replace("\n", "\u21b5")
               .trim());
           elements.add(chapterName);
         }

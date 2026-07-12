@@ -49,7 +49,7 @@ public class CheckErrorAlgorithm505 extends CheckErrorAlgorithmBase {
     boolean result = false;
     for (PageElementImage image : images) {
       String alt = image.getAlternateDescription();
-      if ((alt == null) || (alt.trim().length() == 0)) {
+      if ((alt == null) || (alt.trim().isEmpty())) {
         if (errors == null) {
           return true;
         }

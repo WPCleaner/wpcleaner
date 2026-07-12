@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
@@ -32,11 +33,11 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class GoToPageRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 9192058472932969543L;
 
   /** Maps of all the buttons. */
-  private HashMap<Object, JButton> buttons;
+  private final HashMap<Object, JButton> buttons;
 
   /** Wiki */
   private final EnumWikipedia wiki;

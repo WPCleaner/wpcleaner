@@ -14,6 +14,7 @@ import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
 import java.io.File;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -56,7 +57,7 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class CWToolsPanel extends BotToolsPanel {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = -8468890591813838957L;
 
   /** Configure if page that couldn't be fixed should be analyzed */
@@ -465,9 +466,9 @@ public class CWToolsPanel extends BotToolsPanel {
     List<CheckErrorAlgorithm> algorithms = new ArrayList<>();
     if ((parts != null) && (parts.length > 0)) {
       String[] elements = parts[0].split("\\,");
-      for (int i = 0; i < elements.length; i++) {
+      for (String element : elements) {
         try {
-          int errorNumber = Integer.parseInt(elements[i]);
+          int errorNumber = Integer.parseInt(element);
           CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
               window.getWiki(), errorNumber);
           if (algorithm != null) {
@@ -482,9 +483,9 @@ public class CWToolsPanel extends BotToolsPanel {
     algorithms.clear();
     if ((parts != null) && (parts.length > 1)) {
       String[] elements = parts[1].split("\\,");
-      for (int i = 0; i < elements.length; i++) {
+      for (String element : elements) {
         try {
-          int errorNumber = Integer.parseInt(elements[i]);
+          int errorNumber = Integer.parseInt(element);
           CheckErrorAlgorithm algorithm = CheckErrorAlgorithms.getAlgorithm(
               window.getWiki(), errorNumber);
           if (algorithm != null) {

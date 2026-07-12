@@ -89,7 +89,7 @@ public class CheckErrorAlgorithm543 extends CheckErrorAlgorithmBase {
           while ((tmpIndex < link.getEndIndex()) && (contents.charAt(tmpIndex) == ' ')) {
             tmpIndex++;
           }
-          if ((prefix.length() > 0) &&
+          if ((!prefix.isEmpty()) &&
               (contents.startsWith(prefix, tmpIndex))) {
             hasPipe = true;
             newStartIndex = tmpIndex;

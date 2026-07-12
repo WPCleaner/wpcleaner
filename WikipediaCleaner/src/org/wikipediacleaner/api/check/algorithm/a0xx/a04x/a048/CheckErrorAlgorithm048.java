@@ -81,7 +81,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       return false;
     }
     Integer namespace = analysis.getPage().getNamespace();
-    if ((namespace != null) && (namespace.intValue() == Namespace.USER_TALK)) {
+    if ((namespace != null) && (namespace == Namespace.USER_TALK)) {
       return false;
     }
 
@@ -213,7 +213,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
       String anchor = link.getAnchor();
       if ((anchor != null) &&
-          (anchor.trim().length() > 0)) {
+          (!anchor.trim().isEmpty())) {
         boolean automatic = true;
         if (anchor.trim().startsWith("cite") ||
             anchor.trim().startsWith("fn") ||
@@ -222,7 +222,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
           automatic = false;
         }
         if ((link.getText() == null) ||
-            (link.getText().trim().length() == 0)) {
+            (link.getText().trim().isEmpty())) {
           automatic = false;
           String replacement = InternalLinkBuilder.from(null)
               .withAnchor(anchor)
@@ -274,7 +274,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
             WPCConfigurationString.APOSTROPHE_TEMPLATE);
         if (apostropheTemplate != null) {
           errorResult.addReplacement(
-              TemplateBuilder.from(apostropheTemplate).toString() +
+              TemplateBuilder.from(apostropheTemplate) +
               "'''" + link.getDisplayedText() + "'''");
         }
       }
@@ -297,7 +297,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {
@@ -320,7 +320,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
     int firstTitle = 0;
     if (fixName.equals(globalFixes[0])) {
       Collection<PageElementTitle> titles = analysis.getTitles();
-      if ((titles != null) && (titles.size() > 0)) {
+      if ((titles != null) && (!titles.isEmpty())) {
         firstTitle = titles.iterator().next().getBeginIndex();
       } else {
         firstTitle = contents.length();
@@ -343,13 +343,13 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
           if ((previousCR > tagImagemap.getEndIndex()) &&
               (contents.charAt(nextCR) == '\n')) {
             if (previousCR > currentIndex) {
-              newContents.append(contents.substring(currentIndex, previousCR));
+              newContents.append(contents, currentIndex, previousCR);
               currentIndex = nextCR;
             }
           }
         } else {
           if (link.getBeginIndex() > currentIndex) {
-            newContents.append(contents.substring(currentIndex, link.getBeginIndex()));
+            newContents.append(contents, currentIndex, link.getBeginIndex());
           }
           if ((currentIndex == 0) && (link.getBeginIndex() < firstTitle)) {
             newContents.append("'''");
@@ -408,9 +408,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
       List<String[]> tmpList = WPCConfiguration.convertPropertyToStringArrayList(tmp);
       for (String[] line : tmpList) {
         if (line.length > 0) {
-          for (String template : group.getTemplateNames(line[0])) {
-            ignoredTemplates.add(template);
-          }
+          ignoredTemplates.addAll(group.getTemplateNames(line[0]));
         }
       }
     }
@@ -419,7 +417,7 @@ public class CheckErrorAlgorithm048 extends CheckErrorAlgorithmBase {
   /** Flag to report also in image maps */
   private boolean imagemap = false;
 
-  private Set<String> ignoredTemplates = new HashSet<>();
+  private final Set<String> ignoredTemplates = new HashSet<>();
 
   /**
    * Build the list of parameters for this algorithm.

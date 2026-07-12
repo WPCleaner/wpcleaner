@@ -162,11 +162,7 @@ public class CheckErrorAlgorithm523 extends CheckErrorAlgorithmBase {
       }
     }
     if (shouldAdd) {
-      List<Element> elements = imagesMap.get(imageName);
-      if (elements == null) {
-        elements = new ArrayList<>();
-        imagesMap.put(imageName, elements);
-      }
+      List<Element> elements = imagesMap.computeIfAbsent(imageName, k -> new ArrayList<>());
       elements.add(new Element(beginIndex, endIndex));
     }
   }

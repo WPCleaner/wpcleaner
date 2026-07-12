@@ -9,6 +9,7 @@ package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Color;
 import java.awt.Component;
+import java.io.Serial;
 
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
@@ -22,6 +23,7 @@ import org.wikipediacleaner.api.data.ProgressionValue;
  */
 public class ProgressionValueCellRenderer extends DefaultTableCellRenderer {
 
+  @Serial
   private static final long serialVersionUID = -6288144000371007974L;
 
   /**
@@ -52,8 +54,7 @@ public class ProgressionValueCellRenderer extends DefaultTableCellRenderer {
       int row, int column) {
     Component component = super.getTableCellRendererComponent(
         table, value, isSelected, hasFocus, row, column);
-    if (value instanceof ProgressionValue) {
-      ProgressionValue progression = (ProgressionValue) value;
+    if (value instanceof ProgressionValue progression) {
       int status = progression.getStatus();
       if (status < 0) {
         if (isSelected) {

@@ -21,7 +21,7 @@ public class CommentBuilder {
 
   /** Text of the comment */
   @Nonnull
-  private String comment;
+  private final String comment;
 
   /** True to have whitespace separators */
   private boolean whitespace;
@@ -41,8 +41,7 @@ public class CommentBuilder {
    * @return Builder initialized with the text of the comment.
    */
   public static @Nonnull CommentBuilder from(@Nullable String comment) {
-    CommentBuilder builder = new CommentBuilder(StringUtils.defaultIfEmpty(comment, StringUtils.EMPTY));
-    return builder;
+    return new CommentBuilder(StringUtils.defaultIfEmpty(comment, StringUtils.EMPTY));
   }
 
   /**
@@ -67,8 +66,8 @@ public class CommentBuilder {
     }
     sb.append(ContentsUtil
         .trimWhitespace(comment)
-        .replaceAll(ContentsComment.START, "< !--")
-        .replaceAll(ContentsComment.END, "-- >"));
+        .replace(ContentsComment.START, "< !--")
+        .replace(ContentsComment.END, "-- >"));
     if ((sb.charAt(sb.length() - 1) != ' ') && whitespace) {
       sb.append(' ');
     }

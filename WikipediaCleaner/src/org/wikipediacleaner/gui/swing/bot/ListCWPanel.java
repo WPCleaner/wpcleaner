@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
 import java.beans.EventHandler;
 import java.io.File;
+import java.io.Serial;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -39,7 +40,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class ListCWPanel extends JPanel {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = -2902740097721237193L;
 
   /** Wiki */

@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.linter;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -34,7 +35,7 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class ActionLinter extends AbstractAction implements ActionListener {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 9098138148697135308L;
 
   /**

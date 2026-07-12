@@ -81,7 +81,6 @@ public class ApiLoginRequest extends ApiRequest {
     if ((connection != null) && (connection.getLoginToken() != null)) {
       properties.put(PROPERTY_TOKEN, connection.getLoginToken());
     }
-    LoginResult loginResult = result.executeLogin(properties);
-    return loginResult;
+    return result.executeLogin(properties);
   }
 }

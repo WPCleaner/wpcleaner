@@ -36,9 +36,9 @@ public class StringCheckerUnauthorizedCharacters implements StringChecker {
   @Override
   public Result checkString(String text) {
     if ((unauthorized == null) ||
-        (unauthorized.length() == 0) ||
+        (unauthorized.isEmpty()) ||
         (text == null) ||
-        (text.length() == 0)) {
+        (text.isEmpty())) {
       return new Result(true, text, null);
     }
     StringBuilder buffer = new StringBuilder(text.length());

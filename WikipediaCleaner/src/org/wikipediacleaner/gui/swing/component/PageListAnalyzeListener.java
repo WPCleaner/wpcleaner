@@ -44,19 +44,17 @@ public class PageListAnalyzeListener extends MouseAdapter {
     if (e.getClickCount() != 2) {
       return;
     }
-    if (!(e.getComponent() instanceof JList)) {
+    if (!(e.getComponent() instanceof JList list)) {
       return;
     }
-    JList list = (JList) e.getComponent();
     int position = list.locationToIndex(e.getPoint());
     if (position < 0) {
       return;
     }
     Object object = list.getModel().getElementAt(position);
-    if (!(object instanceof Page)) {
+    if (!(object instanceof Page page)) {
       return;
     }
-    Page page = (Page) object;
     ArrayList<Page> knownPages = null;
     if ((pageWindow != null) && (pageWindow.getPage() != null)) {
       Page basePage = pageWindow.getPage();

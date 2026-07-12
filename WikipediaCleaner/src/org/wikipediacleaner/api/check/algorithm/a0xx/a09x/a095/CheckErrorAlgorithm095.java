@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a09x.a095;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -187,8 +188,8 @@ public class CheckErrorAlgorithm095 extends CheckErrorAlgorithmBase {
    */
   private boolean isInvalidTarget(PageAnalysis analysis, String target) {
     if ((target == null) ||
-        (target.trim().length() == 0) ||
-        (target.indexOf(":") < 0)) {
+        (target.trim().isEmpty()) ||
+        (!target.contains(":"))) {
       return false;
     }
     Page page = DataManager.createSimplePage(analysis.getWikipedia(), target, null, null, null);
@@ -196,10 +197,10 @@ public class CheckErrorAlgorithm095 extends CheckErrorAlgorithmBase {
     if (namespace == null) {
       return false;
     }
-    if ((namespace.intValue() != Namespace.USER) &&
-        (namespace.intValue() != Namespace.USER_TALK) &&
-        (namespace.intValue() != Namespace.DRAFT) &&
-        (namespace.intValue() != Namespace.DRAFT_TALK)) {
+    if ((namespace != Namespace.USER) &&
+        (namespace != Namespace.USER_TALK) &&
+        (namespace != Namespace.DRAFT) &&
+        (namespace != Namespace.DRAFT_TALK)) {
       return false;
     }
     return true;
@@ -227,9 +228,7 @@ public class CheckErrorAlgorithm095 extends CheckErrorAlgorithmBase {
         for (String[] array : tmpList) {
           if (array.length > 1) {
             Set<String> set = ignoreTemplates.computeIfAbsent(Page.normalizeTitle(array[0]), key -> new HashSet<>());
-            for (int index = 1; index < array.length; index++) {
-              set.add(array[index]);
-            }
+            set.addAll(Arrays.asList(array).subList(1, array.length));
           }
         }
       }

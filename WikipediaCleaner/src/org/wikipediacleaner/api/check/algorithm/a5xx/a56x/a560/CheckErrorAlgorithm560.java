@@ -8,8 +8,6 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a560;
 
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -38,12 +36,7 @@ public class CheckErrorAlgorithm560 extends CheckErrorAlgorithmBase {
   private static final Map<TagType, Map<String, Boolean>> TAGS_MAP;
 
   static {
-    Map<TagType, Map<String, Boolean>> tagsMap = new HashMap<>();
-    Map<String, Boolean> refTagMap = new HashMap<>();
-    refTagMap.put("name", Boolean.TRUE);
-    refTagMap.put("group", Boolean.TRUE);
-    tagsMap.put(WikiTagType.REF, Collections.unmodifiableMap(refTagMap));
-    TAGS_MAP = Collections.unmodifiableMap(tagsMap);
+    TAGS_MAP = Map.of(WikiTagType.REF, Map.of("name", Boolean.TRUE, "group", Boolean.TRUE));
   }
 
   /**

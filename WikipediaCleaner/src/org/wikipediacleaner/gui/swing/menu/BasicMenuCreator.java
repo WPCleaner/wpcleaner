@@ -81,7 +81,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
 
     List<Page> links = page.getRedirects().getLinks();
     if (Utilities.isDesktopSupported()) {
-      if (((links != null) && (links.size() > 0) && showLinks) ||
+      if (((links != null) && (!links.isEmpty()) && showLinks) ||
           page.getRedirects().isRedirect()) {
         int fixedBeginView = 0;
         int fixedEndView = 0;
@@ -100,7 +100,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
               new ActionExternalViewer(
                   wiki, pageTmp.getTitle(), ActionExternalViewer.ACTION_HISTORY));
         }
-        if ((links != null) && (links.size() > 0) && showLinks) {
+        if ((links != null) && (!links.isEmpty()) && showLinks) {
           fixedBeginView += addSeparator(submenuView);
           fixedBeginHistory += addSeparator(submenuHistory);
     
@@ -152,7 +152,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       } else {
         String title = null;
         if ((page.getNamespace() != null) &&
-            (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
+            (page.getNamespace() == Namespace.TEMPLATE)) {
           title = GT._T("Template External Viewer");
         } else {
           title = GT._T("External Viewer");
@@ -161,7 +161,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
             popup, page, title, true,
             new ActionExternalViewer(wiki, page.getTitle()));
         if ((page.getNamespace() != null) &&
-            (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
+            (page.getNamespace() == Namespace.TEMPLATE)) {
           title = GT._T("Template history");
         } else {
           title = GT._T("History");
@@ -193,7 +193,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
     JMenuItem menuItem = null;
     ActionListener action = null;
     List<Page> links = page.getRedirects().getLinks();
-    if (((links != null) && (links.size() > 0)) || page.getRedirects().isRedirect()) {
+    if (((links != null) && (!links.isEmpty())) || page.getRedirects().isRedirect()) {
       int fixedBegin = 0;
       int fixedEnd = 0;
       JMenu submenuAnalyze = new JMenu(GT._T("Analyze"));
@@ -207,7 +207,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
         submenuAnalyze.add(menuItem);
         fixedBegin++;
       }
-      if ((links != null) && (links.size() > 0)) {
+      if ((links != null) && (!links.isEmpty())) {
         fixedBegin += addSeparator(submenuAnalyze);
   
         for (Page p : links) {
@@ -234,7 +234,7 @@ public class BasicMenuCreator extends AbstractMenuCreator {
       addSubmenu(popup, submenuAnalyze, fixedBegin, fixedEnd);
     } else {
       if ((page.getNamespace() != null) &&
-          (page.getNamespace().intValue() == Namespace.TEMPLATE)) {
+          (page.getNamespace() == Namespace.TEMPLATE)) {
         menuItem = new JMenuItem(GT._T("Analyze template"));
       } else {
         menuItem = new JMenuItem(GT._T("Analyze page"));

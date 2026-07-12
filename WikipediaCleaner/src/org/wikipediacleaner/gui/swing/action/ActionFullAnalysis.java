@@ -105,7 +105,7 @@ public class ActionFullAnalysis implements ActionListener {
    */
   public static JButton createButton(
       Component parent,
-      EnumWikipedia wiki, JList<? extends Object> list,
+      EnumWikipedia wiki, JList<?> list,
       List<Page> knownPages, boolean showIcon, boolean useShortcut) {
     JButton button = createInternalButton(showIcon, false, useShortcut);
     button.addActionListener(new ActionFullAnalysis(parent, wiki, list, knownPages));
@@ -126,7 +126,7 @@ public class ActionFullAnalysis implements ActionListener {
    */
   public static JButton addButton(
       Component parent, JToolBar toolbar,
-      EnumWikipedia wiki, JList<? extends Object> list,
+      EnumWikipedia wiki, JList<?> list,
       List<Page> knownPages, boolean showIcon, boolean useShortcut) {
     JButton button = createButton(parent, wiki, list, knownPages, showIcon, useShortcut);
     if ((button != null) && (toolbar != null)) {
@@ -158,7 +158,7 @@ public class ActionFullAnalysis implements ActionListener {
   /**
    * Selected pages in the JList should be analyzed.
    */
-  private final JList<? extends Object> list;
+  private final JList<?> list;
 
   /**
    * Text component containing the page name.
@@ -190,7 +190,7 @@ public class ActionFullAnalysis implements ActionListener {
    * @param list Selected pages should be analyzed.
    * @param knownPages List of known pages.
    */
-  public ActionFullAnalysis(Component parent, EnumWikipedia wiki, JList<? extends Object> list, List<Page> knownPages) {
+  public ActionFullAnalysis(Component parent, EnumWikipedia wiki, JList<?> list, List<Page> knownPages) {
     this.parent = parent;
     this.wiki = wiki;
     this.title = null;
@@ -244,7 +244,7 @@ public class ActionFullAnalysis implements ActionListener {
 
     // Analyze a list of selected pages
     if (list != null) {
-      List<? extends Object> selection = list.getSelectedValuesList();
+      List<?> selection = list.getSelectedValuesList();
       List<Page> pages = new ArrayList<>();
       if (selection != null) {
         for (Object object : selection) {
@@ -270,7 +270,7 @@ public class ActionFullAnalysis implements ActionListener {
           tmp = select.toString();
         }
       }
-      if ((tmp == null) || (tmp.trim().length() == 0)) {
+      if ((tmp == null) || (tmp.trim().isEmpty())) {
         Utilities.displayWarning(
             parent,
             GT._T("You must input a page name for running a full analysis"),
@@ -289,7 +289,6 @@ public class ActionFullAnalysis implements ActionListener {
     // Analyze a single page
     if (title != null) {
       Controller.runFullAnalysis(title, null, wiki);
-      return;
     }
   }
 }

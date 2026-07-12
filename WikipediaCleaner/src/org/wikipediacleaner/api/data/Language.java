@@ -76,7 +76,7 @@ public class Language implements Comparable<Language> {
     if (code1.equals(code2)) {
       return true;
     }
-    if ((code1.length() == 0) || (code2.length() == 0)) {
+    if ((code1.isEmpty()) || (code2.isEmpty())) {
       return false;
     }
     if (code1.length() != code2.length()) {

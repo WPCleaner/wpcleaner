@@ -67,8 +67,7 @@ public class InformationWindow
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof InformationWindow) {
-              InformationWindow info = (InformationWindow) window;
+            if (window instanceof InformationWindow info) {
               info.title = title;
               info.information = information;
               info.html = html;
@@ -76,8 +75,7 @@ public class InformationWindow
           }
           @Override
           public void displayWindow(BasicWindow window) {
-            if (window instanceof InformationWindow) {
-              InformationWindow info = (InformationWindow) window;
+            if (window instanceof InformationWindow info) {
               info.updateInformation();
             }
           }

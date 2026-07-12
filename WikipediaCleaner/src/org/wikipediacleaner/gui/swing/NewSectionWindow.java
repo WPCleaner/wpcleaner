@@ -50,7 +50,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class NewSectionWindow extends BasicWindow {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+  public final static Integer WINDOW_VERSION = 2;
 
   Page page;
   Page articlePage;
@@ -86,8 +86,7 @@ public class NewSectionWindow extends BasicWindow {
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof NewSectionWindow) {
-              NewSectionWindow newSection = (NewSectionWindow) window;
+            if (window instanceof NewSectionWindow newSection) {
               newSection.page = page;
               newSection.articleText = articleText;
               newSection.articlePage = DataManager.getPage(wikipedia, articleTitle, null, null, null);
@@ -180,7 +179,7 @@ public class NewSectionWindow extends BasicWindow {
     constraints.gridy++;
 
     // Article contents
-    if ((articleText != null) && (articleText.length() > 0)) {
+    if ((articleText != null) && (!articleText.isEmpty())) {
       textArticle = new MWPane(getWikipedia(), articlePage, this);
       textArticle.setText(articleText);
       textArticle.setFormatter(new MWPaneBasicFormatter());
@@ -224,7 +223,7 @@ public class NewSectionWindow extends BasicWindow {
   public void actionValidate() {
     String section = textTitle.getText().trim();
     String text = textNewSection.getText().trim();
-    if (("".equals(section)) || ("".equals(text))) {
+    if ((section.isEmpty()) || (text.isEmpty())) {
       return;
     }
     new NewSectionWorker(

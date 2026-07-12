@@ -28,7 +28,7 @@ public interface ApiAbuseFiltersResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeAbuseFilters(
+  boolean executeAbuseFilters(
       Map<String, String> properties,
       List<AbuseFilter> list) throws APIException;
 }

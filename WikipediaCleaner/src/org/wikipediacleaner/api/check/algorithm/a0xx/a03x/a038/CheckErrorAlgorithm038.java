@@ -95,7 +95,7 @@ public class CheckErrorAlgorithm038 extends CheckErrorAlgorithmBase {
           String text = analysis.getContents().substring(
               iTag.getValueBeginIndex(),
               iTag.getValueEndIndex());
-          if ((text != null) && (text.trim().length() > 0)) {
+          if ((text != null) && (!text.trim().isEmpty())) {
             String visibleText = text;
             if (text.length() > 30) {
               visibleText = text.substring(0, 10) + "…" + text.substring(text.length() - 10); 

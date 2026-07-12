@@ -39,10 +39,10 @@ public class PageElementTable extends PageElement {
       int endIndex = 0;
       while (!done && (endIndex < ends.size())) {
         Integer end = ends.get(endIndex);
-        if (end.intValue() > start.intValue()) {
+        if (end > start) {
           PageElementTable table = analyzeTable(
               analysis, tables,
-              start.intValue(), end.intValue());
+              start, end);
           if (table != null) {
             tables.add(table);
             done = true;
@@ -306,7 +306,7 @@ public class PageElementTable extends PageElement {
             int nextIndex = getMeaningfulIndex(analysis, index + 1);
             if ((nextIndex < contents.length()) &&
                 (contents.charAt(nextIndex) == '|')) {
-              list.add(Integer.valueOf(index));
+              list.add(index);
             }
           }
           previousCr = false;
@@ -341,7 +341,7 @@ public class PageElementTable extends PageElement {
             int nextIndex = getMeaningfulIndex(analysis, index + 1);
             if ((nextIndex < contents.length()) &&
                 (contents.charAt(nextIndex) == '}')) {
-              list.add(Integer.valueOf(nextIndex + 1));
+              list.add(nextIndex + 1);
             }
           }
           if (currentChar != ' ') {

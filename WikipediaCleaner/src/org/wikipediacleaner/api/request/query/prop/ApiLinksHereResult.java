@@ -29,7 +29,7 @@ public interface ApiLinksHereResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeLinksHere(
+  boolean executeLinksHere(
       Map<String, String> properties,
       Page page,
       Map<String, List<Page>> lists) throws APIException;

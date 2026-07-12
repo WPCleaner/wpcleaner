@@ -28,7 +28,7 @@ public interface ApiRawWatchlistResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeWatchlistRaw(
+  boolean executeWatchlistRaw(
       Map<String, String> properties,
       List<Page> watchlist) throws APIException;
 }

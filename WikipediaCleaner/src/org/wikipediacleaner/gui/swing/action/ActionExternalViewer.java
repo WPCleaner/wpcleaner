@@ -10,6 +10,7 @@ package org.wikipediacleaner.gui.swing.action;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -29,9 +30,7 @@ import org.wikipediacleaner.utils.ConfigurationValueShortcut;
  */
 public class ActionExternalViewer extends AbstractAction implements ActionListener {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -2178967292945002584L;
 
   /**
@@ -48,7 +47,7 @@ public class ActionExternalViewer extends AbstractAction implements ActionListen
   private static JButton createInternalButton(
       String action,
       boolean showIcon, boolean useShortcut) {
-    if ((action != null) && (ACTION_HISTORY.equals(action))) {
+    if (ACTION_HISTORY.equals(action)) {
       return Utilities.createJButton(
           showIcon ? "gnome-emblem-documents.png" : null,
           EnumImageSize.NORMAL,

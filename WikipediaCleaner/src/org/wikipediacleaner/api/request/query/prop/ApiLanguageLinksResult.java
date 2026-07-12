@@ -25,7 +25,7 @@ public interface ApiLanguageLinksResult extends ApiPropertiesResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean getLanguageLinks(
+  boolean getLanguageLinks(
       Map<String, String> properties,
       Map<String, String> languageLinks) throws APIException;
 }

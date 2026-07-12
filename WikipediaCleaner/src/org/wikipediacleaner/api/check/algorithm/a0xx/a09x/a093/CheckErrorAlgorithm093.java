@@ -27,7 +27,7 @@ public class CheckErrorAlgorithm093 extends CheckErrorAlgorithmBase {
     super("External link with double http://");
   }
 
-  private static String[] possiblePrefixes = {
+  private static final String[] possiblePrefixes = {
     "http://",  "http:/",  "http:",
     "https://", "https:/", "https:",
   };

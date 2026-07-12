@@ -81,8 +81,7 @@ public class PreviewWindow
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof PreviewWindow) {
-              PreviewWindow expand = (PreviewWindow) window;
+            if (window instanceof PreviewWindow expand) {
               expand.pageTitle = page;
               expand.page = DataManager.createSimplePage(wikipedia, page, null, null, null);
               expand.showExpand = showExpand;
@@ -91,8 +90,7 @@ public class PreviewWindow
           }
           @Override
           public void displayWindow(BasicWindow window) {
-            if (window instanceof PreviewWindow) {
-              PreviewWindow expand = (PreviewWindow) window;
+            if (window instanceof PreviewWindow expand) {
               expand.textTitle.setText(page);
               expand.textOriginal.setText(text);
               expand.textOriginal.setCaretPosition(0);

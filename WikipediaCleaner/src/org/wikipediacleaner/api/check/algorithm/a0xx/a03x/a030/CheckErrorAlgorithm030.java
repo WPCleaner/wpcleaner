@@ -65,9 +65,9 @@ public class CheckErrorAlgorithm030 extends CheckErrorAlgorithmBase {
     MagicWord magicWordImgAlt = wiki.getWikiConfiguration().getMagicWordByType(ImageMagicWordType.IMG_ALT);
     for (PageElementImage image : analysis.getImages()) {
       String description = image.getDescription();
-      if ((description == null) || (description.trim().length() == 0)) {
+      if ((description == null) || (description.trim().isEmpty())) {
         String alt = image.getAlternateDescription();
-        if ((alt == null) || (alt.trim().length() == 0)) {
+        if ((alt == null) || (alt.trim().isEmpty())) {
           if (errors == null) {
             return true;
           }

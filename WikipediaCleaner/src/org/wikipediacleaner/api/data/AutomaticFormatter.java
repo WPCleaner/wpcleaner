@@ -89,6 +89,7 @@ public class AutomaticFormatter {
                 for (AlgorithmError.Progress progress : usedAlgorithms) {
                   if (progress.algorithm == algorithm) {
                     shouldAdd = false;
+                    break;
                   }
                 }
                 if (shouldAdd) {
@@ -217,16 +218,16 @@ public class AutomaticFormatter {
         0,
         defaultSortFirst ? beginDefaultSort : beginCategory));
     if (defaultSortFirst) {
-      sb.append(contents.substring(endDefaultSort + delta, beginCategory));
+      sb.append(contents, endDefaultSort + delta, beginCategory);
     }
-    sb.append(contents.substring(beginDefaultSort, endDefaultSort));
+    sb.append(contents, beginDefaultSort, endDefaultSort);
     sb.append("\n");
     if (defaultSortFirst) {
       if (beginCategory < contents.length()) {
         sb.append(contents.substring(beginCategory));
       }
     } else {
-      sb.append(contents.substring(beginCategory, beginDefaultSort));
+      sb.append(contents, beginCategory, beginDefaultSort);
       if (endDefaultSort + delta < contents.length()) {
         sb.append(contents.substring(endDefaultSort + delta));
       }
@@ -261,13 +262,13 @@ public class AutomaticFormatter {
     // Retrieve last title
     int lastTitle = 0;
     List<PageElementTitle> titles = analysis.getTitles();
-    if ((titles != null) && (titles.size() > 0)) {
+    if ((titles != null) && (!titles.isEmpty())) {
       lastTitle = titles.get(titles.size() - 1).getEndIndex();
     }
 
     // Analyze default sort
     List<PageElementFunction> defaultSorts = analysis.getDefaultSorts();
-    if ((defaultSorts != null) && (defaultSorts.size() > 0)) {
+    if ((defaultSorts != null) && (!defaultSorts.isEmpty())) {
       int beginSort = defaultSorts.get(0).getBeginIndex();
       if (beginSort < lastTitle) {
         return contents;
@@ -295,7 +296,7 @@ public class AutomaticFormatter {
 
     // Analyze first category
     List<PageElementCategory> categories = analysis.getCategories();
-    if ((categories == null) || (categories.size() == 0)) {
+    if ((categories == null) || (categories.isEmpty())) {
       return contents;
     }
     int beginCat = categories.get(0).getBeginIndex();
@@ -430,13 +431,11 @@ public class AutomaticFormatter {
       // Update text if needed
       if (ok && ((nbCr < min) || (nbCr > max))) {
         if (lastIndex < previousCategory.getEndIndex()) {
-          sb.append(contents.substring(lastIndex, previousCategory.getEndIndex()));
+          sb.append(contents, lastIndex, previousCategory.getEndIndex());
           lastIndex = previousCategory.getEndIndex();
         }
         nbCr = normalizeValue(nbCr, min, max);
-        for (int i = 0; i < nbCr; i++) {
-          sb.append('\n');
-        }
+        sb.append("\n".repeat(Math.max(0, nbCr)));
         lastIndex = category.getBeginIndex();
       }
     }
@@ -564,11 +563,11 @@ public class AutomaticFormatter {
 
         // Modify contents
         if (lastIndex < begin.getBeginIndex()) {
-          sb.append(contents.substring(lastIndex, beginIndex));
+          sb.append(contents, lastIndex, beginIndex);
           lastIndex = beginIndex;
         }
-        sb.append(contents.substring(end.getEndIndex(), lastElement.getEndIndex()));
-        sb.append(contents.substring(beginIndex, end.getEndIndex()));
+        sb.append(contents, end.getEndIndex(), lastElement.getEndIndex());
+        sb.append(contents, beginIndex, end.getEndIndex());
         lastIndex = lastElement.getEndIndex();
       }
 
@@ -646,7 +645,7 @@ public class AutomaticFormatter {
       String titleValue = title.getTitleNotTrimmed();
       String titleAfter = title.getAfterTitle();
       if ((titleValue != null) &&
-          ((titleAfter == null) || (titleAfter.equals(""))) &&
+          ((titleAfter == null) || (titleAfter.isEmpty())) &&
           (title.getFirstLevel() == title.getSecondLevel())) {
 
         // Count space characters
@@ -665,19 +664,15 @@ public class AutomaticFormatter {
         if ((nbSpaceBefore < min) || (nbSpaceBefore > max) ||
             (nbSpaceAfter < min) || (nbSpaceAfter > max)) {
           if (lastIndex < title.getBeginIndex()) {
-            sb.append(contents.substring(lastIndex, title.getBeginIndex()));
+            sb.append(contents, lastIndex, title.getBeginIndex());
             lastIndex = title.getBeginIndex();
           }
           nbSpaceBefore = normalizeValue(nbSpaceBefore, min, max);
           nbSpaceAfter = normalizeValue(nbSpaceAfter, min, max);
           StringBuilder newTitle = new StringBuilder();
-          for (int i = 0; i < nbSpaceBefore; i++) {
-            newTitle.append(' ');
-          }
+          newTitle.append(" ".repeat(Math.max(0, nbSpaceBefore)));
           newTitle.append(titleValue.trim());
-          for (int i = 0; i < nbSpaceAfter; i++) {
-            newTitle.append(' ');
-          }
+          newTitle.append(" ".repeat(Math.max(0, nbSpaceAfter)));
           sb.append(TitleBuilder
               .from(title.getLevel(), newTitle.toString())
               .withTrimTitle(false)
@@ -711,9 +706,7 @@ public class AutomaticFormatter {
   private static String changeCharacters(
       String contents, int begin, char character, int count, int end) {
     StringBuilder sb = new StringBuilder(contents.substring(0, begin));
-    for (int i = 0; i < count; i++) {
-      sb.append(character);
-    }
+    sb.append(String.valueOf(character).repeat(Math.max(0, count)));
     sb.append(contents.substring(end));
     return sb.toString();
   }
@@ -723,7 +716,7 @@ public class AutomaticFormatter {
    * @return True if option is valid.
    */
   private static boolean isValidCountOption(String option) {
-    if ((option == null) || (option.length() == 0)) {
+    if ((option == null) || (option.isEmpty())) {
       return false;
     }
     int minusIndex = option.indexOf('-');
@@ -754,7 +747,7 @@ public class AutomaticFormatter {
    * @return Minimum number of characters.
    */
   private static int getMinCountOption(String option) {
-    if ((option == null) || (option.length() == 0)) {
+    if ((option == null) || (option.isEmpty())) {
       return 0;
     }
     int minusIndex = option.indexOf('-');
@@ -769,7 +762,7 @@ public class AutomaticFormatter {
    * @return Maximum number of characters.
    */
   private static int getMaxCountOption(String option) {
-    if ((option == null) || (option.length() == 0)) {
+    if ((option == null) || (option.isEmpty())) {
       return Integer.MAX_VALUE;
     }
     int minusIndex = option.indexOf('-');
@@ -789,10 +782,7 @@ public class AutomaticFormatter {
     if (value < min) {
       return min;
     }
-    if (value > max) {
-      return max;
-    }
-    return value;
+    return Math.min(value, max);
   }
 
 }

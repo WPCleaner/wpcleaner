@@ -63,7 +63,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
     String contents = analysis.getContents();
     for (PageElementExternalLink link : links) {
       String text = link.getText();
-      if ((text == null) || (text.trim().length() == 0)) {
+      if ((text == null) || (text.trim().isEmpty())) {
         boolean hasError = false;
         PageElementTag refTag = analysis.getSurroundingTag(WikiTagType.REF, link.getBeginIndex());
         if (link.hasSquare()) {
@@ -94,7 +94,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
             }
             if (endIndex > link.getEndIndex()) {
               String tmp = contents.substring(link.getEndIndex(), endIndex);
-              if (tmp.trim().length() > 0) {
+              if (!tmp.trim().isEmpty()) {
                 suffix = tmp;
               }
             }
@@ -121,7 +121,7 @@ public class CheckErrorAlgorithm079 extends CheckErrorAlgorithmBase {
                     GT._T("What description would you like to use for the external link ?"),
                     descriptionChecker));
           } else {
-            if (suffix.length() > 0) {
+            if (!suffix.isEmpty()) {
               if (link.hasSquare()) {
                 errorResult.addReplacement(PageElementExternalLink.createExternalLink(url, suffix.trim()));
               } else {

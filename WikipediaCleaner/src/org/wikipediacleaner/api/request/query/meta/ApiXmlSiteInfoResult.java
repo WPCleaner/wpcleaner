@@ -16,7 +16,6 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -59,169 +58,160 @@ public class ApiXmlSiteInfoResult extends ApiXmlResult implements ApiSiteInfoRes
   public void executeSiteInformation(
       Map<String, String> properties)
           throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
-      WikiConfiguration wikiConfiguration = getWiki().getWikiConfiguration();
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    WikiConfiguration wikiConfiguration = getWiki().getWikiConfiguration();
 
-      // Retrieve general information
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/general", Filters.element());
-      Element generalNode = xpa.evaluateFirst(root);
-      if (generalNode != null) {
-        wikiConfiguration.setArticlePath(generalNode.getAttributeValue("articlepath"));
-        wikiConfiguration.setMaxArticleSize(generalNode.getAttributeValue("maxarticlesize"));
-        wikiConfiguration.setScript(generalNode.getAttributeValue("script"));
-        wikiConfiguration.setServer(generalNode.getAttributeValue("server"));
-      }
+    // Retrieve general information
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/general", Filters.element());
+    Element generalNode = xpa.evaluateFirst(root);
+    if (generalNode != null) {
+      wikiConfiguration.setArticlePath(generalNode.getAttributeValue("articlepath"));
+      wikiConfiguration.setMaxArticleSize(generalNode.getAttributeValue("maxarticlesize"));
+      wikiConfiguration.setScript(generalNode.getAttributeValue("script"));
+      wikiConfiguration.setServer(generalNode.getAttributeValue("server"));
+    }
 
-      // Retrieve name spaces
-      HashMap<Integer, Namespace> namespaces = null;
-      xpa = XPathFactory.instance().compile(
-          "/api/query/namespaces/ns", Filters.element());
-      List<Element> results = xpa.evaluate(root);
-      Iterator<Element> iter = results.iterator();
-      namespaces = new HashMap<>();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String title = currentNode.getText();
-        String canonical = currentNode.getAttributeValue("canonical");
-        String id = currentNode.getAttributeValue("id");
-        EnumCaseSensitiveness caseSensitiveness = EnumCaseSensitiveness.getCase(currentNode.getAttributeValue("case"));
-        boolean subPages = (currentNode.getAttribute("subpages") != null);
-        Namespace ns = new Namespace(id, title, canonical, caseSensitiveness, subPages);
-        namespaces.put(ns.getId(), ns);
-      }
+    // Retrieve name spaces
+    HashMap<Integer, Namespace> namespaces = null;
+    xpa = XPathFactory.instance().compile(
+        "/api/query/namespaces/ns", Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    Iterator<Element> iter = results.iterator();
+    namespaces = new HashMap<>();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String title = currentNode.getText();
+      String canonical = currentNode.getAttributeValue("canonical");
+      String id = currentNode.getAttributeValue("id");
+      EnumCaseSensitiveness caseSensitiveness = EnumCaseSensitiveness.getCase(currentNode.getAttributeValue("case"));
+      boolean subPages = (currentNode.getAttribute("subpages") != null);
+      Namespace ns = new Namespace(id, title, canonical, caseSensitiveness, subPages);
+      namespaces.put(ns.getId(), ns);
+    }
 
-      // Retrieve name space aliases
-      xpa = XPathFactory.instance().compile(
-          "/api/query/namespacealiases/ns", Filters.element());
-      results = xpa.evaluate(root);
-      iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        Integer nsId = null;
-        try {
-          nsId = Integer.parseInt(currentNode.getAttributeValue("id"));
-          Namespace namespace = namespaces.get(nsId);
-          if (namespace != null) {
-            namespace.addAlias(currentNode.getText());
-          }
-        } catch (NumberFormatException e) {
-          //
+    // Retrieve name space aliases
+    xpa = XPathFactory.instance().compile(
+        "/api/query/namespacealiases/ns", Filters.element());
+    results = xpa.evaluate(root);
+    iter = results.iterator();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      Integer nsId = null;
+      try {
+        nsId = Integer.parseInt(currentNode.getAttributeValue("id"));
+        Namespace namespace = namespaces.get(nsId);
+        if (namespace != null) {
+          namespace.addAlias(currentNode.getText());
         }
+      } catch (NumberFormatException e) {
+        //
       }
+    }
 
-      // Update name space list
-      LinkedList<Namespace> list = new LinkedList<>(namespaces.values());
-      wikiConfiguration.setNamespaces(list);
+    // Update name space list
+    LinkedList<Namespace> list = new LinkedList<>(namespaces.values());
+    wikiConfiguration.setNamespaces(list);
 
-      // Retrieve languages
-      List<Language> languages = new ArrayList<>();
-      xpa = XPathFactory.instance().compile(
-          "/api/query/languages/lang", Filters.element());
-      results = xpa.evaluate(root);
-      iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String code = currentNode.getAttributeValue("code");
-        String name = currentNode.getText();
-        languages.add(new Language(code, name));
+    // Retrieve languages
+    List<Language> languages = new ArrayList<>();
+    xpa = XPathFactory.instance().compile(
+        "/api/query/languages/lang", Filters.element());
+    results = xpa.evaluate(root);
+    iter = results.iterator();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String code = currentNode.getAttributeValue("code");
+      String name = currentNode.getText();
+      languages.add(new Language(code, name));
+    }
+    wikiConfiguration.setLanguages(languages);
+
+    // Retrieve interwikis
+    List<Interwiki> interwikis = new ArrayList<>();
+    xpa = XPathFactory.instance().compile(
+        "/api/query/interwikimap/iw", Filters.element());
+    results = xpa.evaluate(root);
+    iter = results.iterator();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String prefix = currentNode.getAttributeValue("prefix");
+      boolean local = (currentNode.getAttribute("local") != null);
+      String language = currentNode.getAttributeValue("language");
+      String url = currentNode.getAttributeValue("url");
+      interwikis.add(new Interwiki(prefix, local, language, url));
+    }
+    wikiConfiguration.setInterwikis(interwikis);
+
+    // Retrieve magic words
+    List<MagicWord> magicWords = new ArrayList<>();
+    xpa = XPathFactory.instance().compile(
+        "/api/query/magicwords/magicword", Filters.element());
+    results = xpa.evaluate(root);
+    iter = results.iterator();
+    XPathExpression<Element> xpaAlias = XPathFactory.instance().compile(
+        "./aliases/alias", Filters.element());
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String magicWord = currentNode.getAttributeValue("name");
+      List<String> aliases = new ArrayList<>();
+      List<Element> resultsAlias = xpaAlias.evaluate(currentNode);
+      for (Element currentAlias : resultsAlias) {
+        String alias = currentAlias.getText();
+        aliases.add(alias);
       }
-      wikiConfiguration.setLanguages(languages);
+      boolean caseSensitive = (currentNode.getAttribute("case-sensitive") != null);
+      magicWords.add(new MagicWord(magicWord, aliases, caseSensitive));
+    }
+    wikiConfiguration.setMagicWords(magicWords);
 
-      // Retrieve interwikis
-      List<Interwiki> interwikis = new ArrayList<>();
-      xpa = XPathFactory.instance().compile(
-          "/api/query/interwikimap/iw", Filters.element());
-      results = xpa.evaluate(root);
-      iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String prefix = currentNode.getAttributeValue("prefix");
-        boolean local = (currentNode.getAttribute("local") != null);
-        String language = currentNode.getAttributeValue("language");
-        String url = currentNode.getAttributeValue("url");
-        interwikis.add(new Interwiki(prefix, local, language, url));
+    // Retrieve special page aliases
+    Map<String, SpecialPage> specialPages = new HashMap<>();
+    xpa = XPathFactory.instance().compile(
+        "/api/query/specialpagealiases/specialpage", Filters.element());
+    results = xpa.evaluate(root);
+    iter = results.iterator();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String specialPage = currentNode.getAttributeValue("realname");
+      List<String> aliases = new ArrayList<>();
+      List<Element> resultsAlias = xpaAlias.evaluate(currentNode);
+      for (Element currentAlias : resultsAlias) {
+        String alias = currentAlias.getText();
+        aliases.add(alias);
       }
-      wikiConfiguration.setInterwikis(interwikis);
+      specialPages.put(
+          specialPage,
+          new SpecialPage(specialPage, aliases));
+    }
+    wikiConfiguration.setSpecialPages(specialPages);
 
-      // Retrieve magic words
-      List<MagicWord> magicWords = new ArrayList<>();
-      xpa = XPathFactory.instance().compile(
-          "/api/query/magicwords/magicword", Filters.element());
-      results = xpa.evaluate(root);
-      iter = results.iterator();
-      XPathExpression<Element> xpaAlias = XPathFactory.instance().compile(
-          "./aliases/alias", Filters.element());
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String magicWord = currentNode.getAttributeValue("name");
-        List<String> aliases = new ArrayList<>();
-        List<Element> resultsAlias = xpaAlias.evaluate(currentNode);
-        Iterator<Element> iterAlias = resultsAlias.iterator();
-        while (iterAlias.hasNext()) {
-          Element currentAlias = iterAlias.next();
-          String alias = currentAlias.getText();
-          aliases.add(alias);
-        }
-        boolean caseSensitive = (currentNode.getAttribute("case-sensitive") != null);
-        magicWords.add(new MagicWord(magicWord, aliases, caseSensitive));
+    // Retrieve linter configuration
+    List<LinterCategory> linterCategories = new ArrayList<>();
+    xpa = XPathFactory.instance().compile(
+        "/api/query/general/linter/*", Filters.element());
+    results = xpa.evaluate(root);
+    iter = results.iterator();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String level = currentNode.getName();
+      for (Element child : currentNode.getChildren()) {
+        linterCategories.add(new LinterCategory(level, child.getTextTrim()));
       }
-      wikiConfiguration.setMagicWords(magicWords);
+    }
+    wikiConfiguration.setLinterCategories(linterCategories);
 
-      // Retrieve special page aliases
-      Map<String, SpecialPage> specialPages = new HashMap<>();
-      xpa = XPathFactory.instance().compile(
-          "/api/query/specialpagealiases/specialpage", Filters.element());
-      results = xpa.evaluate(root);
-      iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String specialPage = currentNode.getAttributeValue("realname");
-        List<String> aliases = new ArrayList<>();
-        List<Element> resultsAlias = xpaAlias.evaluate(currentNode);
-        Iterator<Element> iterAlias = resultsAlias.iterator();
-        while (iterAlias.hasNext()) {
-          Element currentAlias = iterAlias.next();
-          String alias = currentAlias.getText();
-          aliases.add(alias);
-        }
-        specialPages.put(
-            specialPage,
-            new SpecialPage(specialPage, aliases));
+    // Retrieve extensions
+    xpa = XPathFactory.instance().compile(
+        "/api/query/extensions/ext", Filters.element());
+    results = xpa.evaluate(root);
+    iter = results.iterator();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String name = currentNode.getAttributeValue("name");
+      if ((name != null) && (name.equals("Translate"))) {
+        wikiConfiguration.setTranslatable(true);
       }
-      wikiConfiguration.setSpecialPages(specialPages);
-
-      // Retrieve linter configuration
-      List<LinterCategory> linterCategories = new ArrayList<>();
-      xpa = XPathFactory.instance().compile(
-          "/api/query/general/linter/*", Filters.element());
-      results = xpa.evaluate(root);
-      iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String level = currentNode.getName();
-        for (Element child : currentNode.getChildren()) {
-          linterCategories.add(new LinterCategory(level, child.getTextTrim()));
-        }
-      }
-      wikiConfiguration.setLinterCategories(linterCategories);
-
-      // Retrieve extensions
-      xpa = XPathFactory.instance().compile(
-          "/api/query/extensions/ext", Filters.element());
-      results = xpa.evaluate(root);
-      iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String name = currentNode.getAttributeValue("name");
-        if ((name != null) && (name.equals("Translate"))) {
-          wikiConfiguration.setTranslatable(true);
-        }
-      }
-    } catch (JDOMException e) {
-      log.error("Error loading namespaces", e);
-      throw new APIException("Error parsing XML", e);
     }
   }
 }

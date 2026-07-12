@@ -9,7 +9,6 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a559;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -230,7 +229,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
       }
     }
 
-    Collections.sort(refs, new IntervalComparator());
+    refs.sort(new IntervalComparator());
     return refs;
   }
 
@@ -293,9 +292,7 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_INCORRECT_SEPARATORS, true, false, false);
     if (tmp != null) {
       tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
-      for (String tmpElement : tmpList) {
-        separators.add(tmpElement);
-      }
+      separators.addAll(tmpList);
     }
 
     tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
@@ -310,12 +307,12 @@ public class CheckErrorAlgorithm559 extends CheckErrorAlgorithmBase {
     tmp = getSpecificProperty(PARAMETER_FORCE_IN_TEMPLATES, true, true, false);
     forceInTemplates = false;
     if (tmp != null) {
-      forceInTemplates = Boolean.valueOf(tmp);
+      forceInTemplates = Boolean.parseBoolean(tmp);
     }
 
     referencesTemplates = getWPCConfiguration().getStringArrayList(WPCConfigurationStringList.REFERENCES_TEMPLATES);
 
-    grouper = new PageElementGrouper(",;.\'′’-&", separators, TAG_SEPARATORS);
+    grouper = new PageElementGrouper(",;.'′’-&", separators, TAG_SEPARATORS);
   }
 
   /** Valid separator between consecutive tags */

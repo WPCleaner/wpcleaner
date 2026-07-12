@@ -28,7 +28,7 @@ class ParameterConfiguration {
 
   @Nullable private String nameReplacement;
 
-  @Nonnull private Map<String, ImmutablePair<String, String>> replacementByValue;
+  @Nonnull private final Map<String, ImmutablePair<String, String>> replacementByValue;
 
   public ParameterConfiguration(String parameterName) {
     this.parameterName = parameterName;
@@ -56,7 +56,7 @@ class ParameterConfiguration {
   }
   
   void addReplacementByValue(@Nonnull String value, @Nonnull String newName, @Nonnull String newValue) {
-    replacementByValue.put(value, new ImmutablePair<String, String>(newName, newValue));
+    replacementByValue.put(value, new ImmutablePair<>(newName, newValue));
   }
   
   Optional<ImmutablePair<String, String>> getValueReplacement(@Nonnull String value) {

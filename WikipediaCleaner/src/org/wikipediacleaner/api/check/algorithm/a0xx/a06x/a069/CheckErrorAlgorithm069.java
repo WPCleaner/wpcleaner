@@ -177,7 +177,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
           if ((param != null) &&
               (param.getName() != null) &&
-              (param.getName().trim().length() > 0)) {
+              (!param.getName().trim().isEmpty())) {
             String name = param.getName().trim();
             for (String[] specialValue : specialValues) {
               if ((specialValue.length > 2) &&
@@ -702,8 +702,8 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
                     if (isbnTemplate.length > 2) {
                       String templateName = isbnTemplate[0];
                       String[] params = isbnTemplate[1].split(",");
-                      Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
-                      if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+                      boolean suggested = Boolean.parseBoolean(isbnTemplate[2]);
+                      if ((params.length > 0) && (suggested)) {
                         TemplateBuilder builder = TemplateBuilder.from(templateName);
                         builder.addParam(
                             !"1".equals(params[0]) ? params[0] : null,
@@ -762,7 +762,7 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
           if (slashIndex > 0) {
             target = target.substring(0, slashIndex);
           }
-          target.replaceAll("_", " ");
+          target = target.replace("_", " ");
           if ("BookSources".equals(target) ||
               ((wiki != null) &&
                (wiki.getRight() != null) &&
@@ -794,7 +794,6 @@ public class CheckErrorAlgorithm069 extends CheckErrorAlgorithmISBN {
    * @param initialEndIndex End index of the area where the error is found.
    * @param extraPrefix Text before the ISBN.
    * @param suffix ISBN value
-   * @return Flag indicating if the error was found.
    */
   private void reportError(
       PageAnalysis analysis,

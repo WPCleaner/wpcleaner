@@ -9,7 +9,6 @@
 package org.wikipediacleaner.api.data.contents;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -51,7 +50,7 @@ public class ContentsFinderBuilder<T extends ContentsElement> {
    */
   List<ContentsFinderElement<T>> createFinderElements(boolean useSmallest) {
     List<ContentsFinderElement<T>> result = new ArrayList<>();
-    Collections.sort(elements, comparator);
+    elements.sort(comparator);
     if (useSmallest) {
       fillSmallestFinderElement(result);
     } else {
@@ -70,7 +69,7 @@ public class ContentsFinderBuilder<T extends ContentsElement> {
     for (T element : elements) {
       if (element.getBeginIndex() >= lastEndIndex) {
         if (element.getBeginIndex() > lastEndIndex) {
-          result.add(new ContentsFinderElement<>(lastEndIndex, element.getBeginIndex(), (T) null));
+          result.add(new ContentsFinderElement<>(lastEndIndex, element.getBeginIndex(), null));
         }
         lastEndIndex = element.getEndIndex();
         result.add(new ContentsFinderElement<>(element.getBeginIndex(), lastEndIndex, element));
@@ -88,7 +87,7 @@ public class ContentsFinderBuilder<T extends ContentsElement> {
           result.add(new ContentsFinderElement<>(element.getEndIndex(), previousElement.getEndIndex(), previousElement.getElement()));
         }
       }
-      result.add(new ContentsFinderElement<>(lastEndIndex, Integer.MAX_VALUE, (T) null));
+      result.add(new ContentsFinderElement<>(lastEndIndex, Integer.MAX_VALUE, null));
     }
   }
 
@@ -102,7 +101,7 @@ public class ContentsFinderBuilder<T extends ContentsElement> {
     for (T element : elements) {
       if (element.getBeginIndex() >= lastEndIndex) {
         if (element.getBeginIndex() > lastEndIndex) {
-          result.add(new ContentsFinderElement<>(lastEndIndex, element.getBeginIndex(), (T) null));
+          result.add(new ContentsFinderElement<>(lastEndIndex, element.getBeginIndex(), null));
         }
         lastEndIndex = element.getEndIndex();
         result.add(new ContentsFinderElement<>(element.getBeginIndex(), lastEndIndex, element));
@@ -111,6 +110,6 @@ public class ContentsFinderBuilder<T extends ContentsElement> {
         lastEndIndex = element.getEndIndex();
       }
     }
-    result.add(new ContentsFinderElement<>(lastEndIndex, Integer.MAX_VALUE, (T) null));
+    result.add(new ContentsFinderElement<>(lastEndIndex, Integer.MAX_VALUE, null));
   }
 }

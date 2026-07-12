@@ -292,9 +292,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     // If only one, there's a problem that can already be reported
     if ((formattingArea.getBoldCount() + formattingArea.getItalicCount() == 1) ||
         (formattingArea.getElements().size() == 1)) {
-      for (PageElementFormatting element : formattingArea.getElements()) {
-        reportElements.add(element);
-      }
+      reportElements.addAll(formattingArea.getElements());
       PageElementFormatting.excludeArea(elements, beginArea, endArea);
       return true;
     }
@@ -310,9 +308,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
 
     // If only one there's a problem that can already be reported
     if (formattingArea.getBoldCount() + formattingArea.getItalicCount() == 1) {
-      for (PageElementFormatting element : formattingAnalysis.getElements()) {
-        reportElements.add(element);
-      }
+      reportElements.addAll(formattingAnalysis.getElements());
       PageElementFormatting.excludeArea(elements, beginAnalysis, endAnalysis);
     }
 
@@ -403,9 +399,8 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
     for (ContentsElement surroundingElement : surroundingElements) {
 
       // Report inside a list item
-      if (surroundingElement instanceof PageElementListItem) {
+      if (surroundingElement instanceof PageElementListItem listItem) {
         // NOTE: closeFull=true fixes lines incorrectly when the closing wasn't intended at the end
-        PageElementListItem listItem = (PageElementListItem) surroundingElement;
         if (reportFormattingElement(
             analysis, elements, element, errors,
             listItem.getBeginIndex() + listItem.getDepth(), listItem.getEndIndex(),
@@ -416,8 +411,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside an internal link
-      if (surroundingElement instanceof PageElementInternalLink) {
-        PageElementInternalLink iLink = (PageElementInternalLink) surroundingElement;
+      if (surroundingElement instanceof PageElementInternalLink iLink) {
         if ((iLink.getText() != null) &&
             (element.getIndex() >= iLink.getBeginIndex() + iLink.getTextOffset())) {
           if (reportFormattingElement(
@@ -431,8 +425,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside an image
-      if (surroundingElement instanceof PageElementImage) {
-        PageElementImage image = (PageElementImage) surroundingElement;
+      if (surroundingElement instanceof PageElementImage image) {
         PageElementImage.Parameter paramDesc = image.getDescriptionParameter();
         if (paramDesc != null) {
           if (reportFormattingElement(
@@ -448,8 +441,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside an external link
-      if (surroundingElement instanceof PageElementExternalLink) {
-        PageElementExternalLink eLink = (PageElementExternalLink) surroundingElement;
+      if (surroundingElement instanceof PageElementExternalLink eLink) {
         if (eLink.hasSquare() && eLink.hasSecondSquare()) {
           if (reportFormattingElement(
               analysis, elements, element, errors,
@@ -462,8 +454,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside a title
-      if (surroundingElement instanceof PageElementTitle) {
-        PageElementTitle title = (PageElementTitle) surroundingElement;
+      if (surroundingElement instanceof PageElementTitle title) {
         if (reportFormattingElement(
             analysis, elements, element, errors,
             title.getBeginIndex() + title.getFirstLevel(),
@@ -475,8 +466,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside a reference tag
-      if (surroundingElement instanceof PageElementTag) {
-        PageElementTag refTag = (PageElementTag) surroundingElement;
+      if (surroundingElement instanceof PageElementTag refTag) {
         if (WikiTagType.REF.equals(refTag.getType())) {
           if (reportFormattingElement(
               analysis, elements, element, errors,
@@ -489,8 +479,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside a table caption
-      if (surroundingElement instanceof PageElementTable.TableCaption) {
-        PageElementTable.TableCaption caption = (PageElementTable.TableCaption) surroundingElement;
+      if (surroundingElement instanceof PageElementTable.TableCaption caption) {
         if (reportFormattingElement(
             analysis, elements, element, errors,
             caption.getBeginIndex() + 2, caption.getEndIndex(),
@@ -501,8 +490,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside a table cell
-      if (surroundingElement instanceof PageElementTable.TableCell) {
-        PageElementTable.TableCell cell = (PageElementTable.TableCell) surroundingElement;
+      if (surroundingElement instanceof PageElementTable.TableCell cell) {
         if (element.getIndex() < cell.getEndOptionsIndex()) {
           if (reportFormattingElementInCellOptions(
               analysis, elements, element, errors, cell)) {
@@ -519,8 +507,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
       }
 
       // Report inside a template
-      if (surroundingElement instanceof PageElementTemplate.Parameter) {
-        PageElementTemplate.Parameter templateParam = (PageElementTemplate.Parameter) surroundingElement;
+      if (surroundingElement instanceof Parameter templateParam) {
         PageElementTemplate template = analysis.isInTemplate(templateParam.getValueStartIndex());
         // TODO: See if area can be reduced on the parameter value, but see problems with {{shy}} on enWP for example
         int areaBegin = template.getBeginIndex();
@@ -569,7 +556,6 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
    * @param beginIndex Beginning index of the area.
    * @param endIndex End index of the area.
    * @param errors List of errors.
-   * @param errors
    */
   private void reportError(
       PageAnalysis analysis, PageElementFormatting element,
@@ -1127,7 +1113,7 @@ public class CheckErrorAlgorithm540 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

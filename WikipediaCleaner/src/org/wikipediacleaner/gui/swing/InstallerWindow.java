@@ -48,7 +48,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.wikipediacleaner.Installer;
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.basic.BasicWindow;
@@ -75,7 +74,7 @@ public class InstallerWindow
   implements ActionListener, WikiChangeListener {
 
   /** Logger */
-  static final Logger log = LoggerFactory.getLogger(Installer.class);
+  static final Logger log = LoggerFactory.getLogger(InstallerWindow.class);
 
   public static final Integer WINDOW_VERSION = 1;
 

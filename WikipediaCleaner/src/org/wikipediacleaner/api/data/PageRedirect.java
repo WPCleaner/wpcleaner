@@ -123,7 +123,7 @@ public class PageRedirect {
     list = new ArrayList<>();
     pageList = new ArrayList<>();
     for (Page tmpPage : pages) {
-      list.add(new ImmutablePair<>(tmpPage, (String) null));
+      list.add(new ImmutablePair<>(tmpPage, null));
       pageList.add(tmpPage);
     }
     isRedirect = true;
@@ -165,12 +165,12 @@ public class PageRedirect {
     }
     Pair<Page, String> to = getLast();
     Page toPage = to.getLeft();
-    String toTitle = toPage.getTitle();
+    StringBuilder toTitle = new StringBuilder(toPage.getTitle());
     if (to.getRight() != null) {
       return toTitle + "#" + to.getRight();
     }
     String pageContents = page.getContents();
-    if ((pageContents != null) && (pageContents.length() > 0)) {
+    if ((pageContents != null) && (!pageContents.isEmpty())) {
       boolean redirectFound = false;
       int startIndex = 0;
       while ((!redirectFound) && (startIndex < pageContents.length())) {
@@ -217,7 +217,7 @@ public class PageRedirect {
           int endRedirect = pageContents.indexOf("]]", startIndex);
           int sharp = pageContents.indexOf("#", startIndex);
           if ((endRedirect > 0) && (sharp > 0) && (sharp < endRedirect)) {
-            toTitle += pageContents.substring(sharp, endRedirect);
+            toTitle.append(pageContents, sharp, endRedirect);
           }
         }
         startIndex = endIndex + 1;
@@ -225,10 +225,10 @@ public class PageRedirect {
     }
     if ((toPage.getNamespace() != null) &&
         (toPage.getNamespace() == Namespace.CATEGORY) &&
-        (!toTitle.startsWith(":"))) {
-      toTitle = ":" + toTitle;
+        (!toTitle.toString().startsWith(":"))) {
+      toTitle.insert(0, ":");
     }
-    return toTitle;
+    return toTitle.toString();
   }
 
   /**

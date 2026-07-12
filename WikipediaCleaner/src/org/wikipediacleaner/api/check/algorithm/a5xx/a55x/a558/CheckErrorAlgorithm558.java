@@ -9,7 +9,6 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a558;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -133,11 +132,10 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
     }
 
     // Check that the two references are based on tags
-    if (!(firstRef instanceof PageElementFullTag) || !(secondRef instanceof PageElementFullTag)) {
+    if (!(firstRef instanceof PageElementFullTag firstRefTag) ||
+        !(secondRef instanceof PageElementFullTag secondRefTag)) {
       return false;
     }
-    PageElementFullTag firstRefTag = (PageElementFullTag) firstRef;
-    PageElementFullTag secondRefTag = (PageElementFullTag) secondRef;
 
     // Check if the two reference tags are for the same name and group
     Parameter firstName = firstRefTag.firstTag.getParameter("name");
@@ -278,7 +276,7 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
       }
     }
 
-    Collections.sort(refs, new IntervalComparator());
+    refs.sort(new IntervalComparator());
     return refs;
   }
 
@@ -342,7 +340,7 @@ public class CheckErrorAlgorithm558 extends CheckErrorAlgorithmBase {
       }
     }
 
-    grouper = new PageElementGrouper(",;.\'′’-&", separators, TAG_SEPARATORS);
+    grouper = new PageElementGrouper(",;.'′’-&", separators, TAG_SEPARATORS);
   }
 
   /** Valid separator between consecutive tags */

@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.request.logout;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom2.input.JDOMParseException;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiXmlResult;
@@ -40,12 +39,7 @@ public class ApiXmlLogoutResult extends ApiXmlResult implements ApiLogoutResult 
   public void executeLogout(
       Map<String, String> properties)
           throws APIException {
-    try {
-      getRoot(properties, 1);
-    } catch (JDOMParseException e) {
-      log.error("Exception in MediaWikiAPI.logout()", e);
-      throw new APIException("Couldn't logout");
-    }
+    getRoot(properties, 1);
   }
 
   /**

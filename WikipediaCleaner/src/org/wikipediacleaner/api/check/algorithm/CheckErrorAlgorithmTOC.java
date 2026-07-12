@@ -8,7 +8,6 @@
 package org.wikipediacleaner.api.check.algorithm;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -87,7 +86,7 @@ public abstract class CheckErrorAlgorithmTOC extends CheckErrorAlgorithmBase {
       }
     }
 
-    Collections.sort(result, new IntervalComparator());
+    result.sort(new IntervalComparator());
     return result;
   }
 

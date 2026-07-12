@@ -377,7 +377,7 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {
@@ -412,11 +412,9 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
         CheckErrorResult errorResult = errors.get(i - 1);
         String newText = errorResult.getFirstReplacement();
         if (newText != null) {
-          String tmp =
-            result.substring(0, errorResult.getStartPosition()) +
-            newText +
-            result.substring(errorResult.getEndPosition());
-          result = tmp;
+          result = result.substring(0, errorResult.getStartPosition()) +
+              newText +
+              result.substring(errorResult.getEndPosition());
         }
       }
     }
@@ -440,16 +438,15 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
         for (int j = 0; j < i - 1; j++) {
           if (errors.get(j).getEndPosition() > errorResult.getStartPosition()) {
             shouldTry = false;
+            break;
           }
         }
         if (shouldTry) {
           String newText = errorResult.getAutomaticReplacement();
           if (newText != null) {
-            String tmp =
-              result.substring(0, errorResult.getStartPosition()) +
-              newText +
-              result.substring(errorResult.getEndPosition());
-            result = tmp;
+            result = result.substring(0, errorResult.getStartPosition()) +
+                newText +
+                result.substring(errorResult.getEndPosition());
           }
         }
       }
@@ -472,11 +469,9 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
         CheckErrorResult errorResult = errors.get(i - 1);
         String newText = errorResult.getAutomaticBotReplacement();
         if (newText != null) {
-          String tmp =
-            result.substring(0, errorResult.getStartPosition()) +
-            newText +
-            result.substring(errorResult.getEndPosition());
-          result = tmp;
+          result = result.substring(0, errorResult.getStartPosition()) +
+              newText +
+              result.substring(errorResult.getEndPosition());
         }
       }
     }
@@ -496,10 +491,8 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
     if (analyze(analysis, errors, false)) {
       for (int i = errors.size(); i > 0; i--) {
         CheckErrorResult errorResult = errors.get(i - 1);
-        String tmp =
-          result.substring(0, errorResult.getStartPosition()) +
-          result.substring(errorResult.getEndPosition());
-        result = tmp;
+        result = result.substring(0, errorResult.getStartPosition()) +
+            result.substring(errorResult.getEndPosition());
       }
     }
     return result;
@@ -618,9 +611,9 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, startIndex, endIndex);
         if (replacements != null) {
-          for (int i = 0; i < replacements.length; i++) {
-            if (replacements[i] != null) {
-              errorResult.addReplacement(replacements[i]);
+          for (String replacement : replacements) {
+            if (replacement != null) {
+              errorResult.addReplacement(replacement);
             }
           }
         }
@@ -656,7 +649,7 @@ public abstract class CheckErrorAlgorithmBase extends AlgorithmBase implements C
     MagicWord magicWord = analysis.getWikiConfiguration().getMagicWordByType(FunctionMagicWordType.DEFAULT_SORT);
     if (magicWord != null) {
       String value = analysis.getWPCConfiguration().getString(WPCConfigurationString.DEFAULTSORT);
-      if ((value != null) && (value.trim().length() > 0)) {
+      if ((value != null) && (!value.trim().isEmpty())) {
         value = value.trim();
         if (magicWord.isPossibleAlias(value)) {
           defaultSort = value;

@@ -44,7 +44,7 @@ public class CheckErrorAlgorithm074 extends CheckErrorAlgorithmBase {
     // Analyzing the text from the beginning
     boolean result = false;
     for (PageElementInternalLink link : analysis.getInternalLinks()) {
-      if (link.getFullLink().trim().length() == 0) {
+      if (link.getFullLink().trim().isEmpty()) {
         if (errors == null) {
           return true;
         }
@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm074 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis, link.getBeginIndex(), link.getEndIndex());
         String text = link.getText();
-        if ((text != null) && (text.length() > 0)) {
+        if ((text != null) && (!text.isEmpty())) {
           errorResult.addReplacement("[[" + link.getText() + "]]");
         }
         errors.add(errorResult);

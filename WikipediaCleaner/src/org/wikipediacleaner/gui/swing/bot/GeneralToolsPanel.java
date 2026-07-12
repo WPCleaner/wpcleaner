@@ -12,6 +12,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -39,9 +40,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
  */
 public class GeneralToolsPanel extends BotToolsPanel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = 211233278326264003L;
 
   /**
@@ -230,7 +229,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     Configuration config = Configuration.getConfiguration();
     WPCConfiguration wpcConfig = wiki.getConfiguration();
     String template = wpcConfig.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
+    if ((template == null) || (template.trim().isEmpty())) {
       Utilities.displayMessageForMissingConfiguration(
           window.getParentComponent(),
           WPCConfigurationString.DAB_WARNING_TEMPLATE.getAttributeName());
@@ -271,7 +270,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     if (!simulation) {
       WPCConfiguration wpcConfig = wiki.getConfiguration();
       String template = wpcConfig.getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
-      if ((template == null) || (template.trim().length() == 0)) {
+      if ((template == null) || (template.trim().isEmpty())) {
         Utilities.displayMessageForMissingConfiguration(
             window.getParentComponent(),
             WPCConfigurationString.ISBN_WARNING_TEMPLATE.getAttributeName());
@@ -307,7 +306,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     if (!simulation) {
       WPCConfiguration wpcConfig = wiki.getConfiguration();
       String template = wpcConfig.getString(WPCConfigurationString.ISSN_WARNING_TEMPLATE);
-      if ((template == null) || (template.trim().length() == 0)) {
+      if ((template == null) || (template.trim().isEmpty())) {
         Utilities.displayMessageForMissingConfiguration(
             window.getParentComponent(),
             WPCConfigurationString.ISSN_WARNING_TEMPLATE.getAttributeName());
@@ -326,7 +325,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     EnumWikipedia wiki = window.getWikipedia();
     WPCConfiguration wpcConfig = wiki.getConfiguration();
     String template = wpcConfig.getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
+    if ((template == null) || (template.trim().isEmpty())) {
       Utilities.displayMessageForMissingConfiguration(
           window.getParentComponent(),
           WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE.getAttributeName());
@@ -344,7 +343,7 @@ public class GeneralToolsPanel extends BotToolsPanel {
     EnumWikipedia wiki = window.getWikipedia();
     WPCConfiguration wpcConfig = wiki.getConfiguration();
     String template = wpcConfig.getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE);
-    if ((template == null) || (template.trim().length() == 0)) {
+    if ((template == null) || (template.trim().isEmpty())) {
       Utilities.displayMessageForMissingConfiguration(
           window.getParentComponent(),
           WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE.getAttributeName());

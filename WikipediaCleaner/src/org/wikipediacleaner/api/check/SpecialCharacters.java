@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -221,10 +222,10 @@ public class SpecialCharacters {
       GetMethod method = null;
       try {
         HttpClient httpClient = new HttpClient();
-        method = new GetMethod("http://sourceforge.net/p/autowikibrowser/code/HEAD/tree/AWB/WikiFunctions/Tools.cs?format=raw");
+        method = new GetMethod("https://sourceforge.net/p/autowikibrowser/code/HEAD/tree/AWB/WikiFunctions/Tools.cs?format=raw");
         int statusCode = httpClient.executeMethod(method);
         if (statusCode == HttpStatus.SC_OK) {
-          br = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(), "UTF8"));
+          br = new BufferedReader(new InputStreamReader(method.getResponseBodyAsStream(), StandardCharsets.UTF_8));
           String line = null;
           boolean startDiacritics = false;
           boolean endDiacritics = false;
@@ -243,7 +244,7 @@ public class SpecialCharacters {
                 int quote4 = line.indexOf('\"', quote3 + 1);
                 if ((quote1 >= 0) && (quote2 >= 0) && (quote3 >= 0) && (quote4 >= 0) &&
                     (quote2 == quote1 + 2)) {
-                  Integer awbDiacritic = Integer.valueOf(line.charAt(quote1 + 1));
+                  Integer awbDiacritic = (int) line.charAt(quote1 + 1);
                   String awbReplacement = line.substring(quote3 + 1, quote4);
                   String replacement = replacements.get(awbDiacritic);
                   if (replacement == null) {
@@ -302,7 +303,7 @@ public class SpecialCharacters {
           }
         }
 
-        Integer currentInt = Integer.valueOf(currentChar);
+        Integer currentInt = (int) currentChar;
         if (replacements.containsKey(currentInt) &&
             !replacement.equals(replacements.get(currentInt))) {
           System.err.println("Several replacements defined for " + currentChar + ":" + replacements.get(currentInt) + "," + replacement);
@@ -364,12 +365,12 @@ public class SpecialCharacters {
   private static Optional<String> getReplacement(int character, EnumWikipedia wiki) {
     Map<Integer, String> localReplacement = localReplacements.get(wiki);
     if (localReplacement != null) {
-      String replacement = localReplacement.get(Integer.valueOf(character));
+      String replacement = localReplacement.get(character);
       if (replacement != null) {
         return Optional.of(replacement);
       }
     }
-    return Optional.ofNullable(replacements.get(Integer.valueOf(character)));
+    return Optional.ofNullable(replacements.get(character));
   }
 
 /**

@@ -20,7 +20,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -226,18 +225,12 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
         } catch (APIException e) {
           // Nothing to do
         }
-        monitoredPages.put(rc.getTitle(), Long.valueOf(currentTime.getTime()));
+        monitoredPages.put(rc.getTitle(), currentTime.getTime());
       }
     }
 
     // Check monitored pages for expired delay
-    Iterator<Entry<String, Long>> itPages = monitoredPages.entrySet().iterator();
-    while (itPages.hasNext()) {
-      Entry<String, Long> entry = itPages.next();
-      if (currentTime.getTime() > entry.getValue().longValue() + delayMonitoring) {
-        itPages.remove();
-      }
-    }
+    monitoredPages.entrySet().removeIf(entry -> currentTime.getTime() > entry.getValue() + delayMonitoring);
 
     // Update list of interesting recent changes
     for (RecentChange rc : filteredNewRC) {
@@ -313,7 +306,7 @@ public class MonitorRCWindow extends BasicWindow implements RecentChangesListene
         List<Page> updatedPages = stats.getUpdatedPages();
         if (updatedPages != null) {
           for (Page page : updatedPages) {
-            monitoredPages.put(page.getTitle(), Long.valueOf(currentTime.getTime()));
+            monitoredPages.put(page.getTitle(), currentTime.getTime());
           }
         }
       } catch (APIException e) {

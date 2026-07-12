@@ -19,12 +19,12 @@ public interface ListenerPredefinedTextInsertion {
    * 
    * @param categoryName Name of the category.
    */
-  public void categoryInserted(String categoryName);
+  void categoryInserted(String categoryName);
 
   /**
    * Notification of the insertion of a template.
    * 
    * @param templateName Name of the template.
    */
-  public void templateInserted(String templateName);
+  void templateInserted(String templateName);
 }

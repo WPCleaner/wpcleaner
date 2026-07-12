@@ -148,7 +148,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
             }
             Integer namespace = talkPage.getNamespace();
             if (namespace != null) {
-              Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace.intValue());
+              Namespace namespaceTalk = wikiConfiguration.getNamespace(namespace);
               if (namespaceTalk != null) {
                 int colonIndex = title.indexOf(':');
                 if (colonIndex >= 0) {
@@ -298,7 +298,7 @@ public abstract class UpdateWarningWorker extends BasicWorker {
     if (title == null) {
       return;
     }
-    if ((start.length() == 0) || (start.compareTo(title) <= 0)) {
+    if ((start.isEmpty()) || (start.compareTo(title) <= 0)) {
       if (!pages.containsKey(title)) {
         pages.put(title, page);
       }

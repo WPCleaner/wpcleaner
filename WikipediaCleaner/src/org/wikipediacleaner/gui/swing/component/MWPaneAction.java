@@ -9,6 +9,7 @@ package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -25,9 +26,7 @@ import javax.swing.text.TextAction;
  */
 public abstract class MWPaneAction extends TextAction {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -312026852059614157L;
 
   /**
@@ -66,12 +65,10 @@ public abstract class MWPaneAction extends TextAction {
     if (component instanceof MWPane) {
       return (MWPane) component;
     }
-    if (component instanceof JMenuItem) {
-      JMenuItem menuItem = (JMenuItem) component;
+    if (component instanceof JMenuItem menuItem) {
       return getMWPane(menuItem.getParent());
     }
-    if (component instanceof JPopupMenu) {
-      JPopupMenu popup = (JPopupMenu) component;
+    if (component instanceof JPopupMenu popup) {
       return getMWPane(popup.getInvoker());
     }
     return null;

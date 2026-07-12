@@ -11,7 +11,6 @@ package org.wikipediacleaner.api.data;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jdom2.Document;
@@ -26,9 +25,9 @@ import org.wikipediacleaner.i18n.GT;
 
 /**
  * Utility class to manage ISBN ranges.
- * 
+ * <p>
  * Values are extracted from RangeMessage.xml.
- * This file can be generated at https://www.isbn-international.org/range_file_generation.
+ * This file can be generated on <a href="https://www.isbn-international.org/range_file_generation">this site</a>.
  */
 public class ISBNRange {
 
@@ -94,7 +93,7 @@ public class ISBNRange {
    */
   public static class ISBNInformation {
     
-    List<String> texts;
+    final List<String> texts;
 
     boolean unknownRange;
 
@@ -150,7 +149,7 @@ public class ISBNRange {
         // Remove "978-"
         prefix = prefix.substring(4);
       }
-      if ((prefix != null) && (prefix.length() > 0)) {
+      if ((prefix != null) && (!prefix.isEmpty())) {
         isbnInfo.texts.add(prefix + "-" + registrationGroup.getAgency());
       }
     }
@@ -193,11 +192,11 @@ public class ISBNRange {
    * Load ISBN ranges
    */
   private static void loadRanges() {
-    if (rangesLoaded == true) {
+    if (rangesLoaded) {
       return;
     }
     synchronized (rangesLock) {
-      if (rangesLoaded == true) {
+      if (rangesLoaded) {
         return;
       }
       InputStream is = ISBNRange.class.getClassLoader().getResourceAsStream(
@@ -224,9 +223,7 @@ public class ISBNRange {
       }
       analyzeEANPrefixes(root);
       analyzeRegistrationGroups(root);
-    } catch (IOException e) {
-      // Nothing to do
-    } catch (JDOMException e) {
+    } catch (IOException | JDOMException e) {
       // Nothing to do
     }
   }
@@ -235,9 +232,8 @@ public class ISBNRange {
    * Analyze RangeMessage.xml file for EAN Prefixes.
    * 
    * @param root Root of RangeMessage.xml file.
-   * @throws JDOMException
    */
-  private static void analyzeEANPrefixes(Element root) throws JDOMException {
+  private static void analyzeEANPrefixes(Element root) {
     eanPrefixes = new ArrayList<>();
     analyzeRanges(root, eanPrefixes, "/ISBNRangeMessage/EAN.UCCPrefixes/EAN.UCC");
   }
@@ -246,9 +242,8 @@ public class ISBNRange {
    * Analyze RangeMessage.xml file for Registration Groups.
    * 
    * @param root Root of RangeMessage.xml file.
-   * @throws JDOMException
    */
-  private static void analyzeRegistrationGroups(Element root) throws JDOMException {
+  private static void analyzeRegistrationGroups(Element root) {
     registrationGroups = new ArrayList<>();
     analyzeRanges(root, registrationGroups, "/ISBNRangeMessage/RegistrationGroups/Group");
   }
@@ -259,14 +254,11 @@ public class ISBNRange {
    * @param root Root of RangeMessage.xml file.
    * @param ranges Current list of ranges.
    * @param xpath XPath selector.
-   * @throws JDOMException
    */
-  private static void analyzeRanges(Element root, List<Range> ranges, String xpath) throws JDOMException {
+  private static void analyzeRanges(Element root, List<Range> ranges, String xpath) {
     XPathExpression<Element> xpa = XPathFactory.instance().compile(xpath, Filters.element());
     List<Element> results = xpa.evaluate(root);
-    Iterator<Element> iter = results.iterator();
-    while (iter.hasNext()) {
-      Element node = iter.next();
+    for (Element node : results) {
       Element prefixNode = node.getChild("Prefix");
       String prefix = (prefixNode != null) ? prefixNode.getValue() : null;
       Element agencyNode = node.getChild("Agency");
@@ -282,22 +274,19 @@ public class ISBNRange {
    * 
    * @param node Current node.
    * @param rangeElement Range element.
-   * @throws JDOMException
    */
-  private static void analyzeRules(Element node, Range rangeElement) throws JDOMException {
+  private static void analyzeRules(Element node, Range rangeElement) {
     XPathExpression<Element> xpa = XPathFactory.instance().compile(
         "./Rules/Rule", Filters.element());
     List<Element> results = xpa.evaluate(node);
-    Iterator<Element> iter = results.iterator();
-    while (iter.hasNext()) {
-      Element ruleNode = iter.next();
+    for (Element ruleNode : results) {
       Element rangeNode = ruleNode.getChild("Range");
       String range = (rangeNode != null) ? rangeNode.getValue() : null;
       Element lengthNode = ruleNode.getChild("Length");
       String length = (lengthNode != null) ? lengthNode.getValue() : null;
       if ((range != null) && (length != null)) {
         String[] rangeElements = range.split("\\-");
-        if ((rangeElements != null) && (rangeElements.length == 2)) {
+        if (rangeElements.length == 2) {
           Rule rule = new Rule(rangeElements[0], rangeElements[1], Integer.parseInt(length));
           rangeElement.addRule(rule);
         }

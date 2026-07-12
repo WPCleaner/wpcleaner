@@ -26,5 +26,5 @@ public interface ApiUsersResult extends ApiResult {
    * @return User.
    * @throws APIException Exception thrown by the API.
    */
-  public User executeUser(Map<String, String> properties) throws APIException;
+  User executeUser(Map<String, String> properties) throws APIException;
 }

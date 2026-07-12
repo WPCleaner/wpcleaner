@@ -75,7 +75,7 @@ public class ContentsCallable extends MediaWikiCallable<Page> {
         api.retrieveContents(getWikipedia(), redirects.getPageList(), false, false);
       }
     } else {
-      api.retrieveSectionContents(getWikipedia(), page, section.intValue());
+      api.retrieveSectionContents(getWikipedia(), page, section);
     }
     if (doAnalysis) {
       PageAnalysis analysis = page.getAnalysis(page.getContents(), true);

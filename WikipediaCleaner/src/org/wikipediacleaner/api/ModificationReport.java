@@ -92,11 +92,11 @@ public class ModificationReport {
     }
 
     // Report errors
-    if (errors.size() > 0) {
+    if (!errors.isEmpty()) {
       result.append("\n\n");
       result.append(CompleteTagBuilder
           .from(HtmlTagType.FONT, GT._T("The following errors have occurred:"))
-          .addAttribute("color", "red").toString());
+          .addAttribute("color", "red"));
       result.append(HtmlTagType.UL.getOpenTag());
       result.append("\n");
       for (Error error: errors) {

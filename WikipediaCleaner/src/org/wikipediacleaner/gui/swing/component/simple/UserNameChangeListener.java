@@ -18,5 +18,5 @@ public interface UserNameChangeListener {
    * 
    * @param userName New user name.
    */
-  public void changeUserName(String userName);
+  void changeUserName(String userName);
 }

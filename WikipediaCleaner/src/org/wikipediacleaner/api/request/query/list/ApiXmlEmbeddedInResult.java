@@ -7,13 +7,11 @@
 
 package org.wikipediacleaner.api.request.query.list;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -52,30 +50,23 @@ public class ApiXmlEmbeddedInResult extends ApiXmlResult implements ApiEmbeddedI
   public boolean executeEmbeddedIn(
       Map<String, String> properties,
       List<Page> list) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve embedding pages
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/embeddedin/ei", Filters.element());
-      List<Element> results = xpa.evaluate(root);
-      Iterator<Element> iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        Page page = DataManager.getPage(
-            getWiki(), currentNode.getAttributeValue("title"), null, null, null);
-        page.setNamespace(currentNode.getAttributeValue("ns"));
-        page.setPageId(currentNode.getAttributeValue("pageid"));
-        list.add(page);
-      }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/embeddedin",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading embedded in list", e);
-      throw new APIException("Error parsing XML", e);
+    // Retrieve embedding pages
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/embeddedin/ei", Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    for (Element currentNode : results) {
+      Page page = DataManager.getPage(
+          getWiki(), currentNode.getAttributeValue("title"), null, null, null);
+      page.setNamespace(currentNode.getAttributeValue("ns"));
+      page.setPageId(currentNode.getAttributeValue("pageid"));
+      list.add(page);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/embeddedin",
+        properties);
   }
 }

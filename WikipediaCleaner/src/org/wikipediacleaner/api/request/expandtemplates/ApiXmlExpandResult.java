@@ -11,7 +11,6 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -47,15 +46,10 @@ public class ApiXmlExpandResult extends ApiXmlResult implements ApiExpandResult 
   public String executeExpandTemplates(
       Map<String, String> properties)
           throws APIException {
-    try {
-      XPathExpression<Element> xpaText = XPathFactory.instance().compile(
-          "/api/expandtemplates/wikitext", Filters.element());
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
-      Element text = xpaText.evaluateFirst(root);
-      return (text != null) ? text.getText() : null;
-    } catch (JDOMException e) {
-      log.error("Error expanding templates", e);
-      throw new APIException("Error parsing XML", e);
-    }
+    XPathExpression<Element> xpaText = XPathFactory.instance().compile(
+        "/api/expandtemplates/wikitext", Filters.element());
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element text = xpaText.evaluateFirst(root);
+    return (text != null) ? text.getText() : null;
   }
 }

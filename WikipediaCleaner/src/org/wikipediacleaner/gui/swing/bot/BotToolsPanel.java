@@ -8,6 +8,7 @@
 package org.wikipediacleaner.gui.swing.bot;
 
 import java.awt.LayoutManager;
+import java.io.Serial;
 
 import javax.swing.JPanel;
 
@@ -19,9 +20,7 @@ import org.wikipediacleaner.gui.swing.basic.BasicWindow;
  */
 abstract class BotToolsPanel extends JPanel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -6986151664537866639L;
 
   protected final BasicWindow window;

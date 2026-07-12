@@ -25,7 +25,7 @@ public interface InternalLinkNotification {
    * @param good True if link is good.
    * @param helpNeeded True if help is needed.
    */
-  public void linkFound(
+  void linkFound(
       Page link, PageElementInternalLink internalLink,
       boolean good, boolean helpNeeded);
 
@@ -36,6 +36,6 @@ public interface InternalLinkNotification {
    * @param template Template in which the link is found.
    * @param matcher Matcher used to find the link in the template.
    */
-  public void linkFound(
+  void linkFound(
       Page link, PageElementTemplate template, TemplateMatcher matcher);
 }

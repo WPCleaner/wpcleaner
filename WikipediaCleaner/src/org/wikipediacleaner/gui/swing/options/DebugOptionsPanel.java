@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -26,9 +27,7 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  */
 public class DebugOptionsPanel extends OptionsPanel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = 3614825228324362078L;
 
   /**

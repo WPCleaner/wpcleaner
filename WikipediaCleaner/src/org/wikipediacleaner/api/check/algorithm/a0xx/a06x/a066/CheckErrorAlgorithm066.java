@@ -72,7 +72,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
               onlySmall = false;
             }
             if (smallTag.getBeginIndex() > lastTest) {
-              innerText.append(description.substring(lastTest, smallTag.getBeginIndex()));
+              innerText.append(description, lastTest, smallTag.getBeginIndex());
             }
             lastTest = smallTag.getEndIndex();
             if (!smallTag.isFullTag()) {
@@ -116,7 +116,7 @@ public class CheckErrorAlgorithm066 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

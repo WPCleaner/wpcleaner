@@ -55,7 +55,7 @@ public class FixDumpWorker extends AutomaticFixWorker {
   private final File dumpFile;
 
   /** Time spent in analysis. */
-  AnalysisPerformance analysisTime;
+  final AnalysisPerformance analysisTime;
 
   /** Count of pages analyzed */
   int countAnalyzed;
@@ -116,19 +116,13 @@ public class FixDumpWorker extends AutomaticFixWorker {
    * Report progress.
    */
   void reportProgress() {
-    StringBuilder buffer = new StringBuilder();
-    buffer.append("\n");
-    buffer.append("Pages processed: " + countAnalyzed);
-    log.info(buffer.toString());
+    String buffer = "\nPages processed: " + countAnalyzed;
+    log.info(buffer);
   }
 
   /**
    * Called on the event dispatching thread (not on the worker thread)
    * after the <code>construct</code> method has returned.
-   * 
-   * @see org.wikipediacleaner.gui.swing.basic.BasicWorker#finished()
-   */
-  /**
    * 
    * @see org.wikipediacleaner.gui.swing.basic.BasicWorker#finished()
    */
@@ -156,7 +150,7 @@ public class FixDumpWorker extends AutomaticFixWorker {
   /**
    * Controller for background tasks.
    */
-  private class CWController extends MediaWikiController {
+  private static class CWController extends MediaWikiController {
 
     /**
      * @param listener Listener to MediaWiki events.
@@ -217,11 +211,10 @@ public class FixDumpWorker extends AutomaticFixWorker {
     private final Page page;
 
     /**
-     * @param wikipedia Wikipedia.
+     * @param wiki Wikipedia.
      * @param listener Listener of MediaWiki events.
      * @param api MediaWiki API.
      * @param page Page.
-     * @param checkWiki True if last version should be checked on wiki.
      */
     public CWPageCallable(
         EnumWikipedia wiki, MediaWikiListener listener, API api,
@@ -390,11 +383,6 @@ public class FixDumpWorker extends AutomaticFixWorker {
       this.maxLevel = tmpLevel;
     }
 
-    /**
-     * @param o
-     * @return
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(Detection o) {
       if (o == null) {

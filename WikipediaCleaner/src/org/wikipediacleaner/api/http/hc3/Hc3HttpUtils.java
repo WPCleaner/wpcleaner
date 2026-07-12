@@ -9,7 +9,6 @@ package org.wikipediacleaner.api.http.hc3;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -138,9 +137,7 @@ public class Hc3HttpUtils extends HttpUtils {
     List<NameValuePair> params = new ArrayList<>();
     if (properties != null) {
       boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
+      for (Entry<String, String> property : properties.entrySet()) {
         String key = property.getKey();
         String value = property.getValue();
         params.add(new NameValuePair(key, value));
@@ -186,9 +183,7 @@ public class Hc3HttpUtils extends HttpUtils {
     List<NameValuePair> params = new ArrayList<>();
     if (properties != null) {
       boolean first = true;
-      Iterator<Map.Entry<String, String>> iter = properties.entrySet().iterator();
-      while (iter.hasNext()) {
-        Map.Entry<String, String> property = iter.next();
+      for (Entry<String, String> property : properties.entrySet()) {
         String key = property.getKey();
         String value = property.getValue();
         params.add(new NameValuePair(key, value));

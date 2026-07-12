@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
@@ -29,11 +30,11 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class GoToExternalRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 6624821564743454143L;
 
   /** Maps of all the buttons. */
-  private HashMap<Object, JButton> buttons;
+  private final HashMap<Object, JButton> buttons;
 
   /**
    * Constructor.
@@ -94,10 +95,9 @@ public class GoToExternalRenderer extends AbstractCellEditor implements
     if (buttons.containsKey(value)) {
       return buttons.get(value);
     }
-    if (!(value instanceof String)) {
+    if (!(value instanceof String url)) {
       return null;
     }
-    String url = (String) value;
     JButton button = new JButton(Utilities.getImageIcon(
         "gnome-emblem-web.png",
         EnumImageSize.SMALL));

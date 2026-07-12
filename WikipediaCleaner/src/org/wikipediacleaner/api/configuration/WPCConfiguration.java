@@ -162,7 +162,6 @@ public class WPCConfiguration {
    * @param reader Reader for the configuration.
    * @param general Flag indicating if dealing with general or user properties.
    * @return Next parameter found.
-   * @throw APIException.
    */
   private boolean setNextParameter(
       BufferedReader reader, boolean general) throws APIException {
@@ -254,9 +253,9 @@ public class WPCConfiguration {
       result = generalBooleanValues.get(attribute);
     }
     if (result == null) {
-      result = Boolean.valueOf(attribute.getDefaultValue());
+      result = attribute.getDefaultValue();
     }
-    return result.booleanValue();
+    return result;
   }
 
   /**
@@ -268,14 +267,14 @@ public class WPCConfiguration {
   public String getString(WPCConfigurationString attribute) {
     String result = userStringValues.get(attribute);
     if ((result == null) ||
-        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+        ((!attribute.canBeEmpty()) && (result.trim().isEmpty()))) {
       result = generalStringValues.get(attribute);
     }
     if ((result == null) ||
-        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+        ((!attribute.canBeEmpty()) && (result.trim().isEmpty()))) {
       result = attribute.getDefaultValue();
     }
-    if ((result != null) && (!attribute.canBeEmpty()) && (result.trim().length() == 0)) {
+    if ((result != null) && (!attribute.canBeEmpty()) && (result.trim().isEmpty())) {
       result = null;
     }
     return result;
@@ -290,14 +289,14 @@ public class WPCConfiguration {
   public String[] getStringArray(WPCConfigurationString attribute) {
     String result = userStringValues.get(attribute);
     if ((result == null) ||
-        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+        ((!attribute.canBeEmpty()) && (result.trim().isEmpty()))) {
       result = generalStringValues.get(attribute);
     }
     if ((result == null) ||
-        ((!attribute.canBeEmpty()) && (result.trim().length() == 0))) {
+        ((!attribute.canBeEmpty()) && (result.trim().isEmpty()))) {
       result = attribute.getDefaultValue();
     }
-    if ((result != null) && (!attribute.canBeEmpty()) && (result.trim().length() == 0)) {
+    if ((result != null) && (!attribute.canBeEmpty()) && (result.trim().isEmpty())) {
       result = null;
     }
     if (result == null) {
@@ -369,9 +368,9 @@ public class WPCConfiguration {
       result = generalLongValues.get(attribute);
     }
     if (result == null) {
-      result = Long.valueOf(attribute.getDefaultValue());
+      result = attribute.getDefaultValue();
     }
-    return result.longValue();
+    return result;
   }
 
   /**
@@ -484,30 +483,19 @@ public class WPCConfiguration {
     }
 
     // Properties available only in general configuration
-    if (name.equals("general_encyclopedic_namespaces")) {
-      setEncyclopedicNamespaces(value);
-    } else if (name.equals("general_dab_1l_templates")) {
-      setTemplateMatchersDab1L(value);
-    } else if (name.equals("general_dab_1lt_templates")) {
-      setTemplateMatchersDab1LT(value);
-    } else if (name.equals("general_dab_1l2t_templates")) {
-      setTemplateMatchersDab1L2T(value);
-    } else if (name.equals("general_good_1l_templates")) {
-      setTemplateMatchersGood1L(value);
-    } else if (name.equals("general_good_1lt_templates")) {
-      setTemplateMatchersGood1LT(value);
-    } else if (name.equals("general_help_1l_templates")) {
-      setTemplateMatchersHelp1L(value);
-    } else if (name.equals("general_help_1lt_templates")) {
-      setTemplateMatchersHelp1LT(value);
-    } else if (name.equals("dab_categories")) {
-      setDisambiguationCategories(value);
-    } else if (name.equals("dab_ask_help_templates_after")) {
-      setTemplatesAfterAskHelp(value);
-    } else if (name.equals("wikt_templates")) {
-      setWiktionaryMatches(value);
-    } else {
-      log.warn(GT._T("Attribute {0} can''t be set in general configuration", name));
+    switch (name) {
+      case "general_encyclopedic_namespaces" -> setEncyclopedicNamespaces(value);
+      case "general_dab_1l_templates" -> setTemplateMatchersDab1L(value);
+      case "general_dab_1lt_templates" -> setTemplateMatchersDab1LT(value);
+      case "general_dab_1l2t_templates" -> setTemplateMatchersDab1L2T(value);
+      case "general_good_1l_templates" -> setTemplateMatchersGood1L(value);
+      case "general_good_1lt_templates" -> setTemplateMatchersGood1LT(value);
+      case "general_help_1l_templates" -> setTemplateMatchersHelp1L(value);
+      case "general_help_1lt_templates" -> setTemplateMatchersHelp1LT(value);
+      case "dab_categories" -> setDisambiguationCategories(value);
+      case "dab_ask_help_templates_after" -> setTemplatesAfterAskHelp(value);
+      case "wikt_templates" -> setWiktionaryMatches(value);
+      default -> log.warn(GT._T("Attribute {0} can''t be set in general configuration", name));
     }
   }
 
@@ -530,13 +518,13 @@ public class WPCConfiguration {
    */
   private void setEncyclopedicNamespaces(String value) {
     encyclopedicNamespaces.clear();
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       if (tmpList != null) {
         for (String tmp : tmpList) {
           try {
-            Integer intValue = Integer.valueOf(tmp);
-            if (intValue.intValue() % 2 == 0) {
+            int intValue = Integer.parseInt(tmp);
+            if (intValue % 2 == 0) {
               encyclopedicNamespaces.add(intValue);
             }
           } catch (NumberFormatException e) {
@@ -572,7 +560,7 @@ public class WPCConfiguration {
     }
     encyclopedicTalkNamespaces = new ArrayList<>(encyclopedicNamespaces.size());
     for (Integer namespace : encyclopedicNamespaces) {
-      encyclopedicTalkNamespaces.add(Integer.valueOf(namespace.intValue() + 1));
+      encyclopedicTalkNamespaces.add(namespace + 1);
     }
   }
 
@@ -775,7 +763,7 @@ public class WPCConfiguration {
   }
 
   private void setTemplateMatchersDab1L(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
@@ -803,7 +791,7 @@ public class WPCConfiguration {
   }
 
   private void setTemplateMatchersDab1LT(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
@@ -831,7 +819,7 @@ public class WPCConfiguration {
   }
 
   private void setTemplateMatchersDab1L2T(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
@@ -855,7 +843,7 @@ public class WPCConfiguration {
   }
 
   private void setTemplateMatchersGood1L(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
@@ -883,7 +871,7 @@ public class WPCConfiguration {
   }
 
   private void setTemplateMatchersGood1LT(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
@@ -911,7 +899,7 @@ public class WPCConfiguration {
   }
 
   private void setTemplateMatchersHelp1L(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
@@ -939,7 +927,7 @@ public class WPCConfiguration {
   }
 
   private void setTemplateMatchersHelp1LT(String value) {
-    if ((value != null) && (value.trim().length() > 0)) {
+    if ((value != null) && (!value.trim().isEmpty())) {
       List<String> tmpList = convertPropertyToStringList(value);
       for (String template : tmpList) {
         String[] elements = template.split("\\|");
@@ -991,7 +979,7 @@ public class WPCConfiguration {
    */
   private void setDisambiguationCategories(String value) {
     List<String> tmp = convertPropertyToStringList(value);
-    if ((tmp != null) && (tmp.size() > 0)) {
+    if ((tmp != null) && (!tmp.isEmpty())) {
       this.disambiguationCategories = new ArrayList<>(tmp.size());
       for (String category : tmp) {
         this.disambiguationCategories.add(
@@ -1026,12 +1014,12 @@ public class WPCConfiguration {
       return "";
     }
     try {
-      comment = MessageFormat.format(comment, Integer.valueOf(count));
+      comment = MessageFormat.format(comment, count);
       if (links != null) {
         StringBuilder sb = new StringBuilder();
         for (String link : links) {
-          sb.append(sb.length() > 0 ? ", " : " - ");
-          sb.append("[[" + link + "]]");
+          sb.append(!sb.isEmpty() ? ", " : " - ");
+          sb.append("[[").append(link).append("]]");
         }
         comment += sb.toString();
       }
@@ -1058,12 +1046,12 @@ public class WPCConfiguration {
       return "";
     }
     try {
-      comment = MessageFormat.format(comment, Integer.valueOf(count));
+      comment = MessageFormat.format(comment, count);
       if (links != null) {
         StringBuilder sb = new StringBuilder();
         for (String link : links) {
-          sb.append(sb.length() > 0 ? ", " : " - ");
-          sb.append("[[" + link + "]]");
+          sb.append(!sb.isEmpty() ? ", " : " - ");
+          sb.append("[[").append(link).append("]]");
         }
         comment += sb.toString();
       }
@@ -1090,12 +1078,12 @@ public class WPCConfiguration {
       return "";
     }
     try {
-      comment = MessageFormat.format(comment, Integer.valueOf(count));
+      comment = MessageFormat.format(comment, count);
       if (links != null) {
         StringBuilder sb = new StringBuilder();
         for (String link : links) {
-          sb.append(sb.length() > 0 ? ", " : " - ");
-          sb.append("[[" + link + "]]");
+          sb.append(!sb.isEmpty() ? ", " : " - ");
+          sb.append("[[").append(link).append("]]");
         }
         comment += sb.toString();
       }
@@ -1133,16 +1121,16 @@ public class WPCConfiguration {
       comment = getString(WPCConfigurationString.DAB_WARNING_TEMPLATE);
     } else {
       try {
-        comment = MessageFormat.format(comment, Integer.valueOf(count));
+        comment = MessageFormat.format(comment, count);
       } catch (IllegalArgumentException e) {
         //
       }
     }
-    if ((comment != null) && (comment.length() > 0) && (links != null)) {
+    if ((comment != null) && (!comment.isEmpty()) && (links != null)) {
       StringBuilder sb = new StringBuilder();
       for (String link : links) {
-        sb.append(sb.length() > 0 ? ", " : " - ");
-        sb.append("[[" + link + "]]");
+        sb.append(!sb.isEmpty() ? ", " : " - ");
+        sb.append("[[").append(link).append("]]");
       }
       comment += sb.toString();
     }
@@ -1181,7 +1169,7 @@ public class WPCConfiguration {
       comment = getString(WPCConfigurationString.ISBN_WARNING_TEMPLATE);
     } else {
       try {
-        comment = MessageFormat.format(comment, Integer.valueOf(count));
+        comment = MessageFormat.format(comment, count);
       } catch (IllegalArgumentException e) {
         //
       }
@@ -1189,7 +1177,7 @@ public class WPCConfiguration {
     if (elements != null) {
       StringBuilder sb = new StringBuilder();
       for (String element : elements) {
-        sb.append(sb.length() > 0 ? ", " : " - ");
+        sb.append(!sb.isEmpty() ? ", " : " - ");
         sb.append(element);
       }
       comment += sb.toString();
@@ -1229,7 +1217,7 @@ public class WPCConfiguration {
       comment = getString(WPCConfigurationString.ISSN_WARNING_TEMPLATE);
     } else {
       try {
-        comment = MessageFormat.format(comment, Integer.valueOf(count));
+        comment = MessageFormat.format(comment, count);
       } catch (IllegalArgumentException e) {
         //
       }
@@ -1237,7 +1225,7 @@ public class WPCConfiguration {
     if (elements != null) {
       StringBuilder sb = new StringBuilder();
       for (String element : elements) {
-        sb.append(sb.length() > 0 ? ", " : " - ");
+        sb.append(!sb.isEmpty() ? ", " : " - ");
         sb.append(element);
       }
       comment += sb.toString();
@@ -1277,7 +1265,7 @@ public class WPCConfiguration {
       comment = getString(WPCConfigurationString.DUPLICATE_ARGS_WARNING_TEMPLATE);
     } else {
       try {
-        comment = MessageFormat.format(comment, Integer.valueOf(count));
+        comment = MessageFormat.format(comment, count);
       } catch (IllegalArgumentException e) {
         //
       }
@@ -1325,7 +1313,7 @@ public class WPCConfiguration {
       comment = getString(WPCConfigurationString.UNKNOWN_PARAMETER_WARNING_TEMPLATE);
     } else {
       try {
-        comment = MessageFormat.format(comment, Integer.valueOf(count));
+        comment = MessageFormat.format(comment, count);
       } catch (IllegalArgumentException e) {
         //
       }
@@ -1410,7 +1398,7 @@ public class WPCConfiguration {
 
   private void setWiktionaryMatches(String value) {
     List<String> tmpList = convertPropertyToStringList(value);
-    if ((tmpList != null) && (tmpList.size() > 0)) {
+    if ((tmpList != null) && (!tmpList.isEmpty())) {
       wiktionaryMatches = new ArrayList<>(tmpList.size());
       for (String tmp : tmpList) {
         String[] elements = tmp.split("\\|");
@@ -1486,13 +1474,13 @@ public class WPCConfiguration {
    */
   public static List<String> convertPropertyToStringList(String property, boolean keepEmpty) {
     List<String> result = null;
-    if ((property != null) && (property.trim().length() > 0)) {
+    if ((property != null) && (!property.trim().isEmpty())) {
       String[] results = property.trim().split("\n");
-      if ((results != null) && (results.length > 0)) {
+      if (results.length > 0) {
         result = new ArrayList<>();
         for (int  i = 0; i < results.length; i++) {
           results[i] = results[i].trim();
-          if ((results[i].length() > 0) || (keepEmpty)) {
+          if ((!results[i].isEmpty()) || (keepEmpty)) {
             result.add(results[i]);
           }
         }

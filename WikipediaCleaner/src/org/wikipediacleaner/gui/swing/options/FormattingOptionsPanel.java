@@ -14,6 +14,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -33,7 +34,6 @@ import javax.swing.SwingConstants;
 
 import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.gui.swing.component.ColorButton;
-import org.wikipediacleaner.gui.swing.options.OptionsPanel;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.images.EnumImageSize;
 import org.wikipediacleaner.utils.Configuration;
@@ -47,9 +47,7 @@ import org.wikipediacleaner.utils.ConfigurationValueStyle;
  */
 public class FormattingOptionsPanel extends OptionsPanel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -8809796439028282940L;
 
   /**

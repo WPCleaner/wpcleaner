@@ -40,7 +40,7 @@ public class CompleteTagBuilder {
   /**
    * Private constructor.
    * 
-   * @param tagName Name of the tag.
+   * @param name Name of the tag.
    * @param contents Contents between the opening and closing tags.
    */
   private CompleteTagBuilder(@Nonnull String name, @Nullable String contents) {
@@ -58,8 +58,7 @@ public class CompleteTagBuilder {
    * @return Builder initialized with the name and format of the tag.
    */
   public static @Nonnull CompleteTagBuilder from(@Nonnull String tagName, @Nullable String contents) {
-    CompleteTagBuilder builder = new CompleteTagBuilder(tagName, contents);
-    return builder;
+    return new CompleteTagBuilder(tagName, contents);
   }
 
   /**
@@ -70,8 +69,7 @@ public class CompleteTagBuilder {
    * @return Builder initialized with the name and format of the tag.
    */
   public static @Nonnull CompleteTagBuilder from(@Nonnull TagType tagType, @Nullable String contents) {
-    CompleteTagBuilder builder = new CompleteTagBuilder(tagType.getNormalizedName(), contents);
-    return builder;
+    return new CompleteTagBuilder(tagType.getNormalizedName(), contents);
   }
 
   /**
@@ -107,10 +105,6 @@ public class CompleteTagBuilder {
     if (!forceOpenCloseTags && StringUtils.isEmpty(contents)) {
       return fullTagBuilder.toString();
     }
-    StringBuilder sb = new StringBuilder();
-    sb.append(openingTagBuilder.toString());
-    sb.append(contents);
-    sb.append(closingTagBuilder.toString());
-    return sb.toString();
+    return openingTagBuilder + contents + closingTagBuilder;
   }
 }

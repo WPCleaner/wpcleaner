@@ -63,7 +63,7 @@ public class PageCommentsWindow extends BasicWindow {
   private JButton buttonOk;
   private JButton buttonRemove;
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+  public final static Integer WINDOW_VERSION = 2;
 
   /**
    * Create and display a PageCommentsWindow.
@@ -84,8 +84,7 @@ public class PageCommentsWindow extends BasicWindow {
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof PageCommentsWindow) {
-              PageCommentsWindow pageComments = (PageCommentsWindow) window;
+            if (window instanceof PageCommentsWindow pageComments) {
               pageComments.page = page;
               pageComments.comment = (comment == null) ? PageComment.get(wikipedia, page.getTitle()).orElse(null) : comment;
             }
@@ -159,7 +158,7 @@ public class PageCommentsWindow extends BasicWindow {
     labelMaxMain.setLabelFor(txtMaxMain);
     labelMaxMain.setHorizontalAlignment(SwingConstants.TRAILING);
     countMain = (page != null) ? page.getBacklinksCountInMainNamespace() : null;
-    JLabel labelMain = new JLabel((countMain != null) ? "/ " + countMain.toString() : "");
+    JLabel labelMain = new JLabel((countMain != null) ? "/ " + countMain : "");
     labelMain.setHorizontalAlignment(SwingConstants.LEADING);
     buttonCopyMaxMain = Utilities.createJButton("\u21D0", null);
     buttonCopyMaxMain.addActionListener(EventHandler.create(
@@ -187,7 +186,7 @@ public class PageCommentsWindow extends BasicWindow {
     labelMaxTemplate.setLabelFor(txtMaxTemplate);
     labelMaxTemplate.setHorizontalAlignment(SwingConstants.TRAILING);
     countTemplate = (page != null) ? page.getBacklinksCountInTemplateNamespace() : null;
-    JLabel labelTemplate = new JLabel((countTemplate != null) ? "/ " + countTemplate.toString() : "");
+    JLabel labelTemplate = new JLabel((countTemplate != null) ? "/ " + countTemplate : "");
     labelTemplate.setHorizontalAlignment(SwingConstants.LEADING);
     buttonCopyMaxTemplate = Utilities.createJButton("\u21D0", null);
     buttonCopyMaxTemplate.addActionListener(EventHandler.create(
@@ -215,18 +214,18 @@ public class PageCommentsWindow extends BasicWindow {
     labelMaxOther.setLabelFor(txtMaxOther);
     labelMaxOther.setHorizontalAlignment(SwingConstants.TRAILING);
     if (page.getBacklinksCount() != null) {
-      int count = page.getBacklinksCount().intValue();
+      int count = page.getBacklinksCount();
       if (page.getBacklinksCountInMainNamespace() != null) {
-        count -= page.getBacklinksCountInMainNamespace().intValue();
+        count -= page.getBacklinksCountInMainNamespace();
       }
       if (page.getBacklinksCountInTemplateNamespace() != null) {
-        count -= page.getBacklinksCountInTemplateNamespace().intValue();
+        count -= page.getBacklinksCountInTemplateNamespace();
       }
-      countOther = Integer.valueOf(count);
+      countOther = count;
     } else {
       countOther = null;
     }
-    JLabel labelOther = new JLabel((countOther != null) ? "/ " + countOther.toString() : "");
+    JLabel labelOther = new JLabel((countOther != null) ? "/ " + countOther : "");
     labelOther.setHorizontalAlignment(SwingConstants.LEADING);
     buttonCopyMaxOther = Utilities.createJButton("\u21D0", null);
     buttonCopyMaxOther.addActionListener(EventHandler.create(

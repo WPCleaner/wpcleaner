@@ -41,7 +41,7 @@ public final class Version {
     "</ul><br/>" +
     GT._T(
         "WPCleaner configuration is available online, check the {0}System configuration{1}.",
-        new Object[] { "<a href=\"http://fr.wikipedia.org/wiki/Utilisateur:NicoV/WikiCleanerConfigurationDocumentation\">", "</a>" }) +
+        new Object[] { "<a href=\"https://fr.wikipedia.org/wiki/Utilisateur:NicoV/WikiCleanerConfigurationDocumentation\">", "</a>" }) +
     "<br/>" +
     GT._T("Please, report any other problem you find to me.");
 

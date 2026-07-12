@@ -8,7 +8,6 @@
 package org.wikipediacleaner.gui.swing.worker.warning;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -100,19 +99,19 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
               "Analysis found {0} articles with disambiguation warning {1}.\n" +
               "Do you want to update the disambiguation warnings ?",
               new Object[] {
-                  Integer.valueOf(warningPages.size()),
+                  warningPages.size(),
                   TemplateBuilder.from(configuration.getString(WPCConfigurationString.DAB_WARNING_TEMPLATE)).toString() }));
           if (answer != JOptionPane.YES_OPTION) {
-            return Integer.valueOf(0);
+            return 0;
           }
         }
 
         // Sort the list of articles (trying a temporary ArrayList for performance)
         if (warningPages.isEmpty()) {
-          return Integer.valueOf(0);
+          return 0;
         }
         List<Page> tmpWarningPages = new ArrayList<>(warningPages);
-        Collections.sort(tmpWarningPages, PageComparator.getTitleFirstComparator());
+        tmpWarningPages.sort(PageComparator.getTitleFirstComparator());
         warningPages.clear();
         warningPages.addAll(tmpWarningPages);
       }
@@ -132,7 +131,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
         List<Page> sublist = tools.extractSublist(warningPages, 10, false);
         if (sublist.isEmpty()) {
           displayStats(stats, startTime);
-          return Integer.valueOf(stats.getUpdatedPagesCount());
+          return stats.getUpdatedPagesCount();
         }
         countUnsaved += sublist.size();
 
@@ -146,8 +145,10 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._T(
-                  "An error occurred when updating disambiguation warnings. Do you want to continue ?\n\n" +
-                  "Error: {0}", e.getMessage()));
+                  """
+                  An error occurred when updating disambiguation warnings. Do you want to continue ?
+                  
+                  Error: {0}""", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
               }
@@ -161,7 +162,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
           }
           if (shouldStop()) {
             displayStats(stats, startTime);
-            return Integer.valueOf(stats.getUpdatedPagesCount());
+            return stats.getUpdatedPagesCount();
           }
         }
 
@@ -188,7 +189,7 @@ public class UpdateDabWarningWorker extends UpdateWarningWorker {
     }
 
     displayStats(stats, startTime);
-    return Integer.valueOf(stats.getUpdatedPagesCount());
+    return stats.getUpdatedPagesCount();
   }
 
   /**

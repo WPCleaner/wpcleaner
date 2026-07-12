@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.checkwiki;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
@@ -31,11 +32,11 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class DetectionRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
-  /** Serialization. */
+  @Serial
   private static final long serialVersionUID = 6604607833138200300L;
 
   /** Maps of all the buttons. */
-  private HashMap<Object, JButton> buttons;
+  private final HashMap<Object, JButton> buttons;
 
   /** Text pane where the text is. */
   private final JTextComponent textPane;
@@ -98,10 +99,9 @@ public class DetectionRenderer extends AbstractCellEditor implements
     if (buttons.containsKey(value)) {
       return buttons.get(value);
     }
-    if ((value == null) || !(value instanceof CheckWikiDetection)) {
+    if ((value == null) || !(value instanceof CheckWikiDetection detection)) {
       return null;
     }
-    CheckWikiDetection detection = (CheckWikiDetection) value;
     JButton button = new JButton(Utilities.getImageIcon(
         "gnome-edit-find.png", EnumImageSize.SMALL));
     button.setBorderPainted(false);
@@ -120,7 +120,7 @@ public class DetectionRenderer extends AbstractCellEditor implements
   public void goToDetection(String location) {
     if (textPane != null) {
       try {
-        int locationValue = Integer.valueOf(location);
+        int locationValue = Integer.parseInt(location);
         if ((locationValue >= 0) && (locationValue < textPane.getText().length())) {
           textPane.setCaretPosition(locationValue);
           textPane.moveCaretPosition(locationValue);

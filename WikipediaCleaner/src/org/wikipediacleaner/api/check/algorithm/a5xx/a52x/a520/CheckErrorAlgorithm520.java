@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
       return false;
     }
     Integer ns = analysis.getPage().getNamespace();
-    if ((ns == null) || (ns.intValue() != Namespace.MAIN)) {
+    if ((ns == null) || (ns != Namespace.MAIN)) {
       return false;
     }
 
@@ -127,7 +127,7 @@ public class CheckErrorAlgorithm520 extends CheckErrorAlgorithmBase {
   protected void initializeSettings() {
     String tmp = getSpecificProperty(PARAMETER_ABUSE_FILTER, true, true, false);
     abuseFilter = null;
-    if ((tmp != null) && (tmp.trim().length() > 0)) {
+    if ((tmp != null) && (!tmp.trim().isEmpty())) {
       try {
         abuseFilter = Integer.valueOf(tmp);
       } catch (NumberFormatException e) {

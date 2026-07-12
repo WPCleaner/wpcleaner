@@ -12,7 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -45,7 +44,7 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
           " ",
           "&nbsp;",
           "''&nbsp;''")
-      .collect(Collectors.toList());
+      .toList();
 
   /**
    * Analyze a page to check if errors are present.
@@ -86,7 +85,6 @@ public class CheckErrorAlgorithm550 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeLink(

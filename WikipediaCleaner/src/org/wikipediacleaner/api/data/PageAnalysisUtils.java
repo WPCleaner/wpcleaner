@@ -140,6 +140,7 @@ public class PageAnalysisUtils {
                     for (int index = 1; index < currentTemplate.length; index++) {
                       if (parameter.getComputedName().equals(currentTemplate[index])) {
                         good = true;
+                        break;
                       }
                     }
                   }
@@ -217,7 +218,7 @@ public class PageAnalysisUtils {
     }
     String pageContents = pageAnalysis.getContents();
     if ((pageContents == null) ||
-        (pageContents.length() == 0) ||
+        (pageContents.isEmpty()) ||
         (anchors == null)) {
       return;
     }
@@ -226,17 +227,13 @@ public class PageAnalysisUtils {
     List<PageElementInternalLink> links = pageAnalysis.getInternalLinks();
     for (PageElementInternalLink internalLink : links) {
       String anchor = internalLink.getAnchor();
-      if ((anchor != null) && (anchor.trim().length() > 0)) {
+      if ((anchor != null) && (!anchor.trim().isEmpty())) {
         String fullAnchor = internalLink.getFullLink();
         // Check if the internal link is for one of the links
         for (Page link : pageLinks) {
           if ((link != null) &&
               (Page.areSameTitle(link.getTitle(), internalLink.getLink()))) {
-            List<String> listAnchors = anchors.get(link);
-            if (listAnchors == null) {
-              listAnchors = new ArrayList<>();
-              anchors.put(link, listAnchors);
-            }
+            List<String> listAnchors = anchors.computeIfAbsent(link, k -> new ArrayList<>());
             if (!listAnchors.contains(fullAnchor)) {
               listAnchors.add(fullAnchor);
             }

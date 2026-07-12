@@ -7,13 +7,11 @@
 
 package org.wikipediacleaner.api.request.query.list;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -56,37 +54,30 @@ public class ApiXmlCategoryMembersResult extends ApiXmlResult implements ApiCate
       Map<String, String> properties,
       List<Page> list,
       Map<Page, Integer> categories, int depth) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve category members
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/categorymembers/cm", Filters.element());
-      List<Element> results = xpa.evaluate(root);
-      Iterator<Element> iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        Page page = DataManager.getPage(
-            getWiki(), currentNode.getAttributeValue("title"), null, null, null);
-        page.setNamespace(currentNode.getAttributeValue("ns"));
-        page.setPageId(currentNode.getAttributeValue("pageid"));
-        if ((page.getNamespace() != null) &&
-            (page.getNamespace().intValue() == Namespace.CATEGORY)) {
-          categories.put(page, depth + 1);
-        } else {
-          if (!list.contains(page)) {
-            list.add(page);
-          }
+    // Retrieve category members
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/categorymembers/cm", Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    for (Element currentNode : results) {
+      Page page = DataManager.getPage(
+          getWiki(), currentNode.getAttributeValue("title"), null, null, null);
+      page.setNamespace(currentNode.getAttributeValue("ns"));
+      page.setPageId(currentNode.getAttributeValue("pageid"));
+      if ((page.getNamespace() != null) &&
+          (page.getNamespace() == Namespace.CATEGORY)) {
+        categories.put(page, depth + 1);
+      } else {
+        if (!list.contains(page)) {
+          list.add(page);
         }
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/categorymembers",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading category members list", e);
-      throw new APIException("Error parsing XML", e);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/categorymembers",
+        properties);
   }
 }

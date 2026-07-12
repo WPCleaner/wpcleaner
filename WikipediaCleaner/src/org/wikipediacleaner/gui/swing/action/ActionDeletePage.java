@@ -129,7 +129,7 @@ public class ActionDeletePage implements ActionListener {
         parent,
         GT._T("Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"),
         "", null);
-    if ((reason == null) || (reason.trim().length() == 0)) {
+    if ((reason == null) || (reason.trim().isEmpty())) {
       return;
     }
     API api = APIFactory.getAPI();

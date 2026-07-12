@@ -27,7 +27,7 @@ public interface ApiRandomPagesResult extends ApiResult {
    * @param list List to be filled with random pages.
    * @throws APIException Exception thrown by the API.
    */
-  public void executeRandomList(
+  void executeRandomList(
       Map<String, String> properties,
       List<Page> list) throws APIException;
 }

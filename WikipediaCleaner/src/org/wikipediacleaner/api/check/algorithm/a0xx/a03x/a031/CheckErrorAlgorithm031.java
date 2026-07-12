@@ -7,8 +7,6 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a03x.a031;
 
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmTags;
@@ -32,12 +30,7 @@ public class CheckErrorAlgorithm031 extends CheckErrorAlgorithmTags {
   private final static Set<TagType> TAGS;
 
   static {
-	Set<TagType> tmpTags = new HashSet<>();
-    tmpTags.add(HtmlTagType.TABLE);
-    tmpTags.add(HtmlTagType.TD);
-    tmpTags.add(HtmlTagType.TH);
-    tmpTags.add(HtmlTagType.TR);
-    TAGS = Collections.unmodifiableSet(tmpTags);
+    TAGS = Set.of(HtmlTagType.TABLE, HtmlTagType.TD, HtmlTagType.TH, HtmlTagType.TR);
   }
 
   /**

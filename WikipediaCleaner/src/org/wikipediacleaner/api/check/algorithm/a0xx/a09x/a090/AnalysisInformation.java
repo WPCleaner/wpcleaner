@@ -108,7 +108,7 @@ class AnalysisInformation {
         analysis.getWikipedia(), article, null, null, null);
     needColon = Boolean.FALSE;
     if (articlePage.getNamespace() != null) {
-      int ns = articlePage.getNamespace().intValue();
+      int ns = articlePage.getNamespace();
       if (ns % 2 == 0) {
         if ((ns != Namespace.MAIN) &&
             (ns != Namespace.USER) &&

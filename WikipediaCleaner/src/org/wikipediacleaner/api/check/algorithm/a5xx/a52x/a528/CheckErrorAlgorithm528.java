@@ -86,8 +86,8 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
           if (pmidTemplate.length > 2) {
             String templateName = pmidTemplate[0];
             String[] params = pmidTemplate[1].split(",");
-            Boolean suggested = Boolean.valueOf(pmidTemplate[2]);
-            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+            boolean suggested = Boolean.parseBoolean(pmidTemplate[2]);
+            if ((params.length > 0) && (suggested)) {
               TemplateBuilder builder = TemplateBuilder.from(templateName);
               builder.addParam(
                   !"1".equals(params[0]) ? params[0] : null,
@@ -145,7 +145,7 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
       return categoryName;
     }
     if ((trackingCategory != null) &&
-        (trackingCategory.trim().length() > 0)) {
+        (!trackingCategory.trim().isEmpty())) {
       return trackingCategory;
     }
     return null;
@@ -204,7 +204,7 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
     categoryName = null;
     if ((tmp != null) &&
-        (tmp.trim().length() > 0)) {
+        (!tmp.trim().isEmpty())) {
       categoryName = tmp.trim();
     }
 
@@ -235,10 +235,10 @@ public class CheckErrorAlgorithm528 extends CheckErrorAlgorithmBase {
   private String categoryName = null;
 
   /** Templates for PMID */
-  private List<String[]> pmidTemplates = new ArrayList<>();
+  private final List<String[]> pmidTemplates = new ArrayList<>();
 
   /** Interwikis for PMID */
-  private List<String[]> pmidInterwikis = new ArrayList<>();
+  private final List<String[]> pmidInterwikis = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.

@@ -86,7 +86,7 @@ public class PageElementInterwikiLink extends PageElement {
     for (Interwiki tmpInterwiki : interwikis) {
       if ((tmpInterwiki != null) &&
           ((tmpInterwiki.getLanguage() == null) ||
-           (tmpInterwiki.getLanguage().length() == 0) ||
+           (tmpInterwiki.getLanguage().isEmpty()) ||
            beginWithColon) &&
           (interwikiText.equals(tmpInterwiki.getPrefix()))) {
         if (interwiki == null) {

@@ -96,7 +96,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
           int beginError = -1;
           int endError = -1;
           boolean shouldStop = false;
-          String replacement = "";
+          StringBuilder replacement = new StringBuilder();
           while (!shouldStop) {
             shouldStop = true;
             currentValuePos = getLastIndexBeforeWhiteSpace(paramValue, currentValuePos);
@@ -127,7 +127,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 ContentsComment comment = analysis.comments().getAt(paramValueStartIndex + currentValuePos);
                 if (comment != null) {
                   if (endError > 0) {
-                    replacement += analysis.getContents().substring(comment.getBeginIndex(), comment.getEndIndex());
+                    replacement.append(analysis.getContents(), comment.getBeginIndex(), comment.getEndIndex());
                   }
                   shouldStop = false;
                   currentValuePos -= comment.getEndIndex() - comment.getBeginIndex();
@@ -146,7 +146,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
                 analysis, beginError, endError,
                 (tagAfter ? ErrorLevel.WARNING : ErrorLevel.ERROR));
             if (!tagAfter) {
-              errorResult.addReplacement(replacement);
+              errorResult.addReplacement(replacement.toString());
             }
             errors.add(errorResult);
           }
@@ -169,7 +169,7 @@ public class CheckErrorAlgorithm059 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

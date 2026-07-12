@@ -23,7 +23,7 @@ import org.wikipediacleaner.api.rest.transform.RestApiTransformWikitextToLintRes
 public class MediaWikiRESTAPI {
 
   /** HTTP client */
-  private HttpClient httpClient;
+  private final HttpClient httpClient;
 
   /**
    * Constructor.

@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
+import java.io.Serial;
 import java.util.HashMap;
 import java.util.Properties;
 
@@ -30,6 +31,7 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class PageListCellRenderer extends JLabel implements ListCellRenderer<Page> {
 
+  @Serial
   private static final long serialVersionUID = 1456336109709806845L;
 
   private PageAnalysis analysis;
@@ -141,7 +143,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer<Pag
       redirect = pageElement.getRedirects().isRedirect();
       if (redirect && showRedirectBacklinks) {
         Integer backlinks = pageElement.getBacklinksCountInMainNamespace();
-        if ((backlinks != null) && (backlinks.intValue() > 0)) {
+        if ((backlinks != null) && (backlinks > 0)) {
           text += " ← " + backlinks;
         }
       }
@@ -158,7 +160,7 @@ public class PageListCellRenderer extends JLabel implements ListCellRenderer<Pag
         if (!isSelected) {
           foreground = Color.DARK_GRAY;
         }
-      } else if (disambiguation.booleanValue()) {
+      } else if (disambiguation) {
         if (count == null) {
           foreground = Color.RED;
         } else if ((count.getInternalLinkCount() > 0) || (count.getIncorrectTemplateCount() > 0)) {

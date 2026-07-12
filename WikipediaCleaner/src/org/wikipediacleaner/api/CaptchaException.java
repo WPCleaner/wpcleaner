@@ -8,14 +8,14 @@
 package org.wikipediacleaner.api;
 
 
+import java.io.Serial;
+
 /**
  * Generic API Exception.
  */
 public class CaptchaException extends Exception {
 
-  /**
-   * 
-   */
+  @Serial
   private static final long serialVersionUID = 6106358257321983463L;
 
   /**

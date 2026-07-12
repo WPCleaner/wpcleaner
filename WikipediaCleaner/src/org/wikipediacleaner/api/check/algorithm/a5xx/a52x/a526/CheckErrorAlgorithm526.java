@@ -78,7 +78,6 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeInternalLink(
@@ -332,7 +331,7 @@ public class CheckErrorAlgorithm526 extends CheckErrorAlgorithmBase {
   protected void initializeSettings() {
     String tmp = getSpecificProperty(PARAMETER_ABUSE_FILTER, true, true, false);
     abuseFilter = null;
-    if ((tmp != null) && (tmp.trim().length() > 0)) {
+    if ((tmp != null) && (!tmp.trim().isEmpty())) {
       try {
         abuseFilter = Integer.valueOf(tmp);
       } catch (NumberFormatException e) {

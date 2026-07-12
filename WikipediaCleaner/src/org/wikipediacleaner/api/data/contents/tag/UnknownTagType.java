@@ -22,11 +22,6 @@ class UnknownTagType extends TagType {
     super(name.toLowerCase(), true, true, true, true);
   }
 
-  /**
-   * @param obj
-   * @return
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -38,6 +33,7 @@ class UnknownTagType extends TagType {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    return normalizedName.equals(obj);
+    UnknownTagType other = (UnknownTagType) obj;
+    return normalizedName.equals(other.normalizedName);
   }
 }

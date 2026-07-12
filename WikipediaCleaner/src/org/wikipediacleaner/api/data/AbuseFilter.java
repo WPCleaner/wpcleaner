@@ -92,7 +92,7 @@ public class AbuseFilter implements Comparable<AbuseFilter> {
    */
   @Override
   public String toString() {
-    return Integer.toString(id) + " - " + description;
+    return id + " - " + description;
   }
 
   /**

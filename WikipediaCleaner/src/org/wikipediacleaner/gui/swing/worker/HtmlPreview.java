@@ -16,5 +16,5 @@ public interface HtmlPreview {
   /**
    * @param text HTML text.
    */
-  public void setHtml(String text);
+  void setHtml(String text);
 }

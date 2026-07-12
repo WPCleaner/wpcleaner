@@ -29,7 +29,7 @@ public interface ApiTemplatesResult extends ApiPropertiesResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeTemplates(
+  boolean executeTemplates(
       Map<String, String> properties,
       Page page,
       List<Page> list) throws APIException;
@@ -42,7 +42,7 @@ public interface ApiTemplatesResult extends ApiPropertiesResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean setDiambiguationStatus(
+  boolean setDiambiguationStatus(
       Map<String, String> properties,
       Collection<Page> list) throws APIException;
 }

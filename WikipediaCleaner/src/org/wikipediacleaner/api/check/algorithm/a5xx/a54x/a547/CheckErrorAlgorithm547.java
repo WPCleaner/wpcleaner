@@ -57,7 +57,7 @@ public class CheckErrorAlgorithm547 extends CheckErrorAlgorithmBase {
 
     // Only in main name space
     if ((analysis.getPage().getNamespace() == null) ||
-        (analysis.getPage().getNamespace().intValue() != Namespace.MAIN)) {
+        (analysis.getPage().getNamespace() != Namespace.MAIN)) {
       return false;
     }
 

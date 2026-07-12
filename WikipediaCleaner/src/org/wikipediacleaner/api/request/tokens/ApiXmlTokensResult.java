@@ -7,13 +7,11 @@
 
 package org.wikipediacleaner.api.request.tokens;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -48,28 +46,21 @@ public class ApiXmlTokensResult extends ApiXmlResult implements ApiTokensResult 
   public void executeTokens(
       Map<String, String> properties)
           throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Get recent changes list
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/tokens", Filters.element());
-      List<Element> results = xpa.evaluate(root);
-      Iterator<Element> iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String deleteToken = currentNode.getAttributeValue("deletetoken");
-        if (deleteToken != null) {
-          getWiki().getConnection().setDeleteToken(deleteToken);
-        }
-        String editToken = currentNode.getAttributeValue("edittoken");
-        if (editToken != null) {
-          getWiki().getConnection().setEditToken(editToken);
-        }
+    // Get recent changes list
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/tokens", Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    for (Element currentNode : results) {
+      String deleteToken = currentNode.getAttributeValue("deletetoken");
+      if (deleteToken != null) {
+        getWiki().getConnection().setDeleteToken(deleteToken);
       }
-    } catch (JDOMException e) {
-      log.error("Error retrieving tokens", e);
-      throw new APIException("Error parsing XML", e);
+      String editToken = currentNode.getAttributeValue("edittoken");
+      if (editToken != null) {
+        getWiki().getConnection().setEditToken(editToken);
+      }
     }
   }
 }

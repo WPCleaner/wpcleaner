@@ -40,7 +40,7 @@ public class RemoveLinkAction implements ActionListener {
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     if ((textPane != null) &&
         (text != null) &&
-        (text.length() > 0)) {
+        (!text.isEmpty())) {
       try {
         textPane.setCaretPosition(startOffset);
         textPane.moveCaretPosition(endOffset);

@@ -68,16 +68,14 @@ public class TemplateListWindow extends BasicWindow {
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof TemplateListWindow) {
-              TemplateListWindow templates = (TemplateListWindow) window;
+            if (window instanceof TemplateListWindow templates) {
               templates.page = page;
               templates.link = link;
             }
           }
           @Override
           public void displayWindow(BasicWindow window) {
-            if (window instanceof TemplateListWindow) {
-              TemplateListWindow templates = (TemplateListWindow) window;
+            if (window instanceof TemplateListWindow templates) {
               templates.actionReload();
             }
           }

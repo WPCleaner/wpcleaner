@@ -13,7 +13,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.apache.commons.lang3.StringUtils;
@@ -69,9 +68,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     }
 
     // Analyze each image
-    boolean result = analyzeImages(analysis, errors);
-
-    return result;
+    return analyzeImages(analysis, errors);
   }
 
   /**
@@ -190,11 +187,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           if (ImageMagicWordType.VERTICAL_ALIGN_OPTIONS.contains(mwType)) {
             paramsVAlign.add(param);
           } else {
-            List<Parameter> tmpList = paramsOther.get(mwType);
-            if (tmpList == null) {
-              tmpList = new ArrayList<>();
-              paramsOther.put(mwType, tmpList);
-            }
+            List<Parameter> tmpList = paramsOther.computeIfAbsent(mwType, k -> new ArrayList<>());
             tmpList.add(param);
           }
         }
@@ -224,8 +217,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     return result;
   }
 
-  private static final Pattern UPRIGHT_PATTERN = Pattern.compile("(?:\\d++(?:\\.\\d++)?|\\.\\d++)");
-  private static final Pattern UPRIGHT_SURE_PATTERN_= Pattern.compile("(?:\\d(?:\\.\\d++)?|\\.\\d++)");
+  private static final Pattern UPRIGHT_PATTERN = Pattern.compile("\\d++(?:\\.\\d++)?|\\.\\d++");
+  private static final Pattern UPRIGHT_SURE_PATTERN_= Pattern.compile("\\d(?:\\.\\d++)?|\\.\\d++");
   private static final List<Pattern> UPRIGHT_DELETE_PATTERN = Stream
       .of(
           "\\d\\d++ *+px",                           // 12 px
@@ -233,8 +226,8 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
           "\\d++ *+x *+\\d++ *+px",                  // 1x1 px
           "\\d++\\.\\d++ *+x *+\\d++\\.\\d++ *+px")  // 1.1x1.1 px
       .map(Pattern::compile)
-      .collect(Collectors.toList());
-  private static final Pattern UPRIGHT_ZERO_PATTERN = Pattern.compile("(?:0++(?:\\.0++)?|\\.0++)");
+      .toList();
+  private static final Pattern UPRIGHT_ZERO_PATTERN = Pattern.compile("0++(?:\\.0++)?|\\.0++");
   
   /**
    * Report errors for incorrect value in upright parameter.
@@ -271,7 +264,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex, ErrorLevel.ERROR);
 
     // Check for possible replacement
-    String newValue = value.replaceAll(",", ".").replaceAll("\"", "").replaceAll(" ", "").trim();
+    String newValue = value.replace(",", ".").replace("\"", "").replace(" ", "").trim();
     if (newValue.startsWith("O")) {
       newValue = newValue.replaceFirst("O", "0");
     }
@@ -373,9 +366,10 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
     int beginIndex = image.getBeginIndex() + param.getBeginOffset();
     int endIndex = image.getBeginIndex() + param.getEndOffset();
     boolean hasContents = false;
-    for (int index = beginIndex; (index < endIndex) && !hasContents; index++) {
+    for (int index = beginIndex; (index < endIndex); index++) {
       if (contents.charAt(index) != ' ') {
         hasContents = true;
+        break;
       }
     }
     if (!hasContents) {
@@ -393,9 +387,10 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       beginIndex = image.getBeginIndex() + param.getBeginOffset();
       endIndex = image.getBeginIndex() + param.getEndOffset();
       hasContents = false;
-      for (int index = beginIndex; (index < endIndex) && !hasContents; index++) {
+      for (int index = beginIndex; (index < endIndex); index++) {
         if (contents.charAt(index) != ' ') {
           hasContents = true;
+          break;
         }
       }
       CheckErrorResult errorResult = createCheckErrorResult(
@@ -511,10 +506,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
       int endIndex = image.getBeginIndex() + param.getEndOffset();
 
       // Check if modifications can be automatic
-      boolean automatic = true;
-      if (analysis.isInFunction(beginIndex) != null) {
-        automatic = false;
-      }
+      boolean automatic = analysis.isInFunction(beginIndex) == null;
       ErrorLevel errorLevel = ErrorLevel.ERROR;
       if (!paramKeep.getCorrect()) {
         if ((numParam == 1) && param.getCorrect()) {
@@ -555,7 +547,7 @@ public class CheckErrorAlgorithm534 extends CheckErrorAlgorithmBase {
         String contents = analysis.getContents();
         String replacement =
             contents.substring(beginIndexKeep - 1, endIndexKeep) +
-            CommentBuilder.from(contents.substring(beginIndex, endIndex)).toString();
+            CommentBuilder.from(contents.substring(beginIndex, endIndex));
         errorResult.addReplacement(replacement, automatic);
         errors.add(errorResult);
       }

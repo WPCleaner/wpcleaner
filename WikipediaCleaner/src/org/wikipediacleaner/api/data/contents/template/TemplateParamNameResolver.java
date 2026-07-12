@@ -14,7 +14,7 @@ package org.wikipediacleaner.api.data.contents.template;
  */
 public class TemplateParamNameResolver {
 
-  private Integer nextParamNum = Integer.valueOf(1);
+  private Integer nextParamNum = 1;
 
   /**
    * Default constructor.
@@ -30,7 +30,7 @@ public class TemplateParamNameResolver {
    */
   public String nextParameterWithoutRegister(String parameterName) {
     String result = parameterName;
-    if ((result == null) || (result.length() == 0)) {
+    if ((result == null) || (result.isEmpty())) {
       result = nextParamNum.toString();
     }
     return result;
@@ -45,7 +45,7 @@ public class TemplateParamNameResolver {
   public String nextParameter(String parameterName) {
     String result = nextParameterWithoutRegister(parameterName);
     if (result.equals(nextParamNum.toString())) {
-      nextParamNum = Integer.valueOf(nextParamNum.intValue() + 1);
+      nextParamNum = nextParamNum + 1;
     }
     return result;
   }

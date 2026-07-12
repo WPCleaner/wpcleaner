@@ -138,7 +138,7 @@ public class PageElementISSNConfiguration {
   private static class ConfigurationVersion {
 
     /** All versions of configuration */
-    private static Map<EnumWikipedia, ArrayList<ConfigurationVersion>> versions = new HashMap<>();
+    private static final Map<EnumWikipedia, ArrayList<ConfigurationVersion>> versions = new HashMap<>();
 
     /** WPCleaner configuration */
     private final WPCConfiguration config;
@@ -159,11 +159,7 @@ public class PageElementISSNConfiguration {
       ConfigurationVersion version = null;
       synchronized (versions) {
         EnumWikipedia wiki = config.getWiki();
-        ArrayList<ConfigurationVersion> listWiki = versions.get(wiki);
-        if (listWiki == null) {
-          listWiki = new ArrayList<>();
-          versions.put(wiki, listWiki);
-        }
+        ArrayList<ConfigurationVersion> listWiki = versions.computeIfAbsent(wiki, k -> new ArrayList<>());
         int versionNum = config.getVersion();
         while (listWiki.size() <= versionNum) {
           listWiki.add(null);
@@ -203,11 +199,7 @@ public class PageElementISSNConfiguration {
           String templateName = Page.normalizeTitle(ignoreTemplate[0]);
           String paramName = (ignoreTemplate.length > 1) ? ignoreTemplate[1].trim() : null;
           String paramValue = (ignoreTemplate.length > 2) ? ignoreTemplate[2].trim() : null;
-          List<Pair<String, String>> listParams = ignoreTemplates.get(templateName);
-          if (listParams == null) {
-            listParams = new ArrayList<>();
-            ignoreTemplates.put(templateName, listParams);
-          }
+          List<Pair<String, String>> listParams = ignoreTemplates.computeIfAbsent(templateName, k -> new ArrayList<>());
           listParams.add(new ImmutablePair<>(paramName, paramValue));
         }
       }
@@ -235,11 +227,7 @@ public class PageElementISSNConfiguration {
             (autoDashTemplate[1] != null)) {
           String name = Page.normalizeTitle(autoDashTemplate[0]);
           String param = autoDashTemplate[1].trim();
-          List<String> listParams = autoDashTemplates.get(name);
-          if (listParams == null) {
-            listParams = new ArrayList<>();
-            autoDashTemplates.put(name, listParams);
-          }
+          List<String> listParams = autoDashTemplates.computeIfAbsent(name, k -> new ArrayList<>());
           listParams.add(param);
         }
       }
@@ -267,11 +255,7 @@ public class PageElementISSNConfiguration {
             (autoFormatTemplate[1] != null)) {
           String name = Page.normalizeTitle(autoFormatTemplate[0]);
           String param = autoFormatTemplate[1].trim();
-          List<String> listParams = autoFormatTemplates.get(name);
-          if (listParams == null) {
-            listParams = new ArrayList<>();
-            autoFormatTemplates.put(name, listParams);
-          }
+          List<String> listParams = autoFormatTemplates.computeIfAbsent(name, k -> new ArrayList<>());
           listParams.add(param);
         }
       }

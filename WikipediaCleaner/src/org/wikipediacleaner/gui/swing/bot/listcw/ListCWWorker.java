@@ -89,7 +89,7 @@ public class ListCWWorker extends BasicWorker {
   final boolean onlyRecheck;
 
   /** Time spent in analysis. */
-  AnalysisPerformance analysisTime;
+  final AnalysisPerformance analysisTime;
 
   /** Count of pages analyzed */
   int countAnalyzed;
@@ -532,7 +532,7 @@ public class ListCWWorker extends BasicWorker {
       String contents = page.getContents();
       if (!initialRevisionId.equals(page.getRevisionId()) ||
           !initialContents.equals(contents)) {
-        logCW.info("Page " + truePageName + " has been modified");
+        logCW.info("Page {} has been modified", truePageName);
         throw new APIException("Page " + truePageName + " has been modified");
       }
 

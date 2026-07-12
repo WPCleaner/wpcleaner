@@ -68,7 +68,7 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(
             analysis,
             defaultSort.getBeginIndex(), defaultSort.getEndIndex());
-        if (text.trim().length() > 0) {
+        if (!text.trim().isEmpty()) {
           errorResult.addReplacement(
               PageElementFunction.createFunction(defaultSort.getFunctionName(), text),
               true);
@@ -94,7 +94,7 @@ public class CheckErrorAlgorithm088 extends CheckErrorAlgorithmBase {
 
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

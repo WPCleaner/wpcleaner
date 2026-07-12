@@ -152,7 +152,7 @@ public class PageAnalysis {
   public boolean isInNamespace(int namespace) {
     if ((page != null) &&
         (page.getNamespace() != null)) {
-      return (page.getNamespace().intValue() == namespace);
+      return (page.getNamespace() == namespace);
     }
     return false;
   }
@@ -307,7 +307,7 @@ public class PageAnalysis {
     if (withTitles) {
       elements.addAll(getTitles());
     }
-    Collections.sort(elements, new ContentsElementComparator());
+    elements.sort(new ContentsElementComparator());
     return elements;
   }
 
@@ -324,8 +324,7 @@ public class PageAnalysis {
     }
 
     // Check if in internal link
-    PageElementInternalLink internalLink = isInInternalLink(currentIndex);
-    element = internalLink;
+    element = isInInternalLink(currentIndex);
 
     // Check if in template
     PageElementTemplate template = isInTemplate(currentIndex);
@@ -595,6 +594,7 @@ public class PageAnalysis {
 
       // Update areas of non wiki text
       areas.addComments(comments().getAll());
+      level1Done = true;
 
       if (perf != null) {
         perf.printEndAlways();
@@ -717,8 +717,7 @@ public class PageAnalysis {
       String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
-      List<Areas.Area> tmpAreas = new ArrayList<>();
-      tmpAreas.addAll(areas.getAreas());
+      List<Areas.Area> tmpAreas = new ArrayList<>(areas.getAreas());
       while (currentIndex < maxIndex) {
 
         // Checking if the current index is in wiki text area.
@@ -816,8 +815,7 @@ public class PageAnalysis {
       String text = contents.getText();
       int currentIndex = 0;
       int areaIndex = 0;
-      List<Areas.Area> tmpAreas = new ArrayList<>();
-      tmpAreas.addAll(areas.getAreas());
+      List<Areas.Area> tmpAreas = new ArrayList<>(areas.getAreas());
       while (currentIndex < maxIndex) {
 
         // Checking if the current index is in wiki text area.
@@ -1144,7 +1142,7 @@ public class PageAnalysis {
 
     // Check if this is an external link
     String text = contents.getText();
-    if ((externalLinks.size() == 0) ||
+    if ((externalLinks.isEmpty()) ||
         (externalLinks.get(externalLinks.size() - 1).getEndIndex() <= currentIndex)) {
       PageElementExternalLink link = PageElementExternalLink.analyzeBlock(
           getWikipedia(), text, currentIndex, this);
@@ -1401,7 +1399,7 @@ public class PageAnalysis {
   /**
    * Links count.
    */
-  private Map<String, InternalLinkCount> linksCount = new HashMap<>();
+  private final Map<String, InternalLinkCount> linksCount = new HashMap<>();
 
   /**
    * @param link Link.
@@ -1424,7 +1422,7 @@ public class PageAnalysis {
    * @param links Links.
    */
   public void countLinks(List<Page> links) {
-    if ((links == null) || (links.size() == 0)) {
+    if ((links == null) || (links.isEmpty())) {
       return;
     }
     List<Page> interestingLinks = new ArrayList<>();
@@ -1433,7 +1431,7 @@ public class PageAnalysis {
         interestingLinks.add(link);
       }
     }
-    if (interestingLinks.size() > 0) {
+    if (!interestingLinks.isEmpty()) {
       InternalLinkCounter counter = new InternalLinkCounter(linksCount, interestingLinks);
       PageAnalysisUtils.findInternalLinks(this, interestingLinks, counter);
     }
@@ -2286,7 +2284,7 @@ public class PageAnalysis {
     if (checkWikiErrors == null) {
       checkWikiErrors = new HashMap<>();
     }
-    checkWikiErrors.put(Integer.valueOf(errorNumber), new Result(found, errors));
+    checkWikiErrors.put(errorNumber, new Result(found, errors));
   }
 
   /**
@@ -2297,6 +2295,6 @@ public class PageAnalysis {
     if (checkWikiErrors == null) {
       return null;
     }
-    return checkWikiErrors.get(Integer.valueOf(errorNumber));
+    return checkWikiErrors.get(errorNumber);
   }
 }

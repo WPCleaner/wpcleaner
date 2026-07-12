@@ -8,8 +8,8 @@
 
 package org.wikipediacleaner.api.data;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -88,7 +88,6 @@ public class SearchEngine {
   /**
    * @param map Map of search engines (parameter name => search engines)
    * @param searchEngines Search engines configuration
-   * @param template
    */
   private static void populateSearchEnginesMap(
       Map<String, List<SearchEngine>> map,
@@ -98,29 +97,21 @@ public class SearchEngine {
       return;
     }
 
-    try {
-      for (String[] searchEngine : searchEngines) {
-        if ((searchEngine.length >= 4) &&
-            (Page.areSameTitle(template.getTemplateName(), searchEngine[2]))) {
-          String[] parameterNames = searchEngine[3].split("\\,");
-          for (String parameterName : parameterNames) {
-            String value = template.getParameterValue(parameterName);
-            if ((value != null) && (value.trim().length() > 0)) {
-              List<SearchEngine> result = map.get(parameterName);
-              if (result == null) {
-                result = new ArrayList<>();
-                map.put(parameterName, result);
-              }
-              String engineName = searchEngine[0].trim();
-              String url = MessageFormat.format(
-                  searchEngine[1].trim(), URLEncoder.encode(value, "UTF8"));
-              result.add(new SearchEngine(engineName, url));
-            }
+    for (String[] searchEngine : searchEngines) {
+      if ((searchEngine.length >= 4) &&
+          (Page.areSameTitle(template.getTemplateName(), searchEngine[2]))) {
+        String[] parameterNames = searchEngine[3].split("\\,");
+        for (String parameterName : parameterNames) {
+          String value = template.getParameterValue(parameterName);
+          if ((value != null) && (!value.trim().isEmpty())) {
+            List<SearchEngine> result = map.computeIfAbsent(parameterName, k -> new ArrayList<>());
+            String engineName = searchEngine[0].trim();
+            String url = MessageFormat.format(
+                searchEngine[1].trim(), URLEncoder.encode(value, StandardCharsets.UTF_8));
+            result.add(new SearchEngine(engineName, url));
           }
         }
       }
-    } catch (UnsupportedEncodingException e) {
-      // Nothing to do
     }
   }
 }

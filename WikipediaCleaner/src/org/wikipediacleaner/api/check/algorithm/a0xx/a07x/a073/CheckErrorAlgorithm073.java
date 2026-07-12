@@ -126,10 +126,10 @@ public class CheckErrorAlgorithm073 extends CheckErrorAlgorithmISBN {
     // Add search for other identifiers
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as OCLC"),
-        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", number))));
+        new ActionExternalViewer(MessageFormat.format("https://worldcat.org/oclc/{0}", number))));
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as LCCN"),
-        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", number))));
+        new ActionExternalViewer(MessageFormat.format("https://lccn.loc.gov/{0}", number))));
 
     // Add ISSN if number starts with 977=Prefix for ISSN
     if (number.startsWith("977")) { // Prefix for ISSN

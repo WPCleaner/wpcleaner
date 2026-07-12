@@ -24,5 +24,5 @@ public interface ApiSiteInfoResult extends ApiResult {
    * @param properties Properties defining request.
    * @throws APIException Exception thrown by the API.
    */
-  public void executeSiteInformation(Map<String, String> properties) throws APIException;
+  void executeSiteInformation(Map<String, String> properties) throws APIException;
 }

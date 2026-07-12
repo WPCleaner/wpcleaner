@@ -109,9 +109,8 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
         }
       }
     }
-    CheckErrorResult result = createCheckErrorResult(
+    return createCheckErrorResult(
         analysis, issn.getBeginIndex(), issn.getEndIndex(), level);
-    return result;
   }
 
   private final String[] possibleSplit = {
@@ -138,16 +137,14 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
       // Basic splits
       for (String split : possibleSplit) {
         issnValues.clear();
-        for (String value : issn.getISSNNotTrimmed().trim().split(split)) {
-          issnValues.add(value);
-        }
+        Collections.addAll(issnValues, issn.getISSNNotTrimmed().trim().split(split));
         addSuggestions(analysis, errorResult, issn, issnValues);
       }
 
       // Evolved split
       String issnValue = issn.getISSNNotTrimmed().trim();
       issnValues.clear();
-      while (issnValue.length() > 0) {
+      while (!issnValue.isEmpty()) {
         // Remove extra characters
         int index = 0;
         while ((index < issnValue.length()) &&
@@ -190,7 +187,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
     Iterator<String> itValues = issnValues.iterator();
     while (itValues.hasNext()) {
       String value = itValues.next();
-      if ((value == null) || (value.trim().length() == 0)) {
+      if ((value == null) || (value.trim().isEmpty())) {
         itValues.remove();
       }
     }
@@ -201,7 +198,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
       String issnValue = issnValues.get(numIssn);
 
       // Remove extra characters at the beginning
-      while ((issnValue.length() > 0) &&
+      while ((!issnValue.isEmpty()) &&
              (extraChars.indexOf(issnValue.charAt(0)) >= 0)) {
         issnValue = issnValue.substring(1);
       }
@@ -214,17 +211,17 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
       }
 
       // Remove extra characters at the beginning
-      while ((issnValue.length() > 0) &&
+      while ((!issnValue.isEmpty()) &&
              (extraChars.indexOf(issnValue.charAt(0)) >= 0)) {
         issnValue = issnValue.substring(1);
       }
 
       // Remove extra characters at both extremities
-      while ((issnValue.length() > 0) &&
+      while ((!issnValue.isEmpty()) &&
              (extraChars.indexOf(issnValue.charAt(0)) >= 0)) {
         issnValue = issnValue.substring(1);
       }
-      while ((issnValue.length() > 0) &&
+      while ((!issnValue.isEmpty()) &&
              (extraChars.indexOf(issnValue.charAt(issnValue.length() - 1)) >= 0)) {
         issnValue = issnValue.substring(0, issnValue.length() - 1);
       }
@@ -235,7 +232,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
     itValues = issnValues.iterator();
     while (itValues.hasNext()) {
       String value = itValues.next();
-      if ((value == null) || (value.trim().length() == 0)) {
+      if ((value == null) || (value.trim().isEmpty())) {
         itValues.remove();
       }
     }
@@ -257,14 +254,14 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
         if (!value.equals(issn.getISSNNotTrimmed())) {
           errorResult.addReplacement(issnValues.get(0));
         }
-      } else if (issnValues.size() > 0) {
+      } else if (!issnValues.isEmpty()) {
         if (issn.isTemplateParameter()) {
           PageElementTemplate template = analysis.isInTemplate(issn.getBeginIndex());
           if (template != null) {
             Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
             if ((param != null) &&
                 (param.getName() != null) &&
-                (param.getName().trim().length() > 0)) {
+                (!param.getName().trim().isEmpty())) {
               String name = param.getName().trim();
               int index = name.length();
               while ((index > 0) &&
@@ -273,19 +270,19 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
               }
               int currentNum = 1;
               if (index < name.length()) {
-                currentNum = Integer.valueOf(name.substring(index));
+                currentNum = Integer.parseInt(name.substring(index));
                 name = name.substring(0, index);
               }
               currentNum++;
               StringBuilder buffer = new StringBuilder();
               buffer.append(issnValues.get(0));
               for (int issnNum = 1; issnNum < issnValues.size(); issnNum++) {
-                while (template.getParameterIndex(name + Integer.toString(currentNum)) >= 0) {
+                while (template.getParameterIndex(name + currentNum) >= 0) {
                   currentNum++;
                 }
                 buffer.append(" |");
                 buffer.append(name);
-                buffer.append(Integer.toString(currentNum));
+                buffer.append(currentNum);
                 buffer.append("=");
                 buffer.append(issnValues.get(issnNum));
                 currentNum++;
@@ -316,7 +313,7 @@ public abstract class CheckErrorAlgorithmISSN extends CheckErrorAlgorithmBase {
         String replacement = issn.askForHelp(helpNeededTemplate, reason);
         if (replacement != null) {
           errorResult.addReplacement(
-              replacement.toString(),
+              replacement,
               GT._T("Ask for help using {0}", TemplateBuilder.from(helpNeededTemplate[0]).toString()));
         }
       }

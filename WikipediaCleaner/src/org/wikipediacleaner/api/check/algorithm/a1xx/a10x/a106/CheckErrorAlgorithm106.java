@@ -94,7 +94,7 @@ public class CheckErrorAlgorithm106 extends CheckErrorAlgorithmISSN {
           Parameter param = template.getParameterAtIndex(issn.getBeginIndex());
           if ((param != null) &&
               (param.getName() != null) &&
-              (param.getName().trim().length() > 0)) {
+              (!param.getName().trim().isEmpty())) {
             String name = param.getName().trim();
             for (String[] specialValue : specialValues) {
               if ((specialValue.length > 2) &&

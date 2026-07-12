@@ -36,7 +36,7 @@ public class TagBuilder {
   /**
    * Private constructor.
    * 
-   * @param tagName Name of the tag.
+   * @param name Name of the tag.
    * @param format Format of the tag.
    */
   private TagBuilder(@Nonnull String name, @Nonnull TagFormat format) {
@@ -53,8 +53,7 @@ public class TagBuilder {
    * @return Builder initialized with the name and format of the tag.
    */
   public static @Nonnull TagBuilder from(@Nonnull String tagName, @Nonnull TagFormat format) {
-    TagBuilder builder = new TagBuilder(tagName, format);
-    return builder;
+    return new TagBuilder(tagName, format);
   }
 
   /**
@@ -65,8 +64,7 @@ public class TagBuilder {
    * @return Builder initialized with the name and format of the tag.
    */
   public static @Nonnull TagBuilder from(@Nonnull TagType tagType, @Nonnull TagFormat format) {
-    TagBuilder builder = new TagBuilder(tagType.getNormalizedName(), format);
-    return builder;
+    return new TagBuilder(tagType.getNormalizedName(), format);
   }
 
   /**

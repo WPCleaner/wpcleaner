@@ -100,7 +100,7 @@ public class PageElementISBNConfiguration {
   private static class ConfigurationVersion {
 
     /** All versions of configuration */
-    private static Map<EnumWikipedia, ArrayList<ConfigurationVersion>> versions = new HashMap<>();
+    private static final Map<EnumWikipedia, ArrayList<ConfigurationVersion>> versions = new HashMap<>();
 
     /** WPCleaner configuration */
     private final WPCConfiguration config;
@@ -110,9 +110,6 @@ public class PageElementISBNConfiguration {
 
     /**
      * Retrieve configuration for a given version.
-     * 
-     * @param config Configuration.
-     * @return
      */
     public static ConfigurationVersion getConfigurationVersion(WPCConfiguration config) {
       if ((config == null) || (config.getVersion() < 0)) {
@@ -121,11 +118,7 @@ public class PageElementISBNConfiguration {
       ConfigurationVersion version = null;
       synchronized (versions) {
         EnumWikipedia wiki = config.getWiki();
-        ArrayList<ConfigurationVersion> listWiki = versions.get(wiki);
-        if (listWiki == null) {
-          listWiki = new ArrayList<>();
-          versions.put(wiki, listWiki);
-        }
+        ArrayList<ConfigurationVersion> listWiki = versions.computeIfAbsent(wiki, k -> new ArrayList<>());
         int versionNum = config.getVersion();
         while (listWiki.size() <= versionNum) {
           listWiki.add(null);
@@ -162,11 +155,7 @@ public class PageElementISBNConfiguration {
           String paramName = (ignoreTemplate.length > 1) ? ignoreTemplate[1].trim() : null;
           String paramValue = (ignoreTemplate.length > 2) ? ignoreTemplate[2].trim() : null;
           String ignoredParam = (ignoreTemplate.length > 3) ? ignoreTemplate[3].trim() : null;
-          List<IgnoreTemplates> listParams = ignoreTemplates.get(templateName);
-          if (listParams == null) {
-            listParams = new ArrayList<>();
-            ignoreTemplates.put(templateName, listParams);
-          }
+          List<IgnoreTemplates> listParams = ignoreTemplates.computeIfAbsent(templateName, k -> new ArrayList<>());
           listParams.add(new IgnoreTemplates(paramName, paramValue, ignoredParam));
         }
       }

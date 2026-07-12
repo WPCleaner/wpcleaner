@@ -7,8 +7,6 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a01x.a014;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmUnclosedTags;
@@ -26,10 +24,7 @@ public class CheckErrorAlgorithm014 extends CheckErrorAlgorithmUnclosedTags {
   private static final List<TagType> TAGS;
 
   static {
-    List<TagType> tmpList = new ArrayList<>();
-    tmpList.add(WikiTagType.SOURCE);
-    tmpList.add(WikiTagType.SYNTAXHIGHLIGHT);
-    TAGS = Collections.unmodifiableList(tmpList);
+    TAGS = List.of(WikiTagType.SOURCE, WikiTagType.SYNTAXHIGHLIGHT);
   }
 
   public CheckErrorAlgorithm014() {

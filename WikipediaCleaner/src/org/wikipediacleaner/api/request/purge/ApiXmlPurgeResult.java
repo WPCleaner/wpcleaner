@@ -10,7 +10,6 @@ package org.wikipediacleaner.api.request.purge;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
-import org.jdom2.input.JDOMParseException;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.request.ApiRequest;
@@ -42,11 +41,6 @@ public class ApiXmlPurgeResult extends ApiXmlResult implements ApiPurgeResult {
   public void executePurge(
       Map<String, String> properties)
           throws APIException {
-    try {
-      checkForError(getRoot(properties, ApiRequest.MAX_ATTEMPTS));
-    } catch (JDOMParseException e) {
-      log.error("Error purging page cache", e);
-      throw new APIException("Error parsing XML", e);
-    }
+    checkForError(getRoot(properties, ApiRequest.MAX_ATTEMPTS));
   }
 }

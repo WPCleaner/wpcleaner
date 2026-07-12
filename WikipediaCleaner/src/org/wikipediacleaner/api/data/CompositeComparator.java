@@ -17,9 +17,9 @@ import java.util.List;
 
 /**
  * A generic composite comparator class.
- * 
+ * <p>
  * A list of several simple comparators are used one after
- * an other until a meaningful result is obtained.
+ * another until a meaningful result is obtained.
  * @param <T> Type of classes.
  */
 public class CompositeComparator<T> implements NamedComparator<T>, Cloneable, Externalizable {

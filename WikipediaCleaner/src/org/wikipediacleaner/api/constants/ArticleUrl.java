@@ -11,6 +11,7 @@ package org.wikipediacleaner.api.constants;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,8 +30,8 @@ public class ArticleUrl {
   private static Charset iso88591Charset = null;
 
   static {
-    utf8Charset = Charset.forName("UTF8");
-    iso88591Charset = Charset.forName("ISO-8859-1");
+    utf8Charset = StandardCharsets.UTF_8;
+    iso88591Charset = StandardCharsets.ISO_8859_1;
   }
 
   /**
@@ -148,19 +149,17 @@ public class ArticleUrl {
     }
 
     // Check that URL is coherent with provided base
-    StringBuilder buffer = new StringBuilder();
-    buffer.append("//");
-    buffer.append(uri.getAuthority());
-    buffer.append(HttpUtils.parseEncodedString(uri.getPath(), utf8Charset, iso88591Charset));
     int paramIndex = base.indexOf("$1");
     if (paramIndex < 0) {
       return null;
     }
-    String bufferStr = buffer.toString();
-    if (bufferStr.length() <= paramIndex) {
+    String buffer = "//" +
+        uri.getAuthority() +
+        HttpUtils.parseEncodedString(uri.getPath(), utf8Charset, iso88591Charset);
+    if (buffer.length() <= paramIndex) {
       return null;
     }
-    if (!bufferStr.startsWith(base.substring(0, paramIndex))) {
+    if (!buffer.startsWith(base.substring(0, paramIndex))) {
       return null;
     }
 
@@ -183,7 +182,7 @@ public class ArticleUrl {
       }
     }
 
-    return new ArticleUrl(bufferStr.substring(paramIndex), paramValues, uri.getFragment());
+    return new ArticleUrl(buffer.substring(paramIndex), paramValues, uri.getFragment());
   }
 
   /**
@@ -209,11 +208,9 @@ public class ArticleUrl {
     }
 
     // Check that URL is coherent with provided base
-    StringBuilder buffer = new StringBuilder();
-    buffer.append("//");
-    buffer.append(uri.getAuthority());
-    buffer.append(HttpUtils.parseEncodedString(uri.getRawPath(), utf8Charset, iso88591Charset));
-    String bufferStr = buffer.toString();
+    String bufferStr = "//" +
+        uri.getAuthority() +
+        HttpUtils.parseEncodedString(uri.getRawPath(), utf8Charset, iso88591Charset);
     if (!bufferStr.equals(base)) {
       return null;
     }
@@ -268,7 +265,7 @@ public class ArticleUrl {
     String tmpTitle = title;
     if (tmpTitle != null) {
       tmpTitle = tmpTitle.replaceAll("\\_", " ");
-      tmpTitle = tmpTitle.replaceAll("  ", " ");
+      tmpTitle = tmpTitle.replace("  ", " ");
       if (tmpTitle.endsWith("/")) {
         tmpTitle = tmpTitle.substring(0, tmpTitle.length() - 1);
       }

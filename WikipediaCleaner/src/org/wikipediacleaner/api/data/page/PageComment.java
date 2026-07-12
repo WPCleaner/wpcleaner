@@ -184,10 +184,9 @@ public class PageComment {
         (maxOtherArticles == null)) {
       return Optional.empty();
     }
-    return Optional.of(Integer.valueOf(
-        (maxMainArticles != null ? maxMainArticles.intValue() : 0) +
-        (maxTemplateArticles != null ? maxTemplateArticles.intValue() : 0) +
-        (maxOtherArticles != null ? maxOtherArticles.intValue() : 0)));
+    return Optional.of((maxMainArticles != null ? maxMainArticles : 0) +
+        (maxTemplateArticles != null ? maxTemplateArticles : 0) +
+        (maxOtherArticles != null ? maxOtherArticles : 0));
   }
 
   /**
@@ -195,14 +194,14 @@ public class PageComment {
    */
   public void fixValues() {
     if ((maxArticles != null) && (maxOtherArticles == null)) {
-      int tmp = maxArticles.intValue();
+      int tmp = maxArticles;
       if (maxMainArticles != null) {
-        tmp -= maxMainArticles.intValue();
+        tmp -= maxMainArticles;
       }
       if (maxTemplateArticles != null) {
-        tmp -= maxTemplateArticles.intValue();
+        tmp -= maxTemplateArticles;
       }
-      maxOtherArticles = Integer.valueOf(tmp);
+      maxOtherArticles = tmp;
     }
   }
 

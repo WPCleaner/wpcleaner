@@ -102,7 +102,7 @@ public class CheckErrorAlgorithm100 extends CheckErrorAlgorithmBase {
                     isListTag(nextTag)) {
                   replacement =
                       contents.substring(beginIndex, endIndex) +
-                      TagBuilder.from(tag.getName(), TagFormat.CLOSE).toString();
+                      TagBuilder.from(tag.getName(), TagFormat.CLOSE);
                   automatic = true;
                 }
               } else if (currentChar == '<') {

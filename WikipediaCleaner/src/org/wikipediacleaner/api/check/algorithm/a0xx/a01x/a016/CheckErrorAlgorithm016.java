@@ -121,13 +121,13 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
           begin = Math.max(index - Character.charCount(contents.codePointBefore(index)), 0);
         }
         List<Integer> controls = new ArrayList<>();
-        controls.add(Integer.valueOf(codePoint));
+        controls.add(codePoint);
         int end = index + Character.charCount(codePoint);
         while ((end < endArea) &&
                ((getControlCharacter(contents.codePointBefore(end)) != null) ||
                 (getControlCharacter(contents.codePointAt(end)) != null))) {
-          Integer controlNum = Integer.valueOf(contents.codePointAt(end));
-          if ((controlNum != null) && (!controls.contains(controlNum))) {
+          Integer controlNum = contents.codePointAt(end);
+          if (!controls.contains(controlNum)) {
             controls.add(controlNum);
           }
           end += Character.charCount(contents.codePointAt(end));
@@ -137,11 +137,11 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
         CheckErrorResult errorResult = createCheckErrorResult(analysis, begin, end);
         boolean controlInTitle = false;
         for (Integer controlFound : controls) {
-          ControlCharacter found = getControlCharacter(controlFound.intValue());
+          ControlCharacter found = getControlCharacter(controlFound);
           if (found != null) {
             errorResult.addText(
-                Integer.toHexString(controlFound.intValue()) + " - " + GT._T(found.description));
-            controlInTitle |= analysis.getPage().getTitle().codePoints().anyMatch(value -> value == controlFound.intValue());
+                Integer.toHexString(controlFound) + " - " + GT._T(found.description));
+            controlInTitle |= analysis.getPage().getTitle().codePoints().anyMatch(value -> value == controlFound);
           }
         }
         StringBuilder replacementB = new StringBuilder();
@@ -320,7 +320,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
     if (control != null) {
       String propertyName = "use_" + Integer.toHexString(codePoint).toUpperCase();
       String filter = getSpecificProperty(propertyName, true, true, false);
-      if ((filter != null) && (Boolean.FALSE.equals(Boolean.valueOf(filter)))) {
+      if ((filter != null) && (!Boolean.parseBoolean(filter))) {
         control = null;
       }
     }
@@ -339,7 +339,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {
@@ -376,7 +376,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    onlyTemplates = Boolean.valueOf(getSpecificProperty(
+    onlyTemplates = Boolean.parseBoolean(getSpecificProperty(
         PARAMETER_ONLY_TEMPLATES, true, true, false));
   }
 
@@ -449,7 +449,7 @@ public class CheckErrorAlgorithm016 extends CheckErrorAlgorithmBase {
      * @param safe True if removing the control character is safe.
      * @param description Description of the control character.
      */
-    private ControlCharacter(
+    ControlCharacter(
         int begin, int end,
         boolean removable, boolean safe,
         Boolean safeInRedirect, Boolean safeInAnchor,

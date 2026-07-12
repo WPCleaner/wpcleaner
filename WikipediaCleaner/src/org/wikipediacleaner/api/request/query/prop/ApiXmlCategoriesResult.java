@@ -15,7 +15,6 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -56,39 +55,32 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
       Map<String, String> properties,
       Page page,
       List<Page> list) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve back links
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/pages/page/categories/cl", Filters.element());
-      List<Element> listCategories = xpa.evaluate(root);
-      Iterator<Element> itCategory = listCategories.iterator();
-      while (itCategory.hasNext()) {
-        Element currentCategory = itCategory.next();
-        String pageId = currentCategory.getAttributeValue("pageid");
-        String ns = currentCategory.getAttributeValue("ns");
-        String title = currentCategory.getAttributeValue("title");
-        Page category = DataManager.getPage(
-            getWiki(), title, null, null, null);
-        category.setNamespace(ns);
-        category.setPageId(pageId);
-        if (currentCategory.getAttribute("missing") != null) {
-          category.setExisting(Boolean.FALSE);
-        }
-        if (!list.contains(category)) {
-          list.add(category);
-        }
+    // Retrieve back links
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/pages/page/categories/cl", Filters.element());
+    List<Element> listCategories = xpa.evaluate(root);
+    for (Element currentCategory : listCategories) {
+      String pageId = currentCategory.getAttributeValue("pageid");
+      String ns = currentCategory.getAttributeValue("ns");
+      String title = currentCategory.getAttributeValue("title");
+      Page category = DataManager.getPage(
+          getWiki(), title, null, null, null);
+      category.setNamespace(ns);
+      category.setPageId(pageId);
+      if (currentCategory.getAttribute("missing") != null) {
+        category.setExisting(Boolean.FALSE);
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/categories",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading templates", e);
-      throw new APIException("Error parsing XML", e);
+      if (!list.contains(category)) {
+        list.add(category);
+      }
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/categories",
+        properties);
   }
 
   /**
@@ -103,55 +95,50 @@ public class ApiXmlCategoriesResult extends ApiXmlPropertiesResult implements Ap
   public boolean setDiambiguationStatus(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Manage redirects and missing pages
-      updateRedirect(root, pages);
+    // Manage redirects and missing pages
+    updateRedirect(root, pages);
 
-      // Set disambiguation status
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/pages/page", Filters.element());
-      List<Element> results = xpa.evaluate(root);
-      Iterator<Element> iter = results.iterator();
-      XPathExpression<Element> xpaCategory = XPathFactory.instance().compile(
-          "categories/cl", Filters.element());
-      List<Page> tmpPages = new ArrayList<>();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        String title = currentNode.getAttributeValue("title");
-        for (Page p : pages) {
-          tmpPages.clear();
-          Iterator<Page> it = p.getRedirects().getIteratorWithPage();
-          while (it.hasNext()) {
-            Page p2 = it.next();
-            tmpPages.add(p2);
-            if ((p2.getTitle() != null) &&
-                (Page.areSameTitle(p2.getTitle(), title))) {
-              List<Element> listCategories = xpaCategory.evaluate(currentNode);
-              boolean dab = false;
-              for (Element category : listCategories) {
-                if (!dab && (category.getAttribute("ns").getValue().equals("" + Namespace.CATEGORY))) {
-                  dab = true;
-                }
+    // Set disambiguation status
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/pages/page", Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    Iterator<Element> iter = results.iterator();
+    XPathExpression<Element> xpaCategory = XPathFactory.instance().compile(
+        "categories/cl", Filters.element());
+    List<Page> tmpPages = new ArrayList<>();
+    while (iter.hasNext()) {
+      Element currentNode = iter.next();
+      String title = currentNode.getAttributeValue("title");
+      for (Page p : pages) {
+        tmpPages.clear();
+        Iterator<Page> it = p.getRedirects().getIteratorWithPage();
+        while (it.hasNext()) {
+          Page p2 = it.next();
+          tmpPages.add(p2);
+          if ((p2.getTitle() != null) &&
+              (Page.areSameTitle(p2.getTitle(), title))) {
+            List<Element> listCategories = xpaCategory.evaluate(currentNode);
+            boolean dab = false;
+            for (Element category : listCategories) {
+              if (!dab && (category.getAttribute("ns").getValue().equals("" + Namespace.CATEGORY))) {
+                dab = true;
               }
-              if (dab) {
-                for (Page p3 : tmpPages) {
-                  p3.setDisambiguationPage(Boolean.TRUE);
-                }
+            }
+            if (dab) {
+              for (Page p3 : tmpPages) {
+                p3.setDisambiguationPage(Boolean.TRUE);
               }
             }
           }
         }
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/categories",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error updating disambiguation status", e);
-      throw new APIException("Error parsing XML", e);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/categories",
+        properties);
   }
 }

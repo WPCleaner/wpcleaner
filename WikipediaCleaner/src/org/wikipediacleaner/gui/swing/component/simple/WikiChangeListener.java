@@ -20,5 +20,5 @@ public interface WikiChangeListener {
    * 
    * @param wiki New wiki.
    */
-  public void changeWiki(EnumWikipedia wiki);
+  void changeWiki(EnumWikipedia wiki);
 }

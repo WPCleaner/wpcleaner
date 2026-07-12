@@ -93,7 +93,7 @@ public class PageElementISBN extends PageElement {
                 }
               }
               for (String param : params) {
-                if ((param != null) && (param.length() > 0)) {
+                if ((param != null) && (!param.isEmpty())) {
                   analyzeTemplateParams(
                       analysis, isbns, isbnConfig,
                       template, param,
@@ -117,7 +117,7 @@ public class PageElementISBN extends PageElement {
               analyzeTemplateParams(
                   analysis, isbns, isbnConfig,
                   template,
-                  ((isbnTemplate.length > 1) && (isbnTemplate[1].length() > 0)) ? isbnTemplate[1] : "1",
+                  ((isbnTemplate.length > 1) && (!isbnTemplate[1].isEmpty())) ? isbnTemplate[1] : "1",
                   false, false, false, true);
             }
           }
@@ -432,7 +432,7 @@ public class PageElementISBN extends PageElement {
         boolean done = false;
         if ((template != null) &&
             (parameter != null) &&
-            (isCorrect == false) &&
+            (!isCorrect) &&
             (ignoreIncorrect != null)) {
           for (String[] ignore : ignoreIncorrect) {
             if ((ignore.length > 1) &&
@@ -516,7 +516,7 @@ public class PageElementISBN extends PageElement {
       if (nameOk) {
         String paramValue = param.getValue();
         if ((paramValue == null) ||
-            (paramValue.trim().length() == 0) ||
+            (paramValue.trim().isEmpty()) ||
             "{{#property:p212}}".equalsIgnoreCase(paramValue.trim()) || // ISBN-13
             "{{#property:p957}}".equalsIgnoreCase(paramValue.trim())) { // ISBN-10
           nameOk = false;
@@ -608,13 +608,13 @@ public class PageElementISBN extends PageElement {
             }
           }
 
-          if (paramValue.length() > 0) {
+          if (!paramValue.isEmpty()) {
             isbns.add(new PageElementISBN(
                 beginIndex, endIndex, analysis, value,
                 true, correct, helpRequested, template));
           }
         } else if (acceptAllValues) {
-          if (paramValue.length() > 0) {
+          if (!paramValue.isEmpty()) {
             isbns.add(new PageElementISBN(
                 template.getParameterValueStartIndex(paramNum),
                 template.getParameterValueStartIndex(paramNum) + paramValue.length(),
@@ -826,10 +826,10 @@ public class PageElementISBN extends PageElement {
     addCorrectISBN(result, prefix, cleanedISBN);
 
     // Common mistyped characters
-    cleanedISBN = cleanedISBN.replaceAll("x", "X");
-    cleanedISBN = cleanedISBN.replaceAll("O", "0");
-    cleanedISBN = cleanedISBN.replaceAll("I", "1");
-    cleanedISBN = cleanedISBN.replaceAll("B", "8");
+    cleanedISBN = cleanedISBN.replace("x", "X");
+    cleanedISBN = cleanedISBN.replace("O", "0");
+    cleanedISBN = cleanedISBN.replace("I", "1");
+    cleanedISBN = cleanedISBN.replace("B", "8");
     addCorrectISBN(result, prefix, cleanedISBN);
 
     return result;
@@ -849,8 +849,8 @@ public class PageElementISBN extends PageElement {
         for (String[] isbnTemplate : isbnTemplates) {
           if (isbnTemplate.length > 2) {
             String[] params = isbnTemplate[1].split(",");
-            Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
-            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+            boolean suggested = Boolean.parseBoolean(isbnTemplate[2]);
+            if ((params.length > 0) && (suggested)) {
               TemplateBuilder builder = TemplateBuilder.from(isbnTemplate[0]);
               builder.addParam(
                   !"1".equals(params[0]) ? params[0] : null,
@@ -903,7 +903,7 @@ public class PageElementISBN extends PageElement {
     // Reason
     if ((reason != null) &&
         (helpNeededTemplate.length > 2) &&
-        (helpNeededTemplate[2].length() > 0)) {
+        (!helpNeededTemplate[2].isEmpty())) {
       builder.addParam(helpNeededTemplate[2], reason);
     }
 
@@ -923,12 +923,12 @@ public class PageElementISBN extends PageElement {
   public String askForHelp(
       String comment, String reason) {
     if ((comment == null) ||
-        (comment.trim().length() == 0)) {
+        (comment.trim().isEmpty())) {
       return null;
     }
     StringBuilder replacement = new StringBuilder();
     replacement.append(comment);
-    if ((reason != null) && (reason.trim().length() > 0)) {
+    if ((reason != null) && (!reason.trim().isEmpty())) {
       replacement.append(" - ");
       replacement.append(reason);
     }
@@ -944,7 +944,7 @@ public class PageElementISBN extends PageElement {
       return null;
     }
     isbn = isbn.trim();
-    if (isbn.length() == 0) {
+    if (isbn.isEmpty()) {
       return isbn;
     }
     PageAnalysis analysis = new PageAnalysis(null, isbn);
@@ -994,8 +994,7 @@ public class PageElementISBN extends PageElement {
       check = check % 11; // Modulus 11
       check = 11 - check; // Invert
       check = check % 11; // 11 -> 0
-      char checksum = (check < 10) ? (char) ('0' + check): 'X';
-      return checksum;
+      return (check < 10) ? (char) ('0' + check): 'X';
     }
 
     // Check for ISBN-13
@@ -1012,8 +1011,7 @@ public class PageElementISBN extends PageElement {
       check = check % 10; // Modulus 10
       check = 10 - check; // Invert
       check = check % 10; // 10 -> 0
-      char checksum = (char) ('0' + check);
-      return checksum;
+      return (char) ('0' + check);
     }
 
     return 0;

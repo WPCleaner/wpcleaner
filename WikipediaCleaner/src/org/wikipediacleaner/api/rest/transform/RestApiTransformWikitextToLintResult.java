@@ -50,7 +50,7 @@ public class RestApiTransformWikitextToLintResult extends RestApiJsonResult {
     String url = "api/rest_v1/transform/wikitext/to/lint";
     String formattedTitle = title;
     if (formattedTitle != null) {
-      formattedTitle = formattedTitle.replaceAll(" ", "_");
+      formattedTitle = formattedTitle.replace(" ", "_");
     }
     JsonNode root = getRoot(properties, url, formattedTitle, RestApiRequest.MAX_ATTEMPTS);
     if (root != null) {

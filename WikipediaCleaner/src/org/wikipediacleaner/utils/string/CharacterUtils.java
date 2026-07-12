@@ -42,14 +42,14 @@ public class CharacterUtils {
     if ((firstChar >= LOWER_BOUNDARY) && (firstChar <= UPPER_BOUNDARY)) {
       Character uppercase = UPPERCASE_CONVERSION.get(firstChar);
       if (uppercase != null) {
-        firstChar = uppercase.charValue();
+        firstChar = uppercase;
       } else {
         firstChar = Character.toUpperCase(firstChar);
       }
     } else {
       firstChar = Character.toUpperCase(firstChar);
     }
-    return "" + firstChar + text.substring(1);
+    return firstChar + text.substring(1);
   }
 
   /**
@@ -64,13 +64,13 @@ public class CharacterUtils {
   }
 
   /** Whitespace characters */
-  public final static String WHITESPACE = " \u00A0";
+  public static final String WHITESPACE = " \u00A0";
 
   /** En dash character */
-  public static char EN_DASH = '\u2013';
+  public static final char EN_DASH = '\u2013';
 
   /** Em dash character */
-  public static char EM_DASH = '\u2014';
+  public static final char EM_DASH = '\u2014';
 
   /** Dash characters */
   public static final String DASHES = "-" + EN_DASH + EM_DASH;

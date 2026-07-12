@@ -91,7 +91,6 @@ public class TranslateWorker extends BasicWorker {
    * @param translateText Flag indicating if internal link text should be translated.
    * @param useInterLanguage Flag indicating if interlanguage links can be used.
    * @return Text with internal links translated.
-   * @throws APIException
    */
   private String translateInternalLinks(
       String text,
@@ -115,14 +114,14 @@ public class TranslateWorker extends BasicWorker {
       if (translated != null) {
         if (!Page.areSameTitle(linkPage, translated)) {
           if (link.getBeginIndex() > lastPosition) {
-            newText.append(text.substring(lastPosition, link.getBeginIndex()));
+            newText.append(text, lastPosition, link.getBeginIndex());
             lastPosition = link.getBeginIndex();
           }
           newText.append("[[");
           if (translateText && (link.getText() == null)) {
             String displayed = link.getDisplayedText();
             if ((displayed != null) &&
-                (displayed.length() > 0) &&
+                (!displayed.isEmpty()) &&
                 (Character.isLowerCase(displayed.charAt(0)))) {
               if (translated.length() > 1) {
                 translated = translated.substring(0, 1).toLowerCase() + translated.substring(1);
@@ -146,7 +145,7 @@ public class TranslateWorker extends BasicWorker {
       } else {
         if (useInterLanguage) {
           if (link.getBeginIndex() > lastPosition) {
-            newText.append(text.substring(lastPosition, link.getBeginIndex()));
+            newText.append(text, lastPosition, link.getBeginIndex());
             lastPosition = link.getEndIndex();
           }
           newText.append("[[:");
@@ -160,7 +159,7 @@ public class TranslateWorker extends BasicWorker {
         }
       }
     }
-    if (newText.length() == 0) {
+    if (newText.isEmpty()) {
       return text;
     }
     if (lastPosition < text.length()) {
@@ -174,7 +173,6 @@ public class TranslateWorker extends BasicWorker {
    * @param text Text to translate.
    * @param translate Flag indicating if categories should be translated.
    * @return Text with categories translated.
-   * @throws APIException
    */
   private String translateCategories(
       String text, boolean translate) throws APIException {
@@ -203,7 +201,7 @@ public class TranslateWorker extends BasicWorker {
       }
       if ((translated != null) && !Page.areSameTitle(categoryName, translated)) {
         if (category.getBeginIndex() > lastPosition) {
-          newText.append(text.substring(lastPosition, category.getBeginIndex()));
+          newText.append(text, lastPosition, category.getBeginIndex());
           lastPosition = category.getBeginIndex();
         }
         newText.append("[[");
@@ -216,7 +214,7 @@ public class TranslateWorker extends BasicWorker {
         lastPosition = category.getEndIndex();
       }
     }
-    if (newText.length() == 0) {
+    if (newText.isEmpty()) {
       return text;
     }
     if (lastPosition < text.length()) {
@@ -231,7 +229,6 @@ public class TranslateWorker extends BasicWorker {
    * @param translateName Flag indicating if templates names should be translated.
    * @param translateWithoutParams Flag indicating if templates without parameters should be translated.
    * @return Text with templates translated.
-   * @throws APIException
    */
   private String translateTemplates(
       String text,
@@ -262,19 +259,19 @@ public class TranslateWorker extends BasicWorker {
       }
       if ((translated != null) && !Page.areSameTitle(templateName, translated)) {
         if (template.getBeginIndex() > lastPosition) {
-          newText.append(text.substring(lastPosition, template.getBeginIndex()));
+          newText.append(text, lastPosition, template.getBeginIndex());
           lastPosition = template.getBeginIndex();
         }
         if (translateWithoutParams && (template.getParameterCount() == 0)) {
           int columnPos = translated.indexOf(':');
-          newText.append(TemplateBuilder.from(columnPos < 0 ? translated : translated.substring(columnPos + 1)).toString());
+          newText.append(TemplateBuilder.from(columnPos < 0 ? translated : translated.substring(columnPos + 1)));
           lastPosition = template.getEndIndex();
         } else {
-          newText.append(CommentBuilder.from(translated).toString());
+          newText.append(CommentBuilder.from(translated));
         }
       }
     }
-    if (newText.length() == 0) {
+    if (newText.isEmpty()) {
       return text;
     }
     if (lastPosition < text.length()) {
@@ -287,7 +284,6 @@ public class TranslateWorker extends BasicWorker {
   /**
    * @param pageName Page name.
    * @return Language link.
-   * @throws APIException
    */
   private String getLanguageLink(String pageName) throws APIException {
     API api = APIFactory.getAPI();

@@ -31,7 +31,6 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * An action listener for checking language links existence.
  */
-@SuppressWarnings("serial")
 public class CheckLanguageLinkAction extends TextAction {
 
   private final EnumWikipedia fromWiki;
@@ -77,7 +76,7 @@ public class CheckLanguageLinkAction extends TextAction {
       // Check language link
       if ((fromWiki != null) && (toWiki != null)) {
         String languageLink = api.getLanguageLink(fromWiki, toWiki, title);
-        if (message.length() > 0) {
+        if (!message.isEmpty()) {
           message.append("\n");
         }
         if (languageLink != null) {
@@ -107,7 +106,7 @@ public class CheckLanguageLinkAction extends TextAction {
       if (toWiki != null) {
         Page page = DataManager.createSimplePage(toWiki, title, null, null, null);
         api.retrieveInfo(toWiki, Collections.singletonList(page));
-        if (message.length() > 0) {
+        if (!message.isEmpty()) {
           message.append("\n");
         }
         if (Boolean.FALSE.equals(page.isExisting())) {

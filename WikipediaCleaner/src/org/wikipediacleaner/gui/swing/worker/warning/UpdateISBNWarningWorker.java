@@ -91,14 +91,14 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
               "Do you want to update the warnings ?",
               new Object[] { Integer.valueOf(warningPages.size()).toString(), "ISBN" } ));
           if (answer != JOptionPane.YES_OPTION) {
-            return Integer.valueOf(0);
+            return 0;
           }
         }
 
         // Sort the list of articles
-        Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
+        warningPages.sort(PageComparator.getTitleFirstComparator());
         if (warningPages.isEmpty()) {
-          return Integer.valueOf(0);
+          return 0;
         }
       }
 
@@ -115,7 +115,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
         if (sublist.isEmpty()) {
           errors = tools.getErrorsMap();
           displayResult(stats, startTime, errors);
-          return Integer.valueOf(stats.getUpdatedPagesCount());
+          return stats.getUpdatedPagesCount();
         }
 
         // Update warning
@@ -128,8 +128,10 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._T(
-                  "An error occurred when updating {1} warnings. Do you want to continue ?\n\n" +
-                  "Error: {0}",
+                  """
+                  An error occurred when updating {1} warnings. Do you want to continue ?
+                  
+                  Error: {0}""",
                   new Object[] { e.getMessage(), "ISBN" } ));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
@@ -141,7 +143,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
             Configuration config = Configuration.getConfiguration();
             config.setString(null, ConfigurationValueString.LAST_ISBN_WARNING, lastTitle);
             displayResult(stats, startTime, null);
-            return Integer.valueOf(stats.getUpdatedPagesCount());
+            return stats.getUpdatedPagesCount();
           }
         }
 
@@ -169,7 +171,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
     }
 
     displayResult(stats, startTime, errors);
-    return Integer.valueOf(stats.getUpdatedPagesCount());
+    return stats.getUpdatedPagesCount();
   }
 
   /**
@@ -302,7 +304,7 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
       WPCConfiguration config = wiki.getConfiguration();
       String pageName = config.getString(WPCConfigurationString.ISBN_ERRORS_PAGE);
       boolean saved = false;
-      if ((pageName != null) && (pageName.trim().length() > 0)) {
+      if ((pageName != null) && (!pageName.trim().isEmpty())) {
         boolean updatePage = false;
         if (simulation && (getWindow() != null)) {
           int answer = Utilities.displayYesNoWarning(
@@ -336,9 +338,9 @@ public class UpdateISBNWarningWorker extends UpdateWarningWorker {
               }
               if ((begin >= 0) && (end > begin)) {
                 StringBuilder newText = new StringBuilder();
-                newText.append(contents.substring(0, begin));
+                newText.append(contents, 0, begin);
                 newText.append("\n");
-                newText.append(buffer.toString());
+                newText.append(buffer);
                 newText.append(contents.substring(end));
                 api.updatePage(
                     wiki, page, newText.toString(),

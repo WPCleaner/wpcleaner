@@ -114,16 +114,16 @@ public class AutomaticFixingWorker extends BasicWorker {
             getWikipedia(), pages[numPage].getTitle(), pages[numPage].getPageId(), null, null);
       }
       MediaWiki mw = MediaWiki.getMediaWikiAccess(this);
-      Integer count = Integer.valueOf(mw.replaceText(
+      int count = mw.replaceText(
           tmpPages, replacements, getWikipedia(),
           comment, report, automaticCW, forceCW,
-          save, true, true, pauseAfterEachEdit, botFix, parent));
+          save, true, true, pauseAfterEachEdit, botFix, parent);
       if (showDescription && (count > 0)) {
         InformationWindow.createInformationWindow(
             GT.__(
                 "The following modifications have been done ({0} page):",
                 "The following modifications have been done ({0} pages):",
-                count, count.toString()),
+                count, Integer.toString(count)),
             report.getReport(getWikipedia()), true, getWikipedia());
       }
       return count;

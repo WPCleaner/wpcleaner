@@ -21,6 +21,7 @@ import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.Rectangle2D;
+import java.io.Serial;
 
 import javax.swing.JComponent;
 import javax.swing.JRootPane;
@@ -32,17 +33,18 @@ import javax.swing.SwingUtilities;
  */
 public class ProgressPanel extends JComponent implements MouseListener, KeyListener {
 
+  @Serial
   private static final long serialVersionUID = -4675782468350775884L;
 
   private String application = "";
   private String text = "";
-  private int    alphaLevel = 255;
+  private final int    alphaLevel = 255;
   private float  shield = 0.70F;
 
   private RenderingHints hints = null;
   private Color background = Color.GRAY;
   private Color textBackground = Color.CYAN;
-  private Color textBorder = Color.BLUE;
+  private final Color textBorder = Color.BLUE;
 
   private boolean started = false;
   private Component recentFocusOwner = null;
@@ -208,8 +210,8 @@ public class ProgressPanel extends JComponent implements MouseListener, KeyListe
     g2.fillRect(0, 0, width, height);
 
     // Draw text
-    if (((application != null) && (application.length() > 0)) ||
-        ((text != null) && (text.length() > 0))) {
+    if (((application != null) && (!application.isEmpty())) ||
+        ((text != null) && (!text.isEmpty()))) {
 
       // Positions
       float xMin = Float.MAX_VALUE;
@@ -224,7 +226,7 @@ public class ProgressPanel extends JComponent implements MouseListener, KeyListe
       TextLayout layoutApplication = null;
       float xApplication = Float.MAX_VALUE;
       float yApplication = Float.MIN_VALUE;
-      if ((application != null) && (application.length() > 0)) {
+      if ((application != null) && (!application.isEmpty())) {
         layoutApplication = new TextLayout(application, getFont(), context);
         Rectangle2D boundsApplication = layoutApplication.getBounds();
         xApplication = (float) (width - boundsApplication.getWidth()) / 2;
@@ -237,7 +239,7 @@ public class ProgressPanel extends JComponent implements MouseListener, KeyListe
       TextLayout layoutText = null;
       float xText = Float.MAX_VALUE;
       float yText = Float.MIN_VALUE;
-      if ((text != null) && (text.length() > 0)) {
+      if ((text != null) && (!text.isEmpty())) {
         layoutText = new TextLayout(text, getFont(), context);
         Rectangle2D boundsText = layoutText.getBounds();
         xText = (float) (width - boundsText.getWidth()) / 2;

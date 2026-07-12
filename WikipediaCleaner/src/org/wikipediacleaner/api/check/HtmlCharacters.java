@@ -424,7 +424,7 @@ public enum HtmlCharacters {
    * @param number Entity number.
    * @param name Entity name.
    * @param value Entity value.
-   * @param alternative Alternative entity number.
+   * @param alternativeNumber Alternative entity number.
    */
   HtmlCharacters(int number, String name, char value, int alternativeNumber) {
     this.number = number;

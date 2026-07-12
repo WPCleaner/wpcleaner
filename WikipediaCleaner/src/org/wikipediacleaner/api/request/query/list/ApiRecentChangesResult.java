@@ -28,7 +28,7 @@ public interface ApiRecentChangesResult extends ApiResult {
    * @return The timestamp to use as a starting point for the next call.
    * @throws APIException Exception thrown by the API.
    */
-  public String executeRecentChanges(
+  String executeRecentChanges(
       Map<String, String> properties,
       List<RecentChange> recentChanges) throws APIException;
 }

@@ -26,7 +26,6 @@ import org.wikipediacleaner.utils.TextProvider;
 /**
  * An action listener for replacing text by an internal link.
  */
-@SuppressWarnings("serial")
 public class AddInternalLinkAction extends TextAction {
 
   private final String article;
@@ -141,7 +140,7 @@ public class AddInternalLinkAction extends TextAction {
     }
     if (textProvider != null) {
       Collection<String> texts = textProvider.getTexts();
-      if ((texts != null) && (texts.size() > 0)) {
+      if ((texts != null) && (!texts.isEmpty())) {
         value = texts.iterator().next();
         if (tmpPossibleValues == null) {
           tmpPossibleValues = new String[texts.size()];

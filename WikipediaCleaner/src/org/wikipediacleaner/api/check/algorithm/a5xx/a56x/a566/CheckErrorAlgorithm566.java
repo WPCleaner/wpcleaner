@@ -105,8 +105,8 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
     final boolean canAutomatic = tmpAutomatic;
 
     // Analyze prefix and suffix
-    String tmpPrefix = contents.substring(beginIndex, beginTagIndex);
-    String tmpSuffix = contents.substring(endTagIndex, endIndex);
+    StringBuilder tmpPrefix = new StringBuilder(contents.substring(beginIndex, beginTagIndex));
+    StringBuilder tmpSuffix = new StringBuilder(contents.substring(endTagIndex, endIndex));
     String tagContents = StringUtils.EMPTY;
     if (!tag.isFullTag()) {
       tagContents = contents.substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
@@ -116,24 +116,24 @@ public class CheckErrorAlgorithm566 extends CheckErrorAlgorithmTags {
       found = false;
       for (String possiblePrefix : prefixes) {
         if (tagContents.startsWith(possiblePrefix)) {
-          tmpPrefix += possiblePrefix;
+          tmpPrefix.append(possiblePrefix);
           tagContents = tagContents.substring(possiblePrefix.length());
           found = true;
         }
       }
     } while (found);
-    final String prefix = tmpPrefix;
+    final String prefix = tmpPrefix.toString();
     do {
       found = false;
       for (String possibleSuffix : suffixes) {
         if (tagContents.endsWith(possibleSuffix)) {
-          tmpSuffix = possibleSuffix + tmpSuffix;
+          tmpSuffix.insert(0, possibleSuffix);
           tagContents = tagContents.substring(0, tagContents.length() - possibleSuffix.length());
           found = true;
         }
       }
     } while (found);
-    final String suffix = tmpSuffix;
+    final String suffix = tmpSuffix.toString();
 
     // Report error
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);

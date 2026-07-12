@@ -153,7 +153,7 @@ public class CheckErrorAlgorithm047 extends CheckErrorAlgorithmBase {
           errors.add(errorResult);
           result = true;
         }
-        if ((result == true) && (errors == null)) {
+        if ((result) && (errors == null)) {
           return true;
         }
       }

@@ -170,7 +170,7 @@ public class CheckErrorAlgorithm008 extends CheckErrorAlgorithmBase {
           secondEqualsCount, firstPart).toString());
       if (equalIndex < endLineIndex) {
         errorResult.addReplacement(
-            TitleBuilder.from(equalsCount, firstPart).toString() +
+            TitleBuilder.from(equalsCount, firstPart) +
             "\n" +
             contents.substring(equalIndex, endLineIndex));
       }

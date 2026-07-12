@@ -18,21 +18,21 @@ public interface BasicWorkerListener {
    * 
    * @param worker Current worker.
    */
-  public void beforeStart(BasicWorker worker);
+  void beforeStart(BasicWorker worker);
 
   /**
    * Called just at the end of the start() method in BasicWorker.
    * 
    * @param worker Current worker.
    */
-  public void afterStart(BasicWorker worker);
+  void afterStart(BasicWorker worker);
 
   /**
    * Called just at the beginning of the finished() method in BasicWorker.
    * 
    * @param worker Current worker.
    */
-  public void beforeFinished(BasicWorker worker);
+  void beforeFinished(BasicWorker worker);
   
   /**
    * Called just at the end of the finished() method in BasicWorker.
@@ -40,5 +40,5 @@ public interface BasicWorkerListener {
    * @param worker Current worker.
    * @param ok Flag indicating if the worker finished OK.
    */
-  public void afterFinished(BasicWorker worker, boolean ok);
+  void afterFinished(BasicWorker worker, boolean ok);
 }

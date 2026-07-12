@@ -92,7 +92,7 @@ public class ApiEmbeddedInRequest extends ApiListRequest {
     properties.put(PROPERTY_LIST, PROPERTY_LIST_EMBEDDEDIN);
     properties.put(PROPERTY_CONTINUE, PROPERTY_CONTINUE_DEFAULT);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    if ((namespaces != null) && (namespaces.size() > 0)) {
+    if ((namespaces != null) && (!namespaces.isEmpty())) {
       properties.put(PROPERTY_NAMESPACE, constructList(namespaces));
     }
     properties.put(PROPERTY_TITLE, page.getTitle());

@@ -24,10 +24,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -138,8 +138,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof AutomaticFixingWindow) {
-              AutomaticFixingWindow fixing = (AutomaticFixingWindow) window;
+            if (window instanceof AutomaticFixingWindow fixing) {
               fixing.setPage(referencePage);
               fixing.pages = pages;
               fixing.modelPages = new PageListModel();
@@ -151,8 +150,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
           }
           @Override
           public void displayWindow(BasicWindow window) {
-            if (window instanceof AutomaticFixingWindow) {
-              AutomaticFixingWindow fixing = (AutomaticFixingWindow) window;
+            if (window instanceof AutomaticFixingWindow fixing) {
               fixing.actionReload();
             }
           }
@@ -493,7 +491,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     if ((list == null) || (list.isEmpty())) {
       return GT._T("No errors selected");
     }
-    Collections.sort(list, new CheckErrorAlgorithmComparator());
+    list.sort(new CheckErrorAlgorithmComparator());
     StringBuilder msg = new StringBuilder();
     for (int i = 0; i < list.size(); i++) {
       int j = i;
@@ -501,7 +499,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
              (list.get(j).getErrorNumber() + 1 == list.get(j + 1).getErrorNumber())) {
         j++;
       }
-      if (msg.length() > 0) {
+      if (!msg.isEmpty()) {
         msg.append(", ");
       }
       if (j > i + 1) {
@@ -513,7 +511,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
         msg.append(list.get(i).getErrorNumber());
       }
     }
-    return "(" + msg.toString() + ")";
+    return "(" + msg + ")";
   }
 
   /**
@@ -576,9 +574,9 @@ public class AutomaticFixingWindow extends OnePageWindow {
           page.getTitle(), AutomaticFixing.class);
       if (automaticFixing != null) {
         List<AutomaticFixing> data = new ArrayList<>(automaticFixing.length);
-        for (int i = 0; i < automaticFixing.length; i++) {
-          if (automaticFixing[i] instanceof AutomaticFixing) {
-            data.add((AutomaticFixing) automaticFixing[i]);
+        for (Object o : automaticFixing) {
+          if (o instanceof AutomaticFixing) {
+            data.add((AutomaticFixing) o);
           }
         }
         modelAutomaticFixing.setData(data);
@@ -674,7 +672,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
       return false;
     }
     String originalText = textOriginal.getText();
-    if ((originalText == null) || (originalText.length() == 0)) {
+    if ((originalText == null) || (originalText.isEmpty())) {
       return false;
     }
     String replacementText = textReplacement.getText();
@@ -729,7 +727,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
     // Check that information is set
     List<Page> values = listPages.getSelectedValuesList();
-    if ((values == null) || (values.size() == 0)) {
+    if ((values == null) || (values.isEmpty())) {
       Utilities.displayWarning(
           getParentComponent(),
           GT._T("You must select the pages on which running automatic fixing."));
@@ -737,7 +735,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
     }
     String comment = getComment();
     if ((comment != null) &&
-        (comment.trim().length() == 0)) {
+        (comment.trim().isEmpty())) {
       if (save) {
         Utilities.displayWarning(getParentComponent(), GT._T(
             "A comment is required for automatic fixing."));
@@ -801,9 +799,8 @@ public class AutomaticFixingWindow extends OnePageWindow {
         if (!worker.shouldContinue()) {
           return;
         }
-        if (worker.get() instanceof Integer) {
-          Integer count = (Integer) worker.get();
-          if (count.intValue() == 0) {
+        if (worker.get() instanceof Integer count) {
+          if (count == 0) {
             return;
           }
         }
@@ -820,7 +817,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
     // Test replacements in the test pane
     String text = paneOriginal.getText();
-    if ((text != null) && (text.trim().length() > 0)) {
+    if ((text != null) && (!text.trim().isEmpty())) {
       List<AutomaticFixing> fixing = modelAutomaticFixing.getData();
       List<String> replacements = new ArrayList<>();
       text = AutomaticFixing.apply(fixing, text, replacements);
@@ -836,7 +833,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
 
     // Test replacements in the page list
     List<Page> values = listPages.getSelectedValuesList();
-    if ((values != null) && (values.size() > 0)) {
+    if ((values != null) && (!values.isEmpty())) {
       String message = GT._T("Do you want to test the replacements on the pages ?");
       int answer = Utilities.displayYesNoWarning(getParentComponent(), message);
       if (answer == JOptionPane.YES_OPTION) {
@@ -1015,7 +1012,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
             int to = (part + 1) * PART_SIZE;
             subMenu = new JMenu(GT._T(
                 "Errors from {0} to {1}",
-                new Object[] { Integer.valueOf(from), Integer.valueOf(to) }));
+                new Object[] {from, to}));
             popup.add(subMenu);
 
             lastPart = part;
@@ -1060,13 +1057,13 @@ public class AutomaticFixingWindow extends OnePageWindow {
   }
 
   /**
-   * Remove or add an algorithm from the list depending if it's already in the list.
+   * Remove or add an algorithm from the list depending on if it's already in the list.
    * 
    * @param error Error number.
    * @param list List of algorithms.
    */
   private void toggleAlgorithm(String error, List<CheckErrorAlgorithm> list) {
-    if (error == "*") {
+    if (Objects.equals(error, "*")) {
 
       // Select all errors
       list.clear();
@@ -1078,7 +1075,7 @@ public class AutomaticFixingWindow extends OnePageWindow {
           }
         }
       }
-    } else if (error == "-") {
+    } else if (Objects.equals(error, "-")) {
 
       // Select no errors
       list.clear();

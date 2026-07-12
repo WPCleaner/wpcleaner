@@ -27,11 +27,10 @@ import org.wikipediacleaner.gui.swing.component.MWPaneFormatter;
 /**
  * An action listener for replacing templates.
  */
-@SuppressWarnings("serial")
 public class ReplaceTemplateAction extends TextAction {
 
   private final String template;
-  private List<TemplateParameter> parameters;
+  private final List<TemplateParameter> parameters;
   private final TemplateReplacement replacement;
   private final String oldTitle;
   private final String newTitle;
@@ -106,7 +105,7 @@ public class ReplaceTemplateAction extends TextAction {
     if ((localElement != null) &&
         (localTextPane != null) &&
         (localNewTitle != null) &&
-        (localNewTitle.length() > 0)) {
+        (!localNewTitle.isEmpty())) {
       localTextPane.setCaretPosition(localElement.getStartOffset());
       localTextPane.moveCaretPosition(localElement.getEndOffset());
       TemplateBuilder builder = TemplateBuilder.from(template);

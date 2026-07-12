@@ -57,7 +57,7 @@ public class TemplateMatcher1L extends TemplateMatcher {
     }
     if (neededParameter != null) {
       String parameter = template.getParameterValue(neededParameter);
-      if ((parameter == null) || (parameter.length() == 0)) {
+      if ((parameter == null) || (parameter.isEmpty())) {
         return null;
       }
     }
@@ -94,10 +94,8 @@ public class TemplateMatcher1L extends TemplateMatcher {
       Page page, PageElementTemplate template,
       int index, String text) {
     String parameterValue = null;
-    switch (index) {
-    case 0:
+    if (index == 0) {
       parameterValue = text;
-      break;
     }
     if (parameterValue == null) {
       return null;

@@ -114,7 +114,7 @@ public class CWConfiguration {
 
       // Add text
       if (!textsAdded.contains(text)) {
-        if (algorithmsComment.length() > 0) {
+        if (!algorithmsComment.isEmpty()) {
           algorithmsComment.append(" - ");
         }
         algorithmsComment.append(text);
@@ -124,8 +124,8 @@ public class CWConfiguration {
 
     // Build the entire comment
     String comment = getComment();
-    if (comment.indexOf("{0}") < 0) {
-      return comment + " (" + algorithmsComment.toString() + ")";
+    if (!comment.contains("{0}")) {
+      return comment + " (" + algorithmsComment + ")";
     }
     return GT._T(comment, algorithmsComment.toString());
   }
@@ -162,7 +162,7 @@ public class CWConfiguration {
   /**
    * Enumerated value for the origin of the configuration.
    */
-  public static enum Origin {
+  public enum Origin {
     GENERAL_CONFIGURATION,
     WIKI_CONFIGURATION,
     USER_CONFIGURATION,
@@ -251,34 +251,34 @@ public class CWConfiguration {
    * @param otherSuffix Suffix for properties not to consider.
    * @param origin Origin of the configuration.
    * @return Next parameter found.
-   * @throw APIException.
+   * @throws APIException In case of problem with API.
    */
   private boolean setNextParameter(
       BufferedReader reader,
       String suffix, String otherSuffix,
       Origin origin) throws APIException {
-    String line;
+    StringBuilder line;
     try {
-      while ((line = reader.readLine()) != null) {
-        int posEqual = line.indexOf('=');
-        int posSharp = line.indexOf('#');
+      while ((line = new StringBuilder(reader.readLine())) != null) {
+        int posEqual = line.toString().indexOf('=');
+        int posSharp = line.toString().indexOf('#');
         if ((posEqual > 0) &&
             ((posSharp < 0) || (posSharp > posEqual))) {
           String name = line.substring(0, posEqual);
-          line = line.substring(posEqual + 1);
+          line = new StringBuilder(line.substring(posEqual + 1));
           int posEnd = line.indexOf(" END");
           while (posEnd == -1) {
             String nextLine = reader.readLine();
             if (nextLine != null) {
-              line += "\n" + nextLine;
+              line.append("\n").append(nextLine);
               posEnd = line.indexOf(" END");
             } else {
               posEnd = line.length();
             }
           }
-          line = line.substring(0, posEnd);
-          if ((name != null) && (line != null)) {
-            setProperty(name.trim(), line, suffix, otherSuffix, origin);
+          line = new StringBuilder(line.substring(0, posEnd));
+          if (name != null) {
+            setProperty(name.trim(), line.toString(), suffix, otherSuffix, origin);
           }
           return true;
         }

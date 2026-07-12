@@ -52,8 +52,6 @@ class NumericFormatnum extends Numeric {
 
   /**
    * Add suggestions for an invalid formatnum:
-   * 
-   * @param errorResult
    */
   public void addSuggestions(CheckErrorResult errorResult) {
     // No suggestion with more than one parameter
@@ -63,8 +61,7 @@ class NumericFormatnum extends Numeric {
 
     boolean tryAgain = true;
     while (tryAgain) {
-      tryAgain = false;
-      tryAgain |= extractBoldItalic();
+      tryAgain = extractBoldItalic();
       tryAgain |= extractLeadingText();
       tryAgain |= extractTrailingText();
       tryAgain |= removeSurroundingWhitespace();
@@ -135,7 +132,6 @@ class NumericFormatnum extends Numeric {
       errorResult.addReplacement(
           prefix + functionPrefix + value + functionSuffix + suffix,
           automatic);
-      return;
     }
   }
 

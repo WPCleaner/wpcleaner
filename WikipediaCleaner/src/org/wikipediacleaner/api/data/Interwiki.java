@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.data;
 
 import java.util.List;
+import java.util.Objects;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.http.HttpUtils;
@@ -164,8 +165,8 @@ public class Interwiki implements Comparable<Interwiki> {
     boolean equals = true;
     equals &= prefix.equals(iw.prefix);
     equals &= (local == iw.local);
-    equals &= (language == null) ? (iw.language == null) : language.equals(iw.language);
-    equals &= (url == null) ? (iw.url == null) : url.equals(iw.url);
+    equals &= Objects.equals(language, iw.language);
+    equals &= Objects.equals(url, iw.url);
     return equals;
   }
 

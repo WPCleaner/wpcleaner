@@ -69,7 +69,7 @@ public class Utilities {
 
   public final static int NO_ALL_OPTION = 102;
 
-  private final static String URL_CONFIGURATION_HELP = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Configuration/Help";
+  private final static String URL_CONFIGURATION_HELP = "https://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Configuration/Help";
 
   // ==========================================================================
   // Manage event thread

@@ -21,12 +21,6 @@ class ReplacementComparator implements Comparator<Replacement> {
   public ReplacementComparator() {
   }
 
-  /**
-   * @param o1
-   * @param o2
-   * @return
-   * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-   */
   @Override
   public int compare(Replacement o1, Replacement o2) {
     

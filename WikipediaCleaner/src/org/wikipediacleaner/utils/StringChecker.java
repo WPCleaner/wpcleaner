@@ -16,7 +16,7 @@ public interface StringChecker {
   /**
    * Holder for result.
    */
-  public static class Result {
+  class Result {
 
     /**
      * Is the result OK ?
@@ -72,5 +72,5 @@ public interface StringChecker {
    * @param text Text to check.
    * @return Result.
    */
-  public Result checkString(String text);
+  Result checkString(String text);
 }

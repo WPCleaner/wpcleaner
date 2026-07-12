@@ -18,6 +18,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.beans.EventHandler;
 import java.beans.PropertyChangeListener;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,8 +39,6 @@ import javax.swing.JToolBar;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import org.wikipediacleaner.Version;
 import org.wikipediacleaner.api.APIFactory;
@@ -89,6 +88,7 @@ public class CheckWikiContentPanel
   extends JPanel
   implements ActionListener, ItemListener, ListenerPageDeletion, PageProvider {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   public final static String ACTION_MARK_AS_FIXED = "MARK_AS_FIXED";
@@ -276,16 +276,11 @@ public class CheckWikiContentPanel
     cellRenderer.showCountOccurence(true);
     listErrors.setCellRenderer(cellRenderer);
     listErrors.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-    listErrors.addListSelectionListener(new ListSelectionListener() {
-
-      @Override
-      public void valueChanged(ListSelectionEvent e) {
-        if (e.getValueIsAdjusting()) {
-          return;
-        }
-        actionSelectError();
+    listErrors.addListSelectionListener(e -> {
+      if (e.getValueIsAdjusting()) {
+        return;
       }
-      
+      actionSelectError();
     });
     JScrollPane scrollErrors = new JScrollPane(listErrors);
     scrollErrors.setMinimumSize(new Dimension(200, 200));
@@ -392,7 +387,7 @@ public class CheckWikiContentPanel
     // Further analysis if expected error is not found
     if ((errors != null) &&
         !errors.isEmpty() &&
-        (errorFound == false)) {
+        (!errorFound)) {
       int answer = JOptionPane.NO_OPTION;
 
       // Ask Check Wiki what errors are still detected
@@ -401,6 +396,7 @@ public class CheckWikiContentPanel
       for (AlgorithmError error : errors) {
         if (error.getErrorNumber() < CheckErrorAlgorithm.MAX_ERROR_NUMBER_WITH_LIST) {
           shouldCheck = true;
+          break;
         }
       }
       if (shouldCheck) {
@@ -415,6 +411,7 @@ public class CheckWikiContentPanel
           for (AlgorithmError error : errors) {
             if (detection.getErrorNumber() == error.getErrorNumber()) {
               errorDetected = true;
+              break;
             }
           }
         }
@@ -423,7 +420,7 @@ public class CheckWikiContentPanel
       // Construct a list of errors
       StringBuilder txtErrors = new StringBuilder();
       for (AlgorithmError error : errors) {
-        if (txtErrors.length() > 0) {
+        if (!txtErrors.isEmpty()) {
           txtErrors.append("-");
         }
         txtErrors.append(error.getErrorNumber());
@@ -476,19 +473,18 @@ public class CheckWikiContentPanel
       }
 
       // Act according to user answer
-      switch (answer) {
-      case Utilities.YES_ALL_OPTION:
-        window.yesAll = true;
-        answer = JOptionPane.YES_OPTION;
-        break;
-
-      case Utilities.NO_ALL_OPTION:
-        window.noAll = true;
-        answer = JOptionPane.NO_OPTION;
-        break;
-      }
-      switch (answer) {
-      case JOptionPane.YES_OPTION:
+      answer = switch (answer) {
+        case Utilities.YES_ALL_OPTION -> {
+          window.yesAll = true;
+          yield JOptionPane.YES_OPTION;
+        }
+        case Utilities.NO_ALL_OPTION -> {
+          window.noAll = true;
+          yield JOptionPane.NO_OPTION;
+        }
+        default -> answer;
+      };
+      if (answer == JOptionPane.YES_OPTION) {
         if (errorCount == 0) {
           pane.remove(this);
         }
@@ -503,7 +499,6 @@ public class CheckWikiContentPanel
         if (errorCount == 0) {
           return;
         }
-        break;
       }
     }
 
@@ -536,8 +531,8 @@ public class CheckWikiContentPanel
    */
   public CheckErrorPage getSelectedError() {
     Object selection = listErrors.getSelectedValue();
-    if (selection instanceof CheckErrorPage) {
-      return (CheckErrorPage) selection;
+    if (selection instanceof CheckErrorPage checkErrorPage) {
+      return checkErrorPage;
     }
     return null;
   }
@@ -559,9 +554,7 @@ public class CheckWikiContentPanel
     } else {
       CheckErrorAlgorithm algorithm = errorSelected.getAlgorithm();
       MWPaneFormatter formatter = textPage.getFormatter();
-      if (formatter instanceof MWPaneCheckWikiFormatter) {
-        MWPaneCheckWikiFormatter cwFormatter =
-          (MWPaneCheckWikiFormatter) formatter;
+      if (formatter instanceof MWPaneCheckWikiFormatter cwFormatter) {
         if (!cwFormatter.isSameAlgorithm(algorithm)) {
           formatter = new MWPaneCheckWikiFormatter(algorithm);
           textPage.setFormatter(formatter);
@@ -687,13 +680,13 @@ public class CheckWikiContentPanel
    */
   private String getComment(List<AlgorithmError.Progress> errorsFixed) {
     String comment = getWiki().getCWConfiguration().getComment(errorsFixed);
-    if ((comment != null) && (comment.length() > 0)) {
+    if ((comment != null) && (!comment.isEmpty())) {
       Configuration config = Configuration.getConfiguration();
       String userComment = config.getString(getWiki(), ConfigurationValueString.COMMENT);
-      if ((userComment == null) || (userComment.trim().length() == 0)) {
+      if ((userComment == null) || (userComment.trim().isEmpty())) {
         userComment = config.getString(null, ConfigurationValueString.COMMENT);
       }
-      if ((userComment != null) && (userComment.trim().length() > 0)) {
+      if ((userComment != null) && (!userComment.trim().isEmpty())) {
         comment = userComment.trim() + " - " + comment;
       }
     }
@@ -716,7 +709,7 @@ public class CheckWikiContentPanel
     updateComment(errorsFixed);
 
     // Check that a comment is available
-    if (textComment.getText().trim().length() == 0) {
+    if (textComment.getText().trim().isEmpty()) {
       Utilities.displayWarning(getParent(), GT._T(
           "A comment is required for sending the page."));
       return;
@@ -794,10 +787,6 @@ public class CheckWikiContentPanel
     sendWorker.start();
   }
 
-  /**
-   * @param errorsFixed
-   * @param ok
-   */
   void afterSendingFinished(List<AlgorithmError.Progress> errorsFixed, boolean ok) {
     if (ok) {
       // Close pane
@@ -809,8 +798,7 @@ public class CheckWikiContentPanel
         CheckErrorAlgorithm algoFixed = errorFixed.algorithm;
         for (int posError = 0; posError < window.modelAllErrors.getSize(); posError++) {
           Object element = window.modelAllErrors.getElementAt(posError);
-          if (element instanceof AlgorithmError) {
-            final AlgorithmError tmpError = (AlgorithmError) element;
+          if (element instanceof AlgorithmError tmpError) {
             if (tmpError.getAlgorithm().getErrorNumberString().equals(algoFixed.getErrorNumberString()) &&
                 errorFixed.full) {
               tmpError.remove(page);
@@ -876,8 +864,7 @@ public class CheckWikiContentPanel
     actionSelectError();
     updateComment(null);
     Object selected = listErrors.getSelectedValue();
-    if (selected instanceof CheckErrorPage) {
-      CheckErrorPage errorPage = (CheckErrorPage) selected;
+    if (selected instanceof CheckErrorPage errorPage) {
       if (!errorPage.getErrorFound()) {
         int index = listErrors.getSelectedIndex();
         if (index < modelErrors.getSize() - 1) {

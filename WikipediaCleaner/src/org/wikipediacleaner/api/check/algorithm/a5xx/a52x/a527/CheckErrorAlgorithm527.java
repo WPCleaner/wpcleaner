@@ -72,14 +72,8 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
       if (refTag.isComplete() && !refTag.isFullTag()) {
         String tagId = getTagIdentifier(refTag);
         String value = content.substring(refTag.getValueBeginIndex(), refTag.getValueEndIndex());
-        if ((tagId != null) &&
-            (value != null) &&
-            (value.length() > 0)) {
-          List<PageElementTag> namedTags = namedRefTags.get(tagId);
-          if (namedTags == null) {
-            namedTags = new ArrayList<>();
-            namedRefTags.put(tagId, namedTags);
-          }
+        if (tagId != null && !value.isEmpty()) {
+          List<PageElementTag> namedTags = namedRefTags.computeIfAbsent(tagId, k -> new ArrayList<>());
           namedTags.add(refTag);
         }
       }
@@ -197,7 +191,7 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
       return categoryName;
     }
     if ((trackingCategory != null) &&
-        (trackingCategory.trim().length() > 0)) {
+        (!trackingCategory.trim().isEmpty())) {
       return trackingCategory;
     }
     return null;
@@ -256,7 +250,7 @@ public class CheckErrorAlgorithm527 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
     categoryName = null;
     if ((tmp != null) &&
-        (tmp.trim().length() > 0)) {
+        (!tmp.trim().isEmpty())) {
       categoryName = tmp.trim();
     }
   }

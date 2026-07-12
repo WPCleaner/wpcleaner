@@ -59,7 +59,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
     }
     if (neededParameter != null) {
       String parameter = template.getParameterValue(neededParameter);
-      if ((parameter == null) || (parameter.length() == 0)) {
+      if ((parameter == null) || (parameter.isEmpty())) {
         return null;
       }
     }
@@ -81,7 +81,7 @@ public class TemplateMatcher1LT extends TemplateMatcher {
               parameterName,
               "???" } ));
       String value = getParameterValue(page, template);
-      if ((value != null) && (value.trim().length() > 0)) {
+      if ((value != null) && (!value.trim().isEmpty())) {
         String pipeTemplate = getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE);
         replacements.add(GT._T(
             "Replace parameter {0} with {1}",
@@ -103,18 +103,13 @@ public class TemplateMatcher1LT extends TemplateMatcher {
   public String getReplacement(
       Page page, PageElementTemplate template,
       int index, String text) {
-    String parameterValue = null;
-    switch (index) {
-    case 0:
-      parameterValue = text;
-      break;
-    case 1:
-      parameterValue =
-        text +
-        TemplateBuilder.from(getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE)).toString() +
-        getParameterValue(page, template);
-      break;
-    }
+    String parameterValue = switch (index) {
+      case 0 -> text;
+      case 1 -> text +
+          TemplateBuilder.from(getWikipedia().getConfiguration().getString(WPCConfigurationString.PIPE_TEMPLATE)) +
+          getParameterValue(page, template);
+      default -> null;
+    };
     if (parameterValue == null) {
       return null;
     }

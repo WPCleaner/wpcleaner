@@ -208,7 +208,7 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
 
     // URL encoded slash
     if (value.contains("%2F")) {
-      String newValue = value.replaceAll("%2F", "/");
+      String newValue = value.replace("%2F", "/");
       if (isValidDOI(newValue)) {
         addReplacement(analysis, errorResult, param, newValue, true);
       }
@@ -216,7 +216,7 @@ public class CheckErrorAlgorithm577 extends CheckErrorAlgorithmBase {
 
     // Non-breaking space
     if (value.contains("\u00A0")) {
-      String newValue = value.replaceAll("\u00A0", " ");
+      String newValue = value.replace("\u00A0", " ");
       addReplacement(analysis, errorResult, param, newValue, isValidDOI(newValue));
     }
 

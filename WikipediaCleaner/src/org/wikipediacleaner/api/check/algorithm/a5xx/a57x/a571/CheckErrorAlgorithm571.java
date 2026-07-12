@@ -160,7 +160,7 @@ public class CheckErrorAlgorithm571 extends CheckErrorAlgorithmBase {
               String nextTagValue = contents.substring(
                   nextTag.getValueBeginIndex(), nextTag.getValueEndIndex());
               if ((nextTagValue == null) ||
-                  nextTagValue.trim().equals("")) {
+                  nextTagValue.trim().isEmpty()) {
                 extended = true;
                 endIndex = nextTag.getCompleteEndIndex();
               }

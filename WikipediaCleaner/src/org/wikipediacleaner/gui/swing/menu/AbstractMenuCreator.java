@@ -81,7 +81,7 @@ public abstract class AbstractMenuCreator {
    * @return Number of items added.
    */
   public int addDisabledText(JMenu menu, String text) {
-    if ((menu == null) || (text == null) || (text.length() == 0)) {
+    if ((menu == null) || (text == null) || (text.isEmpty())) {
       return 0;
     }
     JMenuItem menuItem = new JMenuItem(text);
@@ -98,7 +98,7 @@ public abstract class AbstractMenuCreator {
    * @return Number of items added.
    */
   public int addDisabledText(JPopupMenu menu, String text) {
-    if ((menu == null) || (text == null) || (text.length() == 0)) {
+    if ((menu == null) || (text == null) || (text.isEmpty())) {
       return 0;
     }
     JMenuItem menuItem = new JMenuItem(text);

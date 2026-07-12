@@ -77,9 +77,7 @@ class RecentChangesRunnable implements Runnable {
           Date currentTime = DataManager.convertIso8601DateTime(start);
           manager.fireRecentChanges(recentChanges, currentTime);
         }
-      } catch (APIException e) {
-        // Nothing to do.
-      } catch (ParseException e) {
+      } catch (APIException | ParseException e) {
         // Nothing to do.
       }
       try {

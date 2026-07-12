@@ -35,7 +35,7 @@ import org.wikipediacleaner.utils.Configuration;
 public class WikiSelector implements WikiProvider {
 
   /** URL for other wiki than the defined ones */
-  private final static String URL_OTHER_WIKI = "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Wikis";
+  private final static String URL_OTHER_WIKI = "https://en.wikipedia.org/wiki/Wikipedia:WPCleaner/Wikis";
 
   /** Parent component */
   private final Component parentComponent;

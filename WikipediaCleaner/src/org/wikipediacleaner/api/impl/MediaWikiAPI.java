@@ -737,15 +737,9 @@ public class MediaWikiAPI implements API {
   private void updateRedirectStatus(
       EnumWikipedia wiki,
       List<Page> pages,
-      Element root)
-      throws APIException {
-    try {
-      ApiXmlPropertiesResult result = new ApiXmlPropertiesResult(wiki, httpClient);
-      result.updateRedirect(root, pages);
-    } catch (JDOMException e) {
-      log.error("Error redirects", e);
-      throw new APIException("Error parsing XML result", e);
-    }
+      Element root) {
+    ApiXmlPropertiesResult result = new ApiXmlPropertiesResult(wiki, httpClient);
+    result.updateRedirect(root, pages);
   }
 
   // ==========================================================================

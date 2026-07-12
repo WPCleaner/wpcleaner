@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
@@ -28,9 +29,7 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class LimitOptionsPanel extends OptionsPanel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -7125394212316622303L;
 
   /**

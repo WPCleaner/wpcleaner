@@ -66,19 +66,17 @@ public abstract class AbstractPageListPopupListener extends AbstractPopupListene
   protected void showPopup(MouseEvent e) {
 
     // Retrieve information
-    if (!(e.getComponent() instanceof JList)) {
+    if (!(e.getComponent() instanceof JList tmpList)) {
       return;
     }
-    JList tmpList = (JList) e.getComponent();
     int position = tmpList.locationToIndex(e.getPoint());
     if (position < 0) {
       return;
     }
     Object object = tmpList.getModel().getElementAt(position);
-    if (!(object instanceof Page)) {
+    if (!(object instanceof Page link)) {
       return;
     }
-    Page link = (Page) object;
     showPopup(tmpList, link, e.getX(), e.getY());
   }
 
@@ -91,19 +89,17 @@ public abstract class AbstractPageListPopupListener extends AbstractPopupListene
   protected void showPopup(KeyEvent e) {
 
     // Retrieve information
-    if (!(e.getComponent() instanceof JList)) {
+    if (!(e.getComponent() instanceof JList tmpList)) {
       return;
     }
-    JList tmpList = (JList) e.getComponent();
     int position = tmpList.getSelectedIndex();
     if (position < 0) {
       return;
     }
     Object object = tmpList.getModel().getElementAt(position);
-    if (!(object instanceof Page)) {
+    if (!(object instanceof Page link)) {
       return;
     }
-    Page link = (Page) object;
     Rectangle rect = tmpList.getCellBounds(position, position);
     showPopup(tmpList, link, (int) rect.getMinX(), (int) rect.getMaxY());
   }

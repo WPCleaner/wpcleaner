@@ -76,8 +76,7 @@ public class PageElementFormattingAnalysis {
     int bold = 0;
     int italic = 0;
     List<PageElementFormatting> selected = null;
-    for (int index = 0; index < elements.size(); index++) {
-      PageElementFormatting element = elements.get(index);
+    for (PageElementFormatting element : elements) {
       if ((element.getIndex() >= beginIndex) &&
           (element.getIndex() + element.getLength() <= endIndex)) {
         if (selected == null) {

@@ -7,13 +7,11 @@
 
 package org.wikipediacleaner.api.request.query.prop;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -55,33 +53,26 @@ public class ApiXmlRedirectsResult extends ApiXmlResult implements ApiRedirectsR
       Page page,
       List<Page> list)
           throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve redirects
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/pages/page/redirects/rd", Filters.element());
-      List<Element> listRedirects = xpa.evaluate(root);
-      Iterator<Element> itRedirects = listRedirects.iterator();
-      while (itRedirects.hasNext()) {
-        Element currentRedirect = itRedirects.next();
-        Page link = DataManager.getPage(
-            getWiki(), currentRedirect.getAttributeValue("title"), null, null, null);
-        link.setNamespace(currentRedirect.getAttributeValue("ns"));
-        link.setPageId(currentRedirect.getAttributeValue("pageid"));
-        link.getRedirects().add(page, null); // TODO: Check if fragment is available
-        if (!list.contains(link)) {
-          list.add(link);
-        }
+    // Retrieve redirects
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/pages/page/redirects/rd", Filters.element());
+    List<Element> listRedirects = xpa.evaluate(root);
+    for (Element currentRedirect : listRedirects) {
+      Page link = DataManager.getPage(
+          getWiki(), currentRedirect.getAttributeValue("title"), null, null, null);
+      link.setNamespace(currentRedirect.getAttributeValue("ns"));
+      link.setPageId(currentRedirect.getAttributeValue("pageid"));
+      link.getRedirects().add(page, null); // TODO: Check if fragment is available
+      if (!list.contains(link)) {
+        list.add(link);
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/redirects",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading redirects", e);
-      throw new APIException("Error parsing XML", e);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/redirects",
+        properties);
   }
 }

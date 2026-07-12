@@ -101,8 +101,6 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param template Template to check.
-   * @param paramName Name of the parameter to check.
-   * @param onlyInteger True if only integer values are accepted.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTemplateParam(
@@ -114,7 +112,7 @@ public class CheckErrorAlgorithm568 extends CheckErrorAlgorithmBase {
 
     // Check if an error is present
     Optional<List<TemplateParameterSuggestion>> suggestions = templateConfiguration.analyzeParam(analysis, template, paramNum);
-    if (!suggestions.isPresent()) {
+    if (suggestions.isEmpty()) {
       return false;
     }
     if (errors == null) {

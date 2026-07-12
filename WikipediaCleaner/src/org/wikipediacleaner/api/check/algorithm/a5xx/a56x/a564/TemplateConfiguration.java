@@ -140,7 +140,7 @@ class TemplateConfiguration {
     // Handle non-breaking white space in the parameter name
     List<TemplateParameterSuggestion> results = new ArrayList<>();
     if (name.contains("\u00A0")) {
-      String cleanedName = name.replaceAll("\u00A0", " ").trim();
+      String cleanedName = name.replace("\u00A0", " ").trim();
       boolean knownName = false;
       if (knownParams.contains(cleanedName)) {
         knownName = true;

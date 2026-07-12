@@ -10,6 +10,7 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 
 import javax.swing.JButton;
 import javax.swing.JColorChooser;
@@ -20,9 +21,7 @@ import javax.swing.JColorChooser;
  */
 public class ColorButton extends JButton implements ActionListener {
 
-  /**
-   * Serialisation.
-   */
+  @Serial
   private static final long serialVersionUID = -4093271062830284750L;
 
   /**

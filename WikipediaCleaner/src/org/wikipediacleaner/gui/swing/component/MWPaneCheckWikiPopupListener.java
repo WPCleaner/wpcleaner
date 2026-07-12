@@ -50,11 +50,10 @@ public class MWPaneCheckWikiPopupListener extends MWPanePopupListener {
     // Check if it's for Check Wiki
     AttributeSet attributes = element.getAttributes();
     Object attrInfo = attributes.getAttribute(MWPaneFormatter.ATTRIBUTE_INFO);
-    if (!(attrInfo instanceof CheckErrorResult)) {
+    if (!(attrInfo instanceof CheckErrorResult info)) {
       return null;
     }
 
-    CheckErrorResult info = (CheckErrorResult) attrInfo;
     MWPaneCheckWikiMenuCreator menu = new MWPaneCheckWikiMenuCreator();
     JPopupMenu popup = menu.createPopupMenu(null);
     menu.addInfo(popup, element, textPane, info);

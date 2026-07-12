@@ -158,8 +158,7 @@ public class UpdateDabWarningTools extends UpdateWarningTools {
       } else {
         for (Page page : pages) {
           List<Page> links = page.getRedirects().getLinks();
-          for (int numLink = 0; numLink < links.size(); numLink++) {
-            Page link = links.get(numLink);
+          for (Page link : links) {
             if (Boolean.TRUE.equals(wiki.isDisambiguationPage(link))) {
               link.setDisambiguationPage(Boolean.TRUE);
               hasDisambiguationLink = true;

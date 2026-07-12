@@ -75,7 +75,7 @@ public class AlgorithmParametersDescriptor {
 
   /**
    * Constructor.
-   * 
+   * <p>
    * Configuration is done through the set methods.
    */
   public AlgorithmParametersDescriptor() {
@@ -382,9 +382,7 @@ public class AlgorithmParametersDescriptor {
       }
       first = false;
     }
-    for (int i = 0; i < optionalCount; i++) {
-      result.append("]");
-    }
+    result.append("]".repeat(Math.max(0, optionalCount)));
   }
 
   /**
@@ -395,10 +393,10 @@ public class AlgorithmParametersDescriptor {
    * @param tooltip Text of the tooltip.
    */
   private void addTooltipText(StringBuilder result, String text, String tooltip) {
-    if ((text == null) || (text.length() == 0)) {
+    if ((text == null) || (text.isEmpty())) {
       return;
     }
-    if (!displayTooltip || (tooltip == null) || (tooltip.length() == 0)) {
+    if (!displayTooltip || (tooltip == null) || (tooltip.isEmpty())) {
       result.append(text);
       return;
     }

@@ -87,7 +87,7 @@ public class AnalysisPageListMenuCreator extends BasicMenuCreator {
   public void addReplaceAllLinks(
       JPopupMenu popup, Page page, MWPane textPane) {
     List<Page> links = page.getRedirects().getLinks();
-    if ((links != null) && (links.size() > 0)) {
+    if ((links != null) && (!links.isEmpty())) {
       JMenu submenuLink = new JMenu(GT._T("Link to"));
 
       int fixedBeginLink = 0;

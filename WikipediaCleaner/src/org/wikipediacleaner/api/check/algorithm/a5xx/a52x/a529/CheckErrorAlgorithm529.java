@@ -253,8 +253,8 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
     }
     String templateName = isbnTemplate[0];
     String[] params = isbnTemplate[1].split(",");
-    Boolean suggested = Boolean.valueOf(isbnTemplate[2]);
-    if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+    boolean suggested = Boolean.parseBoolean(isbnTemplate[2]);
+    if ((params.length > 0) && (suggested)) {
       TemplateBuilder builder = TemplateBuilder.from(templateName);
       builder.addParam(
           !"1".equals(params[0]) ? params[0] : null,
@@ -263,7 +263,7 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
       if (((prefix != null) && !prefix.isEmpty()) ||
           ((suffix != null) && !suffix.isEmpty())) {
         errorResult.addReplacement(
-            (prefix != null ? prefix : "") + builder.toString() + (suffix != null ? suffix : ""));
+            (prefix != null ? prefix : "") + builder + (suffix != null ? suffix : ""));
       }
     }
   }
@@ -291,7 +291,7 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
       return categoryName;
     }
     if ((trackingCategory != null) &&
-        (trackingCategory.trim().length() > 0)) {
+        (!trackingCategory.trim().isEmpty())) {
       return trackingCategory;
     }
     return null;
@@ -353,7 +353,7 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
     categoryName = null;
     if ((tmp != null) &&
-        (tmp.trim().length() > 0)) {
+        (!tmp.trim().isEmpty())) {
       categoryName = tmp.trim();
     }
 
@@ -393,13 +393,13 @@ public class CheckErrorAlgorithm529 extends CheckErrorAlgorithmBase {
   private String categoryName = null;
 
   /** Templates for ISBN */
-  private List<String[]> isbnTemplates = new ArrayList<>();
+  private final List<String[]> isbnTemplates = new ArrayList<>();
 
   /** Interwikis for ISBN */
-  private List<String[]> isbnInterwikis = new ArrayList<>();
+  private final List<String[]> isbnInterwikis = new ArrayList<>();
 
   /** Automatic replacements for ISBN */
-  private List<AutomaticReplacement> automaticReplacements = new ArrayList<>();
+  private final List<AutomaticReplacement> automaticReplacements = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.

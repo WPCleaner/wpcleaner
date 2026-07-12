@@ -84,11 +84,6 @@ public class InternalLinkCounter implements InternalLinkNotification {
    */
   private InternalLinkCount getLinkCount(Page link) {
     String title = link.getTitle();
-    InternalLinkCount linkCount = linksCount.get(title);
-    if (linkCount == null) {
-      linkCount = new InternalLinkCount(title);
-      linksCount.put(title, linkCount);
-    }
-    return linkCount;
+    return linksCount.computeIfAbsent(title, InternalLinkCount::new);
   }
 }

@@ -102,7 +102,7 @@ public class MagicWord implements Comparable<MagicWord> {
     if (text == null) {
       return false;
     }
-    if ((text.length() > 0) &&
+    if ((!text.isEmpty()) &&
         (text.charAt(0) == '#') &&
         type.isWithSharp()) {
       text = text.substring(1);

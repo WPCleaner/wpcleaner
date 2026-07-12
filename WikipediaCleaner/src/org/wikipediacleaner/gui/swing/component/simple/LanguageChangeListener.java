@@ -20,5 +20,5 @@ public interface LanguageChangeListener {
    * 
    * @param language New language.
    */
-  public void changeLanguage(EnumLanguage language);
+  void changeLanguage(EnumLanguage language);
 }

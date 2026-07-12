@@ -21,5 +21,5 @@ public interface PageListProvider extends WikiProvider {
   /**
    * @return Page.
    */
-  public List<Page> getPages();
+  List<Page> getPages();
 }

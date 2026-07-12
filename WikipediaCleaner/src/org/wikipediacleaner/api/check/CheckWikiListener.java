@@ -22,5 +22,5 @@ public interface CheckWikiListener {
    * @param page Page fixed.
    * @param errorNumber Error for which the page is fixed.
    */
-  public void pageFixed(Page page, int errorNumber);
+  void pageFixed(Page page, int errorNumber);
 }

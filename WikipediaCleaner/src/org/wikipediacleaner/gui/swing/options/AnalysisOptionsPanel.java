@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 
 import javax.swing.BorderFactory;
 import javax.swing.JCheckBox;
@@ -30,9 +31,7 @@ import org.wikipediacleaner.utils.ConfigurationValueInteger;
  */
 public class AnalysisOptionsPanel extends OptionsPanel {
 
-  /**
-   * Serialisation.
-   */
+  @Serial
   private static final long serialVersionUID = 8159287537211853955L;
 
   /**

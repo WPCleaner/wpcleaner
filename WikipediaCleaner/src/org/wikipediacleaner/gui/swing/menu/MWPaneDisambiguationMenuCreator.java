@@ -74,7 +74,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (String[] template : templates) {
             String replacement = createTextForTemplate(template[0], page.getTitle(), text);
             String message = GT._T("Using {0}", TemplateBuilder.from(template[0]).toString());
-            if ((template.length > 1) && (template[1].trim().length() > 0)) {
+            if ((template.length > 1) && (!template[1].trim().isEmpty())) {
               message += " - " + template[1].trim();
             }
             addItem(
@@ -99,7 +99,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (String comment : comments) {
             String replacement =
                 InternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
-                CommentBuilder.from(comment).toString();
+                CommentBuilder.from(comment);
             addItem(
                 submenu, null, GT._T("Using {0}", comment), true,
                 new ReplaceTextAction(page, replacement, element, textPane));
@@ -108,7 +108,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         } else {
           String replacement =
               InternalLinkBuilder.from(page.getTitle()).withText(text).toString() +
-              CommentBuilder.from(comments.get(0)).toString();
+              CommentBuilder.from(comments.get(0));
           addItem(
               popup, null, GT._T("Mark as normal link using comment"), true,
               new ReplaceTextAction(page, replacement, element, textPane));
@@ -165,7 +165,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
           for (List<String> template : templatesAfter) {
             String templateName = template.get(0);
             addItem(
-                submenu, null, GT._T("Using {0}", "[[…]]" + TemplateBuilder.from(templateName).toString()), true,
+                submenu, null, GT._T("Using {0}", "[[…]]" + TemplateBuilder.from(templateName)), true,
                 new MarkLinkAction(
                     page, element,
                     createTextForTemplateAfterLink(template, page.getTitle(), text),
@@ -175,15 +175,15 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         popup.add(submenu);
       } else {
         String newText = null;
-        if ((templates != null) && (templates.size() > 0)) {
+        if ((templates != null) && (!templates.isEmpty())) {
           newText = createTextForTemplate(templates.get(0), page.getTitle(), text);
-        } else if ((templatesAfter != null) && (templatesAfter.size() > 0)) {
+        } else if ((templatesAfter != null) && (!templatesAfter.isEmpty())) {
           newText = createTextForTemplateAfterLink(templatesAfter.get(0), page.getTitle(), text);
         }
         if (newText != null) {
           addItem(
               popup, null, GT._T("Mark as needing help"), true,
-              new MarkLinkAction(page, element, newText.toString(), textPane, checkBox));
+              new MarkLinkAction(page, element, newText, textPane, checkBox));
         }
       }
     }
@@ -211,7 +211,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         (page != null) &&
         Boolean.TRUE.equals(page.isDisambiguationPage()) &&
         (templates != null) &&
-        (templates.size() > 0)) {
+        (!templates.isEmpty())) {
       if (templates.size() > 1) {
         JMenu submenu = new JMenu(GT._T("Link text"));
         for (String template : templates) {
@@ -264,8 +264,8 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       // Determine if separators are needed
       List<String> wiktionary = page.getWiktionaryLinks();
       boolean separators = false;
-      if (((links != null) && (links.size() > 0)) ||
-          ((wiktionary != null) && (wiktionary.size() > 0))) {
+      if (((links != null) && (!links.isEmpty())) ||
+          ((wiktionary != null) && (!wiktionary.isEmpty()))) {
         separators = true;
       }
 
@@ -330,7 +330,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       }
 
       // Wiktionary links
-      if ((wiktionary != null) && (wiktionary.size() > 0)) {
+      if ((wiktionary != null) && (!wiktionary.isEmpty())) {
         for (String wikt : wiktionary) {
           String name = "wikt:" + wikt;
           addItem(
@@ -340,7 +340,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
       }
 
       // Possible links
-      if ((links != null) && (links.size() > 0)) {
+      if ((links != null) && (!links.isEmpty())) {
         for (Page p : links) {
           if (p.getRedirects().isRedirect()) {
             JMenu submenu1 = new JMenu(p.getTitle());
@@ -367,7 +367,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                   new ChangePreferredDisambiguationAction(
                       page.getWikipedia(), page.getTitle(), pageTmp.getTitle(), true));
 
-              if ((anchors != null) && (anchors.size() > 0)) {
+              if ((anchors != null) && (!anchors.isEmpty())) {
                 for (String anchor : anchors) {
                   addItem(
                       submenu1, pageTmp, anchor, true,
@@ -391,7 +391,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
             submenuReplace.add(submenu2);
             submenuAddPreferred.add(submenu3);
           } else if ((p.getNamespace() != null) &&
-                     (p.getNamespace().intValue() == Namespace.CATEGORY)) {
+                     (p.getNamespace() == Namespace.CATEGORY)) {
             JMenu submenu1 = new JMenu(p.getTitle());
             JMenu submenu2 = new JMenu(p.getTitle());
 
@@ -646,7 +646,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         }
 
         // Wiktionary links
-        if ((wiktionary != null) && (wiktionary.size() > 0)) {
+        if ((wiktionary != null) && (!wiktionary.isEmpty())) {
           if ((!separators) && (fixedBegin > 0)) {
             fixedBegin += addSeparator(submenu);
             separators = true;
@@ -663,7 +663,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
         }
 
         // Possible links
-        if ((links != null) && (links.size() > 0)) {
+        if ((links != null) && (!links.isEmpty())) {
           if ((!separators) && (fixedBegin > 0)) {
             fixedBegin += addSeparator(submenu);
             separators = true;
@@ -686,7 +686,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
                         matcher.getReplacement(page, template, indexReplacement, pageTmp.getTitle()),
                         element, textPane));
         
-                if ((anchors != null) && (anchors.size() > 0)) {
+                if ((anchors != null) && (!anchors.isEmpty())) {
                   for (String anchor : anchors) {
                     addItem(
                         submenu1, pageTmp, anchor, true,
@@ -787,7 +787,7 @@ public class MWPaneDisambiguationMenuCreator extends BasicMenuCreator {
     for (int i = 1; i < template.size(); i++) {
       builder.addParam(template.get(i));
     }
-    newText.append(builder.toString());
+    newText.append(builder);
     return newText.toString();
   }
 }

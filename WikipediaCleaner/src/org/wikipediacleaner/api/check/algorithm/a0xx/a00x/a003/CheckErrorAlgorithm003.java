@@ -12,7 +12,6 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
 import org.wikipediacleaner.api.algorithm.AlgorithmParameterElement;
@@ -62,7 +61,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     // Analyzing text for <ref> tags
     PageElementTag lastRefTag = null;
     List<PageElementTag> refTags = analysis.getTags(WikiTagType.REF);
-    if ((refTags != null) && (refTags.size() > 0)) {
+    if ((refTags != null) && (!refTags.isEmpty())) {
       for (int numTag = refTags.size() - 1; (numTag >= 0) && (lastRefTag == null); numTag--) {
         boolean usefulRef = true;
         PageElementTag refTag = refTags.get(numTag);
@@ -172,8 +171,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
     // Search for titles where references tag can be added
     List<PageElementTitle> correctTitles = analysis.getTitles().stream()
-        .filter(title -> isPossibleTitle(title))
-        .collect(Collectors.toList());
+        .filter(this::isPossibleTitle)
+        .toList();
     correctTitles.forEach(title -> {
       int beginIndex = title.getBeginIndex();
       int endIndex = title.getEndIndex();
@@ -188,17 +187,15 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
 
     // Search for titles before which references tag can be added
     List<PageElementTitle> titlesBefore = analysis.getTitles().stream()
-        .filter(title -> isBeforeTitle(title))
-        .collect(Collectors.toList());
-    titlesBefore.forEach(title -> {
-      addSuggestionBeforeElement(
-          analysis, errors, title, title.getLevel(),
-          (errors.size() == 1) && (lastRefTagIndex <= title.getBeginIndex()) && canBeAutomatic);
-    });
+        .filter(this::isBeforeTitle)
+        .toList();
+    titlesBefore.forEach(title -> addSuggestionBeforeElement(
+        analysis, errors, title, title.getLevel(),
+        (errors.size() == 1) && (lastRefTagIndex <= title.getBeginIndex()) && canBeAutomatic));
 
     // Search for templates before which references tag can be added
     analysis.getTemplates().stream()
-        .filter(template -> isBeforeTemplate(template))
+        .filter(this::isBeforeTemplate)
         .findFirst()
         .ifPresent(template -> {
           int beginIndex = template.getBeginIndex();
@@ -240,7 +237,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         analysis, beginIndex, endIndex, ErrorLevel.WARNING);
     String replacement =
         (needNewLineBefore ? "\n\n" : "") +
-        TitleBuilder.from(titleLevel, preferredTitle).toString() +
+        TitleBuilder.from(titleLevel, preferredTitle) +
         "\n" + insert + "\n\n" +
         analysis.getContents().substring(beginIndex, endIndex);
     tmpErrorResult.addReplacement(replacement, automatic);

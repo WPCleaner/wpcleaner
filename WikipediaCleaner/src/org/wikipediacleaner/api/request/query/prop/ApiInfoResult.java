@@ -15,19 +15,19 @@ import org.wikipediacleaner.api.data.Page;
 
 
 /**
- * Base interface for MediaWiki API informations results.
+ * Base interface for MediaWiki API information results.
  */
 public interface ApiInfoResult extends ApiPropertiesResult {
 
   /**
-   * Execute informations request.
+   * Execute information request.
    * 
    * @param properties Properties defining request.
-   * @param pages Pages to be filled with informations.
+   * @param pages Pages to be filled with information.
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeInformations(
+  boolean executeInformations(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException;
 }

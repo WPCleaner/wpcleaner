@@ -8,8 +8,8 @@
 package org.wikipediacleaner.api.constants.wiki;
 
 import java.awt.ComponentOrientation;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -223,13 +223,9 @@ public abstract class AbstractWikiSettings {
    * @return URL of the wiki.
    */
   public String getURL(String pageTitle, boolean redirect, boolean secured) {
-    try {
-      return getIndexURL(secured) +
-             "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
-             (redirect ? "" : "&redirect=no");
-    } catch (UnsupportedEncodingException e) {
-      return getIndexURL(secured);
-    }
+    return getIndexURL(secured) +
+           "?title=" + URLEncoder.encode(pageTitle, StandardCharsets.UTF_8) +
+           (redirect ? "" : "&redirect=no");
   }
 
   /**
@@ -239,14 +235,10 @@ public abstract class AbstractWikiSettings {
    * @return URL of the wiki.
    */
   public String getURL(String pageTitle, String action, boolean secured) {
-    try {
-      return getIndexURL(secured) +
-             "?title=" + URLEncoder.encode(pageTitle, "UTF-8") +
-             "&redirect=no" +
-             "&action=" + action;
-    } catch (UnsupportedEncodingException e) {
-      return getIndexURL(secured);
-    }
+    return getIndexURL(secured) +
+           "?title=" + URLEncoder.encode(pageTitle, StandardCharsets.UTF_8) +
+           "&redirect=no" +
+           "&action=" + action;
   }
 
   /**

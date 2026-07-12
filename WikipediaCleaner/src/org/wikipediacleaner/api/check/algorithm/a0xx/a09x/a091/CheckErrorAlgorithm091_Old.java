@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm091_Old extends CheckErrorAlgorithmBase {
 
     // Searching a DEFAULTSORT tag
     List<PageElementFunction> defaultSorts = analysis.getDefaultSorts();
-    if (defaultSorts.size() > 0) {
+    if (!defaultSorts.isEmpty()) {
       return false;
     }
 
@@ -78,8 +78,9 @@ public class CheckErrorAlgorithm091_Old extends CheckErrorAlgorithmBase {
     }
     for (PageElementCategory category : categories) {
       if ((category.getSort() == null) ||
-          (category.getSort().trim().length() == 0)) {
+          (category.getSort().trim().isEmpty())) {
         categoriesWithoutSort = true;
+        break;
       }
     }
     if (!categoriesWithoutSort) {

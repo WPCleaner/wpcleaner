@@ -8,6 +8,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Component;
+import java.io.Serial;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class BooleanIconCellRenderer extends DefaultTableCellRenderer {
 
+  @Serial
   private static final long serialVersionUID = 1557809942272845154L;
 
   /**
@@ -69,16 +71,14 @@ public class BooleanIconCellRenderer extends DefaultTableCellRenderer {
       JTable table, Object value,
       boolean isSelected, boolean hasFocus,
       int row, int column) {
-    if (value instanceof Boolean) {
-      Boolean booleanValue = (Boolean) value;
+    if (value instanceof Boolean booleanValue) {
       ImageIcon icon = booleanValue ? iconTrue : iconFalse;
       if (icon != null) {
         return new JLabel(icon);
       }
       return super.getTableCellRendererComponent(table, "", isSelected, hasFocus, row, column);
     }
-    Component component = super.getTableCellRendererComponent(
+    return super.getTableCellRendererComponent(
         table, value, isSelected, hasFocus, row, column);
-    return component;
   }
 }

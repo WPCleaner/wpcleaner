@@ -149,11 +149,11 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
         boolean newLine = (contents.charAt(beginIndex - 1) == '\n');
         errorResult = createCheckErrorResult(analysis, beginIndex, endIndex, ErrorLevel.WARNING);
         StringBuilder replacement = new StringBuilder();
-        replacement.append(TemplateBuilder.from(closeTemplate).toString());
+        replacement.append(TemplateBuilder.from(closeTemplate));
         if (newLine) {
           replacement.append('\n');
         }
-        replacement.append(contents.substring(beginIndex, endIndex));
+        replacement.append(contents, beginIndex, endIndex);
         errorResult.addReplacement(replacement.toString());
         errors.add(errorResult);
       }
@@ -190,11 +190,7 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
         for (String[] tmpPair : tmpPairs) {
           if (tmpPair.length > 1) {
             String openTemplateName = Page.normalizeTitle(tmpPair[0]);
-            PairInformation pairInfo = pairsMap.get(openTemplateName);
-            if (pairInfo == null) {
-              pairInfo = new PairInformation();
-              pairsMap.put(openTemplateName, pairInfo);
-            }
+            PairInformation pairInfo = pairsMap.computeIfAbsent(openTemplateName, k -> new PairInformation());
             pairInfo.addCloseTemplates(tmpPair);
           }
         }
@@ -230,7 +226,7 @@ public class CheckErrorAlgorithm544 extends CheckErrorAlgorithmBase {
    * Bean for holding information about a pair of templates.
    */
   private static class PairInformation {
-    private Set<String> closeTemplates;
+    private final Set<String> closeTemplates;
     private String replacement;
 
     public PairInformation() {

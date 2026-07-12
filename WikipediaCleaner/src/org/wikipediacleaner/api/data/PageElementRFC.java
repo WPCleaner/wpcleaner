@@ -79,7 +79,7 @@ public class PageElementRFC extends PageElement {
                 }
               }
               for (String param : params) {
-                if ((param != null) && (param.length() > 0)) {
+                if ((param != null) && (!param.isEmpty())) {
                   analyzeTemplateParams(
                       analysis, rfcs, rfcIgnoreTemplates,
                       template, param,
@@ -103,7 +103,7 @@ public class PageElementRFC extends PageElement {
               analyzeTemplateParams(
                   analysis, rfcs, rfcIgnoreTemplates,
                   template,
-                  ((rfcTemplate.length > 1) && (rfcTemplate[1].length() > 0)) ? rfcTemplate[1] : "1",
+                  ((rfcTemplate.length > 1) && (!rfcTemplate[1].isEmpty())) ? rfcTemplate[1] : "1",
                   false, false, false, true);
             }
           }
@@ -512,13 +512,13 @@ public class PageElementRFC extends PageElement {
         }
         if (ok) {
           String value = analysis.getContents().substring(beginIndex, endIndex);
-          if (paramValue.length() > 0) {
+          if (!paramValue.isEmpty()) {
             rfcs.add(new PageElementRFC(
                 beginIndex, endIndex, analysis, value,
                 true, correct, helpRequested, template));
           }
         } else if (acceptAllValues) {
-          if (paramValue.length() > 0) {
+          if (!paramValue.isEmpty()) {
             rfcs.add(new PageElementRFC(
                 template.getParameterValueStartIndex(paramNum),
                 template.getParameterValueStartIndex(paramNum) + paramValue.length(),
@@ -679,8 +679,8 @@ public class PageElementRFC extends PageElement {
         for (String[] rfcTemplate : rfcTemplates) {
           if (rfcTemplate.length > 2) {
             String[] params = rfcTemplate[1].split(",");
-            Boolean suggested = Boolean.valueOf(rfcTemplate[2]);
-            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+            boolean suggested = Boolean.parseBoolean(rfcTemplate[2]);
+            if ((params.length > 0) && (suggested)) {
               TemplateBuilder builder = TemplateBuilder.from(rfcTemplate[0]);
               builder.addParam(
                   !"1".equals(params[0]) ? params[0] : null,
@@ -733,7 +733,7 @@ public class PageElementRFC extends PageElement {
     // Reason
     if ((reason != null) &&
         (helpNeededTemplate.length > 2) &&
-        (helpNeededTemplate[2].length() > 0)) {
+        (!helpNeededTemplate[2].isEmpty())) {
       builder.addParam(helpNeededTemplate[2], reason);
     }
 
@@ -753,12 +753,12 @@ public class PageElementRFC extends PageElement {
   public String askForHelp(
       String comment, String reason) {
     if ((comment == null) ||
-        (comment.trim().length() == 0)) {
+        (comment.trim().isEmpty())) {
       return null;
     }
     StringBuilder replacement = new StringBuilder();
     replacement.append(comment);
-    if ((reason != null) && (reason.trim().length() > 0)) {
+    if ((reason != null) && (!reason.trim().isEmpty())) {
       replacement.append(" - ");
       replacement.append(reason);
     }
@@ -774,7 +774,7 @@ public class PageElementRFC extends PageElement {
       return null;
     }
     rfc = rfc.trim();
-    if (rfc.length() == 0) {
+    if (rfc.isEmpty()) {
       return rfc;
     }
     PageAnalysis analysis = new PageAnalysis(null, rfc);
@@ -809,7 +809,7 @@ public class PageElementRFC extends PageElement {
       return false;
     }
     rfcValue = cleanRFC(rfcValue);
-    if (rfcValue.length() == 0) {
+    if (rfcValue.isEmpty()) {
       return false;
     }
     return true;

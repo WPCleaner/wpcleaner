@@ -50,7 +50,7 @@ public class RandomPageWorker extends BasicWorker {
       API api = APIFactory.getAPI();
       setText(GT._T("Getting random page"));
       List<Page> pages = api.getRandomPages(getWikipedia(), 1, false);
-      if (pages.size() > 0) {
+      if (!pages.isEmpty()) {
         title = pages.get(0).getTitle();
       } else {
         title = "";

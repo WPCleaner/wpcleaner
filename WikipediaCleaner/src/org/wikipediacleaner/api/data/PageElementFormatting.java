@@ -11,7 +11,6 @@ package org.wikipediacleaner.api.data;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -128,16 +127,11 @@ public class PageElementFormatting {
    * @return Meaningful length.
    */
   public int getMeaningfulLength() {
-    switch (length) {
-    case 2:
-    case 3:
-    case 5:
-      return length;
-    case 4:
-      return 3;
-    default:
-      return 5;
-    }
+    return switch (length) {
+      case 2, 3, 5 -> length;
+      case 4 -> 3;
+      default -> 5;
+    };
   }
 
   /**
@@ -252,7 +246,7 @@ public class PageElementFormatting {
     while (elements.remove(null)) {
       // Nothing to do, remove() removes an element and return a boolean
     }
-    Collections.sort(elements, new ContentsElementComparator());
+    elements.sort(new ContentsElementComparator());
     Collections.reverse(elements);
     surroundingElements = elements;
   }
@@ -337,9 +331,6 @@ public class PageElementFormatting {
     return inTemplateParameter;
   }
 
-  /**
-   * @return Main area in which the formatting element is.
-   */
   private void computeMainArea() {
     mainAreaBegin = 0;
     mainAreaEnd = analysis.getContents().length();
@@ -597,13 +588,7 @@ public class PageElementFormatting {
   public static void excludeArea(
       List<PageElementFormatting> elements,
       int beginIndex, int endIndex) {
-    Iterator<PageElementFormatting> itElement = elements.iterator();
-    while (itElement.hasNext()) {
-      PageElementFormatting element = itElement.next();
-      if ((element.index >= beginIndex) &&
-          (element.index + element.length <= endIndex)) {
-        itElement.remove();
-      }
-    }
+    elements.removeIf(element -> (element.index >= beginIndex) &&
+        (element.index + element.length <= endIndex));
   }
 }

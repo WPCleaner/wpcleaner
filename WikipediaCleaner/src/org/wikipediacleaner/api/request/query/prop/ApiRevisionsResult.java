@@ -27,7 +27,7 @@ public interface ApiRevisionsResult extends ApiPropertiesResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeLastRevision(
+  boolean executeLastRevision(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException;
 }

@@ -7,11 +7,11 @@
 
 package org.wikipediacleaner.gui.swing;
 
+import java.io.Serial;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,9 +28,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class RecentChangesTableModel extends AbstractTableModel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = 6449639241165534424L;
 
   /**
@@ -46,7 +44,7 @@ public class RecentChangesTableModel extends AbstractTableModel {
   /**
    * Maximum number of changes to keep in the history.
    */
-  private int maxChanges;
+  private final int maxChanges;
 
   public final static int COLUMN_RC_ID = 0;
   public final static int COLUMN_FLAGS = COLUMN_RC_ID + 1;
@@ -114,13 +112,7 @@ public class RecentChangesTableModel extends AbstractTableModel {
    * @param title Title.
    */
   public void removeRecentChanges(String title) {
-    Iterator<RecentChange> itRC = recentChanges.iterator();
-    while (itRC.hasNext()) {
-      RecentChange rc = itRC.next();
-      if (Page.areSameTitle(title, rc.getTitle())) {
-        itRC.remove();
-      }
-    }
+    recentChanges.removeIf(rc -> Page.areSameTitle(title, rc.getTitle()));
     cleanUpList();
   }
 
@@ -246,19 +238,14 @@ public class RecentChangesTableModel extends AbstractTableModel {
    */
   @Override
   public String getColumnName(int column) {
-    switch (column) {
-    case COLUMN_FLAGS:
-      return "Nmb";
-    case COLUMN_RC_ID:
-      return GT._T("Id");
-    case COLUMN_TIMESTAMP:
-      return "Time";
-    case COLUMN_TITLE:
-      return GT._T("Title");
-    case COLUMN_USER:
-      return GT._T("User");
-    }
-    return super.getColumnName(column);
+    return switch (column) {
+      case COLUMN_FLAGS -> "Nmb";
+      case COLUMN_RC_ID -> GT._T("Id");
+      case COLUMN_TIMESTAMP -> "Time";
+      case COLUMN_TITLE -> GT._T("Title");
+      case COLUMN_USER -> GT._T("User");
+      default -> super.getColumnName(column);
+    };
   }
 
   /**
@@ -268,18 +255,10 @@ public class RecentChangesTableModel extends AbstractTableModel {
    */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    switch (columnIndex) {
-    case COLUMN_FLAGS:
-      return String.class;
-    case COLUMN_RC_ID:
-      return Integer.class;
-    case COLUMN_TIMESTAMP:
-      return String.class;
-    case COLUMN_TITLE:
-      return String.class;
-    case COLUMN_USER:
-      return String.class;
-    }
-    return super.getColumnClass(columnIndex);
+    return switch (columnIndex) {
+      case COLUMN_FLAGS, COLUMN_TIMESTAMP, COLUMN_TITLE, COLUMN_USER -> String.class;
+      case COLUMN_RC_ID -> Integer.class;
+      default -> super.getColumnClass(columnIndex);
+    };
   }
 }

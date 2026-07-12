@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
@@ -32,11 +33,11 @@ import org.wikipediacleaner.images.EnumImageSize;
 public abstract class GoToRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = -7425915853836707658L;
 
   /** Maps of all the buttons. */
-  private HashMap<Object, JButton> buttons;
+  private final HashMap<Object, JButton> buttons;
 
   /** Text pane where the text is. */
   protected final JTextComponent textPane;
@@ -139,12 +140,12 @@ public abstract class GoToRenderer extends AbstractCellEditor implements
       try {
         String[] locations = location.split(";");
         if (locations.length > 0) {
-          int startValue = Integer.valueOf(locations[0]);
+          int startValue = Integer.parseInt(locations[0]);
           if ((startValue >= 0) && (startValue < textPane.getText().length())) {
             textPane.setCaretPosition(startValue);
             textPane.moveCaretPosition(startValue);
             if (locations.length > 1) {
-              int endValue = Integer.valueOf(locations[1]);
+              int endValue = Integer.parseInt(locations[1]);
               if ((endValue >= 0) && (endValue <= textPane.getText().length())) {
                 textPane.moveCaretPosition(endValue);
               }

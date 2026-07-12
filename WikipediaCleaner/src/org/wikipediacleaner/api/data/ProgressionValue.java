@@ -58,9 +58,9 @@ public class ProgressionValue implements Comparable<ProgressionValue> {
   public String toString() {
     if (currentValue != null) {
       if ((goalValue != null) && (!currentValue.equals(goalValue))) {
-        return "" + currentValue + " / " + goalValue;
+        return currentValue + " / " + goalValue;
       }
-      if (!displayZero && (currentValue.intValue() == 0) && (goalValue == null)) {
+      if (!displayZero && (currentValue == 0) && (goalValue == null)) {
         return "";
       }
       return currentValue.toString();
@@ -73,10 +73,9 @@ public class ProgressionValue implements Comparable<ProgressionValue> {
    */
   @Override
   public boolean equals(Object obj) {
-    if (!(obj instanceof ProgressionValue)) {
+    if (!(obj instanceof ProgressionValue value)) {
       return false;
     }
-    ProgressionValue value = (ProgressionValue) obj;
     if (currentValue == null) {
       if (value.currentValue != null) {
         return false;

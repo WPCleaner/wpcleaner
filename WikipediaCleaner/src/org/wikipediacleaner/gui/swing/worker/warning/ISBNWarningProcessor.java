@@ -98,7 +98,7 @@ public class ISBNWarningProcessor extends WarningProcessor {
       }
       String error = analysis.getContents().substring(beginIndex, endIndex);
       error = error.replaceAll("\\=", "&#x3D;"); // Replace "=" by its HTML value
-      error = error.replaceAll("\n", "\u21b5"); // Replacer \n by a visual character
+      error = error.replace("\n", "\u21b5"); // Replacer \n by a visual character
       error = error.replaceAll("\\<", "&lt;"); // Replace "<" by its HTML element
       error = error.replaceAll("\\[", "&#x5B;"); // Replace "[" by its HTML value
       error = error.replaceAll("\\]", "&#x5D;"); // Replace "]" by its HTML value
@@ -113,11 +113,10 @@ public class ISBNWarningProcessor extends WarningProcessor {
         PageElementISBN isbn = analysis.isInISBN(beginIndex);
         if (isbn != null) {
           if ((algorithm != null) &&
-              (algorithm instanceof CheckErrorAlgorithmISBN)) {
-            CheckErrorAlgorithmISBN isbnAlgo = (CheckErrorAlgorithmISBN) algorithm;
+              (algorithm instanceof CheckErrorAlgorithmISBN isbnAlgo)) {
             String reason = isbnAlgo.getReason(isbn);
-            if ((reason != null) && (reason.length() > 0)) {
-              if (comment.length() > 0) {
+            if ((reason != null) && (!reason.isEmpty())) {
+              if (!comment.isEmpty()) {
                 comment.append(" - ");
               }
               comment.append(reason);

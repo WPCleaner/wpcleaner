@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serial;
 
 import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
@@ -37,6 +38,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class CloseTabComponent extends JPanel {
 
+  @Serial
   private static final long serialVersionUID = 1L;
 
   final JTabbedPane pane;
@@ -71,6 +73,7 @@ public class CloseTabComponent extends JPanel {
    */
   private class TabButton extends JButton implements ActionListener {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     public TabButton() {
@@ -141,8 +144,7 @@ public class CloseTabComponent extends JPanel {
     @Override
     public void mouseEntered(MouseEvent e) {
       Component component = e.getComponent();
-      if (component instanceof AbstractButton) {
-        AbstractButton button = (AbstractButton) component;
+      if (component instanceof AbstractButton button) {
         button.setBorderPainted(true);
       }
     }
@@ -153,8 +155,7 @@ public class CloseTabComponent extends JPanel {
     @Override
     public void mouseExited(MouseEvent e) {
       Component component = e.getComponent();
-      if (component instanceof AbstractButton) {
-        AbstractButton button = (AbstractButton) component;
+      if (component instanceof AbstractButton button) {
         button.setBorderPainted(false);
       }
     }

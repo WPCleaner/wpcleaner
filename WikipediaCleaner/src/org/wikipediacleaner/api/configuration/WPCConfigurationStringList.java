@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.configuration;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -48,10 +49,10 @@ public enum WPCConfigurationStringList {
   ISBN_INTERWIKIS("general_isbn_interwikis", true, true, true, null ),
   // ISBN search engines
   ISBN_SEARCH_ENGINES("general_isbn_search_engines", true, true, true, new String[] { 
-      "WorldCat|http://worldcat.org/isbn/{0}",
-      "ISBNdb|http://isbndb.com/search/all?query={0}",
-      "OttoBib|http://www.ottobib.com/isbn/{0}",
-      "Copyright Clearance Center|http://www.copyright.com/openurl.do?isbn={0}&servicename=all&WT.mc_id=wikipedia",
+      "WorldCat|https://worldcat.org/isbn/{0}",
+      "ISBNdb|https://isbndb.com/search/all?query={0}",
+      "OttoBib|https://www.ottobib.com/isbn/{0}",
+      "Copyright Clearance Center|https://www.copyright.com/openurl.do?isbn={0}&servicename=all&WT.mc_id=wikipedia",
   } ),
   // ISBN search engines
   ISBN_SEARCH_ENGINES_TEMPLATES("general_isbn_search_engines_templates", true, true, true),
@@ -77,8 +78,8 @@ public enum WPCConfigurationStringList {
   ISSN_INTERWIKIS("general_issn_interwikis", true, true, true, null ),
   // ISSN search engines
   ISSN_SEARCH_ENGINES("general_issn_search_engines", true, true, true, new String[] { 
-      "WorldCat|http://worldcat.org/issn/{0}",
-      "MIAR|http://miar.ub.edu/issn/{0}",
+      "WorldCat|https://worldcat.org/issn/{0}",
+      "MIAR|https://miar.ub.edu/issn/{0}",
   } ),
   // ISSN search engines
   ISSN_SEARCH_ENGINES_TEMPLATES("general_issn_search_engines_templates", true, true, true),
@@ -199,9 +200,7 @@ public enum WPCConfigurationStringList {
     this.userAttribute = userAttribute;
     if (defaultValue != null) {
       this.defaultValue = new ArrayList<>(defaultValue.length);
-      for (String element : defaultValue) {
-        this.defaultValue.add(element);
-      }
+      this.defaultValue.addAll(Arrays.asList(defaultValue));
     } else {
       this.defaultValue = null;
     }

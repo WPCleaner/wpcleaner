@@ -16,5 +16,5 @@ public enum TagFormat {
 
   OPEN,
   CLOSE,
-  FULL;
+  FULL
 }

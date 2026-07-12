@@ -242,7 +242,7 @@ public abstract class ApiJsonResult extends BasicApiResult {
         String value = continueElement.getValue().asText();
         if ((name != null) && (value != null)) {
           properties.put(name, value);
-          if (!"".equals(value)) {
+          if (!value.isEmpty()) {
             result = true;
           }
         }
@@ -292,21 +292,19 @@ public abstract class ApiJsonResult extends BasicApiResult {
     if (useDisambig) {
       Element pageProps = pageNode.getChild("pageprops");
       boolean dabPage = (pageProps != null) && (pageProps.getAttribute("disambiguation") != null);
-      page.setDisambiguationPage(Boolean.valueOf(dabPage));
+      page.setDisambiguationPage(dabPage);
     }
     return page;
   }
 
   /**
    * Trace a document contents.
-   * 
-   * @param parser JSON parser.
    */
   private void traceDocument(JsonNode root) {
     if (DEBUG_JSON) {
       System.out.println("********** START OF DOCUMENT **********");
       if (root != null) {
-        System.out.println(root.toString());
+        System.out.println(root);
       }
       System.out.println("**********  END OF DOCUMENT  **********");
     }

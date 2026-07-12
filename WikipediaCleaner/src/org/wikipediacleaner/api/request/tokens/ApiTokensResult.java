@@ -24,5 +24,5 @@ public interface ApiTokensResult extends ApiResult {
    * @param properties Properties defining request.
    * @throws APIException Exception thrown by the API.
    */
-  public void executeTokens(Map<String, String> properties) throws APIException;
+  void executeTokens(Map<String, String> properties) throws APIException;
 }

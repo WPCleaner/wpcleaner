@@ -108,9 +108,7 @@ public class AlgorithmParameter implements Comparable<AlgorithmParameter> {
     this.name = name;
     this.description = description;
     if (elements != null) {
-      for (AlgorithmParameterElement element : elements) {
-        this.elements.add(element);
-      }
+      Collections.addAll(this.elements, elements);
     }
     this.multiline = multiline;
   }
@@ -143,7 +141,7 @@ public class AlgorithmParameter implements Comparable<AlgorithmParameter> {
     StringBuilder buffer = new StringBuilder();
     int optionalCount = 0;
     for (AlgorithmParameterElement element : getElements()) {
-      boolean first = (buffer.length() == 0);
+      boolean first = (buffer.isEmpty());
       if (element.isOptional()) {
         buffer.append("[");
         optionalCount++;
@@ -156,9 +154,7 @@ public class AlgorithmParameter implements Comparable<AlgorithmParameter> {
         buffer.append("...");
       }
     }
-    for (int i = 0; i < optionalCount; i++) {
-      buffer.append("]");
-    }
+    buffer.append("]".repeat(Math.max(0, optionalCount)));
     return buffer.toString();
   }
 

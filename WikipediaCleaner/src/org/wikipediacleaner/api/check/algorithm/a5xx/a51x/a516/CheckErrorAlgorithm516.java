@@ -44,7 +44,7 @@ public class CheckErrorAlgorithm516 extends CheckErrorAlgorithmBase {
       return false;
     }
     Integer ns = analysis.getPage().getNamespace();
-    if ((ns == null) || (ns.intValue() != Namespace.MAIN)) {
+    if ((ns == null) || (ns != Namespace.MAIN)) {
       return false;
     }
 

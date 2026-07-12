@@ -109,9 +109,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param templateParameter Parameter to analyze.
    * @param templateConfiguration Configuration for the template.
-   * @return
    */
   private boolean analyzeTemplateParameter(
       PageAnalysis analysis,
@@ -122,7 +120,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
 
     // Check if there's an error
     Optional<List<TemplateParameterSuggestion>> suggestions = templateConfiguration.analyzeParam(analysis, template, paramNum);
-    if (!suggestions.isPresent()) {
+    if (suggestions.isEmpty()) {
       return false;
     }
     if (errors == null) {
@@ -304,7 +302,7 @@ public class CheckErrorAlgorithm564 extends CheckErrorAlgorithmBase {
   }
 
   /** Page containing a dump analysis */
-  private List<String> dumpAnalyses = new ArrayList<>();
+  private final List<String> dumpAnalyses = new ArrayList<>();
 
   /** Templates and parameters that are checked */
   private final Map<String, TemplateConfiguration> configurationByTemplateName = new HashMap<>();

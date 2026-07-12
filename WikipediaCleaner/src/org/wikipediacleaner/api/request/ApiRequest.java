@@ -7,8 +7,8 @@
 
 package org.wikipediacleaner.api.request;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -209,11 +209,7 @@ public abstract class ApiRequest {
     int charactersCount = 0;
     for (Page page : pages) {
       int length = 0;
-      try {
-        length = URLEncoder.encode(page.getTitle(), "UTF8").length();
-      } catch (UnsupportedEncodingException e) {
-        // Not supposed to happen.
-      }
+      length = URLEncoder.encode(page.getTitle(), StandardCharsets.UTF_8).length();
       if ((pagesCount + 1> maxSize) ||
           ((charactersCount + length > MAX_LENGTH_LIST_URLENCODED) && (pagesCount > 0))) {
         result.add(currentList);
@@ -240,7 +236,7 @@ public abstract class ApiRequest {
   protected String constructListTitles(Collection<Page> pages) {
     StringBuilder buffer = new StringBuilder();
     for (Page page : pages) {
-      if (buffer.length() > 0) {
+      if (!buffer.isEmpty()) {
         buffer.append("|");
       }
       buffer.append(page.getTitle());
@@ -258,7 +254,7 @@ public abstract class ApiRequest {
     StringBuilder buffer = new StringBuilder();
     for (Page page : pages) {
       if (page.getPageId() != null) {
-        if (buffer.length() > 0) {
+        if (!buffer.isEmpty()) {
           buffer.append("|");
         }
         buffer.append(page.getPageId());
@@ -276,7 +272,7 @@ public abstract class ApiRequest {
   protected String constructList(Collection<?> values) {
     StringBuilder buffer = new StringBuilder();
     for (Object value : values) {
-      if (buffer.length() > 0) {
+      if (!buffer.isEmpty()) {
         buffer.append("|");
       }
       buffer.append(value.toString());

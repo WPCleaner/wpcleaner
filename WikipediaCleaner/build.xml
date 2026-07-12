@@ -387,7 +387,7 @@
                  storepass="${WPCleaner.p12.password}"
                  alias="wpcleaner-sign"
                  keypass="${WPCleaner.p12key.password}"
-                 tsaurl="http://time.certum.pl/">
+                 tsaurl="https://time.certum.pl/">
         </signjar>
         <signjar jar="${WPCleaner.tmp.dir}/WPCleanerUnsigned.jar"
                  signedjar="${WPCleaner.tmp.dir}/WPCleaner.jar"
@@ -396,7 +396,7 @@
                  storepass="${WPCleaner.p12.password}"
                  alias="wpcleaner-sign"
                  keypass="${WPCleaner.p12key.password}"
-                 tsaurl="http://time.certum.pl/">
+                 tsaurl="https://time.certum.pl/">
         </signjar>
         <signjar jar="${WPCleaner.tmp.dir}/WPCleanerInstallerUnsigned.jar"
                  signedjar="${WPCleaner.tmp.dir}/WPCleanerInstaller.jar"
@@ -405,7 +405,7 @@
                  storepass="${WPCleaner.p12.password}"
                  alias="wpcleaner-sign"
                  keypass="${WPCleaner.p12key.password}"
-                 tsaurl="http://time.certum.pl/">
+                 tsaurl="https://time.certum.pl/">
         </signjar>
         <!-- Time Stamping Servers:
              http://time.certum.pl/
@@ -832,8 +832,8 @@
           They are needed if you want to build a version of WikipediaCleaner with translations in other languages.
           Otherwise, you dont need them.
           ----------------------------------------------
-          Homepage: http://www.gnu.org/software/gettext/
-          Win32: http://gnuwin32.sourceforge.net/packages/gettext.htm
+          Homepage: https://www.gnu.org/software/gettext/
+          Win32: https://gnuwin32.sourceforge.net/packages/gettext.htm
         </echo>
       </else>
     </if>

@@ -8,6 +8,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.text.BadLocationException;
@@ -24,9 +25,7 @@ import org.wikipediacleaner.api.check.CheckErrorResult;
  */
 public class MWPaneReplaceAllAction extends MWPaneAction {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -5712602406152066930L;
 
   private final String originalText;
@@ -68,12 +67,11 @@ public class MWPaneReplaceAllAction extends MWPaneAction {
             (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_TYPE) != null) &&
             (attr.getAttribute(MWPaneFormatter.ATTRIBUTE_INFO) != null)) {
           Object attrInfo = attr.getAttribute(MWPaneFormatter.ATTRIBUTE_INFO);
-          if (attrInfo instanceof CheckErrorResult) {
+          if (attrInfo instanceof CheckErrorResult info) {
             int startOffset = MWPaneFormatter.getUUIDStartOffset(textPane, run);
             int endOffset = MWPaneFormatter.getUUIDEndOffet(textPane, run);
             if (originalText.equals(textPane.getText(startOffset, endOffset - startOffset))) {
               boolean possible = false;
-              CheckErrorResult info = (CheckErrorResult) attrInfo;
               List<Actionnable> actionnables = info.getPossibleActions();
               if (actionnables != null) {
                 for (Actionnable actionnable : actionnables) {

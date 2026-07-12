@@ -12,6 +12,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.font.TextAttribute;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,7 @@ import org.wikipediacleaner.utils.ConfigurationValueString;
 public class MWPane
     extends JTextPane {
 
+  @Serial
   private static final long serialVersionUID = 3225120886653438117L;
 
   public static final String PROPERTY_MODIFIED = "ModifiedProperty";
@@ -278,8 +280,6 @@ public class MWPane
 
   /**
    * Enabling to render this component editable or not temporarily.
-   * 
-   * @param editable
    */
   void setEditableInternal(boolean editable) {
     super.setEditable(editable);
@@ -369,9 +369,9 @@ public class MWPane
     String text = getText();
     List<Font> possibleFonts = new ArrayList<>();
     Font[] allFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
-    for (int i = 0; i < allFonts.length; i++) {
-      if (allFonts[i].canDisplayUpTo(text) == -1) {
-        possibleFonts.add(allFonts[i]);
+    for (Font allFont : allFonts) {
+      if (allFont.canDisplayUpTo(text) == -1) {
+        possibleFonts.add(allFont);
       }
     }
     return possibleFonts;

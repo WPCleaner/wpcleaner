@@ -136,7 +136,7 @@ public class PageElementParameter extends PageElement {
       return null;
     }
     String parameterName = contents.substring(startParameterName, tmpIndex).trim();
-    if (parameterName.length() == 0) {
+    if (parameterName.isEmpty()) {
       return null;
     }
 
@@ -488,7 +488,7 @@ public class PageElementParameter extends PageElement {
     int paramNum = 1;
     while (index < parameters.size()) {
       String paramName = parameters.get(index).name;
-      if ((paramName == null) || (paramName.length() == 0)) {
+      if ((paramName == null) || (paramName.isEmpty())) {
         paramName = Integer.toString(paramNum);
       }
       if (paramName.equals(Integer.toString(paramNum))) {
@@ -526,7 +526,7 @@ public class PageElementParameter extends PageElement {
 
   private void addParameter(StringBuilder sb, String paramName, String parameterValue) {
     sb.append('|');
-    if ((paramName != null) && (paramName.trim().length() > 0)) {
+    if ((paramName != null) && (!paramName.trim().isEmpty())) {
       sb.append(paramName);
       sb.append('=');
     }

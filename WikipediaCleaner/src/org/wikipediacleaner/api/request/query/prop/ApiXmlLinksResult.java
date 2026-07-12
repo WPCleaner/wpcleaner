@@ -14,7 +14,6 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -54,46 +53,35 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
       Map<String, String> properties,
       Map<String, List<Page>> lists,
       Map<String, String> normalization) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve normalization information
-      retrieveNormalization(root, normalization);
+    // Retrieve normalization information
+    retrieveNormalization(root, normalization);
 
-      // Retrieve back links
-      XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
-          "/api/query/pages/page", Filters.element());
-      List<Element> listPages = xpaPages.evaluate(root);
-      Iterator<Element> itPage = listPages.iterator();
-      XPathExpression<Element> xpaLinks = XPathFactory.instance().compile(
-          "links/pl", Filters.element());
-      while (itPage.hasNext()) {
-        Element pageNode = itPage.next();
-        String pageTitle = pageNode.getAttributeValue("title");
-        List<Page> links = lists.get(pageTitle);
-        if (links == null) {
-          links = new ArrayList<>();
-          lists.put(pageTitle, links);
-        }
-        List<Element> listLinks = xpaLinks.evaluate(pageNode);
-        Iterator<Element> itLinks = listLinks.iterator();
-        while (itLinks.hasNext()) {
-          Element linkNode = itLinks.next();
-          Page link = DataManager.getPage(
-              getWiki(), linkNode.getAttributeValue("title"), null, null, null);
-          link.setNamespace(linkNode.getAttributeValue("ns"));
-          links.add(link);
-        }
+    // Retrieve back links
+    XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
+        "/api/query/pages/page", Filters.element());
+    List<Element> listPages = xpaPages.evaluate(root);
+    Iterator<Element> itPage = listPages.iterator();
+    XPathExpression<Element> xpaLinks = XPathFactory.instance().compile(
+        "links/pl", Filters.element());
+    while (itPage.hasNext()) {
+      Element pageNode = itPage.next();
+      String pageTitle = pageNode.getAttributeValue("title");
+      List<Page> links = lists.computeIfAbsent(pageTitle, k -> new ArrayList<>());
+      List<Element> listLinks = xpaLinks.evaluate(pageNode);
+      for (Element linkNode : listLinks) {
+        Page link = DataManager.getPage(
+            getWiki(), linkNode.getAttributeValue("title"), null, null, null);
+        link.setNamespace(linkNode.getAttributeValue("ns"));
+        links.add(link);
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/links",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading links", e);
-      throw new APIException("Error parsing XML", e);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/links",
+        properties);
   }
 
   /**
@@ -115,33 +103,26 @@ public class ApiXmlLinksResult extends ApiXmlPropertiesResult implements ApiLink
       List<Page> knownPages,
       Map<String, String> normalization,
       List<Page> redirects, boolean useDisambig) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve normalization information
-      retrieveNormalization(root, normalization);
+    // Retrieve normalization information
+    retrieveNormalization(root, normalization);
 
-      // Retrieve back links
-      XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
-          "/api/query/pages/page", Filters.element());
-      List<Element> listLinks = xpaPages.evaluate(root);
-      Iterator<Element> itLinks = listLinks.iterator();
-      while (itLinks.hasNext()) {
-        Element linkNode = itLinks.next();
-        Page link = getPage(getWiki(), linkNode, knownPages, useDisambig);
-        if ((redirects != null) && (link.getRedirects().isRedirect())) {
-          redirects.add(link);
-        }
-        links.add(link);
+    // Retrieve back links
+    XPathExpression<Element> xpaPages = XPathFactory.instance().compile(
+        "/api/query/pages/page", Filters.element());
+    List<Element> listLinks = xpaPages.evaluate(root);
+    for (Element linkNode : listLinks) {
+      Page link = getPage(getWiki(), linkNode, knownPages, useDisambig);
+      if ((redirects != null) && (link.getRedirects().isRedirect())) {
+        redirects.add(link);
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/links",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading links", e);
-      throw new APIException("Error parsing XML", e);
+      links.add(link);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/links",
+        properties);
   }
 }

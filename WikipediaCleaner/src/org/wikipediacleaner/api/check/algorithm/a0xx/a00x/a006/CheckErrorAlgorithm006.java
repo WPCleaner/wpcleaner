@@ -81,8 +81,8 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
     EnumWikipedia wiki = analysis.getWikipedia();
     boolean characterFound = false;
     boolean characterReplaced = false;
-    String unknownCharacters = "";
-    String text = "";
+    StringBuilder unknownCharacters = new StringBuilder();
+    StringBuilder text = new StringBuilder();
     int lastPos = 0;
     int currentPos = 0;
     String value = (tag.getParameterCount() > 0) ? tag.getParameterValue(0) : "";
@@ -98,14 +98,14 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
       }
       if (error) {
         characterFound = true;
-        text += value.substring(lastPos, currentPos);
+        text.append(value, lastPos, currentPos);
         String newCharacter = SpecialCharacters.proposeReplacement(character, wiki);
         if (!Character.toString(character).equals(newCharacter)) {
           characterReplaced = true;
         } else {
-          unknownCharacters += character;
+          unknownCharacters.append(character);
         }
-        text += newCharacter;
+        text.append(newCharacter);
         lastPos = currentPos + 1;
       }
       currentPos++;
@@ -120,12 +120,12 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
           analysis, tag.getBeginIndex(), tag.getEndIndex());
       if (characterReplaced) {
         if (lastPos < value.length()) {
-          text += value.substring(lastPos);
+          text.append(value.substring(lastPos));
         }
-        errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text));
+        errorResult.addReplacement(PageElementFunction.createFunction(tag.getFunctionName(), text.toString()));
       } else {
         errorResult.addText(
-            GT._T("Unable to replace the characters [{0}]", unknownCharacters));
+            GT._T("Unable to replace the characters [{0}]", unknownCharacters.toString()));
       }
       errors.add(errorResult);
       return true;
@@ -154,7 +154,7 @@ public class CheckErrorAlgorithm006 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

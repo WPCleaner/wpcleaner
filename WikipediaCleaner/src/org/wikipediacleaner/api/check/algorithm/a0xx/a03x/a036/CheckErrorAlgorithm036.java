@@ -64,7 +64,7 @@ public class CheckErrorAlgorithm036 extends CheckErrorAlgorithmBase {
         for (String alias : redirect.getAliases()) {
           int endIndex = currentIndex + alias.length();
           if ((endIndex < contents.length()) &&
-              (alias.length() > 0) &&
+              (!alias.isEmpty()) &&
               (alias.equalsIgnoreCase(contents.substring(currentIndex, endIndex)))) {
             char nextChar = contents.charAt(endIndex);
             if ((nextChar == ' ') || (nextChar == '[')) {

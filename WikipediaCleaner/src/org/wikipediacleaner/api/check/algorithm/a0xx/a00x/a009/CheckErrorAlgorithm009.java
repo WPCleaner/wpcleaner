@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.api.check.algorithm.a0xx.a00x.a009;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -137,7 +138,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
                 tmpIndex--;
               }
               replacement.append("\n\n");
-              replacement.append(contents.substring(function.getBeginIndex(), function.getEndIndex()));
+              replacement.append(contents, function.getBeginIndex(), function.getEndIndex());
             }
             replacement.append("\n");
             beginIndex = tmpIndex;
@@ -166,6 +167,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
             char currentChar = contents.charAt(index);
             if ((currentChar != ' ') && (currentChar != '\n')) {
               automatic = false;
+              break;
             }
           }
           replacement.append(contents.substring(
@@ -175,9 +177,8 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
         }
         String replacementText = (lastCategory - currentCategory > 1) ?
             "[[...]]\u21B5...\u21B5[[...]]" : "[[...]]\u21B5[[...]]";
-        replacement.append(contents.substring(
-            categories.get(lastCategory).getBeginIndex(),
-            categories.get(lastCategory).getEndIndex()));
+        final PageElementCategory lastElementCategory = categories.get(lastCategory);
+        replacement.append(contents, lastElementCategory.getBeginIndex(), lastElementCategory.getEndIndex());
         errorResult.addReplacement(replacement.toString(), replacementText, automatic);
         errors.add(errorResult);
       }
@@ -222,9 +223,7 @@ public class CheckErrorAlgorithm009 extends CheckErrorAlgorithmBase {
             Set<String> parameters = ignoreTemplates.computeIfAbsent(
                 Page.normalizeTitle(tmpElement[0]),
                 k -> new HashSet<>());
-            for (int elementNum = 1; elementNum < tmpElement.length; elementNum++) {
-              parameters.add(tmpElement[elementNum]);
-            }
+            parameters.addAll(Arrays.asList(tmpElement).subList(1, tmpElement.length));
           }
         }
       }

@@ -28,7 +28,7 @@ public interface ApiEmbeddedInResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeEmbeddedIn(
+  boolean executeEmbeddedIn(
       Map<String, String> properties,
       List<Page> list) throws APIException;
 }

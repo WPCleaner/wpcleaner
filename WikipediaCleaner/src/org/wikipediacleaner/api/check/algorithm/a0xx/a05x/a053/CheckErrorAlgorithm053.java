@@ -45,7 +45,7 @@ public class CheckErrorAlgorithm053 extends CheckErrorAlgorithmBase {
 
     // Retrieving last category
     List<PageElementCategory> categories = analysis.getCategories();
-    if (categories.size() == 0) {
+    if (categories.isEmpty()) {
       return false;
     }
     int lastCategory = categories.get(categories.size() - 1).getEndIndex();

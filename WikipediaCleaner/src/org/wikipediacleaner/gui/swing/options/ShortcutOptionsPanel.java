@@ -17,6 +17,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
@@ -42,9 +43,7 @@ import org.wikipediacleaner.utils.ConfigurationValueShortcut;
  */
 public class ShortcutOptionsPanel extends OptionsPanel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = 5269712919862161621L;
 
   /**
@@ -512,9 +511,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
    */
   private class KeyCodeButton extends JButton implements ActionListener, KeyEventDispatcher {
 
-    /**
-     * Serialization.
-     */
+    @Serial
     private static final long serialVersionUID = -2362841546820504549L;
 
     /**
@@ -585,8 +582,7 @@ public class ShortcutOptionsPanel extends OptionsPanel {
           (key == KeyEvent.VK_RIGHT) ||
           (key == KeyEvent.VK_SHIFT) ||
           (key == KeyEvent.VK_TAB) ||
-          (key == KeyEvent.VK_UP) ||
-          (key == KeyEvent.VK_SHIFT)) {
+          (key == KeyEvent.VK_UP)) {
         return false;
       }
       if (key != KeyEvent.VK_ESCAPE) {

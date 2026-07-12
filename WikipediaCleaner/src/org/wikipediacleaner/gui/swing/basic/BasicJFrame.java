@@ -9,17 +9,19 @@ package org.wikipediacleaner.gui.swing.basic;
 
 import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
+import java.io.Serial;
 
 import javax.swing.JFrame;
 
-import org.wikipediacleaner.utils.Versionned;
+import org.wikipediacleaner.utils.Versioned;
 
 
 /**
  * An extension of JFrame for Wikipedia Cleaner windows
  */
-public class BasicJFrame extends JFrame implements Versionned {
+public class BasicJFrame extends JFrame implements Versioned {
 
+  @Serial
   private static final long serialVersionUID = -6326849068169650289L;
   private Integer version;
 

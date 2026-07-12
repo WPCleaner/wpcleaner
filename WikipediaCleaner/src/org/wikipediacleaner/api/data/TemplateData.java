@@ -140,17 +140,17 @@ public class TemplateData {
     /**
      * True if multiple languages are used for the description.
      */
-    private boolean multipleLanguages;
+    private final boolean multipleLanguages;
 
     /**
      * Description in a single language.
      */
-    private String text;
+    private final String text;
 
     /**
      * Description in multiple languages.
      */
-    private List<LanguageValue> texts;
+    private final List<LanguageValue> texts;
 
     /**
      * Default constructor.
@@ -231,12 +231,12 @@ public class TemplateData {
     /**
      * Language code.
      */
-    private String language;
+    private final String language;
 
     /**
      * Description.
      */
-    private String text;
+    private final String text;
 
     /**
      * @param language Language code.
@@ -277,7 +277,7 @@ public class TemplateData {
   public static class Parameter implements Comparable<Parameter> {
 
     /** Parameter name. */
-    private String name;
+    private final String name;
 
     /** Label for the parameter. */
     private InterfaceText label;
@@ -550,7 +550,7 @@ public class TemplateData {
 
     UNKNOWN("unknown");
 
-    String type;
+    final String type;
 
     /**
      * @param name Type name.
@@ -649,12 +649,12 @@ public class TemplateData {
     /**
      * Set label.
      */
-    private InterfaceText label;
+    private final InterfaceText label;
 
     /**
      * List of parameters in the set.
      */
-    private List<String> parameters;
+    private final List<String> parameters;
 
     /**
      * Default constructor.

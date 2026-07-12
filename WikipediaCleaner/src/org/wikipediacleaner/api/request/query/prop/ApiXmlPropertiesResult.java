@@ -17,7 +17,6 @@ import java.util.Optional;
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -49,9 +48,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * 
    * @param node Element for the page.
    * @param page Page.
-   * @throws JDOMException Exception from due to the DOM.
    */
-  public void updatePageInformation(Element node, Page page) throws JDOMException {
+  public void updatePageInformation(Element node, Page page) {
 
     // Retrieve basic page information
     Attribute attrPageId = node.getAttribute("pageid");
@@ -62,7 +60,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     if (attrTitle != null) {
       page.setTitle(attrTitle.getValue());
     }
-    Optional.ofNullable(node.getAttributeValue("starttimestamp")).ifPresent(timestamp -> page.setStartTimestamp(timestamp));
+    Optional.ofNullable(node.getAttributeValue("starttimestamp")).ifPresent(page::setStartTimestamp);
     Attribute attrRedirect = node.getAttribute("redirect");
     if (attrRedirect != null) {
       page.getRedirects().isRedirect(true);
@@ -94,15 +92,10 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
   public void executeRedirect(
       Map<String, String> properties,
       List<Page> pages) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
-  
-      // Manage redirects and missing pages
-      updateRedirect(root, pages);
-    } catch (JDOMException e) {
-      log.error("Error loading redirects", e);
-      throw new APIException("Error parsing XML", e);
-    }
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+
+    // Manage redirects and missing pages
+    updateRedirect(root, pages);
   }
 
   /**
@@ -110,11 +103,10 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * 
    * @param root Root element.
    * @param normalization Map containing information about title normalization (key=From, value=To).
-   * @throws JDOMException Exception thrown due to the DOM.
    */
   public void retrieveNormalization(
       Element root,
-      Map<String, String> normalization) throws JDOMException {
+      Map<String, String> normalization) {
     if (normalization == null) {
       return;
     }
@@ -124,9 +116,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     if ((listNormalized == null) || (listNormalized.isEmpty())) {
       return;
     }
-    Iterator<Element> itNormalized = listNormalized.iterator();
-    while (itNormalized.hasNext()) {
-      Element normalized = itNormalized.next();
+    for (Element normalized : listNormalized) {
       String from = normalized.getAttributeValue("from");
       String to = normalized.getAttributeValue("to");
       if ((from != null) && (to != null)) {
@@ -158,9 +148,8 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
    * 
    * @param root Root element.
    * @param pages List of pages.
-   * @throws JDOMException Exception thrown due to the DOM.
    */
-  public void updateRedirect(Element root, Collection<Page> pages) throws JDOMException {
+  public void updateRedirect(Element root, Collection<Page> pages) {
 
     // Retrieving redirects
     XPathExpression<Element> xpaRedirects = XPathFactory.instance().compile(
@@ -177,9 +166,7 @@ public class ApiXmlPropertiesResult extends ApiXmlResult implements ApiPropertie
     retrieveNormalization(root, normalization);
 
     // Analyzing redirects
-    Iterator<Element> itRedirect = listRedirects.iterator();
-    while (itRedirect.hasNext()) {
-      Element currentRedirect = itRedirect.next();
+    for (Element currentRedirect : listRedirects) {
       String fromPage = currentRedirect.getAttributeValue("from");
       String toPage = currentRedirect.getAttributeValue("to");
       String toFragement = currentRedirect.getAttributeValue("tofragment");

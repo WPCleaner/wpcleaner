@@ -14,6 +14,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
@@ -32,11 +33,11 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class CopyCellRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 4734178589250415359L;
 
   /** Maps of all the buttons. */
-  private HashMap<Object, JButton> buttons;
+  private final HashMap<Object, JButton> buttons;
 
   /** Column number to copy. */
   private final int copyColumn;
@@ -97,7 +98,7 @@ public class CopyCellRenderer extends AbstractCellEditor implements
    * @return Button for the row.
    */
   private JButton getButton(JTable table, int row) {
-    Integer rowNum = Integer.valueOf(row);
+    Integer rowNum = row;
     if (buttons.containsKey(rowNum)) {
       return buttons.get(rowNum);
     }

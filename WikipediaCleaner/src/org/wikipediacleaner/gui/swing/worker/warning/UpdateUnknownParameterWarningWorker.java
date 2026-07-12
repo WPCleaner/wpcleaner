@@ -7,7 +7,6 @@
 
 package org.wikipediacleaner.gui.swing.worker.warning;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,14 +76,14 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
               "Do you want to update the warnings ?",
               Integer.valueOf(warningPages.size()).toString() ));
           if (answer != JOptionPane.YES_OPTION) {
-            return Integer.valueOf(0);
+            return 0;
           }
         }
 
         // Sort the list of articles
-        Collections.sort(warningPages, PageComparator.getTitleFirstComparator());
+        warningPages.sort(PageComparator.getTitleFirstComparator());
         if (warningPages.isEmpty()) {
-          return Integer.valueOf(0);
+          return 0;
         }
       }
 
@@ -100,7 +99,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
         List<Page> sublist = tools.extractSublist(warningPages, 10, false);
         if (sublist.isEmpty()) {
           displayStats(stats, startTime);
-          return Integer.valueOf(stats.getUpdatedPagesCount());
+          return stats.getUpdatedPagesCount();
         }
 
         // Update warning
@@ -113,8 +112,10 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
           } catch (APIException e) {
             if (getWindow() != null) {
               int answer = getWindow().displayYesNoWarning(GT._T(
-                  "An error occurred when updating unknown parameter warnings. Do you want to continue ?\n\n" +
-                  "Error: {0}", e.getMessage()));
+                  """
+                  An error occurred when updating unknown parameter warnings. Do you want to continue ?
+                  
+                  Error: {0}""", e.getMessage()));
               if (answer != JOptionPane.YES_OPTION) {
                 return e;
               }
@@ -125,7 +126,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
             Configuration config = Configuration.getConfiguration();
             config.setString(null, ConfigurationValueString.LAST_UNKNOWN_PARAMETER_WARNING, lastTitle);
             displayStats(stats, startTime);
-            return Integer.valueOf(stats.getUpdatedPagesCount());
+            return stats.getUpdatedPagesCount();
           }
         }
 
@@ -152,7 +153,7 @@ public class UpdateUnknownParameterWarningWorker extends UpdateWarningWorker {
     }
 
     displayStats(stats, startTime);
-    return Integer.valueOf(stats.getUpdatedPagesCount());
+    return stats.getUpdatedPagesCount();
   }
 
   /**

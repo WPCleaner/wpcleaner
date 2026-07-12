@@ -116,10 +116,9 @@ public final class Replacement {
   public boolean equals(Object obj) {
 
     // Check object type
-    if (!(obj instanceof Replacement)) {
+    if (!(obj instanceof Replacement r2)) {
       return false;
     }
-    Replacement r2 = (Replacement) obj;
 
     // Check replacement text
     if (replacement == null) {

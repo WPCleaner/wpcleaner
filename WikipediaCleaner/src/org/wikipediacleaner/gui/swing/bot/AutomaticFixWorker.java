@@ -155,14 +155,13 @@ public abstract class AutomaticFixWorker extends BasicWorker {
       // Analyze page to check if an error has been found
       List<CheckErrorPage> errorPages = AlgorithmError.analyzeErrors(algorithms, analysis, true);
       boolean found = false;
-      if (errorPages != null) {
-        for (CheckErrorPage errorPage : errorPages) {
-          if (errorPage.getErrorFound()) {
-            found = true;
-          }
+      for (CheckErrorPage errorPage : errorPages) {
+        if (errorPage.getErrorFound()) {
+          found = true;
+          break;
         }
       }
-  
+
       // Handle depending on whether errors were found
       if (found) {
         handleFoundFiltered(algorithms, page, analysis, prefix);
@@ -264,7 +263,6 @@ public abstract class AutomaticFixWorker extends BasicWorker {
    * @param page Page.
    * @param analysis Page analysis.
    * @param prefix Optional prefix for information.
-   * @param markFixed True to mark articles as fixed in Check Wiki.
    * @throws APIException Problem with API.
    */
   private void handleFound(
@@ -290,6 +288,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
       for (AlgorithmError.Progress errorFixed : errorsFixed) {
         if (algorithms.contains(errorFixed.algorithm)) {
           isFixed = true;
+          break;
         }
       }
     }
@@ -298,7 +297,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
     if (isFixed) {
       try {
         StringBuilder comment = new StringBuilder();
-        if ((extraComment != null) && (extraComment.trim().length() > 0)) {
+        if ((extraComment != null) && (!extraComment.trim().isEmpty())) {
           comment.append(extraComment.trim());
           comment.append(" - ");
         }
@@ -327,7 +326,7 @@ public abstract class AutomaticFixWorker extends BasicWorker {
         }
       } catch (APIException e) {
         EnumQueryResult result = e.getQueryResult();
-        LOGGER.error("Error updating page {}: ", page.getTitle(), result.getCode());
+        LOGGER.error("Error updating page {}: {}", page.getTitle(), result.getCode());
         throw e;
       }
     } else if (analyzeNonFixed) {

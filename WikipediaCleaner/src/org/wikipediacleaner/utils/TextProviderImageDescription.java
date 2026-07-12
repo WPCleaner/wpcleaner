@@ -65,7 +65,7 @@ public class TextProviderImageDescription implements TextProvider {
           for (PageElementTemplate template : pageAnalysis.getTemplates()) {
             if (Page.areSameTitle("Information", template.getTemplateName())) {
               String description = template.getParameterValue("Description");
-              if ((description != null) && (description.trim().length() > 0)) {
+              if ((description != null) && (!description.trim().isEmpty())) {
                 result.add(description.trim());
               }
             }
@@ -85,12 +85,12 @@ public class TextProviderImageDescription implements TextProvider {
           for (PageElementTemplate template : pageAnalysis.getTemplates()) {
             if (Page.areSameTitle("Information", template.getTemplateName())) {
               String global = template.getParameterValue("Description");
-              if ((global != null) && (global.trim().length() > 0)) {
+              if ((global != null) && (!global.trim().isEmpty())) {
                 PageAnalysis descAnalysis = commonsPage.getAnalysis(global, true);
                 for (PageElementTemplate template2 : descAnalysis.getTemplates()) {
                   if (Page.areSameTitle(image.getWiki().getSettings().getCode(), template2.getTemplateName())) {
                     String description = template2.getParameterValue("1");
-                    if ((description != null) && (description.trim().length() > 0)) {
+                    if ((description != null) && (!description.trim().isEmpty())) {
                       result.add(description.trim());
                     }
                   }

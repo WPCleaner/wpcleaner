@@ -88,8 +88,8 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
           if (rfcTemplate.length > 2) {
             String templateName = rfcTemplate[0];
             String[] params = rfcTemplate[1].split(",");
-            Boolean suggested = Boolean.valueOf(rfcTemplate[2]);
-            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+            boolean suggested = Boolean.parseBoolean(rfcTemplate[2]);
+            if ((params.length > 0) && (suggested)) {
               TemplateBuilder builder = TemplateBuilder.from(templateName);
               builder.addParam(
                   !"1".equals(params[0]) ? params[0] : null,
@@ -152,7 +152,7 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
       return categoryName;
     }
     if ((trackingCategory != null) &&
-        (trackingCategory.trim().length() > 0)) {
+        (!trackingCategory.trim().isEmpty())) {
       return trackingCategory;
     }
     return null;
@@ -211,7 +211,7 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
     String tmp = getSpecificProperty(PARAMETER_CATEGORY, true, true, false);
     categoryName = null;
     if ((tmp != null) &&
-        (tmp.trim().length() > 0)) {
+        (!tmp.trim().isEmpty())) {
       categoryName = tmp.trim();
     }
 
@@ -242,10 +242,10 @@ public class CheckErrorAlgorithm530 extends CheckErrorAlgorithmBase {
   private String categoryName = null;
 
   /** Templates for RFC */
-  private List<String[]> rfcTemplates = new ArrayList<>();
+  private final List<String[]> rfcTemplates = new ArrayList<>();
 
   /** Interwikis for RFC */
-  private List<String[]> rfcInterwikis = new ArrayList<>();
+  private final List<String[]> rfcInterwikis = new ArrayList<>();
 
   /**
    * Build the list of parameters for this algorithm.

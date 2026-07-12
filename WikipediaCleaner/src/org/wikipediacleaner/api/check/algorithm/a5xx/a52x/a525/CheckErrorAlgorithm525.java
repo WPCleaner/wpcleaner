@@ -136,13 +136,13 @@ public class CheckErrorAlgorithm525 extends CheckErrorAlgorithmBase {
               errorResult.addText(GT._T("Use an anchor template?"));
             }
             for (String[] anchorTemplate : anchorTemplates) {
-              if ((anchorTemplate.length > 0) && (anchorTemplate[0].length() > 0)) {
+              if ((anchorTemplate.length > 0) && (!anchorTemplate[0].isEmpty())) {
                 StringBuilder replacement = new StringBuilder();
                 TemplateBuilder builder = TemplateBuilder.from(anchorTemplate[0]);
                 builder.addParam(
                     ((anchorTemplate.length > 1) && !"1".equals(anchorTemplate[1])) ? anchorTemplate[1] : null,
                     idParam);
-                replacement.append(builder.toString());
+                replacement.append(builder);
                 replacement.append(internal);
                 boolean automatic =
                     (tag.getParametersCount() == 1) &&

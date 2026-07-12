@@ -8,6 +8,7 @@
 
 package org.wikipediacleaner.gui.swing.pagelist;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 
@@ -27,7 +28,7 @@ import org.wikipediacleaner.gui.swing.component.ProgressionValueCellRenderer;
  */
 public class PageListTable extends JTable implements PageListProvider {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 9187589516812365281L;
 
   /** Wiki */
@@ -95,8 +96,7 @@ public class PageListTable extends JTable implements PageListProvider {
     for (int i = 0; i < rows.length; i++) {
       rows[i] = Utilities.convertRowIndexToModel(this, rows[i]);
     }
-    List<Page> result = model.getPages(rows);
-    return result;
+    return model.getPages(rows);
   }
 
   /**

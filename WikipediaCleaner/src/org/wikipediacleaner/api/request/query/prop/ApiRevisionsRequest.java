@@ -203,6 +203,7 @@ public class ApiRevisionsRequest extends ApiPropertiesRequest {
       for (Page page : pages) {
         if (page.getPageId() == null) {
           usePageId = false;
+          break;
         }
       }
     }

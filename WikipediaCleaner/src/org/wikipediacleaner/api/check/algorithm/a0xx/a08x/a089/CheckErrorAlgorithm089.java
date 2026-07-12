@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
     }
 
     String value = defaultSort.getParameterValue(0);
-    if ((value == null) || (value.trim().length() == 0)) {
+    if ((value == null) || (value.trim().isEmpty())) {
       return false;
     }
     value = value.trim();
@@ -93,7 +93,7 @@ public class CheckErrorAlgorithm089 extends CheckErrorAlgorithmBase {
         || areTitlesSimilar(pageTitle, testValue2, analysis.getWikipedia());
     errorResult.addReplacement(PageElementFunction.createFunction(
         defaultSort.getFunctionName(),
-        replacement.toString()),
+        replacement),
         automatic);
     errors.add(errorResult);
     return true;

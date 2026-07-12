@@ -133,28 +133,26 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
         return result;
       }
     }
-    result |= analyzeTables(analysis, errors, TABLE_ATTRIBUTES);
+    result |= analyzeTables(analysis, errors);
 
     return result;
   }
 
   /**
    * Analyze tables to check if errors are present.
-   * 
+   *
    * @param analysis Page analysis.
-   * @param errors Errors found in the page.
-   * @param onlyAutomatic True if analysis could be restricted to errors automatically fixed.
+   * @param errors   Errors found in the page.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTables(
       PageAnalysis analysis,
-      Collection<CheckErrorResult> errors,
-      String[] attributeNames) {
+      Collection<CheckErrorResult> errors) {
 
     // Check each table
     boolean result = false;
     String contents = analysis.getContents();
-    int index = contents.indexOf("{|", 0);
+    int index = contents.indexOf("{|");
     while (index >= 0) {
       if ((index == 0) || (contents.charAt(index - 1) == '\n')) {
 
@@ -164,7 +162,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
           lineEnd = contents.length();
         }
         String line = contents.substring(index, lineEnd);
-        for (String attributeName : attributeNames) {
+        for (String attributeName : CheckErrorAlgorithm112.TABLE_ATTRIBUTES) {
           int attributeIndex = line.indexOf(attributeName);
           boolean shouldReport = false;
           while (!shouldReport && (attributeIndex > 0)) {
@@ -203,7 +201,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
             }
           }
           if (shouldReport && "id".equals(attributeName)) {
-            if ((attributeValue == null) || (attributeValue.trim().length() == 0)) {
+            if ((attributeValue == null) || (attributeValue.trim().isEmpty())) {
               shouldReport = false;
             } else if (attributeValue.startsWith("mw") || attributeValue.startsWith("cx")) {
               shouldReport = true;
@@ -240,7 +238,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
           }
           line = contents.substring(lineBegin, lineEnd);
 
-          if (line.indexOf("|}") >= 0) {
+          if (line.contains("|}")) {
             tableEndFound = true;
           } else {
             int prefix = 0;
@@ -428,7 +426,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
    * @param tagType Tag type.
-   * @param attributeName Tag attribute names.
+   * @param attributeNames Tag attribute names.
    * @return Flag indicating if the error was found.
    */
   private boolean analyzeTagAttributes(
@@ -451,7 +449,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
               shouldReport = true;
               if (shouldReport && "id".equals(attributeName)) {
                 String attributeValue = param.getValue();
-                if ((attributeValue == null) || (attributeValue.trim().length() == 0)) {
+                if ((attributeValue == null) || (attributeValue.trim().isEmpty())) {
                   shouldReport = false;
                 } else if (attributeValue.startsWith("mw") || attributeValue.startsWith("cx")) {
                   shouldReport = true;
@@ -621,9 +619,9 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                             replacement.setLength(0);
                             TemplateBuilder builder = TemplateBuilder.from(columns2Template[0]);
                             builder.addParam(columns2Template[2], Integer.toString(columnCount));
-                            replacement.append(builder.toString());
+                            replacement.append(builder);
                             replacement.append(inside);
-                            replacement.append(TemplateBuilder.from(columns2Template[1]).toString());
+                            replacement.append(TemplateBuilder.from(columns2Template[1]));
                             errorResult.addReplacement(
                                 replacement.toString(),
                                 GT._T("Use {0} and {1}", new Object[] {
@@ -639,7 +637,7 @@ public class CheckErrorAlgorithm112 extends CheckErrorAlgorithmBase {
                             TemplateBuilder builder = TemplateBuilder.from(columnsTemplate[0]);
                             builder.addParam(columnsTemplate[2], Integer.toString(columnCount));
                             builder.addParam(columnsTemplate[1], inside);
-                            replacement.append(builder.toString());
+                            replacement.append(builder);
                             errorResult.addReplacement(
                                 replacement.toString(),
                                 GT._T("Use {0}", TemplateBuilder.from(columnsTemplate[0]).toString()));

@@ -101,9 +101,7 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param templateParameter Parameter to analyze.
    * @param templateConfiguration Configuration for the template.
-   * @return
    */
   private boolean analyzeTemplateParameter(
       PageAnalysis analysis,
@@ -113,7 +111,7 @@ public class CheckErrorAlgorithm563 extends CheckErrorAlgorithmBase {
       TemplateConfiguration templateConfiguration) {
     PageElementTemplate.Parameter templateParam = template.getParameter(paramNum);
     Optional<Boolean> automatic = templateConfiguration.isAutomatic(template, paramNum);
-    if (!automatic.isPresent()) {
+    if (automatic.isEmpty()) {
       return false;
     }
     if (errors == null) {

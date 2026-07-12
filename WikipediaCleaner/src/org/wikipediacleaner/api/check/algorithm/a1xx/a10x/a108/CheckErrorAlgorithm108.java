@@ -114,10 +114,10 @@ public class CheckErrorAlgorithm108 extends CheckErrorAlgorithmISSN {
     // Add search for other identifiers
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as OCLC"),
-        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", originalValue))));
+        new ActionExternalViewer(MessageFormat.format("https://worldcat.org/oclc/{0}", originalValue))));
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as LCCN"),
-        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", originalValue))));
+        new ActionExternalViewer(MessageFormat.format("https://lccn.loc.gov/{0}", originalValue))));
 
     // Add ISSN with modified checksum
     List<String> searchISSN = new ArrayList<>();

@@ -12,6 +12,7 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.JLabel;
@@ -30,7 +31,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class DeadLinkPanel extends JPanel {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = -3583784531089028512L;
 
   /** Wiki */

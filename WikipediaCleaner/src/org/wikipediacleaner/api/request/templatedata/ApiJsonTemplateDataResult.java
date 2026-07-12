@@ -54,9 +54,7 @@ public class ApiJsonTemplateDataResult extends ApiJsonResult implements ApiTempl
     JsonNode root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
     TemplateData result = null;
     if (root != null) {
-      Iterator<JsonNode> itPages = root.path("pages").iterator();
-      while (itPages.hasNext()) {
-        JsonNode page = itPages.next();
+      for (JsonNode page : root.path("pages")) {
         result = createTemplateData(page);
         if (result != null) {
           return result;

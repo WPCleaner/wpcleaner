@@ -16,10 +16,10 @@ public interface MediaWikiListener {
   /**
    * @param text Text to display.
    */
-  public void setText(String text);
+  void setText(String text);
 
   /**
    * @return Flag indicating if the process should stop.
    */
-  public boolean shouldStop();
+  boolean shouldStop();
 }

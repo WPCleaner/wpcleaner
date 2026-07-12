@@ -11,7 +11,6 @@ package org.wikipediacleaner.gui.swing.worker.warning;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.wikipediacleaner.api.configuration.WPCConfigurationBoolean;
@@ -108,13 +107,7 @@ public class DabWarningProcessor extends WarningProcessor {
         if (link == null) {
           done = true;
         } else {
-          Iterator<String> itDab = dabList.iterator();
-          while (itDab.hasNext()) {
-            String dab = itDab.next();
-            if (Page.areSameTitle(dab, link)) {
-              itDab.remove();
-            }
-          }
+          dabList.removeIf(dab -> Page.areSameTitle(dab, link));
           numParam++;
         }
       }

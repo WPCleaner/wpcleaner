@@ -24,5 +24,5 @@ public interface ApiDeleteResult extends ApiResult {
    * @param properties Properties defining request.
    * @throws APIException Exception thrown by the API.
    */
-  public void executeDelete(Map<String, String> properties) throws APIException;
+  void executeDelete(Map<String, String> properties) throws APIException;
 }

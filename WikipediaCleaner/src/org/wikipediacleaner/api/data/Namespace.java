@@ -62,7 +62,7 @@ public class Namespace implements Comparable<Namespace> {
     try {
       tmpId = Integer.parseInt(id);
     } catch (NumberFormatException e) {
-      tmpId = Integer.valueOf(-1);
+      tmpId = -1;
     }
     this.id = tmpId;
     this.title = title;
@@ -203,7 +203,7 @@ public class Namespace implements Comparable<Namespace> {
    */
   @Override
   public String toString() {
-    return "" + id + " - " + title;
+    return id + " - " + title;
   }
 
   /* (non-Javadoc)

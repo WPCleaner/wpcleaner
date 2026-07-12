@@ -147,7 +147,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
         }
       }
       errorResult.addReplacement(TitleBuilder
-          .from(title.getLevel(), text.replaceAll("'''", ""))
+          .from(title.getLevel(), text.replace("'''", ""))
           .withAfter(title.getAfterTitle()).toString(),
           false, automaticBot);
     }
@@ -170,7 +170,7 @@ public class CheckErrorAlgorithm044 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

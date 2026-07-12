@@ -7,13 +7,11 @@
 
 package org.wikipediacleaner.api.request.query.list;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -51,39 +49,32 @@ public class ApiXmlAbuseFiltersResult extends ApiXmlResult implements ApiAbuseFi
   public boolean executeAbuseFilters(
       Map<String, String> properties,
       List<AbuseFilter> list) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve category members
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/abusefilters/filter", Filters.element());
-      List<Element> results = xpa.evaluate(root);
-      Iterator<Element> iter = results.iterator();
-      while (iter.hasNext()) {
-        Element currentNode = iter.next();
-        Integer id = Integer.valueOf(0);
-        try {
-          String tmp = currentNode.getAttributeValue("id");
-          if (tmp != null) {
-            id = Integer.parseInt(tmp);
-          }
-        } catch (NumberFormatException e) {
-          //
+    // Retrieve category members
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/abusefilters/filter", Filters.element());
+    List<Element> results = xpa.evaluate(root);
+    for (Element currentNode : results) {
+      int id = 0;
+      try {
+        String tmp = currentNode.getAttributeValue("id");
+        if (tmp != null) {
+          id = Integer.parseInt(tmp);
         }
-        String description = currentNode.getAttributeValue("description");
-        AbuseFilter filter = new AbuseFilter(id, description);
-        filter.setDeleted(currentNode.getAttribute("deleted") != null);
-        filter.setEnabled(currentNode.getAttribute("enabled") != null);
-        list.add(filter);
+      } catch (NumberFormatException e) {
+        //
       }
-
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/abusefilters",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading abuse filters list", e);
-      throw new APIException("Error parsing XML", e);
+      String description = currentNode.getAttributeValue("description");
+      AbuseFilter filter = new AbuseFilter(id, description);
+      filter.setDeleted(currentNode.getAttribute("deleted") != null);
+      filter.setEnabled(currentNode.getAttribute("enabled") != null);
+      list.add(filter);
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/abusefilters",
+        properties);
   }
 }

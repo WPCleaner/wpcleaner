@@ -54,12 +54,12 @@ public class MWPaneUndoManager implements ActionListener {
   /**
    * Previous texts for Undo.
    */
-  private LinkedList<String> undoTexts;
+  private final LinkedList<String> undoTexts;
 
   /**
    * Previous texts for Redo.
    */
-  private LinkedList<String> redoTexts;
+  private final LinkedList<String> redoTexts;
 
   /**
    * Clear Undo/Redo texts.
@@ -116,7 +116,7 @@ public class MWPaneUndoManager implements ActionListener {
     String newText = undoTexts.getLast();
     String oldText = textPane.getText();
     if (oldText.equals(newText)) {
-      if (undoTexts.size() < 1) {
+      if (undoTexts.isEmpty()) {
         return;
       }
       undoTexts.removeLast();
@@ -141,7 +141,7 @@ public class MWPaneUndoManager implements ActionListener {
     String newText = redoTexts.getLast();
     String oldText = textPane.getText();
     if (oldText.equals(newText)) {
-      if (redoTexts.size() < 1) {
+      if (redoTexts.isEmpty()) {
         return;
       }
       redoTexts.removeLast();

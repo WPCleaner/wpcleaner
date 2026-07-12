@@ -16,5 +16,5 @@ public enum ContainerBehavior {
 
   BOTH,
   SMALLEST_ONLY,
-  LARGEST_ONLY;
+  LARGEST_ONLY
 }

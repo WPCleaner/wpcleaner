@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.checkwiki;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -35,7 +36,7 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class ActionCheckArticle extends AbstractAction implements ActionListener {
 
-  /** Serialization. */
+  @Serial
   private static final long serialVersionUID = 5745075609820714955L;
 
   /**

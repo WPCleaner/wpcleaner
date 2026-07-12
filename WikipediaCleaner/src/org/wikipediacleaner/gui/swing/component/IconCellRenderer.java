@@ -8,6 +8,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.Component;
+import java.io.Serial;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -23,6 +24,7 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class IconCellRenderer extends DefaultTableCellRenderer {
 
+  @Serial
   private static final long serialVersionUID = 1557809942272845154L;
 
   /**
@@ -63,8 +65,7 @@ public class IconCellRenderer extends DefaultTableCellRenderer {
     if (icon != null) {
       return new JLabel(icon);
     }
-    Component component = super.getTableCellRendererComponent(
+    return super.getTableCellRendererComponent(
         table, value, isSelected, hasFocus, row, column);
-    return component;
   }
 }

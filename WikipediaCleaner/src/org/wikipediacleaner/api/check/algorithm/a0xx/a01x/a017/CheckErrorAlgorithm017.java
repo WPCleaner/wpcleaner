@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm.a0xx.a01x.a017;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -223,13 +224,13 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
       }
       if (currentIndex >= keepCategory.getBeginIndex()) {
         if ((category.getSort() != null) &&
-            (category.getSort().length() > 0)) {
+            (!category.getSort().isEmpty())) {
           if (category.getSort().equals(keepCategory.getSort())) {
             automatic = true;
           }
         } else {
           if ((keepCategory.getSort() == null) ||
-              (keepCategory.getSort().length() == 0)) {
+              (keepCategory.getSort().isEmpty())) {
             automatic = true;
           }
         }
@@ -260,7 +261,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     for (PageElementCategory category : categories) {
       if ((category.getBeginIndex() >= lastTitle) &&
           (category.getSort() != null) &&
-          (category.getSort().length() > 0)) {
+          (!category.getSort().isEmpty())) {
         return category;
       }
     }
@@ -275,7 +276,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
     // Third: category with sort key
     for (PageElementCategory category : categories) {
       if ((category.getSort() != null) &&
-          (category.getSort().length() > 0)) {
+          (!category.getSort().isEmpty())) {
         return category;
       }
     }
@@ -296,7 +297,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {
@@ -340,9 +341,7 @@ public class CheckErrorAlgorithm017 extends CheckErrorAlgorithmBase {
             Set<String> parameters = ignoreTemplates.computeIfAbsent(
                 Page.normalizeTitle(tmpElement[0]),
                 k -> new HashSet<>());
-            for (int elementNum = 1; elementNum < tmpElement.length; elementNum++) {
-              parameters.add(tmpElement[elementNum]);
-            }
+            parameters.addAll(Arrays.asList(tmpElement).subList(1, tmpElement.length));
           }
         }
       }

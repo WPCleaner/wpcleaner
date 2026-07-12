@@ -126,11 +126,6 @@ public class ActionOccurrence implements ActionListener {
    */
   private final Occurrence occurrence;
 
-  /**
-   * @param parent Parent component.
-   * @param wiki Wiki.
-   * @param list Selected pages should be added to the watch list.
-   */
   private ActionOccurrence(MWPane pane, Occurrence occurrence) {
     this.pane = pane;
     this.occurrence = occurrence;

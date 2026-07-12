@@ -29,7 +29,7 @@ class ReplacementElement {
   /**
    * @param tagType Included tag type.
    * @param automatic Automatic replacement.
-   * @order Possibilities for order of tags.
+   * @param order Possibilities for order of tags.
    */
   ReplacementElement(
       @Nonnull TagType tagType,

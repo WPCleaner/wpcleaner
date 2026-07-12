@@ -64,11 +64,7 @@ class Replacement implements Comparable<Replacement> {
   public void setMultiple() {
     multiple = Boolean.TRUE;
   }
-  /**
-   * @param o
-   * @return
-   * @see java.lang.Comparable#compareTo(java.lang.Object)
-   */
+
   @Override
   public int compareTo(Replacement o) {
     if (begin != o.begin) {

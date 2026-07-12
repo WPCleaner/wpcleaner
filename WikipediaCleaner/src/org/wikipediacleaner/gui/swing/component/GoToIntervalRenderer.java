@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.component;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.HashMap;
 
 import javax.swing.AbstractCellEditor;
@@ -31,11 +32,11 @@ import org.wikipediacleaner.images.EnumImageSize;
 public class GoToIntervalRenderer extends AbstractCellEditor implements
     TableCellRenderer, TableCellEditor {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 4328768542723876173L;
 
   /** Maps of all the buttons. */
-  private HashMap<Object, JButton> buttons;
+  private final HashMap<Object, JButton> buttons;
 
   /** Text pane where the text is. */
   protected final JTextComponent textPane;
@@ -100,11 +101,10 @@ public class GoToIntervalRenderer extends AbstractCellEditor implements
     if (buttons.containsKey(value)) {
       return buttons.get(value);
     }
-    if (!(value instanceof Interval)) {
+    if (!(value instanceof Interval interval)) {
       return null;
     }
-    Interval interval = (Interval) value;
-    String actionCommand = Integer.toString(interval.getBeginIndex()) + ";" + Integer.toString(interval.getEndIndex());
+    String actionCommand = interval.getBeginIndex() + ";" + interval.getEndIndex();
     JButton button = new JButton(Utilities.getImageIcon(
         "gnome-edit-find.png",
         EnumImageSize.SMALL));
@@ -125,14 +125,14 @@ public class GoToIntervalRenderer extends AbstractCellEditor implements
     try {
       String[] locations = location.split(";");
       if (locations.length > 0) {
-        int startValue = Integer.valueOf(locations[0]);
+        int startValue = Integer.parseInt(locations[0]);
         if ((startValue >= 0) &&
             (textPane != null) &&
             (startValue < textPane.getText().length())) {
           textPane.setCaretPosition(startValue);
           textPane.moveCaretPosition(startValue);
           if (locations.length > 1) {
-            int endValue = Integer.valueOf(locations[1]);
+            int endValue = Integer.parseInt(locations[1]);
             if ((endValue >= 0) && (endValue <= textPane.getText().length())) {
               textPane.moveCaretPosition(endValue);
             }

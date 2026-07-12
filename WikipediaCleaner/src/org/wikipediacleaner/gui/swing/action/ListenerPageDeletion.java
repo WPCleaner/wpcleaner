@@ -19,5 +19,5 @@ public interface ListenerPageDeletion {
    * 
    * @param pageName Name of the page.
    */
-  public void pageDeleted(String pageName);
+  void pageDeleted(String pageName);
 }

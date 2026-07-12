@@ -39,7 +39,7 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
     super("Tag simplification");
   }
 
-  private static Map<TagType, Boolean> tagTypes = new HashMap<>();
+  private final static Map<TagType, Boolean> tagTypes = new HashMap<>();
   
   static {
     tagTypes.put(WikiTagType.REF, Boolean.TRUE);

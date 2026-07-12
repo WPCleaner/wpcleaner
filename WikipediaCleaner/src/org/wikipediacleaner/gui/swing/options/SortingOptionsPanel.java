@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -45,9 +46,7 @@ public class SortingOptionsPanel
   extends OptionsPanel
   implements ListSelectionListener {
 
-  /**
-   * Serialisation.
-   */
+  @Serial
   private static final long serialVersionUID = 2014796573945564540L;
 
   private JButton buttonSortAdd;

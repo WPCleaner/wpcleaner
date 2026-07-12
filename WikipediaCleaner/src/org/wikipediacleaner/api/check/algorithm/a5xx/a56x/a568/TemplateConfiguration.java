@@ -9,6 +9,7 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a56x.a568;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -241,8 +242,6 @@ class TemplateConfiguration {
     String paramName = rawConfiguration[1];
     TemplateConfiguration templateConfig = configuration.computeIfAbsent(templateName, k -> new TemplateConfiguration(templateName));
     List<String> suffixes = templateConfig.removeSuffixes.computeIfAbsent(paramName, k -> new ArrayList<>());
-    for (int paramNum = 2; paramNum < rawConfiguration.length; paramNum++) {
-      suffixes.add(rawConfiguration[paramNum]);
-    }
+    suffixes.addAll(Arrays.asList(rawConfiguration).subList(2, rawConfiguration.length));
   }
 }

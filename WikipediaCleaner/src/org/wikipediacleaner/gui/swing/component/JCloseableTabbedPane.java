@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.Serial;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -29,9 +30,7 @@ import javax.swing.KeyStroke;
 public class JCloseableTabbedPane
   extends JTabbedPane implements KeyListener {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = 1L;
 
   /**
@@ -65,7 +64,7 @@ public class JCloseableTabbedPane
     inputMap.put(keyStroke, "close-current-tab");
     actionMap.put("close-current-tab", new AbstractAction() {
       
-      /** Serialization */
+      @Serial
       private static final long serialVersionUID = -1886432591524366546L;
 
       /**
@@ -95,7 +94,7 @@ public class JCloseableTabbedPane
     try {
       Method method = this.getClass().getMethod(
           "setTabComponentAt",
-          new Class[] { int.class, Component.class });
+          int.class, Component.class);
       method.invoke(this, index, new CloseTabComponent(title, this));
       component.addKeyListener(this);
       /*if (component instanceof Container) {
@@ -104,15 +103,8 @@ public class JCloseableTabbedPane
           child.addKeyListener(this);
         }
       }*/
-    } catch (SecurityException e) {
-      // Nothing
-    } catch (NoSuchMethodException e) {
-      // Nothing
-    } catch (IllegalArgumentException e) {
-      // Nothing
-    } catch (IllegalAccessException e) {
-      // Nothing
-    } catch (InvocationTargetException e) {
+    } catch (SecurityException | NoSuchMethodException | IllegalArgumentException | IllegalAccessException |
+             InvocationTargetException e) {
       // Nothing
     }
     setIconAt(index, new JTabbedPaneCloseIcon(this, component));

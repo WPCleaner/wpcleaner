@@ -81,7 +81,7 @@ class ISBNExtension {
     int squareBracketAfter = 0;
     int smallAfter = 0;
     int endIndex = initialEndIndex;
-    String textAfter = "";
+    StringBuilder textAfter = new StringBuilder();
     continueSearching = true;
     while (continueSearching && endIndex < contents.length()) {
       continueSearching = false;
@@ -94,7 +94,7 @@ class ISBNExtension {
         endIndex++;
         continueSearching = true;
       } else if (contents.charAt(endIndex) == '.') {
-        textAfter += '.';
+        textAfter.append('.');
         endIndex++;
         continueSearching = true;
       } else if (contents.charAt(endIndex) == '<') {
@@ -115,6 +115,6 @@ class ISBNExtension {
         parenthesisBefore, parenthesisAfter,
         squareBracketBefore, squareBracketAfter,
         smallBefore, smallAfter,
-        textAfter);
+        textAfter.toString());
   }
 }

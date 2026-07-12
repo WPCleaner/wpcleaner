@@ -21,8 +21,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +96,6 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
 import org.wikipediacleaner.utils.ConfigurationValueInteger;
 import org.wikipediacleaner.utils.ConfigurationValueShortcut;
 import org.wikipediacleaner.utils.ConfigurationValueString;
-import org.wikipediacleaner.utils.StringChecker;
 
 /**
  * Main Window of WikipediaCleaner. 
@@ -103,7 +104,7 @@ public class MainWindow
   extends BasicWindow
   implements ActionListener {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(6);
+  public final static Integer WINDOW_VERSION = 6;
 
   WikiSelector wikiSelector;
   LanguageSelector languageSelector;
@@ -217,8 +218,8 @@ public class MainWindow
         mainWindow.passwordInput.getField().setText(password);
       }
       if ((wiki != null) &&
-          (userName != null) && (userName.length() > 0) &&
-          (password != null) && (password.length() > 0)) {
+          (userName != null) && (!userName.isEmpty()) &&
+          (password != null) && (!password.isEmpty())) {
         mainWindow.actionLogin();
       }
     }
@@ -284,7 +285,7 @@ public class MainWindow
     constraints.gridy++;
 
     // Message components
-    if ((Version.MESSAGE != null) && !Version.MESSAGE.equals("")) {
+    if ((Version.MESSAGE != null) && !Version.MESSAGE.isEmpty()) {
       try {
         Component messageComponents = createMessageComponents();
         constraints.gridwidth = 3;
@@ -921,9 +922,10 @@ public class MainWindow
    */
   public void actionDemo() {
     int answer = displayYesNoWarning(GT._T(
-        "Demo mode is only available for testing WPCleaner.\n" +
-        "You won't be able to modify pages on Wikipedia in Demo mode.\n" +
-        "Do you want to continue ?"));
+        """
+        Demo mode is only available for testing WPCleaner.
+        You won't be able to modify pages on Wikipedia in Demo mode.
+        Do you want to continue ?"""));
     if (answer == JOptionPane.YES_OPTION) {
       actionLoginDemo(false);
     }
@@ -960,7 +962,7 @@ public class MainWindow
     if (login) {
       String userName = userNameSelector.getUserName();
       if ((userName == null) ||
-          ("".equals(userName.trim()))) {
+          (userName.trim().isEmpty())) {
         displayWarning(
             GT._T("You must input your username before login"),
             userNameSelector.getSelector());
@@ -980,9 +982,7 @@ public class MainWindow
       }
 
       // If password is OK... continue with validation
-      for (int i = 0; i < password.length; i++) {
-        password[i] = '\0';
-      }
+      Arrays.fill(password, '\0');
     }
 
     // Update actions
@@ -1121,8 +1121,7 @@ public class MainWindow
     }
 
     // Construct list of pages containing suggestions
-    List<String> pages = new ArrayList<>();
-    pages.addAll(chapters.keySet());
+    List<String> pages = new ArrayList<>(chapters.keySet());
     Collections.sort(pages);
 
     // Create menu for suggestions
@@ -1263,7 +1262,7 @@ public class MainWindow
       Object select = comboPagename.getSelectedItem();
       if (select != null) {
         String tmp = select.toString().trim();
-        if (!"".equals(tmp)) {
+        if (!tmp.isEmpty()) {
           return tmp;
         }
       }
@@ -1502,13 +1501,12 @@ public class MainWindow
     try {
       API api = APIFactory.getAPI();
       List<AbuseFilter> abuseFilters = api.retrieveAbuseFilters(getWikipedia());
-      if ((abuseFilters != null) && (abuseFilters.size() > 0)) {
+      if ((abuseFilters != null) && (!abuseFilters.isEmpty())) {
         Object filter = Utilities.askForValue(
             getParentComponent(),
             GT._T("What abuse filter are you interested in?"),
             abuseFilters.toArray(), abuseFilters.get(0));
-        if ((filter != null) && (filter instanceof AbuseFilter)) {
-          AbuseFilter abuseFilter = (AbuseFilter) filter;
+        if ((filter != null) && (filter instanceof AbuseFilter abuseFilter)) {
           List<Page> pages = api.retrieveAbuseLog(
               getWikipedia(), abuseFilter.getId(), null);
           if ((pages != null) && (!pages.isEmpty())) {
@@ -1616,14 +1614,12 @@ public class MainWindow
   private void fillLinterCategoryMenu(
       JMenu menu, LinterCategory category, boolean withTemplates) {
     JMenuItem item = new JMenuItem(GT._T("All namespaces"));
-    item.setActionCommand(
-        category.getCategory() + "//" +
-        Boolean.toString(withTemplates));
+    item.setActionCommand(category.getCategory() + "//" + withTemplates);
     item.addActionListener(EventHandler.create(
         ActionListener.class, this, "actionLinterCategory", "actionCommand"));
     menu.add(item);
     List<Namespace> namespaces = getWiki().getWikiConfiguration().getNamespaces();
-    if ((namespaces != null) && (namespaces.size() > 0)) {
+    if ((namespaces != null) && (!namespaces.isEmpty())) {
       menu.addSeparator();
       for (Namespace namespace : namespaces) {
         String title = namespace.getTitle();
@@ -1637,7 +1633,7 @@ public class MainWindow
         item.setActionCommand(
             category.getCategory() + "/" +
             namespace.getId().toString() + "/" +
-            Boolean.toString(withTemplates));
+            withTemplates);
         item.addActionListener(EventHandler.create(
             ActionListener.class, this, "actionLinterCategory", "actionCommand"));
         menu.add(item);
@@ -1880,7 +1876,7 @@ public class MainWindow
         GT._T("The file must be encoded in UTF-8 to be read correctly.") + "\n" +
         GT._T("In which format is the file?");
     String value = Utilities.askForValue(
-        getParentComponent(), message, values, true, values[0], (StringChecker) null);
+        getParentComponent(), message, values, true, values[0], null);
     if (value == null) {
       return;
     }
@@ -1893,42 +1889,40 @@ public class MainWindow
 
     // Read file
     List<String> pages = new ArrayList<>();
-    BufferedReader reader = null;
     String line = null;
-    try {
-      reader = new BufferedReader(new InputStreamReader(new FileInputStream(chosenFile), "UTF8"));
+    try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(chosenFile), StandardCharsets.UTF_8))) {
       switch (choice) {
-      case 0: // Unformatted list
-        while ((line = reader.readLine()) != null) {
-          if (line.trim().length() > 0) {
-            pages.add(line);
+        case 0: // Unformatted list
+          while ((line = reader.readLine()) != null) {
+            if (!line.trim().isEmpty()) {
+              pages.add(line);
+            }
           }
-        }
-        break;
+          break;
 
-      case 1: // Formatted list with internal links
-        StringBuilder buffer = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-          if (buffer.length() > 0) {
-            buffer.append('\n');
+        case 1: // Formatted list with internal links
+          StringBuilder buffer = new StringBuilder();
+          while ((line = reader.readLine()) != null) {
+            if (!buffer.isEmpty()) {
+              buffer.append('\n');
+            }
+            buffer.append(line);
           }
-          buffer.append(line);
-        }
-        Page tmpPage = DataManager.getPage(getWiki(), chosenFile.getName(), null, null, null);
-        String contents = buffer.toString();
-        tmpPage.setContents(contents);
-        PageAnalysis analysis = tmpPage.getAnalysis(contents, false);
-        List<PageElementInternalLink> links = analysis.getInternalLinks();
-        for (PageElementInternalLink link : links) {
-          String target = link.getLink();
-          if (target.startsWith(":")) {
-            target = target.substring(1);
+          Page tmpPage = DataManager.getPage(getWiki(), chosenFile.getName(), null, null, null);
+          String contents = buffer.toString();
+          tmpPage.setContents(contents);
+          PageAnalysis analysis = tmpPage.getAnalysis(contents, false);
+          List<PageElementInternalLink> links = analysis.getInternalLinks();
+          for (PageElementInternalLink link : links) {
+            String target = link.getLink();
+            if (target.startsWith(":")) {
+              target = target.substring(1);
+            }
+            if (!pages.contains(target)) {
+              pages.add(target);
+            }
           }
-          if (!pages.contains(target)) {
-            pages.add(target);
-          }
-        }
-        break;
+          break;
       }
       new PageListWorker(
           wikipedia, this, null,
@@ -1936,15 +1930,8 @@ public class MainWindow
           GT._T("List")).start();
     } catch (IOException e) {
       //
-    } finally {
-      if (reader != null) {
-        try {
-          reader.close();
-        } catch (Exception e) {
-          //
-        }
-      }
     }
+    //
   }
 
   /**
@@ -2001,7 +1988,7 @@ public class MainWindow
       if ((count < 1) || (count > maxPages)) {
         displayWarning(GT._T(
             "The number of pages must be between {0} and {1}",
-            new Object[] { Integer.valueOf(0), Integer.valueOf(maxPages) } ));
+            new Object[] {0, maxPages} ));
       }
     }
     API api = APIFactory.getAPI();
@@ -2009,8 +1996,8 @@ public class MainWindow
       List<String> pageNames = new ArrayList<>(count);
       while (pageNames.size() < count) {
         List<Page> pages = api.getRandomPages(getWikipedia(), count - pageNames.size(), redirects);
-        for (int i = 0; i < pages.size(); i++) {
-          pageNames.add(pages.get(i).getTitle());
+        for (Page page : pages) {
+          pageNames.add(page.getTitle());
         }
       }
       Collections.sort(pageNames);
@@ -2020,7 +2007,6 @@ public class MainWindow
           GT._T("Random pages")).start();
     } catch (APIException e) {
       displayError(e);
-      return;
     }
   }
 

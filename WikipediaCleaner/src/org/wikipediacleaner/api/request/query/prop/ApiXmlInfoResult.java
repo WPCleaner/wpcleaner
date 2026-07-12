@@ -12,7 +12,6 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.data.Page;
@@ -46,17 +45,12 @@ public class ApiXmlInfoResult extends ApiXmlPropertiesResult implements ApiInfoR
   public boolean executeInformations(
       Map<String, String> properties,
       Collection<Page> pages) throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Manage redirects and missing pages
-      updateRedirect(root, pages);
+    // Manage redirects and missing pages
+    updateRedirect(root, pages);
 
-      // Retrieve continue
-      return false;
-    } catch (JDOMException e) {
-      log.error("Error loading revisions", e);
-      throw new APIException("Error parsing XML", e);
-    }
+    // Retrieve continue
+    return false;
   }
 }

@@ -66,7 +66,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
 
     // Only in main name space
     if ((analysis.getPage().getNamespace() == null) ||
-        (analysis.getPage().getNamespace().intValue() != Namespace.MAIN)) {
+        (analysis.getPage().getNamespace() != Namespace.MAIN)) {
       return false;
     }
 
@@ -218,7 +218,7 @@ public class CheckErrorAlgorithm548 extends CheckErrorAlgorithmBase {
       boolean automatic = false;
 
       // For some punctuation characters check what is before
-      if ((REMOVE_LINK_IF_ALONE.indexOf(punctuationText.trim()) >= 0) &&
+      if ((REMOVE_LINK_IF_ALONE.contains(punctuationText.trim())) &&
           (linkTarget != null) &&
           !automatic) {
 

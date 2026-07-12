@@ -218,12 +218,7 @@ public class Performance {
     if (parts == null) {
       parts = new HashMap<>();
     }
-    Long previousTime = parts.get(part);
-    if (previousTime != null) {
-      parts.put(part, Long.valueOf(time - partInitialTime + previousTime.longValue()));
-    } else {
-      parts.put(part, Long.valueOf(time - partInitialTime));
-    }
+    parts.merge(part, time - partInitialTime, Long::sum);
     partInitialTime = time;
   }
 

@@ -34,7 +34,7 @@ import org.wikipediacleaner.i18n.GT;
 public class BotToolsWindow
   extends BasicWindow {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(5);
+  public final static Integer WINDOW_VERSION = 5;
 
   public final List<BotToolsPanel> panels = new ArrayList<>();
 

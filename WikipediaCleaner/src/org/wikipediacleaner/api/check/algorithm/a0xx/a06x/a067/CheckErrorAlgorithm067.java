@@ -76,7 +76,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
 
       // Group tags separated only by punctuation characters
       int firstTagIndex = tagIndex;
-      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, ",;.\'", separator);
+      int lastTagIndex = PageElementTag.groupTags(tags, firstTagIndex, contents, ",;.'", separator);
       tagIndex = lastTagIndex + 1;
       
       // Analyze group of tags
@@ -156,6 +156,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
                   for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
                     if (name.equals(htmlCharacter.getName())) {
                       punctuationFound = false;
+                      break;
                     }
                   }
                 }
@@ -201,6 +202,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             (tmpIndex >= characterName.length()) &&
             (contents.startsWith(characterName, tmpIndex - characterName.length()))) {
           punctuationFoundBefore = false;
+          break;
         }
       }
       int beforeIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, tmpIndex - 1, "0123456789abcdefABCDEF");
@@ -306,15 +308,14 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     boolean automaticTemplate = false;
     boolean automatic = false;
     if (!punctuationFoundAfter) {
-      if (allPunctuations.equals(".")) {
-        automaticEOL = true;
-        automaticUppercase = true;
-        automaticTemplate = true;
-      } else if (allPunctuations.equals("...") ||
-                 allPunctuations.equals(":")) {
-        automaticEOL = true;
-      } else if (allPunctuations.equals(",")) {
-        automaticLowercase = true;
+      switch (allPunctuations) {
+        case "." -> {
+          automaticEOL = true;
+          automaticUppercase = true;
+          automaticTemplate = true;
+        }
+        case "...", ":" -> automaticEOL = true;
+        case "," -> automaticLowercase = true;
       }
     } else if (allPunctuations.equals(punctuationAfter)) {
       if (allPunctuations.equals(".")) {
@@ -368,7 +369,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       if ((link != null) &&
           (link.getBeginIndex() == tmpIndex) &&
           (link.getDisplayedText() != null) &&
-          (link.getDisplayedText().length() > 0)) {
+          (!link.getDisplayedText().isEmpty())) {
         char firstChar = link.getDisplayedText().charAt(0);
         if (Character.isUpperCase(firstChar)) {
           automatic |= automaticUppercase;
@@ -403,7 +404,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
       if ((generalAbbreviation.length > 2)) {
         String abbreviation = generalAbbreviation[2];
         String meaning = "";
-        if (generalAbbreviation[1].length() > 0) {
+        if (!generalAbbreviation[1].isEmpty()) {
           meaning = " (" + generalAbbreviation[1] + ")"; 
         }
         errorResult.addReplacement(
@@ -411,7 +412,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
             abbreviation + textReplace + punctuationAfter + meaning);
       }
     }
-    if ((moveablePrefix.trim() == "") && allPunctuations.startsWith(".")) {
+    if ((moveablePrefix.trim().isEmpty()) && allPunctuations.startsWith(".")) {
       errorResult.addReplacement(
           prefix + previousComment + replace + allPunctuations,
           prefix + textReplace + allPunctuations, automatic);
@@ -496,7 +497,7 @@ public class CheckErrorAlgorithm067 extends CheckErrorAlgorithmBase {
     generalAbbreviations.clear();
     List<String> tmpGeneralAbbreviations = getWPCConfiguration().getStringList(
         WPCConfigurationStringList.ABBREVIATIONS);
-    if ((tmpGeneralAbbreviations != null) && (tmpGeneralAbbreviations.size() > 0)) {
+    if ((tmpGeneralAbbreviations != null) && (!tmpGeneralAbbreviations.isEmpty())) {
       for (String tmpAbbr : tmpGeneralAbbreviations) {
         int pipeIndex1 = tmpAbbr.indexOf('|');
         if (pipeIndex1 > 0) {

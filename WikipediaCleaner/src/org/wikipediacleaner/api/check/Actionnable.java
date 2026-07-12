@@ -22,28 +22,28 @@ public interface Actionnable {
   /**
    * @return Action name.
    */
-  public String getName();
+  String getName();
 
   /**
    * @return Flag indicating if it is composed action.
    */
-  public boolean isCompositeAction();
+  boolean isCompositeAction();
 
   /**
    * @param newText New text.
    * @return True if this action can give this new text.
    */
-  public boolean isPossibleReplacement(String newText);
+  boolean isPossibleReplacement(String newText);
 
   /**
    * @param element Text element.
    * @param textPane Text component.
    * @return Action.
    */
-  public Action getAction(Element element, JTextPane textPane);
+  Action getAction(Element element, JTextPane textPane);
 
   /**
    * @return Actions.
    */
-  public List<Actionnable> getActions();
+  List<Actionnable> getActions();
 }

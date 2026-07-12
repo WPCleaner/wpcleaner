@@ -52,7 +52,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
 
     // Check first title
     List<PageElementTitle> titles = analysis.getTitles();
-    if (titles.size() == 0) {
+    if (titles.isEmpty()) {
       return false;
     }
     PageElementTitle firstTitle = titles.get(0);
@@ -156,7 +156,7 @@ public class CheckErrorAlgorithm083 extends CheckErrorAlgorithmBase {
     for (int titleIndex = 0; titleIndex < correctTitleIndex; titleIndex++) {
       PageElementTitle title = titles.get(titleIndex);
       if (lastIndex < title.getBeginIndex()) {
-        newContents.append(defaultContents.substring(lastIndex, title.getBeginIndex()));
+        newContents.append(defaultContents, lastIndex, title.getBeginIndex());
       }
       newContents.append(TitleBuilder
           .from(title.getLevel() - delta, title.getTitle())

@@ -69,8 +69,7 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
     MWPaneDisambiguationMenuCreator menu = new MWPaneDisambiguationMenuCreator();
 
     // Manage TemplateMatcher
-    if (attrPageElement instanceof PageElementTemplate) {
-      PageElementTemplate template = (PageElementTemplate) attrPageElement;
+    if (attrPageElement instanceof PageElementTemplate template) {
 
       String templateTitle = getWikipedia().getWikiConfiguration().getPageTitle(
           Namespace.TEMPLATE,
@@ -78,7 +77,7 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
       JPopupMenu popup = menu.createPopupMenu(templateTitle);
       if ((matcher != null) &&
           (matcher.getExplanation() != null) &&
-          (matcher.getExplanation().length() > 0)) {
+          (!matcher.getExplanation().isEmpty())) {
         menu.addDisabledText(popup, "→ " + matcher.getExplanation() + " ←");
       }
       menu.addCurrentChapter(popup, position, pageAnalysis);
@@ -100,12 +99,11 @@ public class MWPaneDisambiguationPopupListener extends MWPanePopupListener {
       return popup;
     }
 
-    if ((!(attrPage instanceof Page)) || (!(attrText instanceof String))) {
+    if ((!(attrPage instanceof Page)) || (!(attrText instanceof String text))) {
       return null;
     }
 
     // Menu name
-    String text = (String) attrText;
     JPopupMenu popup = menu.createPopupMenu(null);
 
     // Create sub menus

@@ -71,14 +71,14 @@ public class Suggestion implements Comparable<Suggestion> {
     while (currentIndex < patternText.length()) {
       if (patternText.startsWith("{{", currentIndex)) {
         if (currentIndex > lastIndex) {
-          tmpPattern.append(patternText.substring(lastIndex, currentIndex));
+          tmpPattern.append(patternText, lastIndex, currentIndex);
         }
         tmpPattern.append("\\{\\{");
         currentIndex += 2;
         lastIndex = currentIndex;
       } else if (patternText.startsWith("}}", currentIndex)) {
         if (currentIndex > lastIndex) {
-          tmpPattern.append(patternText.substring(lastIndex, currentIndex));
+          tmpPattern.append(patternText, lastIndex, currentIndex);
         }
         tmpPattern.append("\\}\\}}");
         currentIndex += 2;
@@ -287,6 +287,7 @@ public class Suggestion implements Comparable<Suggestion> {
           for (ElementarySuggestion element : list) {
             if (newText.equals(element.getReplacement())) {
               added = true;
+              break;
             }
           }
           if (!added) {
@@ -294,10 +295,7 @@ public class Suggestion implements Comparable<Suggestion> {
           }
         }
       } catch (Exception e) {
-        log.error(
-            "Error when trying to get replacement\n  " +
-            initialText.substring(begin, end) + " → " + replacement +
-            "\n  " + e.getMessage());
+        log.error("Error when trying to get replacement\n  {} → {}\n  {}", initialText.substring(begin, end), replacement, e.getMessage());
       }
     }
     return list;
@@ -382,7 +380,7 @@ public class Suggestion implements Comparable<Suggestion> {
    * Construct a list of chapters containing suggestions.
    * 
    * @param suggestions List of suggestions.
-   * @return List of chapters containing suggestions (key=Page, value=Chapters).
+   * @return Map of chapters containing suggestions (key=Page, value=Chapters).
    */
   public static Map<String, List<String>> getChapters(Collection<Suggestion> suggestions) {
     Map<String, List<String>> chapters = new HashMap<>();
@@ -391,11 +389,7 @@ public class Suggestion implements Comparable<Suggestion> {
       int sharpIndex = chapter.indexOf('#');
       String page = (sharpIndex < 0) ? chapter : chapter.substring(0, sharpIndex);
       String title = (sharpIndex < 0) ? "" : chapter.substring(sharpIndex + 1);
-      List<String> pageChapters = chapters.get(page);
-      if (pageChapters == null) {
-        pageChapters = new ArrayList<>();
-        chapters.put(page, pageChapters);
-      }
+      List<String> pageChapters = chapters.computeIfAbsent(page, k -> new ArrayList<>());
       if (!pageChapters.contains(title)) {
         pageChapters.add(title);
         Collections.sort(pageChapters);

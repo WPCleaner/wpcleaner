@@ -25,5 +25,5 @@ public interface ApiExpandResult extends ApiResult {
    * @return Expanded text.
    * @throws APIException Exception thrown by the API.
    */
-  public String executeExpandTemplates(Map<String, String> properties) throws APIException;
+  String executeExpandTemplates(Map<String, String> properties) throws APIException;
 }

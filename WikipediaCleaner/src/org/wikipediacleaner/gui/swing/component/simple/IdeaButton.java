@@ -11,7 +11,6 @@ package org.wikipediacleaner.gui.swing.component.simple;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.beans.EventHandler;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -82,31 +81,27 @@ public class IdeaButton {
     url.append("https://phabricator.wikimedia.org/maniphest/task/edit/form/43/");
     url.append("?projects=wpcleaner&subscribers=NicoV");
     final String baseUrl = url.toString();
-    try {
-      StringBuilder description = new StringBuilder();
-      description.append("**Steps to replicate the issue** (include links if applicable):\n");
-      description.append("\n");
-      description.append("*\n");
-      description.append("*\n");
-      description.append("*\n");
-      description.append("\n");
-      description.append("**What happens?**:\n");
-      description.append("\n");
-      description.append("\n");
-      description.append("**What should have happened instead?**:\n");
-      description.append("\n");
-      description.append("\n");
-      description.append("**Other information** (browser name/version, screenshots, etc.):\n");
-      description.append("\n");
-      description.append("\n");
-      description.append("**Information provided by WPCleaner**:\n");
-      description.append("* Java version: " + System.getProperty("java.version") + "\n");
-      description.append("* Java vendor: " + System.getProperty("java.vendor") + "\n");
-      description.append("* Operating system: " + System.getProperty("os.name") + "\n");
-      url.append("&description=" + URLEncoder.encode(description.toString(), StandardCharsets.UTF_8.name()));
-    } catch (UnsupportedEncodingException e) {
-      // Do nothing
-    }
+    StringBuilder description = new StringBuilder();
+    description.append("**Steps to replicate the issue** (include links if applicable):\n");
+    description.append("\n");
+    description.append("*\n");
+    description.append("*\n");
+    description.append("*\n");
+    description.append("\n");
+    description.append("**What happens?**:\n");
+    description.append("\n");
+    description.append("\n");
+    description.append("**What should have happened instead?**:\n");
+    description.append("\n");
+    description.append("\n");
+    description.append("**Other information** (browser name/version, screenshots, etc.):\n");
+    description.append("\n");
+    description.append("\n");
+    description.append("**Information provided by WPCleaner**:\n");
+    description.append("* Java version: ").append(System.getProperty("java.version")).append("\n");
+    description.append("* Java vendor: ").append(System.getProperty("java.vendor")).append("\n");
+    description.append("* Operating system: ").append(System.getProperty("os.name")).append("\n");
+    url.append("&description=").append(URLEncoder.encode(description.toString(), StandardCharsets.UTF_8));
     Utilities.browseURL(url.toString(), () -> Utilities.displayUrlMessage(
         parentComponent,
         GT._T("You can submit bug reports at the following URL:"),

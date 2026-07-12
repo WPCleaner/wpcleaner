@@ -84,11 +84,7 @@ public abstract class WarningProcessor {
     if ((errorsMap == null) || (error == null) || (title == null)) {
       return;
     }
-    List<String> titles = errorsMap.get(error);
-    if (titles == null) {
-      titles = new ArrayList<>();
-      errorsMap.put(error, titles);
-    }
+    List<String> titles = errorsMap.computeIfAbsent(error, k -> new ArrayList<>());
     titles.add(title);
   }
 

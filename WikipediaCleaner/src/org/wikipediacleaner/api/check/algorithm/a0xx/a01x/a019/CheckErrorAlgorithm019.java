@@ -97,7 +97,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
 
     // Compute minimum title level
     List<PageElementTitle> titles = analysis.getTitles();
-    if ((titles == null) || (titles.size() == 0)) {
+    if ((titles == null) || (titles.isEmpty())) {
       return contents;
     }
     if ((titles.get(0).getLevel() > 1) ||
@@ -131,7 +131,7 @@ public class CheckErrorAlgorithm019 extends CheckErrorAlgorithmBase {
       }
       if (found) {
         if (lastIndex < title.getBeginIndex()) {
-          tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
+          tmp.append(contents, lastIndex, title.getBeginIndex());
           lastIndex = title.getBeginIndex();
         }
         tmp.append(TitleBuilder

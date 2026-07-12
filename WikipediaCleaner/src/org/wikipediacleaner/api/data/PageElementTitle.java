@@ -137,6 +137,7 @@ public class PageElementTitle extends PageElement {
       for (int i = beginIndex; i < endIndex; i++) {
         if (contents.charAt(i) == '\n') {
           multiline = true;
+          break;
         }
       }
     }

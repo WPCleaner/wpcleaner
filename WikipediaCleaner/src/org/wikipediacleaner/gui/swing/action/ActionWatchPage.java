@@ -172,7 +172,7 @@ public class ActionWatchPage implements ActionListener {
         links = Collections.singletonList(title);
       }
     }
-    if ((links == null) || (links.size() == 0)) {
+    if ((links == null) || (links.isEmpty())) {
       String message = GT._T("You must select a page to add it on your local watchlist");
       Utilities.displayWarning(parent, message);
       return;

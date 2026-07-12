@@ -19,5 +19,5 @@ public interface WikiProvider {
   /**
    * @return Wiki.
    */
-  public EnumWikipedia getWiki();
+  EnumWikipedia getWiki();
 }

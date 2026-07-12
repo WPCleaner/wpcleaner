@@ -28,7 +28,7 @@ public interface ApiLinksResult extends ApiPropertiesResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeLinks(
+  boolean executeLinks(
       Map<String, String> properties,
       Map<String, List<Page>> lists,
       Map<String, String> normalization) throws APIException;
@@ -45,7 +45,7 @@ public interface ApiLinksResult extends ApiPropertiesResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeLinks(
+  boolean executeLinks(
       Map<String, String> properties,
       List<Page> links,
       List<Page> knownPages,

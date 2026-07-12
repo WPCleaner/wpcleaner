@@ -195,7 +195,7 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
 
     List<String> categoriesAnalyzed = new ArrayList<>();
     Map<Page, Integer> categories = new HashMap<>();
-    categories.put(category, Integer.valueOf(0));
+    categories.put(category, 0);
     int maxSize = getMaxSize(limit, ConfigurationValueInteger.MAX_CATEGORY_MEMBERS);
     maxSize = Math.min(maxSize, max);
     while (!categories.isEmpty()) {
@@ -204,7 +204,7 @@ public class ApiCategoryMembersRequest extends ApiListRequest {
       Entry<Page, Integer> entry = categories.entrySet().iterator().next();
       Page currentCategory = entry.getKey();
       categories.remove(currentCategory);
-      int currentDepth = entry.getValue().intValue();
+      int currentDepth = entry.getValue();
       String categoryName = currentCategory.getTitle();
       int colonIndex = categoryName.indexOf(':');
       if (colonIndex < 0) {

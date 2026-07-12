@@ -134,10 +134,10 @@ public class CheckErrorAlgorithm070 extends CheckErrorAlgorithmISBN {
     // Add search for other identifiers
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as OCLC"),
-        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", isbnNumber))));
+        new ActionExternalViewer(MessageFormat.format("https://worldcat.org/oclc/{0}", isbnNumber))));
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as LCCN"),
-        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", isbnNumber))));
+        new ActionExternalViewer(MessageFormat.format("https://lccn.loc.gov/{0}", isbnNumber))));
 
     // Add search for potential ISSN
     if (length == 8) {

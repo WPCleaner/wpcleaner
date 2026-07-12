@@ -30,7 +30,7 @@ public interface ApiCategoryMembersResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeCategoryMembers(
+  boolean executeCategoryMembers(
       Map<String, String> properties,
       List<Page> list,
       Map<Page, Integer> categories, int depth) throws APIException;

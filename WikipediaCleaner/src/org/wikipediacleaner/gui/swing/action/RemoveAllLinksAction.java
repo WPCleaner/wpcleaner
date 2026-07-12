@@ -22,8 +22,8 @@ import org.wikipediacleaner.gui.swing.component.MWPane;
  */
 public class RemoveAllLinksAction implements ActionListener {
 
-  private MWPane textPane;
-  private Page from;
+  private final MWPane textPane;
+  private final Page from;
 
   public RemoveAllLinksAction(MWPane textPane, Page from) {
     this.textPane = textPane;
@@ -42,7 +42,7 @@ public class RemoveAllLinksAction implements ActionListener {
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     for (PageElementInternalLink link : links) {
       if (Page.areSameTitle(from.getTitle(), link.getLink())) {
-        buffer.append(originalText.substring(lastPosition, link.getBeginIndex()));
+        buffer.append(originalText, lastPosition, link.getBeginIndex());
         lastPosition = link.getBeginIndex();
         buffer.append(link.getDisplayedText());
         lastPosition = link.getEndIndex();

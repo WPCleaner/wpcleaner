@@ -409,7 +409,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private boolean checkSpecialPrefixIndexLink(AnalysisInformation info) {
 
     // Check if templates are defined
-    if ((prefixIndexTemplates == null) || (prefixIndexTemplates.size() == 0)) {
+    if ((prefixIndexTemplates == null) || (prefixIndexTemplates.isEmpty())) {
       return false;
     }
 
@@ -436,7 +436,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         String key = attribute.getKey();
         if ("prefix".equals(key)) {
           prefix = attribute.getValue();
-          while ((prefix.length() > 0) && (prefix.charAt(prefix.length() - 1) == '+')) {
+          while ((!prefix.isEmpty()) && (prefix.charAt(prefix.length() - 1) == '+')) {
             prefix = prefix.substring(0, prefix.length() - 1);
           }
         } else if ("namespace".equals(key)) {
@@ -457,7 +457,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         TemplateBuilder builder = TemplateBuilder.from(prefixIndexTemplate[0]);
         String articleParam = null;
         if (prefixIndexTemplate.length > 1) {
-          if ((prefixIndexTemplate[1].length() > 0) && !"1".equals(prefixIndexTemplate[1])) {
+          if ((!prefixIndexTemplate[1].isEmpty()) && !"1".equals(prefixIndexTemplate[1])) {
             articleParam = prefixIndexTemplate[1];
           }
         }
@@ -466,7 +466,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             prefix);
         String textParam = null;
         if (prefixIndexTemplate.length > 2) {
-          if ((prefixIndexTemplate[2].length() > 0) && !"2".equals(prefixIndexTemplate[2])) {
+          if ((!prefixIndexTemplate[2].isEmpty()) && !"2".equals(prefixIndexTemplate[2])) {
             textParam = prefixIndexTemplate[2];
           }
         }
@@ -491,7 +491,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private boolean checkOldidLink(AnalysisInformation info) {
 
     // Check if old id templates are defined
-    if ((oldidTemplates == null) || (oldidTemplates.size() == 0)) {
+    if ((oldidTemplates == null) || (oldidTemplates.isEmpty())) {
       return false;
     }
 
@@ -518,7 +518,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         TemplateBuilder builder = TemplateBuilder.from(oldidTemplate[0]);
         String articleParam = null;
         if (oldidTemplate.length > 1) {
-          if ((oldidTemplate[1].length() > 0) && !"1".equals(oldidTemplate[1])) {
+          if ((!oldidTemplate[1].isEmpty()) && !"1".equals(oldidTemplate[1])) {
             articleParam = oldidTemplate[1];
           }
         }
@@ -527,7 +527,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             info.article);
         String oldidParam = null;
         if (oldidTemplate.length > 2) {
-          if ((oldidTemplate[2].length() > 0) && !"2".equals(oldidTemplate[2])) {
+          if ((!oldidTemplate[2].isEmpty()) && !"2".equals(oldidTemplate[2])) {
             oldidParam = oldidTemplate[2];
           }
         }
@@ -536,7 +536,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             oldid);
         String textParam = null;
         if (oldidTemplate.length > 3) {
-          if ((oldidTemplate[3].length() > 0) && !"3".equals(oldidTemplate[3])) {
+          if ((!oldidTemplate[3].isEmpty()) && !"3".equals(oldidTemplate[3])) {
             textParam = oldidTemplate[3];
           }
         }
@@ -561,7 +561,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
   private boolean checkHistoryLink(AnalysisInformation info) {
 
     // Check if history templates are defined
-    if ((historyTemplates == null) || (historyTemplates.size() == 0)) {
+    if ((historyTemplates == null) || (historyTemplates.isEmpty())) {
       return false;
     }
 
@@ -591,7 +591,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
         TemplateBuilder builder = TemplateBuilder.from(historyTemplate[0]);
         String articleParam = null;
         if (historyTemplate.length > 1) {
-          if ((historyTemplate[1].length() > 0) && !"1".equals(historyTemplate[1])) {
+          if ((!historyTemplate[1].isEmpty()) && !"1".equals(historyTemplate[1])) {
             articleParam = historyTemplate[1];
           }
         }
@@ -600,7 +600,7 @@ public class CheckErrorAlgorithm090 extends CheckErrorAlgorithmBase {
             info.article);
         String textParam = null;
         if (historyTemplate.length > 2) {
-          if ((historyTemplate[2].length() > 0) && !"2".equals(historyTemplate[2])) {
+          if ((!historyTemplate[2].isEmpty()) && !"2".equals(historyTemplate[2])) {
             textParam = historyTemplate[2];
           }
         }

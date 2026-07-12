@@ -61,7 +61,6 @@ public class PageElementGrouper {
   /**
    * Analyze if text can be between consecutive elements.
    * 
-   * @param contents Page contents.
    * @param beginIndex Begin index of the text.
    * @param endIndex End index of the text.
    * @return True if the text can be between consecutive elements.

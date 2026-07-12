@@ -28,7 +28,7 @@ public interface ApiPagesWithPropResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executePagesWithProp(
+  boolean executePagesWithProp(
       Map<String, String> properties,
       List<Page> list) throws APIException;
 }

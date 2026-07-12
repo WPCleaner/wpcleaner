@@ -34,7 +34,7 @@ public class PasswordInput implements UserNameChangeListener {
   private final WikiProvider wikiProvider;
 
   /** Input field for selecting a password */
-  JPasswordField field;
+  final JPasswordField field;
 
   /** Character used for echoing password */
   private char echo = '*';

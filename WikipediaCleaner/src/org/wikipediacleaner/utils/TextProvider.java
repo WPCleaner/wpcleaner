@@ -18,5 +18,5 @@ public interface TextProvider {
   /**
    * @return Possible texts.
    */
-  public Collection<String> getTexts();
+  Collection<String> getTexts();
 }

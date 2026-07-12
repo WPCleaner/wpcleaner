@@ -10,6 +10,7 @@ package org.wikipediacleaner.api.check.algorithm;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
@@ -148,16 +149,14 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       // Basic splits
       for (String split : possibleSplit) {
         isbnValues.clear();
-        for (String value : isbn.getISBNNotTrimmed().trim().split(split)) {
-          isbnValues.add(value);
-        }
+        isbnValues.addAll(Arrays.asList(isbn.getISBNNotTrimmed().trim().split(split)));
         addSuggestions(analysis, errorResult, isbn, isbnValues, isbnValues.size() == 1);
       }
 
       // Evolved split
       String isbnValue = isbn.getISBNNotTrimmed().trim();
       isbnValues.clear();
-      while (isbnValue.length() > 0) {
+      while (!isbnValue.isEmpty()) {
         // Remove extra characters
         int index = 0;
         while ((index < isbnValue.length()) &&
@@ -202,7 +201,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     Iterator<String> itValues = isbnValues.iterator();
     while (itValues.hasNext()) {
       String value = itValues.next();
-      if ((value == null) || (value.trim().length() == 0)) {
+      if ((value == null) || (value.trim().isEmpty())) {
         itValues.remove();
       }
     }
@@ -213,7 +212,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       String isbnValue = isbnValues.get(numIsbn);
 
       // Remove extra characters at the beginning
-      while ((isbnValue.length() > 0) &&
+      while ((!isbnValue.isEmpty()) &&
              (extraChars.indexOf(isbnValue.charAt(0)) >= 0)) {
         isbnValue = isbnValue.substring(1);
       }
@@ -226,7 +225,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       }
 
       // Remove extra characters at the beginning
-      while ((isbnValue.length() > 0) &&
+      while ((!isbnValue.isEmpty()) &&
              (extraChars.indexOf(isbnValue.charAt(0)) >= 0)) {
         isbnValue = isbnValue.substring(1);
       }
@@ -261,11 +260,11 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
       }
 
       // Remove extra characters at both extremities
-      while ((isbnValue.length() > 0) &&
+      while ((!isbnValue.isEmpty()) &&
              (extraChars.indexOf(isbnValue.charAt(0)) >= 0)) {
         isbnValue = isbnValue.substring(1);
       }
-      while ((isbnValue.length() > 0) &&
+      while ((!isbnValue.isEmpty()) &&
              (extraChars.indexOf(isbnValue.charAt(isbnValue.length() - 1)) >= 0)) {
         isbnValue = isbnValue.substring(0, isbnValue.length() - 1);
       }
@@ -276,7 +275,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
     itValues = isbnValues.iterator();
     while (itValues.hasNext()) {
       String value = itValues.next();
-      if ((value == null) || (value.trim().length() == 0)) {
+      if ((value == null) || (value.trim().isEmpty())) {
         itValues.remove();
       }
     }
@@ -316,7 +315,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         Parameter param = template.getParameterAtIndex(isbn.getBeginIndex());
         if ((param != null) &&
             (param.getName() != null) &&
-            (param.getName().trim().length() > 0)) {
+            (!param.getName().trim().isEmpty())) {
           String name = param.getName().trim();
           int index = name.length();
           while ((index > 0) &&
@@ -325,19 +324,19 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
           }
           int currentNum = 1;
           if (index < name.length()) {
-            currentNum = Integer.valueOf(name.substring(index));
+            currentNum = Integer.parseInt(name.substring(index));
             name = name.substring(0, index);
           }
           currentNum++;
           StringBuilder buffer = new StringBuilder();
           buffer.append(isbnValues.get(0));
           for (int isbnNum = 1; isbnNum < isbnValues.size(); isbnNum++) {
-            while (template.getParameterIndex(name + Integer.toString(currentNum)) >= 0) {
+            while (template.getParameterIndex(name + currentNum) >= 0) {
               currentNum++;
             }
             buffer.append(" |");
             buffer.append(name);
-            buffer.append(Integer.toString(currentNum));
+            buffer.append(currentNum);
             buffer.append("=");
             buffer.append(isbnValues.get(isbnNum));
             currentNum++;
@@ -366,7 +365,7 @@ public abstract class CheckErrorAlgorithmISBN extends CheckErrorAlgorithmBase {
         String replacement = isbn.askForHelp(helpNeededTemplate, reason);
         if (replacement != null) {
           errorResult.addReplacement(
-              replacement.toString(),
+              replacement,
               GT._T("Ask for help using {0}", TemplateBuilder.from(helpNeededTemplate[0]).toString()));
         }
       }

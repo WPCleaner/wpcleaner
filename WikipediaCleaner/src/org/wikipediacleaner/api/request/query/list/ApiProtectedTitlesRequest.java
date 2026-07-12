@@ -128,7 +128,7 @@ public class ApiProtectedTitlesRequest extends ApiListRequest {
         PROPERTY_LIST,
         PROPERTY_LIST_PROTECTEDTITLES);
     properties.put(PROPERTY_LIMIT, LIMIT_MAX);
-    if ((namespaces != null) && (namespaces.size() > 0)) {
+    if ((namespaces != null) && (!namespaces.isEmpty())) {
       properties.put(PROPERTY_NAMESPACE, constructList(namespaces));
     }
     properties.put(PROPERTY_LEVEL, "sysop");

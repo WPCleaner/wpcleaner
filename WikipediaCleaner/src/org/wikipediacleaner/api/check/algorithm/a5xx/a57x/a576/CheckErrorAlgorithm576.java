@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -105,7 +104,7 @@ public class CheckErrorAlgorithm576 extends CheckErrorAlgorithmBase {
           "\\d++ *+x *+\\d++ *+px",                  // 1x1 px
           "\\d++\\.\\d++ *+x *+\\d++\\.\\d++ *+px")  // 1.1x1.1 px
       .map(Pattern::compile)
-      .collect(Collectors.toList());
+      .toList();
   private static final Pattern UPRIGHT_ZERO_PATTERN = Pattern.compile("(?:0++(?:\\.0++)?|\\.0++)");
 
   /**
@@ -140,7 +139,7 @@ public class CheckErrorAlgorithm576 extends CheckErrorAlgorithmBase {
 
     // Check for possible replacement
     String contents = analysis.getContents();
-    String newValue = value.replaceAll(",", ".").replaceAll("\"", "").replaceAll(" ", "").trim();
+    String newValue = value.replace(",", ".").replace("\"", "").replace(" ", "").trim();
     if (newValue.startsWith("O")) {
       newValue = newValue.replaceFirst("O", "0");
     }

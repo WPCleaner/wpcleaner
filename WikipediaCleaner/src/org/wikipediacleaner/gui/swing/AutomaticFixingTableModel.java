@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +23,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 class AutomaticFixingTableModel extends AbstractTableModel {
 
-  /**
-   * Serialization.
-   */
+  @Serial
   private static final long serialVersionUID = -6615379596445669242L;
 
   /**
@@ -159,15 +158,12 @@ class AutomaticFixingTableModel extends AbstractTableModel {
     if (fixing == null) {
       return null;
     }
-    switch (columnIndex) {
-    case COLUMN_FROM:
-      return fixing.getOriginalText();
-    case COLUMN_TO:
-      return fixing.getReplacementText();
-    case COLUMN_REGEX:
-      return fixing.getRegex();
-    }
-    return null;
+    return switch (columnIndex) {
+      case COLUMN_FROM -> fixing.getOriginalText();
+      case COLUMN_TO -> fixing.getReplacementText();
+      case COLUMN_REGEX -> fixing.getRegex();
+      default -> null;
+    };
   }
 
   /**
@@ -177,15 +173,12 @@ class AutomaticFixingTableModel extends AbstractTableModel {
    */
   @Override
   public String getColumnName(int column) {
-    switch (column) {
-    case COLUMN_FROM:
-      return GT._T("Original text");
-    case COLUMN_TO:
-      return GT._T("Replacement text");
-    case COLUMN_REGEX:
-      return GT._T("regex");
-    }
-    return super.getColumnName(column);
+    return switch (column) {
+      case COLUMN_FROM -> GT._T("Original text");
+      case COLUMN_TO -> GT._T("Replacement text");
+      case COLUMN_REGEX -> GT._T("regex");
+      default -> super.getColumnName(column);
+    };
   }
 
   /**
@@ -195,14 +188,10 @@ class AutomaticFixingTableModel extends AbstractTableModel {
    */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    switch (columnIndex) {
-    case COLUMN_FROM:
-      return String.class;
-    case COLUMN_TO:
-      return String.class;
-    case COLUMN_REGEX:
-      return Boolean.class;
-    }
-    return super.getColumnClass(columnIndex);
+    return switch (columnIndex) {
+      case COLUMN_FROM, COLUMN_TO -> String.class;
+      case COLUMN_REGEX -> Boolean.class;
+      default -> super.getColumnClass(columnIndex);
+    };
   }
 }

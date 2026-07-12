@@ -7,7 +7,6 @@
 
 package org.wikipediacleaner.gui.swing.worker;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.APIException;
@@ -89,7 +88,7 @@ public class CheckWikiProjectWorker extends BasicWorker {
 
     // Sorting errors by priority
     setText(GT._T("Sorting errors by priority"));
-    Collections.sort(errors, new AlgorithmErrorComparator());
+    errors.sort(new AlgorithmErrorComparator());
 
     return null;
   }

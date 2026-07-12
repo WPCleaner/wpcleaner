@@ -91,7 +91,7 @@ public class AutomaticFixing implements Comparable<AutomaticFixing> {
    * @return Regular expression or not.
    */
   public Boolean getRegex() {
-    return Boolean.valueOf(regex);
+    return regex;
   }
 
   /**
@@ -117,7 +117,7 @@ public class AutomaticFixing implements Comparable<AutomaticFixing> {
     }
 
     // Apply each automatic fixing expression to the text
-    StringBuffer tmpText = new StringBuffer();
+    StringBuilder tmpText = new StringBuilder();
     for (AutomaticFixing replacement : fixing) {
 
       // Initialize data
@@ -161,7 +161,7 @@ public class AutomaticFixing implements Comparable<AutomaticFixing> {
             finished = true;
           } else {
             if (newIndex > currentIndex) {
-              tmpText.append(text.substring(currentIndex, newIndex));
+              tmpText.append(text, currentIndex, newIndex);
               currentIndex = newIndex;
             }
             tmpText.append(replacementText);

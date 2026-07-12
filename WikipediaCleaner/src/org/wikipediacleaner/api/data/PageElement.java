@@ -48,7 +48,7 @@ public abstract class PageElement extends ContentsElement {
       int beginIndex = elements.get(index).getBeginIndex();
       int endIndex = elements.get(index).getEndIndex();
       index++;
-      buffer.append(contents.substring(beginIndex, endIndex));
+      buffer.append(contents, beginIndex, endIndex);
     }
     return buffer.toString();
   }

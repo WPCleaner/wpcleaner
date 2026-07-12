@@ -126,10 +126,10 @@ public class CheckErrorAlgorithm072 extends CheckErrorAlgorithmISBN {
     // Add search for other identifiers
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as OCLC"),
-        new ActionExternalViewer(MessageFormat.format("http://worldcat.org/oclc/{0}", number))));
+        new ActionExternalViewer(MessageFormat.format("https://worldcat.org/oclc/{0}", number))));
     errorResult.addPossibleAction(new SimpleAction(GT._T(
         "Search as LCCN"),
-        new ActionExternalViewer(MessageFormat.format("http://lccn.loc.gov/{0}", number))));
+        new ActionExternalViewer(MessageFormat.format("https://lccn.loc.gov/{0}", number))));
 
     // Add ISBN with modified checksum
     List<String> searchISBN = new ArrayList<>();

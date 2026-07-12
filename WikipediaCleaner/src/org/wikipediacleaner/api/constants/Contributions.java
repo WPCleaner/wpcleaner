@@ -143,7 +143,7 @@ public class Contributions {
   /**
    * Number of Check Wiki errors.
    */
-  private int[] checkWikiErrors = new int[CWConfiguration.MAX_ERROR_NUMBER];
+  private final int[] checkWikiErrors = new int[CWConfiguration.MAX_ERROR_NUMBER];
 
   /**
    * @param errorNumber Check Wiki error number.

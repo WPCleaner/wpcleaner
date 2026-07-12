@@ -71,7 +71,7 @@ public class CheckErrorAlgorithm504 extends CheckErrorAlgorithmBase {
       return true;
     }
 
-    titles.entrySet().forEach(entry -> reportTitle(analysis, entry.getKey(), entry.getValue(), errors));
+    titles.forEach((key, value) -> reportTitle(analysis, key, value, errors));
     return true;
   }
 
@@ -98,7 +98,7 @@ public class CheckErrorAlgorithm504 extends CheckErrorAlgorithmBase {
           TemplateBuilder.from(template.templateName)
               .addParam(
                   template.paramName,
-                  ((template.commentBefore != null) ? CommentBuilder.from(template.commentBefore).toString() + " " : "") + references)
+                  ((template.commentBefore != null) ? CommentBuilder.from(template.commentBefore) + " " : "") + references)
               .removeUnnecessaryParamNames(true)
               .toString();
       String text = GT._T("Use template {0}", template.templateName);

@@ -79,12 +79,6 @@ public class AutomaticCWWorker extends AutomaticFixWorker {
     return null;
   }
 
-  /**
-   * Analyze an algorithm.
-   * 
-   * @param algorithm Algorithm.
-   * @throws APIException
-   */
   private void analyzeAlgorithm(CheckErrorAlgorithm algorithm) throws APIException {
 
     // Check if analysis is useful
@@ -107,7 +101,6 @@ public class AutomaticCWWorker extends AutomaticFixWorker {
     List<AlgorithmError> errors = new ArrayList<>();
     CheckWiki checkWiki = APIFactory.getCheckWiki();
     checkWiki.retrievePages(algorithm, maxSize, getWikipedia(), errors);
-    List<CheckErrorAlgorithm> algorithms = selectedAlgorithms;
     while (!errors.isEmpty() && shouldContinue()) {
       AlgorithmError error = errors.remove(0);
       int maxErrors = error.getPageCount();
@@ -117,7 +110,7 @@ public class AutomaticCWWorker extends AutomaticFixWorker {
         Page page = error.getPage(0);
         error.remove(page);
         analyzePage(
-            page, algorithms,
+            page, selectedAlgorithms,
             algorithm.getErrorNumberString() + " - " + (numPage + 1) + "/" + maxErrors);
       }
     }

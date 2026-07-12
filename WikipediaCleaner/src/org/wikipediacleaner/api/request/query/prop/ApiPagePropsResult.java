@@ -27,7 +27,7 @@ public interface ApiPagePropsResult extends ApiPropertiesResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean setDiambiguationStatus(
+  boolean setDiambiguationStatus(
       Map<String, String> properties,
       Collection<Page> list) throws APIException;
 }

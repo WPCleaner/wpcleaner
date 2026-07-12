@@ -40,8 +40,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Scott Delap
  * @author Alexander Potochkin
- * 
- * https://swinghelper.dev.java.net/
+ *
+ * <a href="https://swinghelper.dev.java.net/">SwingHelper</a>
  */
 public class CheckThreadViolationRepaintManager extends RepaintManager {
 
@@ -121,9 +121,9 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
 
     protected void violationFound(JComponent c, StackTraceElement[] stackTrace) {
       StringBuilder buffer = new StringBuilder();
-        buffer.append("EDT violation detected on " + c.toString());
+        buffer.append("EDT violation detected on ").append(c.toString());
         for (StackTraceElement st : stackTrace) {
-            buffer.append("\tat " + st);
+            buffer.append("\tat ").append(st);
         }
         log.error(buffer.toString());
     }
@@ -132,12 +132,7 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
         //set CheckThreadViolationRepaintManager 
         RepaintManager.setCurrentManager(new CheckThreadViolationRepaintManager());
         //Valid code  
-        SwingUtilities.invokeAndWait(new Runnable() {
-          @Override
-            public void run() {
-                test();
-            }
-        });
+        SwingUtilities.invokeAndWait((Runnable) CheckThreadViolationRepaintManager::test);
         log.info("Valid code passed...");
         repaintTest();
         log.info("Repaint test - correct code");
@@ -170,13 +165,10 @@ public class CheckThreadViolationRepaintManager extends RepaintManager {
     static JButton test;
     static void repaintTest() {
         try {
-            SwingUtilities.invokeAndWait(new Runnable() {
-              @Override
-                public void run() {
-                    test = new JButton();
-                    test.setSize(100, 100);
-                }
-            });
+            SwingUtilities.invokeAndWait((Runnable) () -> {
+                  test = new JButton();
+                  test.setSize(100, 100);
+              });
         } catch (Exception e) {
             e.printStackTrace();
         } 

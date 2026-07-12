@@ -48,7 +48,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
       return false;
     }
     Integer ns = analysis.getPage().getNamespace();
-    if ((ns == null) || (ns.intValue() != Namespace.MAIN)) {
+    if ((ns == null) || (ns != Namespace.MAIN)) {
       return false;
     }
 
@@ -104,7 +104,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
             ArticleUrl articleUrl = ArticleUrl.isArticleUrl(analysis.getWikipedia(), hrefValue);
             if (articleUrl != null) {
               String article = articleUrl.getTitle();
-              if ((article != null) && (article.length() > 0)) {
+              if ((article != null) && (!article.isEmpty())) {
                 boolean automatic = true;
                 if ((articleUrl.getAttributes() != null) ||
                     (articleUrl.getFragment() != null)) {
@@ -118,7 +118,7 @@ public class CheckErrorAlgorithm004 extends CheckErrorAlgorithmBase {
           }
   
           // Check for link
-          if ((hrefValue != null) && (hrefValue.length() > 0)) {
+          if ((hrefValue != null) && (!hrefValue.isEmpty())) {
             boolean protocolOk = PageElementExternalLink.isPossibleProtocol(hrefValue, 0);
             if (protocolOk) {
               errorResult.addReplacement(

@@ -7,7 +7,7 @@
 
 package org.wikipediacleaner.api.configuration;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -116,12 +116,8 @@ public class WikiConfiguration {
     if ((maxArticleSize == null) || (text == null)) {
       return false;
     }
-    try {
-      if (text.getBytes("UTF-8").length > maxArticleSize.longValue()) {
-        return true;
-      }
-    } catch (UnsupportedEncodingException e) {
-      // Nothing to do
+    if (text.getBytes(StandardCharsets.UTF_8).length > maxArticleSize) {
+      return true;
     }
     return false;
   }
@@ -175,7 +171,7 @@ public class WikiConfiguration {
       return null;
     }
     for (Namespace n : namespaces) {
-      if ((n != null) && (n.getId() != null) && (id == n.getId().intValue())) {
+      if ((n != null) && (n.getId() != null) && (id == n.getId())) {
         return n;
       }
     }

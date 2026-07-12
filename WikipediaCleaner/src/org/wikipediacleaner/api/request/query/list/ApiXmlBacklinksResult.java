@@ -14,7 +14,6 @@ import java.util.Map;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
 import org.jdom2.xpath.XPathExpression;
 import org.jdom2.xpath.XPathFactory;
@@ -57,58 +56,52 @@ public class ApiXmlBacklinksResult extends ApiXmlResult implements ApiBacklinksR
       Page page,
       List<Page> list)
           throws APIException {
-    try {
-      Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
+    Element root = getRoot(properties, ApiRequest.MAX_ATTEMPTS);
 
-      // Retrieve back links
-      XPathExpression<Element> xpa = XPathFactory.instance().compile(
-          "/api/query/backlinks/bl", Filters.element());
-      List<Element> listBacklinks = xpa.evaluate(root);
-      Iterator<Element> itBacklink = listBacklinks.iterator();
-      XPathExpression<Element> xpaRedirLinks = XPathFactory.instance().compile(
-          "redirlinks/bl", Filters.element());
-      while (itBacklink.hasNext()) {
-        Element currentBacklink = itBacklink.next();
-        Page link = DataManager.getPage(
-            getWiki(), currentBacklink.getAttributeValue("title"), null, null, null);
-        link.setNamespace(currentBacklink.getAttributeValue("ns"));
-        link.setPageId(currentBacklink.getAttributeValue("pageid"));
-        if (currentBacklink.getAttribute("redirect") != null) {
-          link.getRedirects().add(page, null); // TODO: Check if fragment is available
-        }
-        if (!list.contains(link)) {
-          list.add(link);
-        }
-
-        // Links through redirects
-        List<Element> listRedirLinks = xpaRedirLinks.evaluate(currentBacklink);
-        if (listRedirLinks != null) {
-          List<Page> linkList = new ArrayList<>();
-          Iterator<Element> itRedirLink = listRedirLinks.iterator();
-          while (itRedirLink.hasNext()) {
-            currentBacklink = itRedirLink.next();
-            Page link2 = DataManager.getPage(
-                getWiki(), currentBacklink.getAttributeValue("title"), null, null, null);
-            link2.setNamespace(currentBacklink.getAttributeValue("ns"));
-            link2.setPageId(currentBacklink.getAttributeValue("pageid"));
-            if (!list.contains(link2)) {
-              list.add(link2);
-            }
-            if (!linkList.contains(link2)) {
-              linkList.add(link2);
-            }
-          }
-          link.setRelatedPages(Page.RelatedPages.BACKLINKS, linkList);
-        }
+    // Retrieve back links
+    XPathExpression<Element> xpa = XPathFactory.instance().compile(
+        "/api/query/backlinks/bl", Filters.element());
+    List<Element> listBacklinks = xpa.evaluate(root);
+    Iterator<Element> itBacklink = listBacklinks.iterator();
+    XPathExpression<Element> xpaRedirLinks = XPathFactory.instance().compile(
+        "redirlinks/bl", Filters.element());
+    while (itBacklink.hasNext()) {
+      Element currentBacklink = itBacklink.next();
+      Page link = DataManager.getPage(
+          getWiki(), currentBacklink.getAttributeValue("title"), null, null, null);
+      link.setNamespace(currentBacklink.getAttributeValue("ns"));
+      link.setPageId(currentBacklink.getAttributeValue("pageid"));
+      if (currentBacklink.getAttribute("redirect") != null) {
+        link.getRedirects().add(page, null); // TODO: Check if fragment is available
+      }
+      if (!list.contains(link)) {
+        list.add(link);
       }
 
-      // Retrieve continue
-      return shouldContinue(
-          root, "/api/query-continue/backlinks",
-          properties);
-    } catch (JDOMException e) {
-      log.error("Error loading back links", e);
-      throw new APIException("Error parsing XML", e);
+      // Links through redirects
+      List<Element> listRedirLinks = xpaRedirLinks.evaluate(currentBacklink);
+      if (listRedirLinks != null) {
+        List<Page> linkList = new ArrayList<>();
+        for (Element listRedirLink : listRedirLinks) {
+          currentBacklink = listRedirLink;
+          Page link2 = DataManager.getPage(
+              getWiki(), currentBacklink.getAttributeValue("title"), null, null, null);
+          link2.setNamespace(currentBacklink.getAttributeValue("ns"));
+          link2.setPageId(currentBacklink.getAttributeValue("pageid"));
+          if (!list.contains(link2)) {
+            list.add(link2);
+          }
+          if (!linkList.contains(link2)) {
+            linkList.add(link2);
+          }
+        }
+        link.setRelatedPages(Page.RelatedPages.BACKLINKS, linkList);
+      }
     }
+
+    // Retrieve continue
+    return shouldContinue(
+        root, "/api/query-continue/backlinks",
+        properties);
   }
 }

@@ -107,8 +107,7 @@ public class DisambiguationWindow extends OnePageWindow {
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof DisambiguationWindow) {
-              DisambiguationWindow disambig = (DisambiguationWindow) window;
+            if (window instanceof DisambiguationWindow disambig) {
               disambig.setPageName(page);
               disambig.modelLinks = new PageListModel();
               disambig.modelLinks.setComparator(PageComparator.getTemplateFirstComparator());
@@ -122,8 +121,7 @@ public class DisambiguationWindow extends OnePageWindow {
           }
           @Override
           public void displayWindow(BasicWindow window) {
-            if (window instanceof DisambiguationWindow) {
-              DisambiguationWindow disambig = (DisambiguationWindow) window;
+            if (window instanceof DisambiguationWindow disambig) {
               disambig.actionReload();
             }
           }
@@ -387,7 +385,7 @@ public class DisambiguationWindow extends OnePageWindow {
     List<String> filtered = config.getStringList(wiki, Configuration.ARRAY_FILTER_NS);
     for (Namespace ns : wiki.getWikiConfiguration().getNamespaces()) {
       Integer id = ns.getId();
-      if ((id != null) && (id.intValue() >= 0)) {
+      if ((id != null) && (id >= 0)) {
         boolean active = !filtered.contains(Integer.toString(ns.getId()));
         JMenuItem item = new JCheckBoxMenuItem(
             ns.toString(), active);
@@ -539,7 +537,7 @@ public class DisambiguationWindow extends OnePageWindow {
    */
   public void actionRunAutomaticFixing() {
     List<Page> values = listLinks.getSelectedValuesList();
-    if ((values == null) || (values.size() == 0)) {
+    if ((values == null) || (values.isEmpty())) {
       Utilities.displayWarning(
           getParentComponent(),
           GT._T("You must select pages on which running automatic fixing."));
@@ -618,8 +616,7 @@ public class DisambiguationWindow extends OnePageWindow {
       if ((!Configuration.VALUE_PAGE_NORMAL.equals(property)) &&
           (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
         firstSelection = currentLine;
-        if (value instanceof Page) {
-          Page firstPage = (Page) value;
+        if (value instanceof Page firstPage) {
           firstNamespace = firstPage.getNamespace();
         }
       }
@@ -642,7 +639,7 @@ public class DisambiguationWindow extends OnePageWindow {
       listLinks.ensureIndexIsVisible(0);
       return;
     }
-    int indices[] = new int[maxCount];
+    int[] indices = new int[maxCount];
 
     // Find items to be selected
     currentLine = firstSelection;
@@ -652,8 +649,8 @@ public class DisambiguationWindow extends OnePageWindow {
       Object value = listLinks.getModel().getElementAt(currentLine);
       String property = backlinksProperties.getProperty(value.toString());
       if ((firstNamespace == null) ||
-          ((value instanceof Page) &&
-           (firstNamespace.equals(((Page) value).getNamespace())))) {
+          ((value instanceof Page page) &&
+           (firstNamespace.equals(page.getNamespace())))) {
         if ((!Configuration.VALUE_PAGE_NORMAL.equals(property)) &&
             (!Configuration.VALUE_PAGE_HELP_NEEDED.equals(property))) {
           indices[currentIndice] = currentLine;
@@ -667,10 +664,8 @@ public class DisambiguationWindow extends OnePageWindow {
 
     // Select items found
     if (currentIndice < indices.length) {
-      int newIndices[] = new int[currentIndice];
-      for (int i = 0; i < currentIndice; i++) {
-        newIndices[i] = indices[i];
-      }
+      int[] newIndices = new int[currentIndice];
+      System.arraycopy(indices, 0, newIndices, 0, currentIndice);
       indices = newIndices;
     }
     listLinks.setSelectedIndices(indices);

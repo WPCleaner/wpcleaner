@@ -154,7 +154,7 @@ public class Numeric {
       if (endDigit == beginDigit) {
         return false;
       }
-      tmp.append(value.substring(beginDigit, endDigit));
+      tmp.append(value, beginDigit, endDigit);
       if (endDigit == value.length()) {
         if (commaCount > 0) {
           value = tmp.toString();

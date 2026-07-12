@@ -29,7 +29,7 @@ public interface ApiBacklinksResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeBacklinks(
+  boolean executeBacklinks(
       Map<String, String> properties,
       Page page,
       List<Page> list) throws APIException;

@@ -51,7 +51,7 @@ public class ReplaceAllLinksAction implements ActionListener {
    */
   @Override
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
-    if ((warning != null) && (warning.trim().length() > 0)) {
+    if ((warning != null) && (!warning.trim().isEmpty())) {
       String message = warning + "\n" + GT._T("Do you want to proceed with the replacement ?");
       int answer = Utilities.displayYesNoWarning(textPane.getParent(), message);
       if (answer != JOptionPane.YES_OPTION) {
@@ -65,7 +65,7 @@ public class ReplaceAllLinksAction implements ActionListener {
     Collection<PageElementInternalLink> links = analysis.getInternalLinks();
     for (PageElementInternalLink link : links) {
       if (Page.areSameTitle(from.getTitle(), link.getLink())) {
-        buffer.append(originalText.substring(lastPosition, link.getBeginIndex()));
+        buffer.append(originalText, lastPosition, link.getBeginIndex());
         lastPosition = link.getBeginIndex();
         buffer.append(InternalLinkBuilder.from(to).withText(link.getDisplayedText()).toString());
         lastPosition = link.getEndIndex();

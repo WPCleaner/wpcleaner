@@ -30,7 +30,7 @@ public interface ApiLintErrorsResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeLinterCategory(
+  boolean executeLinterCategory(
       Map<String, String> properties,
       List<Page> list,
       String category, boolean withTemplates) throws APIException;

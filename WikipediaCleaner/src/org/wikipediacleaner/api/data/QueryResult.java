@@ -15,14 +15,14 @@ import org.wikipediacleaner.api.constants.EnumQueryResult;
  */
 public class QueryResult {
 
-  private EnumQueryResult queryResult;
-  private String details;
-  private String wait;
+  private final EnumQueryResult queryResult;
+  private final String details;
+  private final String wait;
 
-  private Integer pageId;
-  private String  pageTitle;
-  private Integer pageOldRevId;
-  private Integer pageNewRevId;
+  private final Integer pageId;
+  private final String  pageTitle;
+  private final Integer pageOldRevId;
+  private final Integer pageNewRevId;
 
   static public QueryResult createCorrectQuery(
       Integer pageId, String pageTitle, Integer pageOldRevId, Integer pageNewRevId) {

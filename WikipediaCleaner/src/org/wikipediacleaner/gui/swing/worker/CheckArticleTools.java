@@ -11,7 +11,6 @@ package org.wikipediacleaner.gui.swing.worker;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -183,7 +182,7 @@ public class CheckArticleTools {
    * @param step Current step.
    * @param template Template.
    * @param templateData Template data.
-   * @param correct True if the template data is generated.
+   * @param generated True if the template data is generated.
    */
   private void checkTemplate(
       CheckArticleStep step,
@@ -270,7 +269,7 @@ public class CheckArticleTools {
       if (parameters.size() > 1) {
         StringBuilder buffer = new StringBuilder();
         for (PageElementTemplate.Parameter parameter : parameters) {
-          if (buffer.length() > 0) {
+          if (!buffer.isEmpty()) {
             buffer.append(", ");
           }
           buffer.append(parameter.getComputedName());
@@ -315,7 +314,7 @@ public class CheckArticleTools {
     }
     StringBuilder bufferAliases = new StringBuilder();
     for (String alias : aliases) {
-      if (bufferAliases.length() > 0) {
+      if (!bufferAliases.isEmpty()) {
         bufferAliases.append(", ");
       }
       bufferAliases.append(alias);
@@ -567,13 +566,7 @@ public class CheckArticleTools {
      */
     public void cleanup() {
       currentElement = null;
-      Iterator<CheckArticleElement> itElement = elements.iterator();
-      while (itElement.hasNext()) {
-        CheckArticleElement element = itElement.next();
-        if (!element.hasWarnings()) {
-          itElement.remove();
-        }
-      }
+      elements.removeIf(element -> !element.hasWarnings());
     }
   }
 
@@ -614,7 +607,7 @@ public class CheckArticleTools {
      * @param warning Warning.
      */
     public void addWarning(String warning) {
-      if ((warning != null) && (warning.trim().length() > 0)) {
+      if ((warning != null) && (!warning.trim().isEmpty())) {
         warnings.add(warning.trim());
       }
     }

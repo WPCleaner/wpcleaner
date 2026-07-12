@@ -31,7 +31,6 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * An action listener for checking language links existence.
  */
-@SuppressWarnings("serial")
 public class CheckCategoryLinkAction extends TextAction {
 
   private final EnumWikipedia fromWikipedia;
@@ -127,9 +126,10 @@ public class CheckCategoryLinkAction extends TextAction {
       int answer = Utilities.displayYesNoWarning(
           textPane.getParent(),
           GT._T(
-              "The category {0} doesn''t exist in the {2} Wikipedia.\n" +
-              "In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\n" +
-              "Do you want to replace the category by [[{3}]] ?",
+          """
+              The category {0} doesn''t exist in the {2} Wikipedia.
+              In the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.
+              Do you want to replace the category by [[{3}]] ?""",
               new Object[] { title, fromWikipedia.getSettings().getCode(), toWikipedia.getSettings().getCode(), replace } ));
       if (answer == JOptionPane.YES_OPTION) {
         int startOffset = element.getStartOffset();

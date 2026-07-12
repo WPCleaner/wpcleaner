@@ -244,7 +244,7 @@ public class ActionDisambiguationAnalysis implements ActionListener {
           tmp = select.toString();
         }
       }
-      if ((tmp == null) || (tmp.trim().length() == 0)) {
+      if ((tmp == null) || (tmp.trim().isEmpty())) {
         Utilities.displayWarning(
             parent,
             GT._T("You must input a page name for running a disambiguation analysis"),
@@ -263,7 +263,6 @@ public class ActionDisambiguationAnalysis implements ActionListener {
     // Analyze a single page
     if (title != null) {
       Controller.runDisambiguationAnalysis(title, wiki);
-      return;
     }
   }
 }

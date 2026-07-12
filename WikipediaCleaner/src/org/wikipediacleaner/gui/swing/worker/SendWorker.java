@@ -59,7 +59,7 @@ public class SendWorker extends BasicWorker {
    * Utility class for building a SendWorker.
    */
   public static class Builder {
-    private Params params;
+    private final Params params;
 
     /**
      * Prepare for the creation of a SendWorker.

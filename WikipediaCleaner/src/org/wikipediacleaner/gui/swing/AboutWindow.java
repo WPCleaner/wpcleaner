@@ -18,6 +18,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -123,33 +124,31 @@ public class AboutWindow extends BasicWindow {
    */
   private String loadFile(String name) {
     InputStream stream = AboutWindow.class.getResourceAsStream("/" + name);
-    if (stream == null) {
-      System.err.println("File not found: " + name);
-      return null;
-    }
-    BufferedReader reader = null;
-    try {
-      reader = new BufferedReader(new InputStreamReader(stream, "UTF8"));
-      StringBuilder sb = new StringBuilder();
-      String line = null;
-      while ((line = reader.readLine()) != null) {
-        if (sb.length() > 0) {
-          sb.append("<br/>");
-        } else {
-          sb.append("<html>");
-        }
-        sb.append(line);
-      }
-      sb.append("</html>");
-      return sb.toString();
-    } catch (IOException e) {
-      //
-    } finally {
+    try (stream) {
       try {
-        stream.close();
+        if (stream == null) {
+          System.err.println("File not found: " + name);
+          return null;
+        }
+        BufferedReader reader;
+        reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
+        StringBuilder sb = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+          if (!sb.isEmpty()) {
+            sb.append("<br/>");
+          } else {
+            sb.append("<html>");
+          }
+          sb.append(line);
+        }
+        sb.append("</html>");
+        return sb.toString();
       } catch (IOException e) {
         //
       }
+    } catch (IOException e) {
+      //
     }
     return null;
   }
@@ -178,7 +177,7 @@ public class AboutWindow extends BasicWindow {
   private void addPresentation(
       JPanel panel, GridBagConstraints constraints,
       String text) {
-    if ((text != null) && (!"".equals(text.trim()))) {
+    if ((text != null) && (!text.trim().isEmpty())) {
       JLabel label = new JLabel(text);
       label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
       panel.add(label, constraints);
@@ -232,7 +231,7 @@ public class AboutWindow extends BasicWindow {
         "<html>" +
         "<b>WPCleaner</b> is a tool designed to help with various maintenance tasks." +
         "<br>" +
-        "See <a href='http://en.wikipedia.org/wiki/Wikipedia:WPCleaner'>Wikipedia:WPCleaner</a> for more information." +
+        "See <a href='https://en.wikipedia.org/wiki/Wikipedia:WPCleaner'>Wikipedia:WPCleaner</a> for more information." +
         "</html>");
     addFile(panel, constraints, "LICENSE.txt");
     return createScrollPane(panel);
@@ -276,7 +275,7 @@ public class AboutWindow extends BasicWindow {
         "<br>" +
         "The Logging package is an ultra-thin bridge between different logging implementations." +
         "<br>" +
-        "See <a href='http://commons.apache.org/logging/'>http://commons.apache.org/logging/</a> for more information." +
+        "See <a href='https://commons.apache.org/logging/'>https://commons.apache.org/logging/</a> for more information." +
         "</html>");
     addFile(panel, constraints, "NOTICE_commons-logging.txt");
     addFile(panel, constraints, "LICENSE_commons-logging.txt");
@@ -296,7 +295,7 @@ public class AboutWindow extends BasicWindow {
         "<br>" +
         "Commons Codec provides implementations of common encoders and decoders such as Base64, Hex, Phonetic and URLs." +
         "<br>" +
-        "See <a href='http://commons.apache.org/codec/'>http://commons.apache.org/codec/</a> for more information." +
+        "See <a href='https://commons.apache.org/codec/'>https://commons.apache.org/codec/</a> for more information." +
         "</html>");
     addFile(panel, constraints, "NOTICE_commons-codec.txt");
     addFile(panel, constraints, "LICENSE_commons-codec.txt");
@@ -316,7 +315,7 @@ public class AboutWindow extends BasicWindow {
         "<br>" +
         "The Apache Commons Compress library defines an API for working with ar, cpio, Unix dump, tar, zip, gzip, XZ, Pack200, bzip2, 7z, arj, lzma, snappy, DEFLATE and Z files." +
         "<br>" +
-        "See <a href='http://commons.apache.org/proper/commons-compress/'>http://commons.apache.org/proper/commons-compress/</a> for more information." +
+        "See <a href='https://commons.apache.org/proper/commons-compress/'>https://commons.apache.org/proper/commons-compress/</a> for more information." +
         "</html>");
     addFile(panel, constraints, "NOTICE_commons-compress.txt");
     addFile(panel, constraints, "LICENSE_commons-compress.txt");
@@ -334,7 +333,7 @@ public class AboutWindow extends BasicWindow {
         "<html>" +
         "<b>Jakarta Commons HttpClient</b> is an Apache project." +
         "<br>" +
-        "See <a href='http://jakarta.apache.org/httpcomponents/httpclient-3.x/'>http://jakarta.apache.org/httpcomponents/httpclient-3.x/</a> for more information." +
+        "See <a href='https://jakarta.apache.org/httpcomponents/httpclient-3.x/'>https://jakarta.apache.org/httpcomponents/httpclient-3.x/</a> for more information." +
         "</html>");
     addFile(panel, constraints, "NOTICE_commons-httpclient.txt");
     addFile(panel, constraints, "LICENSE_commons-httpclient.txt");
@@ -370,7 +369,7 @@ public class AboutWindow extends BasicWindow {
         "<html>" +
         "<b>Commons Lang</b> is an Apache project." +
         "<br>" +
-        "See <a href='http://commons.apache.org/proper/commons-lang/'>http://commons.apache.org/proper/commons-lang/</a> for more information." +
+        "See <a href='https://commons.apache.org/proper/commons-lang/'>https://commons.apache.org/proper/commons-lang/</a> for more information." +
         "</html>");
     addFile(panel, constraints, "NOTICE_commons-lang3.txt");
     addFile(panel, constraints, "LICENSE_commons-lang3.txt");
@@ -405,7 +404,7 @@ public class AboutWindow extends BasicWindow {
         "<html>" +
         "<b>JDOM</b> is a Java-based solution for accessing, manipulating, and outputting XML data from Java code." +
         "<br>" +
-        "See <a href='http://www.jdom.org/index.html'>http://www.jdom.org/index.html</a> for more information." +
+        "See <a href='https://www.jdom.org/index.html'>https://www.jdom.org/index.html</a> for more information." +
         "</html");
         addFile(panel, constraints, "LICENSE_jdom.txt");
         return createScrollPane(panel);
@@ -422,7 +421,7 @@ public class AboutWindow extends BasicWindow {
         "<html>" +
         "<b>Jaxen</b> is an open source XPath library written in Java." +
         "<br>" +
-        "See <a href='http://jaxen.org/'>http://jaxen.org/</a> for more information." +
+        "See <a href='https://jaxen.org/'>https://jaxen.org/</a> for more information." +
         "</html>");
         addFile(panel, constraints,"LICENSE_jaxen.txt");
         return createScrollPane(panel);
@@ -439,7 +438,7 @@ public class AboutWindow extends BasicWindow {
         "<html>" +
         "<b>Jackson</b> is a multi-purpose Java library for processing JSON data format." +
         "<br>" +
-        "See <a href='http://wiki.fasterxml.com/JacksonHome'>http://wiki.fasterxml.com/JacksonHome</a> for more information." +
+        "See <a href='https://wiki.fasterxml.com/JacksonHome'>https://wiki.fasterxml.com/JacksonHome</a> for more information." +
         "</html>");
         addFile(panel, constraints, "LICENSE_jackson.txt");
         return createScrollPane(panel);

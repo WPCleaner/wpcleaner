@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.wikipediacleaner.api.API;
@@ -112,9 +111,7 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
    * 
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param templateParameter Parameter to analyze.
    * @param templateConfiguration Configuration for the template.
-   * @return
    */
   private boolean analyzeTemplateParameter(
       PageAnalysis analysis,
@@ -125,7 +122,7 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
 
     // Check if there's an error
     Optional<List<TemplateParameterSuggestion>> suggestions = templateConfiguration.analyzeParam(analysis, template, paramNum);
-    if (!suggestions.isPresent()) {
+    if (suggestions.isEmpty()) {
       return false;
     }
     if (errors == null) {
@@ -143,9 +140,9 @@ public class CheckErrorAlgorithm572 extends CheckErrorAlgorithmBase {
     }
     List<PageElementTemplate.Parameter> paramsWithSameValue = IntStream.range(0, template.getParameterCount())
         .filter(paramIndex -> paramIndex != paramNum)
-        .mapToObj(paramIndex -> template.getParameter(paramIndex))
+        .mapToObj(template::getParameter)
         .filter(param -> Objects.equals(param.getValue(), templateParam.getValue()))
-        .collect(Collectors.toList());
+        .toList();
     if (!paramsWithSameValue.isEmpty()) {
       paramsWithSameValue.forEach(param -> errorResult.addText(GT._T("Same value as parameter {0}", param.getName())));
       boolean automatic = paramsWithSameValue.stream()

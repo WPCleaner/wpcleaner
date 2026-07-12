@@ -81,7 +81,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
             firstCrIndex = currentIndex;
           }
 
-          // Check for an other external link
+          // Check for another external link
           if (!posDone) {
             PageElementExternalLink externalLink = analysis.isInExternalLink(currentIndex);
             if (externalLink != null) {
@@ -125,10 +125,10 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
                 analysis, beginIndex, endIndex);
             if (possibleEnd > 0) {
               StringBuilder replacement = new StringBuilder();
-              replacement.append(contents.substring(beginIndex, linkEndIndex));
+              replacement.append(contents, beginIndex, linkEndIndex);
               if (linkEndIndex < possibleEnd) {
                 String tmp = contents.substring(linkEndIndex, possibleEnd).replaceAll("\\n", "");
-                if ((tmp.length() > 0) && !Character.isWhitespace(tmp.charAt(0))) {
+                if ((!tmp.isEmpty()) && !Character.isWhitespace(tmp.charAt(0))) {
                   replacement.append(' ');
                 }
                 replacement.append(tmp);
@@ -136,7 +136,7 @@ public class CheckErrorAlgorithm080 extends CheckErrorAlgorithmBase {
               if (contents.charAt(possibleEnd - 1) != ']') {
                 replacement.append("]");
               }
-              replacement.append(contents.substring(possibleEnd, endIndex));
+              replacement.append(contents, possibleEnd, endIndex);
               errorResult.addReplacement(replacement.toString());
             }
             if (firstCrIndex > 0) {

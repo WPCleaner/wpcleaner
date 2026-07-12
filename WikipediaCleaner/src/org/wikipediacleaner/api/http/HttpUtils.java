@@ -8,7 +8,6 @@
 package org.wikipediacleaner.api.http;
 
 import java.io.ByteArrayOutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.ByteBuffer;
@@ -39,7 +38,7 @@ public class HttpUtils {
   /**
    * Flag for tracing secret keys.
    */
-  protected static boolean DEBUG_SECRET_KEYS = false;
+  protected static final boolean DEBUG_SECRET_KEYS = false;
 
   /**
    * Flag for tracing time.
@@ -147,7 +146,7 @@ public class HttpUtils {
    * @param segment String
    * @return Byte array.
    */
-  private static byte[] parseEncodedString(String segment) throws UnsupportedEncodingException {
+  private static byte[] parseEncodedString(String segment) {
     ByteArrayOutputStream buf = new ByteArrayOutputStream(segment.length());
     int last = 0;
     int index = 0;
@@ -187,21 +186,17 @@ public class HttpUtils {
     if ((segment == null) || (segment.indexOf('%') < 0)) {
       return segment;
     }
-    try {
-      byte[] data = parseEncodedString(segment);
-      for (Charset encoding : encodings) {
-        try {
-          if (encoding != null) {
-            return encoding.newDecoder().
-                onMalformedInput(CodingErrorAction.REPORT).
-                decode(ByteBuffer.wrap(data)).toString();
-          }
-        } catch (CharacterCodingException e) {
-          // Incorrect encoding, try next one
+    byte[] data = parseEncodedString(segment);
+    for (Charset encoding : encodings) {
+      try {
+        if (encoding != null) {
+          return encoding.newDecoder().
+              onMalformedInput(CodingErrorAction.REPORT).
+              decode(ByteBuffer.wrap(data)).toString();
         }
+      } catch (CharacterCodingException e) {
+        // Incorrect encoding, try next one
       }
-    } catch (UnsupportedEncodingException e) {
-      // Nothing to do
     }
     return segment;
   }
@@ -227,7 +222,7 @@ public class HttpUtils {
     try {
       uri = new URI(url);
     } catch (URISyntaxException e) {
-      url = url.replaceAll("&#x20;", "_");
+      url = url.replace("&#x20;", "_");
       try {
         uri = new URI(url);
       } catch (URISyntaxException e2) {
@@ -312,7 +307,7 @@ public class HttpUtils {
     } else {
       result = url.substring(base_prefix.length(), url.length() - base_suffix.length());
     }
-    result = result.replaceAll("_", " ");
+    result = result.replace("_", " ");
     if (result.endsWith("/")) {
       result = result.substring(0, result.length() - 1);
     }

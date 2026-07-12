@@ -82,7 +82,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
       String paddingRight = "";
       boolean same = false;
       boolean automatic = false;
-      if (((anchor == null) || (anchor.trim().length() == 0)) &&
+      if (((anchor == null) || (anchor.trim().isEmpty())) &&
           (text != null)) {
 
         // Check for exact same title
@@ -141,9 +141,9 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
 
               // Specific cases
               boolean shouldReport = true;
-              if (".".equals(paddingLeft) && "".equals(paddingRight)) {
+              if (".".equals(paddingLeft) && paddingRight.isEmpty()) {
                 shouldReport = false; // Only a "." before
-              } else if ("".equals(paddingLeft) && "'".equals(paddingRight)) {
+              } else if (paddingLeft.isEmpty() && "'".equals(paddingRight)) {
                 shouldReport = false; // Only a "'" after
               }
 
@@ -153,22 +153,22 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
                 boolean risk = false;
                 if ((link.getBeginIndex() > 0) &&
                     (content.charAt(link.getBeginIndex() - 1) == '\'') &&
-                    (paddingLeft.length() > 0) &&
+                    (!paddingLeft.isEmpty()) &&
                     (paddingLeft.charAt(paddingLeft.length() - 1) == '\'')) {
                   risk = true;
                 }
                 if ((link.getEndIndex() < content.length()) &&
                     (content.charAt(link.getEndIndex()) == '\'') &&
-                    (paddingRight.length() > 0) &&
+                    (!paddingRight.isEmpty()) &&
                     (paddingRight.charAt(0) == '\'')) {
                   risk = true;
                 }
-                if ((paddingRight.length() > 0) &&
+                if ((!paddingRight.isEmpty()) &&
                     (paddingRight.charAt(0) == '‘')) {
                   risk = true;
                 }
                 Integer namespace = analysis.getPage().getNamespace();
-                automatic = !risk && (namespace != null) && (namespace.intValue() == Namespace.MAIN);
+                automatic = !risk && (namespace != null) && (namespace == Namespace.MAIN);
               }
             } else if (Page.areSameTitle(linkName, cleanedText)) {
               same = true;
@@ -234,42 +234,42 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
         if (!automatic) {
           addReplacement(
               config, errorResult, replacements,
-              paddingLeft + InternalLinkBuilder.from(text).toString() + paddingRight + extraRight,
+              paddingLeft + InternalLinkBuilder.from(text) + paddingRight + extraRight,
               prefix, suffix, false);
         }
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(text).toString() + paddingRight + extraFullRight,
+            paddingLeft + InternalLinkBuilder.from(text) + paddingRight + extraFullRight,
             prefix, suffix, automatic);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(text).toString() + paddingRight + extraRight,
+            paddingLeft + InternalLinkBuilder.from(text) + paddingRight + extraRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraFullRight,
+            paddingLeft + InternalLinkBuilder.from(cleanedText) + paddingRight + extraFullRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraRight,
+            paddingLeft + InternalLinkBuilder.from(cleanedText) + paddingRight + extraRight,
             prefix, suffix, false);
-        paddingLeft = paddingLeft.replaceAll("\'", "");
-        paddingRight = paddingRight.replaceAll("\'", "");
+        paddingLeft = paddingLeft.replace("'", "");
+        paddingRight = paddingRight.replace("'", "");
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(text).toString() + paddingRight + extraFullRight,
-            prefix, suffix, false);
-        addReplacement(
-            config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(text).toString() + paddingRight + extraRight,
+            paddingLeft + InternalLinkBuilder.from(text) + paddingRight + extraFullRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraFullRight,
+            paddingLeft + InternalLinkBuilder.from(text) + paddingRight + extraRight,
             prefix, suffix, false);
         addReplacement(
             config, errorResult, replacements,
-            paddingLeft + InternalLinkBuilder.from(cleanedText).toString() + paddingRight + extraRight,
+            paddingLeft + InternalLinkBuilder.from(cleanedText) + paddingRight + extraFullRight,
+            prefix, suffix, false);
+        addReplacement(
+            config, errorResult, replacements,
+            paddingLeft + InternalLinkBuilder.from(cleanedText) + paddingRight + extraRight,
             prefix, suffix, false);
         errors.add(errorResult);
       }
@@ -299,7 +299,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
     }
     String apostropheTemplate = config.getString(
         WPCConfigurationString.APOSTROPHE_TEMPLATE);
-    if ((apostropheTemplate != null) && (apostropheTemplate.length() > 0)) {
+    if ((apostropheTemplate != null) && (!apostropheTemplate.isEmpty())) {
       String apostropheText = TemplateBuilder.from(apostropheTemplate).toString();
       String replacedPrefix = prefix.replaceAll("\\'", apostropheText);
       String replacedSuffix = suffix.replaceAll("\\'", apostropheText);
@@ -343,7 +343,7 @@ public class CheckErrorAlgorithm064 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {

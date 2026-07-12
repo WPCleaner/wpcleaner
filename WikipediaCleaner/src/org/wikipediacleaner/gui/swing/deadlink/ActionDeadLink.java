@@ -11,6 +11,7 @@ package org.wikipediacleaner.gui.swing.deadlink;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.AbstractAction;
@@ -34,7 +35,7 @@ import org.wikipediacleaner.images.EnumImageSize;
  */
 public class ActionDeadLink extends AbstractAction implements ActionListener {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = -5691508590320375863L;
 
   /**
@@ -146,8 +147,8 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
 
   /**
    * Constructor for checking one article.
-   * 
-   * @param parent Parent component.
+   *
+   * @param window Window.
    * @param wiki Wiki.
    * @param title Page title.
    * @param textPane Text pane where the text is.
@@ -164,7 +165,6 @@ public class ActionDeadLink extends AbstractAction implements ActionListener {
   /**
    * Constructor for checking a list of articles.
    * 
-   * @param parent Parent component.
    * @param window Window.
    * @param wiki Wiki.
    * @param pageListProvider Page list provider.

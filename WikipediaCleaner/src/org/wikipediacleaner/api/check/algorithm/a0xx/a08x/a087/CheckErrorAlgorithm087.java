@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm.a0xx.a08x.a087;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.wikipediacleaner.api.check.HtmlCharacters;
@@ -29,9 +30,7 @@ public class CheckErrorAlgorithm087 extends CheckErrorAlgorithmHtmlNamedEntities
   public CheckErrorAlgorithm087() {
     super("HTML named entities without semicolon");
     htmlCharacters = new ArrayList<>();
-    for (HtmlCharacters htmlCharacter : HtmlCharacters.values()) {
-      htmlCharacters.add(htmlCharacter);
-    }
+    Collections.addAll(htmlCharacters, HtmlCharacters.values());
   }
 
   /**

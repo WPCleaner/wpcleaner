@@ -350,8 +350,7 @@ public class CheckErrorAlgorithm102 extends CheckErrorAlgorithmBase {
         }
       }
     }
-    CheckErrorResult result = createCheckErrorResult(
+    return createCheckErrorResult(
         analysis, pmid.getBeginIndex(), pmid.getEndIndex(), level);
-    return result;
   }
 }

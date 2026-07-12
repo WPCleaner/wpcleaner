@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.linter;
 
+import java.io.Serial;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -30,7 +31,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class LinterErrorListTableModel extends AbstractTableModel {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 6291117363909928449L;
 
   /** Wiki */
@@ -166,7 +167,7 @@ public class LinterErrorListTableModel extends AbstractTableModel {
         Map<String, String> params = error.getParameters();
         if (params != null) {
           for (Entry<String, String> param : params.entrySet()) {
-            if (tmp.length() > 0) {
+            if (!tmp.isEmpty()) {
               tmp.append(";");
             }
             tmp.append(param.getKey());
@@ -217,25 +218,16 @@ public class LinterErrorListTableModel extends AbstractTableModel {
    */
   @Override
   public String getColumnName(int column) {
-    switch (column) {
-    case COLUMN_END:
-      return GT._T("End");
-    case COLUMN_GOTO:
-      return "";
-    case COLUMN_PAGE:
-      return GT._T("Page");
-    case COLUMN_PARAMETERS:
-      return GT._T("Parameters");
-    case COLUMN_PARAMETERS_COPY:
-      return "";
-    case COLUMN_START:
-      return GT._T("Start");
-    case COLUMN_TEMPLATE:
-      return GT._T("Template");
-    case COLUMN_TYPE:
-      return GT._T("Type");
-    }
-    return super.getColumnName(column);
+    return switch (column) {
+      case COLUMN_END -> GT._T("End");
+      case COLUMN_GOTO, COLUMN_PARAMETERS_COPY -> "";
+      case COLUMN_PAGE -> GT._T("Page");
+      case COLUMN_PARAMETERS -> GT._T("Parameters");
+      case COLUMN_START -> GT._T("Start");
+      case COLUMN_TEMPLATE -> GT._T("Template");
+      case COLUMN_TYPE -> GT._T("Type");
+      default -> super.getColumnName(column);
+    };
   }
 
   /**
@@ -245,22 +237,12 @@ public class LinterErrorListTableModel extends AbstractTableModel {
    */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    switch (columnIndex) {
-    case COLUMN_END:
-      return Integer.class;
-    case COLUMN_GOTO:
-      return (textPane != null) ? Interval.class : String.class;
-    case COLUMN_PARAMETERS:
-    case COLUMN_PARAMETERS_COPY:
-      return String.class;
-    case COLUMN_START:
-      return Integer.class;
-    case COLUMN_TEMPLATE:
-      return String.class;
-    case COLUMN_TYPE:
-      return String.class;
-    }
-    return super.getColumnClass(columnIndex);
+    return switch (columnIndex) {
+      case COLUMN_END, COLUMN_START -> Integer.class;
+      case COLUMN_GOTO -> (textPane != null) ? Interval.class : String.class;
+      case COLUMN_PARAMETERS, COLUMN_PARAMETERS_COPY, COLUMN_TEMPLATE, COLUMN_TYPE -> String.class;
+      default -> super.getColumnClass(columnIndex);
+    };
   }
 
 }

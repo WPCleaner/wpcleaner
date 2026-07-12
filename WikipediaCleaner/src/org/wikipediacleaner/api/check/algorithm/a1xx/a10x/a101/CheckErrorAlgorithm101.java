@@ -74,6 +74,7 @@ public class CheckErrorAlgorithm101 extends CheckErrorAlgorithmBase {
           for (String suffix : listSuffixes) {
             if (suffix.equalsIgnoreCase(value)) {
               ordinal = true;
+              break;
             }
           }
         }

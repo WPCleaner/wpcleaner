@@ -9,6 +9,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.beans.EventHandler;
+import java.io.Serial;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -27,7 +28,7 @@ import org.wikipediacleaner.gui.swing.basic.Utilities;
  */
 public class HTMLPane extends JEditorPane {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 6677696793879629708L;
 
   /**
@@ -55,8 +56,7 @@ public class HTMLPane extends JEditorPane {
   public void clearText() {
     Document doc = getDocument();
     if (doc != null) {
-      if (doc instanceof StyledDocument) {
-        StyledDocument styledDoc = (StyledDocument) doc;
+      if (doc instanceof StyledDocument styledDoc) {
         styledDoc.setCharacterAttributes(0, doc.getLength(), new SimpleAttributeSet(), true);
         styledDoc.setParagraphAttributes(0, doc.getLength(), new SimpleAttributeSet(), true);
       }

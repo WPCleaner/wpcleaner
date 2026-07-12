@@ -80,6 +80,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
     for (TableElement start : starts) {
       if (!start.hasMatch) {
         result = true;
+        break;
       }
     }
     if (!result || (errors == null)) {
@@ -230,7 +231,7 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
             }
           }
           tmpName = tmpName.trim();
-          if (tmpName.length() > 0) {
+          if (!tmpName.isEmpty()) {
             templateNames.add(tmpName);
           }
         }
@@ -271,11 +272,6 @@ public class CheckErrorAlgorithm028 extends CheckErrorAlgorithmBase {
       this.begin = begin;
     }
 
-    /**
-     * @param o
-     * @return
-     * @see java.lang.Comparable#compareTo(java.lang.Object)
-     */
     @Override
     public int compareTo(TableElement o) {
       return beginIndex - o.beginIndex;

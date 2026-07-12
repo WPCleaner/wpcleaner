@@ -28,7 +28,7 @@ public interface ApiQueryPageResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeQueryPage(
+  boolean executeQueryPage(
       Map<String, String> properties,
       Set<Page> list) throws APIException;
 }

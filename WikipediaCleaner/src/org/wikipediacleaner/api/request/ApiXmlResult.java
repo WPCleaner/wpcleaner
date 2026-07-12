@@ -26,7 +26,6 @@ import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.Filters;
-import org.jdom2.input.JDOMParseException;
 import org.jdom2.input.SAXBuilder;
 import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
@@ -91,13 +90,12 @@ public abstract class ApiXmlResult extends BasicApiResult {
    * @param properties Properties defining the request.
    * @param maxTry Maximum number of tries.
    * @return Answer of MediaWiki API.
-   * @throws JDOMParseException Exception thrown due to the DOM.
    * @throws APIException Exception thrown by the API.
    */
   protected Element getRoot(
       Map<String, String> properties,
       int maxTry)
-          throws JDOMParseException, APIException {
+          throws APIException {
     int attempt = 0;
     for (;;) {
       Element root = null;

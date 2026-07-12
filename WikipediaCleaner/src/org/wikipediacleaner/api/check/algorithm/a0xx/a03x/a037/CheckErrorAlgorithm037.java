@@ -78,7 +78,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
 
     // Searching a DEFAULTSORT tag
     List<PageElementFunction> defaultSorts = analysis.getDefaultSorts();
-    if ((defaultSorts != null) && (defaultSorts.size() > 0)) {
+    if ((defaultSorts != null) && (!defaultSorts.isEmpty())) {
       return false;
     }
 
@@ -90,8 +90,9 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
     for (PageElementCategory category : categories) {
       if ((category.getSort() == null) ||
-          (category.getSortNotTrimmed().length() == 0)) {
+          (category.getSortNotTrimmed().isEmpty())) {
         categoriesWithoutSort = true;
+        break;
       }
     }
     if (!categoriesWithoutSort) {
@@ -146,7 +147,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     }
     if (automatic) {
       List<PageElementTitle> titles = analysis.getTitles();
-      if ((titles != null) && (titles.size() > 0)) {
+      if ((titles != null) && (!titles.isEmpty())) {
         if (beginIndex < titles.get(titles.size() - 1).getEndIndex()) {
           automatic = false;
         }
@@ -197,7 +198,7 @@ public class CheckErrorAlgorithm037 extends CheckErrorAlgorithmBase {
     limit = 5;
     if (tmp != null) {
       try {
-        limit = Integer.valueOf(tmp);
+        limit = Integer.parseInt(tmp);
       } catch (NumberFormatException e) {
         //
       }

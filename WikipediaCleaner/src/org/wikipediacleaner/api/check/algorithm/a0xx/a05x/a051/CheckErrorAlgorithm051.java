@@ -48,7 +48,7 @@ public class CheckErrorAlgorithm051 extends CheckErrorAlgorithmBase {
 
     // Retrieving last headline
     List<PageElementTitle> titles = analysis.getTitles();
-    if (titles.size() == 0) {
+    if (titles.isEmpty()) {
       return false;
     }
     int lastTitle = titles.get(titles.size() - 1).getEndIndex();

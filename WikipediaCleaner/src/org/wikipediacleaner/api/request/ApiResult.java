@@ -19,15 +19,15 @@ public interface ApiResult {
   /**
    * @return Format of the XML result.
    */
-  public String getFormat();
+  String getFormat();
 
   /**
    * @return Wiki on which requests are made.
    */
-  public EnumWikipedia getWiki();
+  EnumWikipedia getWiki();
 
   /**
    * @return HTTP client for making requests.
    */
-  public HttpClient getHttpClient();
+  HttpClient getHttpClient();
 }

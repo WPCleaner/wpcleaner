@@ -18,12 +18,12 @@ public interface BasicWindowListener {
    * 
    * @param window BasicWindow.
    */
-  public void initializeWindow(BasicWindow window);
+  void initializeWindow(BasicWindow window);
 
   /**
    * Called just after BasicWindow has been displayed.
    * 
    * @param window BasicWindow.
    */
-  public void displayWindow(BasicWindow window);
+  void displayWindow(BasicWindow window);
 }

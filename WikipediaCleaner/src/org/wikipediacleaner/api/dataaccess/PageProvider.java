@@ -19,5 +19,5 @@ public interface PageProvider extends WikiProvider {
   /**
    * @return Page.
    */
-  public Page getPage();
+  Page getPage();
 }

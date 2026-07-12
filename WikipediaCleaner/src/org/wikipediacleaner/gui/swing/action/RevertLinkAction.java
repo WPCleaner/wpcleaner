@@ -43,8 +43,8 @@ public class RevertLinkAction implements ActionListener {
   public void actionPerformed(@SuppressWarnings("unused") ActionEvent e) {
     if ((element == null) ||
         (textPane == null) ||
-        (title == null) || (title.length() == 0) ||
-        (text == null) || (text.length() == 0)) {
+        (title == null) || (title.isEmpty()) ||
+        (text == null) || (text.isEmpty())) {
       return;
     }
 

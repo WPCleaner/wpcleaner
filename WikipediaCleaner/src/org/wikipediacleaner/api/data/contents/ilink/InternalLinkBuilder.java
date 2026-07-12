@@ -52,8 +52,7 @@ public class InternalLinkBuilder {
    * @return Builder initialized with the target of the link.
    */
   public static @Nonnull InternalLinkBuilder from(@Nonnull String target) {
-    InternalLinkBuilder builder = new InternalLinkBuilder(target);
-    return builder;
+    return new InternalLinkBuilder(target);
   }
 
   /**
@@ -95,7 +94,7 @@ public class InternalLinkBuilder {
       fullTarget += "#" + anchor;
     }
     if (colon ||
-        ((fullTarget.length() > 0) && (fullTarget.charAt(0) == '/'))) {
+        ((!fullTarget.isEmpty()) && (fullTarget.charAt(0) == '/'))) {
       fullTarget = ":" + fullTarget;
     }
 

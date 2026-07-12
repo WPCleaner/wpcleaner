@@ -166,7 +166,7 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
 
       // Include the extra text in the link target
       replacement =
-          InternalLinkBuilder.from(link.getFullLink() + extraText).toString() +
+          InternalLinkBuilder.from(link.getFullLink() + extraText) +
           contents.substring(endText, endIndex);
       errorResult.addReplacement(replacement);
 
@@ -362,8 +362,8 @@ public class CheckErrorAlgorithm553 extends CheckErrorAlgorithmBase {
   private String cleanLink(@Nonnull String link, EnumWikipedia wiki) {
     return SpecialCharacters
         .replaceAllSpecialCharacters(link.toUpperCase(), wiki)
-        .replaceAll("-", " ")
-        .replaceAll("’", "'")
+        .replace("-", " ")
+        .replace("’", "'")
         .replaceAll("  ++", " ");
   }
 

@@ -41,9 +41,8 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(titleComparator);
     unitComparators.add(revisionIdComparator);
     unitComparators.add(pageIdComparator);
-    CompositeComparator<Page> comparator = new CompositeComparator<>(
+    return new CompositeComparator<>(
         "Template first", unitComparators);
-    return comparator;
   }
 
   /**
@@ -57,9 +56,8 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(namespaceComparator);
     unitComparators.add(titleComparator);
     unitComparators.add(pageIdComparator);
-    CompositeComparator<Page> comparator = new CompositeComparator<>(
+    return new CompositeComparator<>(
         "Revision Id first", unitComparators);
-    return comparator;
   }
 
   /**
@@ -73,9 +71,8 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(pageIdComparator);
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
-    CompositeComparator<Page> comparator = new CompositeComparator<>(
+    return new CompositeComparator<>(
         "Namespace first", unitComparators);
-    return comparator;
   }
 
   /**
@@ -89,9 +86,8 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(namespaceComparator);
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
-    CompositeComparator<Page> comparator = new CompositeComparator<>(
+    return new CompositeComparator<>(
         "Title first", unitComparators);
-    return comparator;
   }
   
   /**
@@ -106,9 +102,8 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
     unitComparators.add(pageIdComparator);
     unitComparators.add(templateComparator);
     unitComparators.add(redirectComparator);
-    CompositeComparator<Page> comparator = new CompositeComparator<>(
+    return new CompositeComparator<>(
         name, unitComparators);
-    return comparator;
   }
 
   /**
@@ -362,13 +357,13 @@ public abstract class PageComparator implements NamedComparator<Page>, Externali
       if (o2.getNamespace() == null) {
         return -1;
       }
-      if (o1.getNamespace().intValue() == Namespace.TEMPLATE) {
-        if (o2.getNamespace().intValue() == Namespace.TEMPLATE) {
+      if (o1.getNamespace() == Namespace.TEMPLATE) {
+        if (o2.getNamespace() == Namespace.TEMPLATE) {
           return 0;
         }
         return -1;
       }
-      if (o2.getNamespace().intValue() == Namespace.TEMPLATE) {
+      if (o2.getNamespace() == Namespace.TEMPLATE) {
         return 1;
       }
       return 0;

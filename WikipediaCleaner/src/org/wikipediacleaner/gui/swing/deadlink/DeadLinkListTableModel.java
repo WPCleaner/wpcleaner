@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.deadlink;
 
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -28,7 +29,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class DeadLinkListTableModel extends AbstractTableModel {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = 6291117363909928449L;
 
   /** Wiki */
@@ -205,26 +206,15 @@ public class DeadLinkListTableModel extends AbstractTableModel {
    */
   @Override
   public String getColumnName(int column) {
-    switch (column) {
-    case COLUMN_END:
-      return GT._T("End");
-    case COLUMN_GOTO:
-      return "";
-    case COLUMN_LINK:
-      return GT._T("Link");
-    case COLUMN_LINK_COPY:
-    case COLUMN_LINK_VIEW:
-      return "";
-    case COLUMN_PAGE:
-      return GT._T("Page");
-    case COLUMN_START:
-      return GT._T("Start");
-    case COLUMN_STATUS:
-      return "";
-    case COLUMN_STATUS_TEXT:
-      return GT._T("Status");
-    }
-    return super.getColumnName(column);
+    return switch (column) {
+      case COLUMN_END -> GT._T("End");
+      case COLUMN_GOTO, COLUMN_LINK_COPY, COLUMN_LINK_VIEW, COLUMN_STATUS -> "";
+      case COLUMN_LINK -> GT._T("Link");
+      case COLUMN_PAGE -> GT._T("Page");
+      case COLUMN_START -> GT._T("Start");
+      case COLUMN_STATUS_TEXT -> GT._T("Status");
+      default -> super.getColumnName(column);
+    };
   }
 
   /**
@@ -234,23 +224,12 @@ public class DeadLinkListTableModel extends AbstractTableModel {
    */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    switch (columnIndex) {
-    case COLUMN_END:
-      return Integer.class;
-    case COLUMN_GOTO:
-      return (textPane != null) ? Interval.class : String.class;
-    case COLUMN_LINK:
-    case COLUMN_LINK_COPY:
-    case COLUMN_LINK_VIEW:
-      return String.class;
-    case COLUMN_START:
-      return Integer.class;
-    case COLUMN_STATUS:
-      return Integer.class;
-    case COLUMN_STATUS_TEXT:
-      return String.class;
-    }
-    return super.getColumnClass(columnIndex);
+    return switch (columnIndex) {
+      case COLUMN_END, COLUMN_START, COLUMN_STATUS -> Integer.class;
+      case COLUMN_GOTO -> (textPane != null) ? Interval.class : String.class;
+      case COLUMN_LINK, COLUMN_LINK_COPY, COLUMN_LINK_VIEW, COLUMN_STATUS_TEXT -> String.class;
+      default -> super.getColumnClass(columnIndex);
+    };
   }
 
 }

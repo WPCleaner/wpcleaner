@@ -9,6 +9,7 @@ package org.wikipediacleaner.api.check.algorithm.a5xx.a55x.a557;
 
 import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -181,7 +182,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
     boolean automaticUsed = displayedText.isEmpty() ||
         (CharacterUtils.isPunctuation(displayedText.charAt(0)) &&
         (EXTRACT_FIRST_CHAR.indexOf(displayedText.charAt(0)) < 0));
-    if ((displayedText.length() > 0) &&
+    if ((!displayedText.isEmpty()) &&
         (EXTRACT_FIRST_CHAR.indexOf(displayedText.charAt(0)) >= 0)) {
 
       // Decide which first char should be used
@@ -457,8 +458,8 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
   private String cleanLink(@Nonnull String link, EnumWikipedia wiki) {
     return SpecialCharacters
         .replaceAllSpecialCharacters(link.toUpperCase(), wiki)
-        .replaceAll("-", " ")
-        .replaceAll("’", "'")
+        .replace("-", " ")
+        .replace("’", "'")
         .replaceAll("  ++", " ");
   }
 
@@ -507,10 +508,7 @@ public class CheckErrorAlgorithm557 extends CheckErrorAlgorithmBase {
       if (tmpList != null) {
         for (String[] tmpElement : tmpList) {
           if (tmpElement.length > 1) {
-            Set<String> texts = new HashSet<>();
-            for (int i = 1; i < tmpElement.length; i++) {
-              texts.add(tmpElement[i]);
-            }
+            Set<String> texts = new HashSet<>(Arrays.asList(tmpElement).subList(1, tmpElement.length));
             links_ok.put(tmpElement[0], texts);
           }
         }

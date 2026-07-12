@@ -69,7 +69,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
       return false;
     }
     Integer ns = analysis.getPage().getNamespace();
-    if ((ns == null) || (ns.intValue() != Namespace.MAIN)) {
+    if ((ns == null) || (ns != Namespace.MAIN)) {
       return false;
     }
 
@@ -172,18 +172,18 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
     for (int i = 0; i < internalText.length(); i++) {
       char currentChar = internalText.charAt(i);
       if ((apostropheTemplate != null) && (currentChar == '\'')) {
-        replacement.append(TemplateBuilder.from(apostropheTemplate).toString());
+        replacement.append(TemplateBuilder.from(apostropheTemplate));
       } else if ((asteriskTemplate != null) && (currentChar == '*')) {
-        replacement.append(TemplateBuilder.from(asteriskTemplate).toString());
+        replacement.append(TemplateBuilder.from(asteriskTemplate));
       } else if ((openSBTemplate != null) && (currentChar == '[')) {
-        replacement.append(TemplateBuilder.from(openSBTemplate).toString());
+        replacement.append(TemplateBuilder.from(openSBTemplate));
       } else if ((closeSBTemplate != null) && (currentChar == ']')) {
-        replacement.append(TemplateBuilder.from(closeSBTemplate).toString());
+        replacement.append(TemplateBuilder.from(closeSBTemplate));
       } else {
         replacement.append(currentChar);
       }
     }
-    if (!internalText.equals(replacement.toString())) {
+    if (!internalText.contentEquals(replacement)) {
       errorResult.addReplacement(replacement.toString());
     }
 
@@ -194,6 +194,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
         char currentChar = internalText.charAt(i);
         if ((currentChar == '<') || (currentChar == '>')) {
           otherFound = true;
+          break;
         }
       }
       if (!otherFound) {
@@ -360,7 +361,7 @@ public class CheckErrorAlgorithm518 extends CheckErrorAlgorithmBase {
 
     String tmp = getSpecificProperty(PARAMETER_ABUSE_FILTER, true, true, false);
     abuseFilter = null;
-    if ((tmp != null) && (tmp.trim().length() > 0)) {
+    if ((tmp != null) && (!tmp.trim().isEmpty())) {
       try {
         abuseFilter = Integer.valueOf(tmp);
       } catch (NumberFormatException e) {

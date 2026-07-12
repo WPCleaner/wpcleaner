@@ -24,5 +24,5 @@ public interface ApiLogoutResult extends ApiResult {
    * @param properties Properties defining request.
    * @throws APIException Exception thrown by the API.
    */
-  public void executeLogout(Map<String, String> properties) throws APIException;
+  void executeLogout(Map<String, String> properties) throws APIException;
 }

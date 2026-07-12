@@ -25,7 +25,6 @@ import org.wikipediacleaner.utils.TextProvider;
 /**
  * An action listener for replacing text.
  */
-@SuppressWarnings("serial")
 public class AddTextAction extends TextAction {
 
   private final String prefix;
@@ -128,7 +127,7 @@ public class AddTextAction extends TextAction {
     }
     if (textProvider != null) {
       Collection<String> texts = textProvider.getTexts();
-      if ((texts != null) && (texts.size() > 0)) {
+      if ((texts != null) && (!texts.isEmpty())) {
         value = texts.iterator().next();
         if (tmpPossibleValues == null) {
           tmpPossibleValues = new String[texts.size()];

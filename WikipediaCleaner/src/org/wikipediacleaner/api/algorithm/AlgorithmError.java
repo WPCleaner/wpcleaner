@@ -11,8 +11,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -156,9 +157,9 @@ public class AlgorithmError {
         }
         CheckErrorPage errorPage = analyzeError(
             initialError.getAlgorithm(), analysis);
-        if ((errorPage.getErrorFound() == false) ||
+        if ((!errorPage.getErrorFound()) ||
             (errorPage.getActiveResultsCount() < initialError.getActiveResultsCount())) {
-          errorsFixed.add(new Progress(initialError.getAlgorithm(), errorPage.getErrorFound() == false));
+          errorsFixed.add(new Progress(initialError.getAlgorithm(), !errorPage.getErrorFound()));
         }
       }
     }
@@ -183,9 +184,7 @@ public class AlgorithmError {
     // Create error
     AlgorithmError error = new AlgorithmError(wikipedia, errorNumber);
     if (stream != null) {
-      BufferedReader reader = null;
-      try {
-        reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
         String line = null;
         while (((line = reader.readLine()) != null) && !line.endsWith("<pre>")) {
           // Waiting for <pre>
@@ -196,19 +195,10 @@ public class AlgorithmError {
           line = line.replaceAll(Pattern.quote("&amp;"), "&");
           error.addPage(line, null);
         }
-      } catch (UnsupportedEncodingException e) {
-        //
       } catch (IOException e) {
         //
-      } finally {
-        if (reader != null) {
-          try {
-            reader.close();
-          } catch (IOException e) {
-            //
-          }
-        }
       }
+      //
     }
 
     // Add / Replace error
@@ -238,10 +228,8 @@ public class AlgorithmError {
     // Create error
     AlgorithmError error = new AlgorithmError(wikipedia, errorNumber);
     if (stream != null) {
-      BufferedReader reader = null;
-      try {
+      try (BufferedReader reader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))) {
         // Read all lines
-        reader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         ArrayList<String> lines = new ArrayList<>();
         String line = null;
         while ((line = reader.readLine()) != null) {
@@ -251,9 +239,7 @@ public class AlgorithmError {
         if ((lines.size() == 1) && (lines.get(0).indexOf("\\n") > 0)) {
           String[] splittedLines = lines.get(0).split("\\\\n");
           lines.clear();
-          for (String splittedLine : splittedLines) {
-            lines.add(splittedLine);
-          }
+          lines.addAll(Arrays.asList(splittedLines));
         }
         for (String tmpLine : lines) {
           String[] elements = tmpLine.split("\\|");
@@ -275,26 +261,17 @@ public class AlgorithmError {
             }
           }
           // System.err.println("Line: " + tmpLine);
-          if ((pageName != null) && (pageName.trim().length() > 0)) {
+          if ((pageName != null) && (!pageName.trim().isEmpty())) {
             pageName = pageName.replaceAll(Pattern.quote("&#039;"), "'");
             pageName = pageName.replaceAll(Pattern.quote("&quot;"), "\"");
             pageName = pageName.replaceAll(Pattern.quote("&amp;"), "&");
             error.addPage(pageName, pageId);
           }
         }
-      } catch (UnsupportedEncodingException e) {
-        //
       } catch (IOException e) {
         //
-      } finally {
-        if (reader != null) {
-          try {
-            reader.close();
-          } catch (IOException e) {
-            //
-          }
-        }
       }
+      //
     }
 
     // Add / Replace error
@@ -420,7 +397,7 @@ public class AlgorithmError {
       description = algorithm.getShortDescriptionReplaced();
     }
     return GT._T("Error n°{0} ({1} - {2}) - {3}", new Object[] {
-        Integer.valueOf(errorNumber),
+        errorNumber,
         count,
         CWConfigurationError.getPriorityString(priority),
         description });

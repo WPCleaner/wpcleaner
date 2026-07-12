@@ -183,8 +183,7 @@ public class OnePageAnalysisWindow
           }
           @Override
           public void displayWindow(BasicWindow window) {
-            if (window instanceof OnePageAnalysisWindow) {
-              OnePageAnalysisWindow analysis = (OnePageAnalysisWindow) window;
+            if (window instanceof OnePageAnalysisWindow analysis) {
               analysis.actionReload();
             }
           }
@@ -202,9 +201,8 @@ public class OnePageAnalysisWindow
       BasicWindow window,
       String pageName,
       final List<Page> knownPages) {
-    if (window instanceof OnePageAnalysisWindow) {
+    if (window instanceof OnePageAnalysisWindow analysis) {
       Configuration config = Configuration.getConfiguration();
-      OnePageAnalysisWindow analysis = (OnePageAnalysisWindow) window;
       analysis.setPageName(pageName);
       analysis.knownPages = knownPages;
       analysis.modelLinks = new PageListModel();
@@ -672,29 +670,24 @@ public class OnePageAnalysisWindow
   void updateTextFormatting(JList list) {
     if (list == null) {
       List<Page> selection = listLinks.getSelectedValuesList();
-      if ((selection != null) && (selection.size() > 0)) {
+      if ((selection != null) && (!selection.isEmpty())) {
         list = listLinks;
       }
     }
     if (list == null) {
       List<?> selection = listErrors.getSelectedValuesList();
-      if ((selection != null) && (selection.size() > 0)) {
+      if ((selection != null) && (!selection.isEmpty())) {
         list = listErrors;
       }
     }
     if (list == listLinks) {
       // List of links
       List<Page> selection = listLinks.getSelectedValuesList();
-      if ((selection != null) && (selection.size() > 0)) {
+      if ((selection != null) && (!selection.isEmpty())) {
         listErrors.clearSelection();
-        List<Page> pages = new ArrayList<>();
-        for (Page page : selection) {
-          pages.add(page);
-        }
+        List<Page> pages = new ArrayList<>(selection);
         MWPaneFormatter formatter = getTextContents().getFormatter();
-        if (formatter instanceof MWPaneDisambiguationFormatter) {
-          MWPaneDisambiguationFormatter dabFormatter =
-            (MWPaneDisambiguationFormatter) formatter;
+        if (formatter instanceof MWPaneDisambiguationFormatter dabFormatter) {
           if (!dabFormatter.isSameList(pages)) {
             formatter = new MWPaneDisambiguationFormatter(getWikipedia(), pages);
             getTextContents().setFormatter(formatter);
@@ -710,13 +703,10 @@ public class OnePageAnalysisWindow
     } else if (list == listErrors) {
       // List of errors
       Object selection = listErrors.getSelectedValue();
-      if ((selection != null) && (selection instanceof CheckErrorPage)) {
+      if ((selection != null) && (selection instanceof CheckErrorPage errorSelected)) {
         listLinks.clearSelection();
-        CheckErrorPage errorSelected = (CheckErrorPage) selection;
         MWPaneFormatter formatter = getTextContents().getFormatter();
-        if (formatter instanceof MWPaneCheckWikiFormatter) {
-          MWPaneCheckWikiFormatter cwFormatter =
-            (MWPaneCheckWikiFormatter) formatter;
+        if (formatter instanceof MWPaneCheckWikiFormatter cwFormatter) {
           if (!cwFormatter.isSameAlgorithm(errorSelected.getAlgorithm())) {
             formatter = new MWPaneCheckWikiFormatter(errorSelected.getAlgorithm());
             getTextContents().setFormatter(formatter);
@@ -743,8 +733,7 @@ public class OnePageAnalysisWindow
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-      if (e.getSource() instanceof JList) {
-        JList list = (JList) e.getSource();
+      if (e.getSource() instanceof JList list) {
         updateTextFormatting(list);
       }
     }
@@ -832,8 +821,8 @@ public class OnePageAnalysisWindow
             (Boolean.TRUE.equals(p.isDisambiguationPage()))) {
           InternalLinkCount count = analysis.getLinkCount(p);
           if ((count != null) && (count.getTotalLinkCount() > 0)) {
-            mapLinksTotalCount.put(p.getTitle(), Integer.valueOf(count.getTotalLinkCount()));
-            mapLinksHelpNeededCount.put(p.getTitle(), Integer.valueOf(count.getHelpNeededCount()));
+            mapLinksTotalCount.put(p.getTitle(), count.getTotalLinkCount());
+            mapLinksHelpNeededCount.put(p.getTitle(), count.getHelpNeededCount());
           }
         }
       }
@@ -862,7 +851,7 @@ public class OnePageAnalysisWindow
       if ((pageLoaded != null) &&
           (Boolean.FALSE.equals(pageLoaded.isExisting()))) {
         List<Page> similarPages = pageLoaded.getRelatedPages(Page.RelatedPages.SIMILAR_PAGES);
-        if ((similarPages != null) && (similarPages.size() > 0)) {
+        if ((similarPages != null) && (!similarPages.isEmpty())) {
           String answer = Utilities.askForValue(
               getParentComponent(),
               GT._T(
@@ -870,7 +859,7 @@ public class OnePageAnalysisWindow
                   pageLoaded.getTitle()),
               similarPages.toArray(), true,
               similarPages.get(0).toString(), null);
-          if ((answer != null) && (answer.trim().length() > 0)) {
+          if ((answer != null) && (!answer.trim().isEmpty())) {
             Controller.runFullAnalysis(answer, null, getWikipedia());
           }
           dispose();
@@ -1024,15 +1013,12 @@ public class OnePageAnalysisWindow
    */
   public void actionRemoveAllLinks() {
     List<Page> selected = listLinks.getSelectedValuesList();
-    if ((selected == null) || (selected.size() == 0)) {
+    if ((selected == null) || (selected.isEmpty())) {
       return;
     }
     List<String> titles = new ArrayList<>();
     for (Page selectedLine : selected) {
       titles.add(selectedLine.getTitle());
-    }
-    if (titles.size() == 0) {
-      return;
     }
     String currentText = getTextContents().getText();
     PageAnalysis analysis = getPage().getAnalysis(currentText, false);
@@ -1047,7 +1033,7 @@ public class OnePageAnalysisWindow
         }
       }
       if (shouldChange) {
-        buffer.append(currentText.substring(lastPosition, link.getBeginIndex()));
+        buffer.append(currentText, lastPosition, link.getBeginIndex());
         lastPosition = link.getBeginIndex();
         buffer.append(link.getDisplayedText());
         lastPosition = link.getEndIndex();
@@ -1101,7 +1087,7 @@ public class OnePageAnalysisWindow
       return;
     }
     String language = panel.getLanguage();
-    if ((language == null) || (language.length() == 0)) {
+    if ((language == null) || (language.isEmpty())) {
       return;
     }
     Configuration config = Configuration.getConfiguration();
@@ -1110,7 +1096,7 @@ public class OnePageAnalysisWindow
     // Mark text
     StringBuilder newText = new StringBuilder();
     if (start > getTextContents().getSelectionStart()) {
-      newText.append(text.substring(getTextContents().getSelectionStart(), start));
+      newText.append(text, getTextContents().getSelectionStart(), start);
     }
     TemplateBuilder builder = TemplateBuilder.from(elements[0]);
     builder.addParam(
@@ -1119,9 +1105,9 @@ public class OnePageAnalysisWindow
     builder.addParam(
         (elements.length > 2) ? elements[2] : null,
             text.substring(start, end));
-    newText.append(builder.toString());
+    newText.append(builder);
     if (getTextContents().getSelectionEnd() > end) {
-      newText.append(text.substring(end, getTextContents().getSelectionEnd()));
+      newText.append(text, end, getTextContents().getSelectionEnd());
     }
     getTextContents().replaceSelection(newText.toString());
   }
@@ -1228,7 +1214,7 @@ public class OnePageAnalysisWindow
     WPCConfiguration configuration = getConfiguration();
     if (translated) {
       String text = configuration.getString(WPCConfigurationString.TRANSLATION_COMMENT);
-      if ((text != null) && (text.trim().length() > 0)) {
+      if ((text != null) && (!text.trim().isEmpty())) {
         return text;
       }
       return GT._T("Translation");
@@ -1240,7 +1226,7 @@ public class OnePageAnalysisWindow
     // Comment for fixed links to disambiguation pages
     List<String> dabLinks = new ArrayList<>();
     StringBuilder comment = new StringBuilder();
-    if ((mapLinksTotalCount != null) && (mapLinksTotalCount.size() > 0)) {
+    if ((mapLinksTotalCount != null) && (!mapLinksTotalCount.isEmpty())) {
       List<String> fixed = new ArrayList<>();
       List<String> helpRequested = new ArrayList<>();
       for (Entry<String, Integer> p : mapLinksTotalCount.entrySet()) {
@@ -1254,19 +1240,19 @@ public class OnePageAnalysisWindow
                 if (analysis != null) {
                   InternalLinkCount count = analysis.getLinkCount(link);
                   if (count != null) {
-                    currentCount = Integer.valueOf(count.getTotalLinkCount());
-                    currentHelpCount = Integer.valueOf(count.getHelpNeededCount());
+                    currentCount = count.getTotalLinkCount();
+                    currentHelpCount = count.getHelpNeededCount();
                   }
                 }
               }
             }
           }
-          if ((currentCount == null) || (currentCount < p.getValue().intValue())) {
+          if ((currentCount == null) || (currentCount < p.getValue())) {
             fixed.add(p.getKey());
           } else {
             Integer helpCount = mapLinksHelpNeededCount.get(p.getKey());
             if ((helpCount != null) &&
-                ((currentHelpCount == null) || (currentHelpCount > helpCount.intValue()))) {
+                ((currentHelpCount == null) || (currentHelpCount > helpCount))) {
               helpRequested.add(p.getKey());
             }
           }
@@ -1295,20 +1281,20 @@ public class OnePageAnalysisWindow
 
       // Add comment
       boolean showDabLinks = false;
-      if (fixed.size() > 0) {
+      if (!fixed.isEmpty()) {
         Collections.sort(fixed);
         contributions.increaseDabLinks(fixed.size());
         comment.append(configuration.getDisambiguationComment(
             fixed.size(), fixed));
         showDabLinks = true;
-      } else if (helpRequested.size() > 0) {
+      } else if (!helpRequested.isEmpty()) {
         Collections.sort(helpRequested);
         comment.append(configuration.getDisambiguationCommentHelp(
             helpRequested.size(), helpRequested));
         showDabLinks = true;
       }
       if (showDabLinks) {
-        if (dabLinks.size() > 0) {
+        if (!dabLinks.isEmpty()) {
           Collections.sort(dabLinks);
           comment.append(configuration.getDisambiguationCommentTodo(
               dabLinks.size(), dabLinks));
@@ -1318,10 +1304,10 @@ public class OnePageAnalysisWindow
     }
 
     // Comment for fixed Check Wiki errors
-    if ((getInitialErrors() != null) && (getInitialErrors().size() > 0)) {
+    if ((getInitialErrors() != null) && (!getInitialErrors().isEmpty())) {
       List<AlgorithmError.Progress> errorsFixed = computeErrorsFixed();
-      if ((errorsFixed != null) && (errorsFixed.size() > 0)) {
-        if (comment.length() > 0) {
+      if ((errorsFixed != null) && (!errorsFixed.isEmpty())) {
+        if (!comment.isEmpty()) {
           comment.append(" / ");
         }
         comment.append(getWikipedia().getCWConfiguration().getComment(errorsFixed));
@@ -1360,7 +1346,7 @@ public class OnePageAnalysisWindow
     }
     if ((isCategoryAdded && (strCategoryAdded != null)) ||
         (isTemplateAdded && (strTemplateAdded != null))) {
-      if (comment.length() > 0) {
+      if (!comment.isEmpty()) {
         comment.append(" / ");
       }
       if (isCategoryAdded && (strCategoryAdded != null)) {
@@ -1375,9 +1361,9 @@ public class OnePageAnalysisWindow
     }
 
     // Comment for disambiguation links
-    if ((dabLinks.size() > 0) && (comment.length() > 0)) {
+    if ((!dabLinks.isEmpty()) && (!comment.isEmpty())) {
       String newComment = configuration.getDisambiguationWarningComment(dabLinks);
-      if ((newComment != null) && (newComment.length() > 0)) {
+      if ((newComment != null) && (!newComment.isEmpty())) {
         comment.append(" / ");
         Collections.sort(dabLinks);
         comment.append(newComment);
@@ -1386,13 +1372,13 @@ public class OnePageAnalysisWindow
     }
 
     // User defined comment
-    if (comment.length() > 0) {
+    if (!comment.isEmpty()) {
       Configuration config = Configuration.getConfiguration();
       String userComment = config.getString(getWiki(), ConfigurationValueString.COMMENT);
-      if ((userComment == null) || (userComment.trim().length() == 0)) {
+      if ((userComment == null) || (userComment.trim().isEmpty())) {
         userComment = config.getString(null, ConfigurationValueString.COMMENT);
       }
-      if ((userComment != null) && (userComment.trim().length() > 0)) {
+      if ((userComment != null) && (!userComment.trim().isEmpty())) {
         comment.insert(0, " - ");
         comment.insert(0, userComment.trim());
       }
@@ -1497,7 +1483,7 @@ public class OnePageAnalysisWindow
   }
 
   /**
-   * @return Number of errors in the selection.
+   * @return List of errors in the selection.
    */
   private List<Integer> countSelectedErrors(PageAnalysis analysis) {
     // Count check wiki errors

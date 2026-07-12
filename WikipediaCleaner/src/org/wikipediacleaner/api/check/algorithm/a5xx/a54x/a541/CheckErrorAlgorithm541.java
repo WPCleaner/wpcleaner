@@ -88,7 +88,7 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
 
     // Analyze contents to find center tags
     List<PageElementTag> tags = analysis.getTags(tagType);
-    if (tags.size() == 0) {
+    if (tags.isEmpty()) {
       return false;
     }
     if (errors == null) {
@@ -178,7 +178,7 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         automatic = false;
       }
     }
-    if (styleValue.length() == 0) {
+    if (styleValue.isEmpty()) {
       return null;
     }
 
@@ -187,9 +187,8 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     if ((spanTag != null) &&
         (spanTag.getValueBeginIndex() == tag.getCompleteBeginIndex()) &&
         (spanTag.getValueEndIndex() == tag.getCompleteEndIndex())) {
-      CheckErrorResult errorResult = createCheckErrorResult(
+      return createCheckErrorResult(
           analysis, spanTag.getCompleteBeginIndex(), spanTag.getCompleteEndIndex());
-      return errorResult;
     }
 
     // Analyze surrounding table cell
@@ -197,9 +196,8 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
     if (table != null) {
       PageElementTable.TableCell cell = table.getCellAtIndex(tag.getBeginIndex());
       if (cell != null) {
-        CheckErrorResult errorResult = createCheckErrorResult(
+        return createCheckErrorResult(
             analysis, cell.getBeginIndex(), cell.getEndIndex());
-        return errorResult;
       }
     }
 
@@ -282,14 +280,14 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
         if ((cellBeginIndex == beginIndex) && (cellEndIndex == endIndex)) {
           StringBuilder start = new StringBuilder();
           if (tableCell.getEndOptionsIndex() > tableCell.getBeginIndex() + 2) {
-            start.append(contents.substring(tableCell.getBeginIndex(), tableCell.getEndOptionsIndex() - 1));
+            start.append(contents, tableCell.getBeginIndex(), tableCell.getEndOptionsIndex() - 1);
             if (start.charAt(start.length() - 1) != ' ') {
               start.append(' ');
             }
             start.append("align=\"center\" ");
             start.append(contents.charAt(tableCell.getEndOptionsIndex() - 1));
           } else {
-            start.append(contents.substring(tableCell.getBeginIndex(), tableCell.getEndOptionsIndex()));
+            start.append(contents, tableCell.getBeginIndex(), tableCell.getEndOptionsIndex());
             start.append(" align=\"center\" |");
           }
           String text = start + "...";
@@ -390,7 +388,6 @@ public class CheckErrorAlgorithm541 extends CheckErrorAlgorithmBase {
    * @param analysis Page analysis.
    * @param errorResult Error.
    * @param tag Initial tag.
-   * @param tagName Replacement tag name.
    * @param optionName Optional option name for the tag.
    * @param optionValue Optional option value for the tag.
    * @param comment Optional comment.

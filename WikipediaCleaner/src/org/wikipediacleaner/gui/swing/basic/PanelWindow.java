@@ -19,8 +19,6 @@ import javax.swing.WindowConstants;
 
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.gui.swing.action.ActionDispose;
-import org.wikipediacleaner.gui.swing.basic.BasicWindow;
-import org.wikipediacleaner.gui.swing.basic.DefaultBasicWindowListener;
 
 
 /**
@@ -76,8 +74,7 @@ public abstract class PanelWindow extends BasicWindow {
       BasicWindow window,
       String title,
       JPanel panel) {
-    if (window instanceof PanelWindow) {
-      PanelWindow panelWindow = (PanelWindow) window;
+    if (window instanceof PanelWindow panelWindow) {
       panelWindow.setPanel(panel);
       panelWindow.setTitle(title);
     }

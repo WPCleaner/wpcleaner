@@ -61,18 +61,18 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
       int titleLevel = title.getLevel();
       if (titleLevel < previousTitleLevel) {
         for (int i = previousTitleLevel; i > titleLevel; i--) {
-          titles.remove(Integer.valueOf(i));
+          titles.remove(i);
         }
       }
 
       // Analyze current level
       if (titleLevel <= maxLevel) {
-        HashMap<String, PageElementTitle> knownTitles = titles.get(Integer.valueOf(titleLevel));
+        HashMap<String, PageElementTitle> knownTitles = titles.get(titleLevel);
         String titleValue = cleanTitle(title);
         if (knownTitles == null) {
           knownTitles = new HashMap<>();
           knownTitles.put(titleValue, title);
-          titles.put(Integer.valueOf(titleLevel), knownTitles);
+          titles.put(titleLevel, knownTitles);
         } else if (!knownTitles.containsKey(titleValue)) {
           if (onlyConsecutive) {
             knownTitles.clear();
@@ -151,7 +151,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
             analysis, contents);
         String afterTitle = contents.substring(currentTitle.getEndIndex(), currentSectionEndIndex).trim();
         boolean shouldRemove = false;
-        if (afterTitle.length() == 0) {
+        if (afterTitle.isEmpty()) {
           shouldRemove = true;
         } else {
           int tmpIndex = previousTitle.getEndIndex();
@@ -170,14 +170,14 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
               !Objects.equals(previousTitle.getTitle(), cleanTitle(previousTitle));
           if (useSecondTitle && (previousTitle.getBeginIndex() >= lastIndex)) {
             if (previousTitle.getBeginIndex() > lastIndex) {
-              buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
+              buffer.append(contents, lastIndex, previousTitle.getBeginIndex());
               lastIndex = previousTitle.getBeginIndex();
             }
-            buffer.append(contents.substring(currentTitle.getBeginIndex(), currentTitle.getEndIndex()));
+            buffer.append(contents, currentTitle.getBeginIndex(), currentTitle.getEndIndex());
             lastIndex = previousTitle.getEndIndex();
           }
           if (currentTitle.getBeginIndex() > lastIndex) {
-            buffer.append(contents.substring(lastIndex, currentTitle.getBeginIndex()));
+            buffer.append(contents, lastIndex, currentTitle.getBeginIndex());
             lastIndex = currentTitle.getBeginIndex();
           }
           lastIndex = currentSectionEndIndex;
@@ -190,7 +190,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
               analysis, contents);
           String betweenTitles = contents.substring(
               previousTitle.getEndIndex(), previousSectionEndIndex).trim();
-          if (betweenTitles.length() == 0) {
+          if (betweenTitles.isEmpty()) {
             shouldRemove = true;
           } else {
             int tmpIndex = currentTitle.getEndIndex();
@@ -205,15 +205,15 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
           }
           if (shouldRemove) {
             if (previousTitle.getBeginIndex() > lastIndex) {
-              buffer.append(contents.substring(lastIndex, previousTitle.getBeginIndex()));
+              buffer.append(contents, lastIndex, previousTitle.getBeginIndex());
               lastIndex = previousTitle.getBeginIndex();
             }
             boolean useFirstTitle =
                 Objects.equals(previousTitle.getTitle(), cleanTitle(previousTitle)) &&
                 !Objects.equals(currentTitle.getTitle(), cleanTitle(currentTitle));
             if (useFirstTitle) {
-              buffer.append(contents.substring(previousSectionEndIndex, currentTitle.getBeginIndex()));
-              buffer.append(contents.substring(previousTitle.getBeginIndex(), previousTitle.getEndIndex()));
+              buffer.append(contents, previousSectionEndIndex, currentTitle.getBeginIndex());
+              buffer.append(contents, previousTitle.getBeginIndex(), previousTitle.getEndIndex());
               lastIndex = currentTitle.getEndIndex();
             } else {
               lastIndex = previousSectionEndIndex;
@@ -291,7 +291,7 @@ public class CheckErrorAlgorithm092 extends CheckErrorAlgorithmBase {
     }
 
     tmp = getSpecificProperty(PARAMETER_ONLY_CONSECUTIVE, true, false, false);
-    onlyConsecutive = (tmp != null) ? Boolean.valueOf(tmp) : false;
+    onlyConsecutive = Boolean.parseBoolean(tmp);
   }
 
   /** Limit the level of titles */

@@ -63,7 +63,7 @@ public class TaskOptionDialog implements Runnable {
    */
   public int getResult() {
     if (result != null) {
-      return result.intValue();
+      return result;
     }
     return JOptionPane.CLOSED_OPTION;
   }

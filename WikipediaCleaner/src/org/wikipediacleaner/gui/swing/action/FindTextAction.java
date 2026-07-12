@@ -22,13 +22,12 @@ import org.wikipediacleaner.i18n.GT;
 /**
  * An action for searching/finding text
  */
-@SuppressWarnings("serial")
 public class FindTextAction extends TextAction {
 
   private static String lastSearch = "";
 
-  private String search;
-  private JTextPane textPane;
+  private final String search;
+  private final JTextPane textPane;
 
   public FindTextAction() {
     this(null, null);
@@ -62,7 +61,7 @@ public class FindTextAction extends TextAction {
         text.getParent(),
         GT._T("String to find"),
         currentSearch);
-    if ((currentSearch == null) || ("".equals(currentSearch.trim()))) {
+    if ((currentSearch == null) || (currentSearch.trim().isEmpty())) {
       return;
     }
     lastSearch = currentSearch;
@@ -87,7 +86,6 @@ public class FindTextAction extends TextAction {
       text.setCaretPosition(matcher.start());
       text.moveCaretPosition(matcher.end());
       text.requestFocus();
-      return;
     }
   }
 

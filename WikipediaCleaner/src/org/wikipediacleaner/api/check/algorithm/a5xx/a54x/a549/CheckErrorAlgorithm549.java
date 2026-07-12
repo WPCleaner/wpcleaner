@@ -243,7 +243,7 @@ public class CheckErrorAlgorithm549 extends CheckErrorAlgorithmBase {
         } 
       }
     }
-    if (buffer.length() == 0) {
+    if (buffer.isEmpty()) {
       automatic = false;
     }
 

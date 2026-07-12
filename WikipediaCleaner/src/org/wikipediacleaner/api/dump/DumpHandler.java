@@ -9,7 +9,6 @@
 package org.wikipediacleaner.api.dump;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
@@ -22,7 +21,7 @@ public class DumpHandler extends DefaultHandler {
   public boolean isInPage;
 
   /** Handler for page information */
-  public PageHandler pageHandler;
+  public final PageHandler pageHandler;
 
   public DumpHandler() {
     isInPage = false;
@@ -33,9 +32,7 @@ public class DumpHandler extends DefaultHandler {
    * @param processor Page processor.
    */
   public void setPageProcessor(PageProcessor processor) {
-    if (pageHandler != null) {
-      pageHandler.setPageProcessor(processor);
-    }
+    pageHandler.setPageProcessor(processor);
   }
 
   /**
@@ -57,19 +54,15 @@ public class DumpHandler extends DefaultHandler {
    * @param attributes The attributes attached to the element.  If
    *        there are no attributes, it shall be an empty
    *        Attributes object.
-   * @exception org.xml.sax.SAXException Any SAX exception, possibly
-   *            wrapping another exception.
    * @see org.xml.sax.ContentHandler#startElement
    */
   @Override
-  public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+  public void startElement(String uri, String localName, String qName, Attributes attributes) {
     if (!isInPage && qName.equalsIgnoreCase("page")) {
       isInPage = true;
     }
     if (isInPage) {
-      if (pageHandler != null) {
-        pageHandler.startElement(uri, localName, qName, attributes);
-      }
+      pageHandler.startElement(uri, localName, qName, attributes);
     }
   }
 
@@ -89,16 +82,12 @@ public class DumpHandler extends DefaultHandler {
    *        performed.
    * @param qName The qualified name (with prefix), or the
    *        empty string if qualified names are not available.
-   * @exception org.xml.sax.SAXException Any SAX exception, possibly
-   *            wrapping another exception.
    * @see org.xml.sax.ContentHandler#endElement
    */
   @Override
-  public void endElement(String uri, String localName, String qName) throws SAXException {
+  public void endElement(String uri, String localName, String qName) {
     if (isInPage) {
-      if (pageHandler != null) {
-        pageHandler.endElement(uri, localName, qName);
-      }
+      pageHandler.endElement(uri, localName, qName);
     }
     if (isInPage && qName.equalsIgnoreCase("page")) {
       isInPage = false;
@@ -117,16 +106,12 @@ public class DumpHandler extends DefaultHandler {
    * @param start The start position in the character array.
    * @param length The number of characters to use from the
    *               character array.
-   * @exception org.xml.sax.SAXException Any SAX exception, possibly
-   *            wrapping another exception.
    * @see org.xml.sax.ContentHandler#characters
    */
   @Override
-  public void characters(char ch[], int start, int length) throws SAXException {
+  public void characters(char[] ch, int start, int length) {
     if (isInPage) {
-      if (pageHandler != null) {
-        pageHandler.characters(ch, start, length);
-      }
+      pageHandler.characters(ch, start, length);
     }
   }
 }

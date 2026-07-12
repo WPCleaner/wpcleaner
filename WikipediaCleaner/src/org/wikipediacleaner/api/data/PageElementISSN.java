@@ -83,7 +83,7 @@ public class PageElementISSN extends PageElement {
                 }
               }
               for (String param : params) {
-                if ((param != null) && (param.length() > 0)) {
+                if ((param != null) && (!param.isEmpty())) {
                   analyzeTemplateParams(
                       analysis, issns,
                       issnConfig,
@@ -109,7 +109,7 @@ public class PageElementISSN extends PageElement {
                   analysis, issns,
                   issnConfig,
                   template,
-                  ((issnTemplate.length > 1) && (issnTemplate[1].length() > 0)) ? issnTemplate[1] : "1",
+                  ((issnTemplate.length > 1) && (!issnTemplate[1].isEmpty())) ? issnTemplate[1] : "1",
                   false, false, false, true);
             }
           }
@@ -403,7 +403,7 @@ public class PageElementISSN extends PageElement {
         boolean done = false;
         if ((template != null) &&
             (parameter != null) &&
-            (isCorrect == false) &&
+            (!isCorrect) &&
             (ignoreIncorrect != null)) {
           for (String[] ignore : ignoreIncorrect) {
             if ((ignore.length > 1) &&
@@ -485,7 +485,7 @@ public class PageElementISSN extends PageElement {
       if (nameOk) {
         String paramValue = param.getValue();
         if ((paramValue == null) ||
-            (paramValue.trim().length() == 0) ||
+            (paramValue.trim().isEmpty()) ||
             "{{#property:p236}}".equalsIgnoreCase(paramValue.trim())) {
           nameOk = false;
         }
@@ -582,7 +582,7 @@ public class PageElementISSN extends PageElement {
           String contents = analysis.getContents();
           String value = contents.substring(beginIndex, endIndex);
 
-          if (paramValue.length() > 0) {
+          if (!paramValue.isEmpty()) {
             issns.add(new PageElementISSN(
                 beginIndex, endIndex, analysis, value,
                 true, correct, helpRequested, template));
@@ -754,10 +754,10 @@ public class PageElementISSN extends PageElement {
     addCorrectISSN(result, prefix, cleanedISSN, automatic);
 
     // Common mistyped characters
-    cleanedISSN = cleanedISSN.replaceAll("x", "X");
-    cleanedISSN = cleanedISSN.replaceAll("O", "0");
-    cleanedISSN = cleanedISSN.replaceAll("I", "1");
-    cleanedISSN = cleanedISSN.replaceAll("B", "8");
+    cleanedISSN = cleanedISSN.replace("x", "X");
+    cleanedISSN = cleanedISSN.replace("O", "0");
+    cleanedISSN = cleanedISSN.replace("I", "1");
+    cleanedISSN = cleanedISSN.replace("B", "8");
     addCorrectISSN(result, prefix, cleanedISSN, false);
 
     return result;
@@ -785,8 +785,8 @@ public class PageElementISSN extends PageElement {
         for (String[] issnTemplate : issnTemplates) {
           if (issnTemplate.length > 2) {
             String[] params = issnTemplate[1].split(",");
-            Boolean suggested = Boolean.valueOf(issnTemplate[2]);
-            if ((params.length > 0) && (Boolean.TRUE.equals(suggested))) {
+            boolean suggested = Boolean.parseBoolean(issnTemplate[2]);
+            if ((params.length > 0) && (suggested)) {
               TemplateBuilder builder = TemplateBuilder.from(issnTemplate[0]);
               builder.addParam(
                   !"1".equals(params[0]) ? params[0] : null,
@@ -840,7 +840,7 @@ public class PageElementISSN extends PageElement {
     // ISSN
     replacement.append("|");
     if ((helpNeededTemplate.length > 1) &&
-        (helpNeededTemplate[1].length() > 0)) {
+        (!helpNeededTemplate[1].isEmpty())) {
       replacement.append(helpNeededTemplate[1]);
       replacement.append("=");
     }
@@ -849,7 +849,7 @@ public class PageElementISSN extends PageElement {
     // Reason
     if ((reason != null) &&
         (helpNeededTemplate.length > 2) &&
-        (helpNeededTemplate[2].length() > 0)) {
+        (!helpNeededTemplate[2].isEmpty())) {
       replacement.append("|");
       replacement.append(helpNeededTemplate[2]);
       replacement.append("=");
@@ -874,12 +874,12 @@ public class PageElementISSN extends PageElement {
   public String askForHelp(
       String comment, String reason) {
     if ((comment == null) ||
-        (comment.trim().length() == 0)) {
+        (comment.trim().isEmpty())) {
       return null;
     }
     StringBuilder replacement = new StringBuilder();
     replacement.append(comment);
-    if ((reason != null) && (reason.trim().length() > 0)) {
+    if ((reason != null) && (!reason.trim().isEmpty())) {
       replacement.append(" - ");
       replacement.append(reason);
     }
@@ -895,7 +895,7 @@ public class PageElementISSN extends PageElement {
       return null;
     }
     issn = issn.trim();
-    if (issn.length() == 0) {
+    if (issn.isEmpty()) {
       return issn;
     }
     PageAnalysis analysis = new PageAnalysis(null, issn);
@@ -945,8 +945,7 @@ public class PageElementISSN extends PageElement {
       check = check % 11; // Modulus 11
       check = 11 - check; // Invert
       check = check % 11; // 11 -> 0
-      char checksum = (check < 10) ? (char) ('0' + check): 'X';
-      return checksum;
+      return (check < 10) ? (char) ('0' + check): 'X';
     }
 
     return 0;

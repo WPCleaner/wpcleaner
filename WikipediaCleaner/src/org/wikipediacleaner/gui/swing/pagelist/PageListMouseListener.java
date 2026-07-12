@@ -31,10 +31,8 @@ public class PageListMouseListener extends MouseAdapter {
     if ((!e.isConsumed()) &&
         (e.getButton() == MouseEvent.BUTTON1) &&
         (e.getClickCount() == 2)) {
-      if (e.getSource() instanceof JTable) {
-        JTable table = (JTable) e.getSource();
-        if (table.getModel() instanceof PageListTableModel) {
-          PageListTableModel model = (PageListTableModel) table.getModel();
+      if (e.getSource() instanceof JTable table) {
+        if (table.getModel() instanceof PageListTableModel model) {
           int column = table.columnAtPoint(e.getPoint());
           int row = table.rowAtPoint(e.getPoint());
           if ((column >= 0) && (row >= 0)) {

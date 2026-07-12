@@ -102,14 +102,14 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
       int offset = 0;
       for (Integer levelOffset : offsets) {
         if (levelOffset != null) {
-          offset += levelOffset.intValue();
+          offset += levelOffset;
         }
       }
 
       // Replace title if needed
       if (offset > 0) {
         if (lastIndex < title.getBeginIndex()) {
-          tmp.append(contents.substring(lastIndex, title.getBeginIndex()));
+          tmp.append(contents, lastIndex, title.getBeginIndex());
           lastIndex = title.getBeginIndex();
         }
         tmp.append(TitleBuilder
@@ -130,11 +130,11 @@ public class CheckErrorAlgorithm025 extends CheckErrorAlgorithmBase {
             levelOffset,
             titles.get(index2).getLevel() - title.getLevel() - 1);
       }
-      offsets.add(Integer.valueOf(levelOffset));
+      offsets.add(levelOffset);
       if ((levelOffset == 0) &&
           (index + 1 < titles.size()) &&
           (titles.get(index + 1).getLevel() > title.getLevel() + 1)) {
-        offsets.add(Integer.valueOf(titles.get(index + 1).getLevel() - title.getLevel() - 1));
+        offsets.add(titles.get(index + 1).getLevel() - title.getLevel() - 1);
       }
     }
     if (lastIndex == 0) {

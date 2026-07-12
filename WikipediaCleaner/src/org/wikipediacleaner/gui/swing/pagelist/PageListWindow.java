@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -63,7 +64,7 @@ import org.wikipediacleaner.utils.ConfigurationValueShortcut;
  */
 public class PageListWindow extends BasicWindow {
 
-  public final static Integer WINDOW_VERSION = Integer.valueOf(2);
+  public final static Integer WINDOW_VERSION = 2;
 
   String title;
   Page referencePage;
@@ -111,8 +112,7 @@ public class PageListWindow extends BasicWindow {
         new DefaultBasicWindowListener() {
           @Override
           public void initializeWindow(BasicWindow window) {
-            if (window instanceof PageListWindow) {
-              PageListWindow pageList = (PageListWindow) window;
+            if (window instanceof PageListWindow pageList) {
               pageList.title = title;
               pageList.referencePage = referencePage;
               pageList.pages = pages;
@@ -339,9 +339,9 @@ public class PageListWindow extends BasicWindow {
             .map(PageComment::getMaxMainArticles)
             .orElse(null);
         if (maxMainArticles != null) {
-          int maxArticles = maxMainArticles.intValue();
+          int maxArticles = maxMainArticles;
           Integer articles = page.getBacklinksCountInMainNamespace();
-          if ((articles != null) && (maxArticles < articles.intValue())) {
+          if ((articles != null) && (maxArticles < articles)) {
             int tmpIndex = tablePages.convertRowIndexToView(index);
             tablePages.addRowSelectionInterval(tmpIndex, tmpIndex);
           }
@@ -357,7 +357,7 @@ public class PageListWindow extends BasicWindow {
   public void actionDisambiguationWatch() {
     List<Page> selectedPages = tablePages.getSelectedPages();
     if ((selectedPages == null) ||
-        (selectedPages.size() == 0)) {
+        (selectedPages.isEmpty())) {
       return;
     }
     List<String> pageNames = new ArrayList<>(selectedPages.size());
@@ -434,7 +434,7 @@ public class PageListWindow extends BasicWindow {
    */
   public void actionCheckArticle() {
     List<Page> selectedPages = tablePages.getSelectedPages();
-    if ((selectedPages == null) || (selectedPages.size() == 0)) {
+    if ((selectedPages == null) || (selectedPages.isEmpty())) {
       return;
     }
     final CheckArticleWorker checkWorker = new CheckArticleWorker(
@@ -447,7 +447,7 @@ public class PageListWindow extends BasicWindow {
    */
   public void actionUpdateInfo() {
     List<Page> selectedPages = tablePages.getSelectedPages();
-    if ((selectedPages == null) || (selectedPages.size() == 0)) {
+    if ((selectedPages == null) || (selectedPages.isEmpty())) {
       return;
     }
     final UpdateInfoWorker updateWorker = new UpdateInfoWorker(
@@ -507,23 +507,14 @@ public class PageListWindow extends BasicWindow {
     if (file == null) {
       return;
     }
-    BufferedWriter buffer = null;
-    try {
-      buffer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF8"));
+    try (BufferedWriter buffer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8))) {
       for (Page page : pages) {
-        buffer.append("* [[:" + page.getTitle() + "]]\n");
+        buffer.append("* [[:").append(page.getTitle()).append("]]\n");
       }
     } catch (IOException e) {
       // Nothing to do
-    } finally {
-      if (buffer != null) {
-        try {
-          buffer.close();
-        } catch (IOException e) {
-          // Nothing to do
-        }
-      }
     }
+    // Nothing to do
   }
 
   /**
@@ -531,7 +522,7 @@ public class PageListWindow extends BasicWindow {
    */
   public void actionRunAutomaticFixing() {
     List<Page> selectedPages = tablePages.getSelectedPages();
-    if ((selectedPages == null) || (selectedPages.size() == 0)) {
+    if ((selectedPages == null) || (selectedPages.isEmpty())) {
       Utilities.displayWarning(
           getParentComponent(),
           GT._T("You must select pages on which running automatic fixing."));
@@ -552,19 +543,19 @@ public class PageListWindow extends BasicWindow {
       if (page != null) {
         Integer tmpLinks = page.getBacklinksCountInMainNamespace();
         if (tmpLinks != null) {
-          backlinksMain += tmpLinks.intValue();
+          backlinksMain += tmpLinks;
           Integer maxMainArticles = Optional
               .ofNullable(commentsByPageTitle.get(page.getTitle()))
               .map(PageComment::getMaxMainArticles)
               .orElse(null);
           if (maxMainArticles != null) {
-            maxMain += maxMainArticles.intValue();
-            actualMain += tmpLinks.intValue();
+            maxMain += maxMainArticles;
+            actualMain += tmpLinks;
           }
         }
         tmpLinks = page.getBacklinksCount();
         if (tmpLinks != null) {
-          backlinks += tmpLinks.intValue();
+          backlinks += tmpLinks;
         }
       }
     }
@@ -572,12 +563,12 @@ public class PageListWindow extends BasicWindow {
     if ((actualMain > 0) || (maxMain > 0)) {
       if (backlinksMain != actualMain) {
         if (actualMain != maxMain) {
-          txtMain = "" + backlinksMain + " (" + actualMain + "/" + maxMain + ")";
+          txtMain = backlinksMain + " (" + actualMain + "/" + maxMain + ")";
         } else {
-          txtMain = "" + backlinksMain + " (" + actualMain + ")";
+          txtMain = backlinksMain + " (" + actualMain + ")";
         }
       } else if (actualMain != maxMain) {
-        txtMain = "" + actualMain + "/" + maxMain;
+        txtMain = actualMain + "/" + maxMain;
       } else {
         txtMain = "" + actualMain;
       }

@@ -29,10 +29,6 @@ public class AnalyzerComment extends AnalyzerElement {
     super(Arrays.asList(new Class[] { ContentsComment.class }));
   }
 
-  /**
-   * @param contents
-   * @see org.wikipediacleaner.api.data.analysis.AnalyzerElement#analyze(org.wikipediacleaner.api.data.analysis.Contents)
-   */
   @Override
   void analyze(Contents contents) {
     if (contents.comments != null) {

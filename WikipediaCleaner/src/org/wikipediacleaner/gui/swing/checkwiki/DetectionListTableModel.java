@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.checkwiki;
 
+import java.io.Serial;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -23,9 +24,10 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class DetectionListTableModel extends AbstractTableModel {
 
+  @Serial
   private static final long serialVersionUID = 1334781606144392233L;
 
-  private List<CheckWikiDetection> detections;
+  private final List<CheckWikiDetection> detections;
 
   private final JTextComponent textPane;
 
@@ -150,19 +152,13 @@ public class DetectionListTableModel extends AbstractTableModel {
    */
   @Override
   public String getColumnName(int column) {
-    switch (column) {
-    case COLUMN_ERROR_NUMBER:
-      return GT._T("Error");
-    case COLUMN_GOTO:
-      return "";
-    case COLUMN_LOCATION:
-      return GT._T("Location");
-    case COLUMN_LOCATION_METHOD:
-      return "";
-    case COLUMN_NOTICE:
-      return GT._T("Notice");
-    }
-    return super.getColumnName(column);
+    return switch (column) {
+      case COLUMN_ERROR_NUMBER -> GT._T("Error");
+      case COLUMN_GOTO, COLUMN_LOCATION_METHOD -> "";
+      case COLUMN_LOCATION -> GT._T("Location");
+      case COLUMN_NOTICE -> GT._T("Notice");
+      default -> super.getColumnName(column);
+    };
   }
 
   /**
@@ -172,19 +168,12 @@ public class DetectionListTableModel extends AbstractTableModel {
    */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    switch (columnIndex) {
-    case COLUMN_ERROR_NUMBER:
-      return Integer.class;
-    case COLUMN_GOTO:
-      return CheckWikiDetection.class;
-    case COLUMN_LOCATION:
-      return Integer.class;
-    case COLUMN_LOCATION_METHOD:
-      return String.class;
-    case COLUMN_NOTICE:
-      return String.class;
-    }
-    return super.getColumnClass(columnIndex);
+    return switch (columnIndex) {
+      case COLUMN_ERROR_NUMBER, COLUMN_LOCATION -> Integer.class;
+      case COLUMN_GOTO -> CheckWikiDetection.class;
+      case COLUMN_LOCATION_METHOD, COLUMN_NOTICE -> String.class;
+      default -> super.getColumnClass(columnIndex);
+    };
   }
 
 }

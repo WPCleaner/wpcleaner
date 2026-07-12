@@ -51,7 +51,7 @@ import org.wikipediacleaner.i18n.GT;
 public abstract class MWPanePopupListener extends AbstractPopupListener {
 
   private final EnumWikipedia wikipedia;
-  private BasicWindow window;
+  private final BasicWindow window;
 
   public MWPanePopupListener(EnumWikipedia wikipedia, BasicWindow window) {
     this.wikipedia = wikipedia;
@@ -81,11 +81,10 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
   protected void showPopup(MouseEvent e) {
 
     // Retrieve information
-    if (!(e.getComponent() instanceof MWPane)) {
+    if (!(e.getComponent() instanceof MWPane textPane)) {
       return;
     }
-    MWPane textPane = (MWPane) e.getComponent();
-    showPopup(textPane, textPane.viewToModel(e.getPoint()), e.getX(), e.getY());
+    showPopup(textPane, textPane.viewToModel2D(e.getPoint()), e.getX(), e.getY());
   }
 
   /**
@@ -97,10 +96,9 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
   protected void showPopup(KeyEvent e) {
 
     // Retrieve information
-    if (!(e.getComponent() instanceof MWPane)) {
+    if (!(e.getComponent() instanceof MWPane textPane)) {
       return;
     }
-    MWPane textPane = (MWPane) e.getComponent();
     try {
       Rectangle rect = textPane.modelToView(textPane.getCaretPosition());
       showPopup(textPane, textPane.getSelectionStart(), rect.x, rect.y);
@@ -180,68 +178,57 @@ public abstract class MWPanePopupListener extends AbstractPopupListener {
     }
 
     // Menu for internal link
-    if (element instanceof PageElementInternalLink) {
-      PageElementInternalLink internalLink = (PageElementInternalLink) element;
+    if (element instanceof PageElementInternalLink internalLink) {
       return createDefaultPopupInternalLink(textPane, position, pageAnalysis, internalLink);
     }
 
     // Menu for image
-    if (element instanceof PageElementImage) {
-      PageElementImage image = (PageElementImage) element;
+    if (element instanceof PageElementImage image) {
       return createDefaultPopupImage(textPane, position, pageAnalysis, image);
     }
 
     // Menu for external link
-    if (element instanceof PageElementExternalLink) {
-      PageElementExternalLink externalLink = (PageElementExternalLink) element;
+    if (element instanceof PageElementExternalLink externalLink) {
       return createDefaultPopupExternalLink(pageAnalysis, position, externalLink);
     }
 
     // Menu for template
-    if (element instanceof PageElementTemplate) {
-      PageElementTemplate template = (PageElementTemplate) element;
+    if (element instanceof PageElementTemplate template) {
       return createDefaultPopupTemplate(pageAnalysis, position, template);
     }
 
     // Menu for category
-    if (element instanceof PageElementCategory) {
-      PageElementCategory category = (PageElementCategory) element;
+    if (element instanceof PageElementCategory category) {
       return createDefaultPopupCategory(textPane, position, pageAnalysis, category);
     }
 
     // Menu for interwiki
-    if (element instanceof PageElementInterwikiLink) {
-      PageElementInterwikiLink interwiki = (PageElementInterwikiLink) element;
+    if (element instanceof PageElementInterwikiLink interwiki) {
       return createDefaultPopupInterwikiLink(textPane, position, pageAnalysis, interwiki);
     }
 
     // Menu for language
-    if (element instanceof PageElementLanguageLink) {
-      PageElementLanguageLink language = (PageElementLanguageLink) element;
+    if (element instanceof PageElementLanguageLink language) {
       return createDefaultPopupLanguageLink(textPane, position, pageAnalysis, language);
     }
 
     // Menu for parameter
-    if (element instanceof PageElementParameter) {
-      PageElementParameter parameter = (PageElementParameter) element;
+    if (element instanceof PageElementParameter parameter) {
       return createDefaultPopupParameter(pageAnalysis, position, parameter);
     }
 
     // Menu for function
-    if (element instanceof PageElementFunction) {
-      PageElementFunction function = (PageElementFunction) element;
+    if (element instanceof PageElementFunction function) {
       return createDefaultPopupFunction(pageAnalysis, position, function);
     }
 
     // Menu for ISBN
-    if (element instanceof PageElementISBN) {
-      PageElementISBN isbn = (PageElementISBN) element;
+    if (element instanceof PageElementISBN isbn) {
       return createDefaultPopupISBN(pageAnalysis, position, isbn);
     }
 
     // Menu for ISSN
-    if (element instanceof PageElementISSN) {
-      PageElementISSN issn = (PageElementISSN) element;
+    if (element instanceof PageElementISSN issn) {
       return createDefaultPopupISSN(pageAnalysis, position, issn);
     }
 

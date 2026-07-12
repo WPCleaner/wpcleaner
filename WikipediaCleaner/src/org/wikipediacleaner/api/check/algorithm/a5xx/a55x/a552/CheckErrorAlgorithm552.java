@@ -158,7 +158,7 @@ public class CheckErrorAlgorithm552 extends CheckErrorAlgorithmBase {
       String replacement =
           contents.substring(beginIndex, endIndex) +
           WikiTagType.NOWIKI.getFullTag() +
-          contents.substring(endIndex, endIndex + 1);
+          contents.charAt(endIndex);
       errorResult.addReplacement(replacement, "{{...}}<nowiki/>}");
     }
     errorResult.addReplacement(

@@ -143,8 +143,6 @@ public class CheckErrorAlgorithm539 extends CheckErrorAlgorithmBase {
   /**
    * @param analysis Page analysis.
    * @param errors Errors found in the page.
-   * @param tag Tag.
-   * @param replacement Replacement configuration.
    * @param elements Formatting elements.
    * @return Flag indicating if the error was found.
    */

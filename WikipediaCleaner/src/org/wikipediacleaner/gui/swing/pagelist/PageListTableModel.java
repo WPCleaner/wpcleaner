@@ -7,6 +7,7 @@
 
 package org.wikipediacleaner.gui.swing.pagelist;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -32,12 +33,13 @@ import org.wikipediacleaner.utils.Configuration;
  */
 public class PageListTableModel extends AbstractTableModel {
 
+  @Serial
   private static final long serialVersionUID = 6219036518582006787L;
 
-  private EnumWikipedia wiki;
+  private final EnumWikipedia wiki;
 
-  private List<Page> pages;
-  private Map<String, PageComment> commentsByTitle;
+  private final List<Page> pages;
+  private final Map<String, PageComment> commentsByTitle;
 
   private List<String> watchedPages;
 
@@ -128,8 +130,8 @@ public class PageListTableModel extends AbstractTableModel {
   public List<Page> getPages(int[] rows) {
     if ((rows != null) && (rows.length > 0)) {
       List<Page> result = new ArrayList<>();
-      for (int i = 0; i < rows.length; i++) {
-        result.add(pages.get(rows[i]));
+      for (int row : rows) {
+        result.add(pages.get(row));
       }
       return result;
     }
@@ -226,25 +228,17 @@ public class PageListTableModel extends AbstractTableModel {
    */
   @Override
   public String getColumnName(int column) {
-    switch (column) {
-    case COLUMN_BACKLINKS_MAIN:
-      return GT._T("Main");
-    case COLUMN_BACKLINKS_TEMPLATE:
-      return "{{.}}";
-    case COLUMN_BACKLINKS_OTHER:
-      return GT._T("Other");
-    case COLUMN_COMMENTS_TEXT:
-      return GT._T("Comments");
-    case COLUMN_DISAMBIGUATION:
-      return "D";
-    case COLUMN_PAGE:
-      return GT._T("Page");
-    case COLUMN_REDIRECT:
-      return "R";
-    case COLUMN_WATCHED:
-      return "";
-    }
-    return super.getColumnName(column);
+    return switch (column) {
+      case COLUMN_BACKLINKS_MAIN -> GT._T("Main");
+      case COLUMN_BACKLINKS_TEMPLATE -> "{{.}}";
+      case COLUMN_BACKLINKS_OTHER -> GT._T("Other");
+      case COLUMN_COMMENTS_TEXT -> GT._T("Comments");
+      case COLUMN_DISAMBIGUATION -> "D";
+      case COLUMN_PAGE -> GT._T("Page");
+      case COLUMN_REDIRECT -> "R";
+      case COLUMN_WATCHED -> "";
+      default -> super.getColumnName(column);
+    };
   }
 
   /* (non-Javadoc)
@@ -252,25 +246,12 @@ public class PageListTableModel extends AbstractTableModel {
    */
   @Override
   public Class<?> getColumnClass(int columnIndex) {
-    switch (columnIndex) {
-    case COLUMN_BACKLINKS_MAIN:
-      return ProgressionValue.class;
-    case COLUMN_BACKLINKS_TEMPLATE:
-      return ProgressionValue.class;
-    case COLUMN_BACKLINKS_OTHER:
-      return ProgressionValue.class;
-    case COLUMN_COMMENTS_TEXT:
-      return String.class;
-    case COLUMN_DISAMBIGUATION:
-      return Boolean.class;
-    case COLUMN_PAGE:
-      return String.class;
-    case COLUMN_REDIRECT:
-      return Boolean.class;
-    case COLUMN_WATCHED:
-      return Boolean.class;
-    }
-    return super.getColumnClass(columnIndex);
+    return switch (columnIndex) {
+      case COLUMN_BACKLINKS_MAIN, COLUMN_BACKLINKS_TEMPLATE, COLUMN_BACKLINKS_OTHER -> ProgressionValue.class;
+      case COLUMN_COMMENTS_TEXT, COLUMN_PAGE -> String.class;
+      case COLUMN_DISAMBIGUATION, COLUMN_REDIRECT, COLUMN_WATCHED -> Boolean.class;
+      default -> super.getColumnClass(columnIndex);
+    };
   }
 
 }

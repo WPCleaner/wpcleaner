@@ -14,18 +14,10 @@ package org.wikipediacleaner.api.data.contents.magicword;
  */
 class UnknownMagicWordType extends MagicWordType {
 
-  /**
-   * @param name
-   */
   public UnknownMagicWordType(String name) {
     super(name, false, false, false, false);
   }
 
-  /**
-   * @param obj
-   * @return
-   * @see java.lang.Object#equals(java.lang.Object)
-   */
   @Override
   public boolean equals(Object obj) {
     if (this == obj) {
@@ -37,6 +29,7 @@ class UnknownMagicWordType extends MagicWordType {
     if (getClass() != obj.getClass()) {
       return false;
     }
-    return name.equals(obj);
+    UnknownMagicWordType unknownMagicWordType = (UnknownMagicWordType) obj;
+    return name.equals(unknownMagicWordType.name);
   }
 }

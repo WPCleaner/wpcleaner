@@ -8,6 +8,7 @@
 package org.wikipediacleaner.gui.swing.component;
 
 import java.awt.event.ActionEvent;
+import java.io.Serial;
 
 import org.wikipediacleaner.api.data.PageElementTitle;
 
@@ -17,7 +18,7 @@ import org.wikipediacleaner.api.data.PageElementTitle;
  */
 public class MWPaneEditTocAction extends MWPaneAction {
 
-  /** Serialization */
+  @Serial
   private static final long serialVersionUID = -8884273905628744049L;
 
   /** Title to be selected when opening the TOC */

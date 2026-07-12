@@ -73,7 +73,7 @@ public enum WPCConfigurationString {
   // Help page
   HELP_PAGE("help_page", null, false, true, false),
   // URL of the help page
-  HELP_URL("help_url", "http://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
+  HELP_URL("help_url", "https://en.wikipedia.org/wiki/Wikipedia:WPCleaner", false, true, false),
   // Comment used to indicate an ISBN with an error
   ISBN_HELP_NEEDED_COMMENT("general_isbn_help_needed_comment", null, false, true, true),
   // Page for storing a synthesis of ISBN errors

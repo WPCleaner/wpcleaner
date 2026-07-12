@@ -28,7 +28,7 @@ public interface ApiSearchResult extends ApiResult {
    * @return True if request should be continued.
    * @throws APIException Exception thrown by the API.
    */
-  public boolean executeSearch(
+  boolean executeSearch(
       Map<String, String> properties,
       List<Page> list) throws APIException;
 }

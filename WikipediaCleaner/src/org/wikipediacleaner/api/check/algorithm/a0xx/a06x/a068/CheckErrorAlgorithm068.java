@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.check.algorithm.a0xx.a06x.a068;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
@@ -186,9 +187,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
     List<String> order = new ArrayList<>();
     if (templateArgs.length >= 6) {
       String[] tmpOrder = templateArgs[5].split(",");
-      for (String tmp : tmpOrder) {
-        order.add(tmp);
-      }
+      order.addAll(Arrays.asList(tmpOrder));
     }
     if (!order.contains(paramLocalTitle)) {
       order.add(paramLocalTitle);
@@ -243,7 +242,7 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * @return List of possible global fixes.
+   * @return Array of possible global fixes.
    */
   @Override
   public String[] getGlobalFixes() {
@@ -342,14 +341,14 @@ public class CheckErrorAlgorithm068 extends CheckErrorAlgorithmBase {
                 StringBuilder prefix = new StringBuilder();
                 StringBuilder suffix = new StringBuilder();
                 buildReplacementTemplate(templateArgs, link, prefix, suffix);
-                replacement = prefix.toString() + toTitle + suffix.toString();
+                replacement = prefix + toTitle + suffix;
               }
             }
 
             // Do the replacement
             if (replacement != null) {
               if (currentIndex < link.getBeginIndex()) {
-                tmpContents.append(contents.substring(currentIndex, link.getBeginIndex()));
+                tmpContents.append(contents, currentIndex, link.getBeginIndex());
               }
               tmpContents.append(replacement);
               currentIndex = link.getEndIndex();

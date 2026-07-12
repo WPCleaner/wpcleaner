@@ -7,9 +7,9 @@
 
 package org.wikipediacleaner.gui.swing.component;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
@@ -28,6 +28,7 @@ import org.wikipediacleaner.i18n.GT;
  */
 public class PageListModel extends AbstractListModel<Page> {
 
+  @Serial
   private static final long serialVersionUID = 8914341302198128905L;
 
   private boolean showDisambiguation;
@@ -42,8 +43,8 @@ public class PageListModel extends AbstractListModel<Page> {
   private boolean countOther;
   private boolean countRedirect;
 
-  private ArrayList<Page> fullList;
-  private ArrayList<Page> filteredList;
+  private final ArrayList<Page> fullList;
+  private final ArrayList<Page> filteredList;
 
   private JLabel linkCount;
   private CompositeComparator<Page> comparator;
@@ -74,7 +75,7 @@ public class PageListModel extends AbstractListModel<Page> {
    */
   public void setComparator(CompositeComparator<Page> comparator) {
     this.comparator = comparator;
-    Collections.sort(fullList, this.comparator);
+    fullList.sort(this.comparator);
     updateStatus();
   }
 
@@ -109,10 +110,9 @@ public class PageListModel extends AbstractListModel<Page> {
     }
     fullList.addAll(elements);
     if (comparator != null) {
-      Collections.sort(fullList, comparator);
+      fullList.sort(comparator);
     }
-    for (int i = 0; i < fullList.size(); i++) {
-      Page page = fullList.get(i);
+    for (Page page : fullList) {
       if (filterPage(page)) {
         filteredList.add(page);
       }
@@ -128,8 +128,7 @@ public class PageListModel extends AbstractListModel<Page> {
    * @param element The component to be added.
    */
   public void addElement(Object element) {
-    if (element instanceof Page) {
-      Page page = (Page) element;
+    if (element instanceof Page page) {
       boolean added = false;
       if (comparator != null) {
         for (int i = 0; !added && (i < fullList.size()); i++) {
@@ -199,12 +198,12 @@ public class PageListModel extends AbstractListModel<Page> {
     if (!Boolean.TRUE.equals(page.isExisting()) && showMissing) {
       return true;
     }
-    if (!Boolean.FALSE.equals(page.getRedirects().isRedirect()) && showRedirect) {
+    if (page.getRedirects().isRedirect() && showRedirect) {
       return true;
     }
     if (!Boolean.TRUE.equals(page.isDisambiguationPage()) &&
         !Boolean.FALSE.equals(page.isExisting()) &&
-        !Boolean.TRUE.equals(page.getRedirects().isRedirect()) &&
+        !page.getRedirects().isRedirect() &&
         showOther) {
       return true;
     }
@@ -320,11 +319,11 @@ public class PageListModel extends AbstractListModel<Page> {
     }
 
     // Update the new list
-    for (int i = 0; i < fullList.size(); i++) {
-      if (filterPage(fullList.get(i))) {
-        filteredList.add(fullList.get(i));
+    for (Page page : fullList) {
+      if (filterPage(page)) {
+        filteredList.add(page);
       }
-      if (filteredList.size() > 0) {
+      if (!filteredList.isEmpty()) {
         fireIntervalAdded(this, 0, filteredList.size() - 1);
       }
     }
@@ -346,7 +345,7 @@ public class PageListModel extends AbstractListModel<Page> {
           if (count != null) {
             totalCount += count.getTotalLinkCount();
             if ((p.getNamespace() != null) &&
-                (Namespace.MAIN == p.getNamespace().intValue())) {
+                (Namespace.MAIN == p.getNamespace())) {
               mainCount += count.getTotalLinkCount();
             }
           }

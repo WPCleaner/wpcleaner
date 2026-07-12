@@ -90,7 +90,7 @@ public class LinkReplacement {
    */
   public static String getPossibleLastSuffix(String from, Collection<Page> links) {
     if ((lastSuffix == null) ||
-        (lastSuffix.length() == 0) ||
+        (lastSuffix.isEmpty()) ||
         (links == null)) {
       return null;
     }

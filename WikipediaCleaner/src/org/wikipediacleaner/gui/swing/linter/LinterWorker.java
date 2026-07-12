@@ -110,7 +110,6 @@ public class LinterWorker extends BasicWorker {
    * @param pageTitle Title of the page.
    * @param pageText Optional text content of the page.
    * @return List of linter errors in the page.
-   * @throws APIException
    */
   private List<LinterError> retrieveLinterErrors(
       EnumWikipedia wiki,
@@ -133,6 +132,7 @@ public class LinterWorker extends BasicWorker {
         for (LinterCategory category : wiki.getWikiConfiguration().getLinterCategories()) {
           if (category.getCategory().equals(error.getType())) {
             found = true;
+            break;
           }
         }
       }

@@ -104,7 +104,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
             // Checking if the | is counting for
             if ((levelSquareBrackets == 0) &&
                 (levelCurlyBrackets == 0)) {
-              pipeIndex.add(Integer.valueOf(currentPos));
+              pipeIndex.add(currentPos);
             }
             break;
           }
@@ -112,7 +112,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
         }
 
         // Testing if the error has been found
-        if ((levelSquareBrackets == 0) && (pipeIndex.size() > 0)) {
+        if ((levelSquareBrackets == 0) && (!pipeIndex.isEmpty())) {
           if (errors == null) {
             return true;
           }
@@ -121,10 +121,10 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
           // List replacements
           List<String> replacements = new ArrayList<>();
           for (int i = 0; i <= pipeIndex.size(); i++) {
-            int beginText = (i > 0) ? (pipeIndex.get(i - 1).intValue() + 1) : 0;
-            int endText = (i < pipeIndex.size()) ? pipeIndex.get(i).intValue() : text.length();
+            int beginText = (i > 0) ? (pipeIndex.get(i - 1) + 1) : 0;
+            int endText = (i < pipeIndex.size()) ? pipeIndex.get(i) : text.length();
             if ((beginText < endText) &&
-                (text.substring(beginText, endText).trim().length() > 0)) {
+                (!text.substring(beginText, endText).trim().isEmpty())) {
               String replacement = InternalLinkBuilder
                   .from(link.getLink())
                   .withAnchor(link.getAnchor())
@@ -140,7 +140,7 @@ public class CheckErrorAlgorithm032 extends CheckErrorAlgorithmBase {
           CheckErrorResult errorResult = createCheckErrorResult(
               analysis, link.getBeginIndex(), link.getEndIndex());
           boolean emptyLink = false;
-          if ((link.getFullLink() == null) || (link.getFullLink().trim().length() == 0)) {
+          if ((link.getFullLink() == null) || (link.getFullLink().trim().isEmpty())) {
             errorResult.addReplacement(InternalLinkBuilder.from(link.getText()).toString());
             emptyLink = true;
           }

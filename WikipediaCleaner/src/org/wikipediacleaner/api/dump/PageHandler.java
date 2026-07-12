@@ -14,7 +14,6 @@ import org.wikipediacleaner.api.data.DataManager;
 import org.wikipediacleaner.api.data.Page;
 import org.wikipediacleaner.api.data.PageRedirect;
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 
@@ -107,12 +106,10 @@ public class PageHandler extends DefaultHandler {
    * @param attributes The attributes attached to the element.  If
    *        there are no attributes, it shall be an empty
    *        Attributes object.
-   * @exception org.xml.sax.SAXException Any SAX exception, possibly
-   *            wrapping another exception.
    * @see org.xml.sax.ContentHandler#startElement
    */
   @Override
-  public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
+  public void startElement(String uri, String localName, String qName, Attributes attributes) {
     if (isInPage) {
       if (isInRevision) {
         if (qName.equals("id")) {
@@ -161,12 +158,10 @@ public class PageHandler extends DefaultHandler {
    *        performed.
    * @param qName The qualified name (with prefix), or the
    *        empty string if qualified names are not available.
-   * @exception org.xml.sax.SAXException Any SAX exception, possibly
-   *            wrapping another exception.
    * @see org.xml.sax.ContentHandler#endElement
    */
   @Override
-  public void endElement(String uri, String localName, String qName) throws SAXException {
+  public void endElement(String uri, String localName, String qName) {
     if (!isInPage) {
       return;
     }
@@ -241,12 +236,10 @@ public class PageHandler extends DefaultHandler {
    * @param start The start position in the character array.
    * @param length The number of characters to use from the
    *               character array.
-   * @exception org.xml.sax.SAXException Any SAX exception, possibly
-   *            wrapping another exception.
    * @see org.xml.sax.ContentHandler#characters
    */
   @Override
-  public void characters(char[] ch, int start, int length) throws SAXException {
+  public void characters(char[] ch, int start, int length) {
     if (isInPage) {
       if (isInRevision) {
         if (isInRevisionId) {

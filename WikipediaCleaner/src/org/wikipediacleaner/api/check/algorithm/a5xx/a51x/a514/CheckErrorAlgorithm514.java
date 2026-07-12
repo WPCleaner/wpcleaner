@@ -67,15 +67,11 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
     for (PageElementTag tag : tags) {
       if (!tag.isFullTag() && !tag.isEndTag() && tag.isComplete()) {
         String value = analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
-        if ((value != null) && (value.trim().length() > 0)) {
+        if (!value.trim().isEmpty()) {
           PageElementTag.Parameter nameParam = tag.getParameter("name");
           if (nameParam != null) {
             String groupValue = PageElementTagRef.getGroup(tag, analysis);
-            Set<String> set = names.get(groupValue);
-            if (set == null) {
-              set = new HashSet<>();
-              names.put(groupValue, set);
-            }
+            Set<String> set = names.computeIfAbsent(groupValue, k -> new HashSet<>());
             String nameValue = nameParam.getTrimmedValue();
             set.add(nameValue);
           }
@@ -90,7 +86,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
         withoutContent = true;
       } else if (tag.isComplete()) {
         String content = analysis.getContents().substring(tag.getValueBeginIndex(), tag.getValueEndIndex());
-        withoutContent = ((content == null) || (content.trim().length() == 0));
+        withoutContent = ((content == null) || (content.trim().isEmpty()));
       }
       if (withoutContent) {
         PageElementTag.Parameter nameParam = tag.getParameter("name");
@@ -98,7 +94,7 @@ public class CheckErrorAlgorithm514 extends CheckErrorAlgorithmBase {
           String nameValue = nameParam.getTrimmedValue();
           PageElementTag.Parameter groupParam = tag.getParameter("group");
           String groupValue = (groupParam != null) ? groupParam.getValue() : null;
-          if ((groupValue != null) && (groupValue.length() == 0)) {
+          if ((groupValue != null) && (groupValue.isEmpty())) {
             groupValue = null;
           }
           boolean found = false;

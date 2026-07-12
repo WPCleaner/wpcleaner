@@ -8,11 +8,9 @@
 
 package org.wikipediacleaner.api.check;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
-import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.ResponseManager;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -66,15 +64,8 @@ class PagesResponseManager implements ResponseManager {
     this.errors = errors;
   }
 
-  /**
-   * @param stream
-   * @throws IOException
-   * @throws APIException
-   * @see org.wikipediacleaner.api.ResponseManager#manageResponse(java.io.InputStream)
-   */
   @Override
-  public void manageResponse(InputStream stream) throws IOException,
-      APIException {
+  public void manageResponse(InputStream stream) {
     if (classic) {
       AlgorithmError.addCheckErrorClassic(
           errors, wiki,

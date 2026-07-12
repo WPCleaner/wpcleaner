@@ -89,47 +89,41 @@ public class CWConfigurationError {
     if (value != null) {
       value = value.trim();
     }
-    if (name.equals("prio")) {
-      setPriority(value, origin);
-    } else if (name.equals("bot")) {
-      setBot(value, origin);
-    } else if (name.equals("head")) {
-      setShortDescription(value, origin);
-    } else if (name.equals("desc")) {
-      setLongDescription(value, origin);
-    } else if (name.equals("link")) {
-      setLink(value, origin);
-    } else if (name.equals("noauto")) {
-      setNoAuto(value, origin);
-    } else if (name.equals("whitelist")) {
-      setWhiteList(value, origin);
-    } else if (name.equals("whitelistpage")) {
-      setWhiteListPageName(value, origin);
-    } else {
-      switch (origin) {
-      case GENERAL_CONFIGURATION:
-        if (value == null) {
-          generalConfiguration.remove(name);
-        } else {
-          generalConfiguration.setProperty(name, value);
-        }
-        break;
+    switch (name) {
+      case "prio" -> setPriority(value, origin);
+      case "bot" -> setBot(value, origin);
+      case "head" -> setShortDescription(value, origin);
+      case "desc" -> setLongDescription(value, origin);
+      case "link" -> setLink(value, origin);
+      case "noauto" -> setNoAuto(value, origin);
+      case "whitelist" -> setWhiteList(value, origin);
+      case "whitelistpage" -> setWhiteListPageName(value, origin);
+      default -> {
+        switch (origin) {
+          case GENERAL_CONFIGURATION:
+            if (value == null) {
+              generalConfiguration.remove(name);
+            } else {
+              generalConfiguration.setProperty(name, value);
+            }
+            break;
 
-      case USER_CONFIGURATION:
-        if (value == null) {
-          userConfiguration.remove(name);
-        } else {
-          userConfiguration.setProperty(name, value);
-        }
-        break;
+          case USER_CONFIGURATION:
+            if (value == null) {
+              userConfiguration.remove(name);
+            } else {
+              userConfiguration.setProperty(name, value);
+            }
+            break;
 
-      case WIKI_CONFIGURATION:
-        if (value == null) {
-          wikiConfiguration.remove(name);
-        } else {
-          wikiConfiguration.setProperty(name, value);
+          case WIKI_CONFIGURATION:
+            if (value == null) {
+              wikiConfiguration.remove(name);
+            } else {
+              wikiConfiguration.setProperty(name, value);
+            }
+            break;
         }
-        break;
       }
     }
   }
@@ -149,13 +143,13 @@ public class CWConfigurationError {
     String result = null;
     if (useUser) {
       result = userConfiguration.getProperty(name);
-      if ((result != null) && (acceptEmpty || (result.length() > 0))) {
+      if ((result != null) && (acceptEmpty || (!result.isEmpty()))) {
         return result;
       }
     }
     if (useWiki) {
       result = wikiConfiguration.getProperty(name);
-      if ((result != null) && (acceptEmpty || (result.length() > 0))) {
+      if ((result != null) && (acceptEmpty || (!result.isEmpty()))) {
         return result;
       }
     }
@@ -204,7 +198,7 @@ public class CWConfigurationError {
     Integer intValue = null;
     if (value != null) {
       try {
-        intValue = Integer.valueOf(Integer.parseInt(value));
+        intValue = Integer.parseInt(value);
       } catch (NumberFormatException e) {
         //
       }
@@ -233,7 +227,7 @@ public class CWConfigurationError {
     if (value == null) {
       botWiki = false;
     } else {
-      botWiki = Boolean.valueOf(value);
+      botWiki = Boolean.parseBoolean(value);
     }
   }
 
@@ -243,13 +237,13 @@ public class CWConfigurationError {
   public int getPriority() {
     int priority = PRIORITY_UNKOWN;
     if ((priority == PRIORITY_UNKOWN) && (priorityUser != null)) {
-      priority = priorityUser.intValue();
+      priority = priorityUser;
     }
     if ((priority == PRIORITY_UNKOWN) && (priorityWiki != null)) {
-      priority = priorityWiki.intValue();
+      priority = priorityWiki;
     }
     if ((priority == PRIORITY_UNKOWN) && (priorityGeneral != null)) {
-      priority = priorityGeneral.intValue();
+      priority = priorityGeneral;
     }
     if ((priority == PRIORITY_DEACTIVATED) && botWiki) {
       priority = PRIORITY_BOT_ONLY;
@@ -315,20 +309,14 @@ public class CWConfigurationError {
    * @return Textual description of the priority.
    */
   public static String getPriorityString(int priority) {
-    switch (priority) {
-    case PRIORITY_DEACTIVATED:
-      return GT._T("Deactivated");
-    case PRIORITY_LOWEST:
-      return GT._T("Low priority");
-    case PRIORITY_MIDDLE:
-      return GT._T("Middle priority");
-    case PRIORITY_TOP:
-      return GT._T("Top priority");
-    case PRIORITY_BOT_ONLY:
-      return GT._T("For Bot");
-    default:
-      return GT._T("Priority unknown");
-    }
+    return switch (priority) {
+      case PRIORITY_DEACTIVATED -> GT._T("Deactivated");
+      case PRIORITY_LOWEST -> GT._T("Low priority");
+      case PRIORITY_MIDDLE -> GT._T("Middle priority");
+      case PRIORITY_TOP -> GT._T("Top priority");
+      case PRIORITY_BOT_ONLY -> GT._T("For Bot");
+      default -> GT._T("Priority unknown");
+    };
   }
 
   // =================================================================================
@@ -360,8 +348,8 @@ public class CWConfigurationError {
   private void setShortDescription(String value, Origin origin) {
     String replaced = value;
     if (replaced != null) {
-      replaced = replaced.replaceAll("&lt;", "<");
-      replaced = replaced.replaceAll("&gt;", ">");
+      replaced = replaced.replace("&lt;", "<");
+      replaced = replaced.replace("&gt;", ">");
     }
     switch (origin) {
     case GENERAL_CONFIGURATION:
@@ -383,10 +371,10 @@ public class CWConfigurationError {
    * @return Short description.
    */
   public String getShortDescription() {
-    if ((shortDescriptionUser != null) && (shortDescriptionUser.length() > 0)) {
+    if ((shortDescriptionUser != null) && (!shortDescriptionUser.isEmpty())) {
       return shortDescriptionUser;
     }
-    if ((shortDescriptionWiki != null) && (shortDescriptionWiki.length() > 0)) {
+    if ((shortDescriptionWiki != null) && (!shortDescriptionWiki.isEmpty())) {
       return shortDescriptionWiki;
     }
     return shortDescriptionGeneral;
@@ -397,11 +385,11 @@ public class CWConfigurationError {
    */
   public String getShortDescriptionReplaced() {
     if ((shortDescriptionReplacedUser != null) &&
-        (shortDescriptionReplacedUser.length() > 0)) {
+        (!shortDescriptionReplacedUser.isEmpty())) {
       return shortDescriptionReplacedUser;
     }
     if ((shortDescriptionReplacedWiki != null) &&
-        (shortDescriptionReplacedWiki.length() > 0)) {
+        (!shortDescriptionReplacedWiki.isEmpty())) {
       return shortDescriptionReplacedWiki;
     }
     return shortDescriptionReplacedGeneral;
@@ -448,10 +436,10 @@ public class CWConfigurationError {
    * @return Long description.
    */
   public String getLongDescription() {
-    if ((longDescriptionUser != null) && (longDescriptionUser.length() > 0)) {
+    if ((longDescriptionUser != null) && (!longDescriptionUser.isEmpty())) {
       return longDescriptionUser;
     }
-    if ((longDescriptionWiki != null) && (longDescriptionWiki.length() > 0)) {
+    if ((longDescriptionWiki != null) && (!longDescriptionWiki.isEmpty())) {
       return longDescriptionWiki;
     }
     return longDescriptionGeneral;
@@ -481,7 +469,7 @@ public class CWConfigurationError {
    * @param origin Origin of the configuration.
    */
   private void setNoAuto(String value, Origin origin) {
-    Boolean booleanValue = Boolean.valueOf(value);
+    boolean booleanValue = Boolean.parseBoolean(value);
     switch (origin) {
     case GENERAL_CONFIGURATION:
       noAutoGeneral = booleanValue;
@@ -500,13 +488,13 @@ public class CWConfigurationError {
    */
   public boolean getNoAuto() {
     if (noAutoUser != null) {
-      return noAutoUser.booleanValue();
+      return noAutoUser;
     }
     if (noAutoWiki != null) {
-      return noAutoWiki.booleanValue();
+      return noAutoWiki;
     }
     if (noAutoGeneral != null) {
-      return noAutoGeneral.booleanValue();
+      return noAutoGeneral;
     }
     return false;
   }

@@ -8,6 +8,7 @@
 package org.wikipediacleaner.api.constants;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -79,9 +80,7 @@ public enum EnumLanguage {
       }
     } catch (ClassNotFoundException e) {
       // No bundle, we simply don't have translation for this language
-    } catch (IllegalAccessException e) {
-      // Shouldn't happen, but same consequence as ClassNotFoundException
-    } catch (InstantiationException e) {
+    } catch (IllegalAccessException | InstantiationException e) {
       // Shouldn't happen, but same consequence as ClassNotFoundException
     } catch (UnsupportedClassVersionError e) {
       // May happen if messages compiled with a more recent Java, but same consequence as ClassNotFoundException
@@ -94,9 +93,7 @@ public enum EnumLanguage {
    */
   public static List<EnumLanguage> getList() {
     List<EnumLanguage> list = new ArrayList<>(EnumLanguage.values().length);
-    for (EnumLanguage e : EnumLanguage.values()) {
-      list.add(e);
-    }
+    Collections.addAll(list, EnumLanguage.values());
     return list;
   }
 
