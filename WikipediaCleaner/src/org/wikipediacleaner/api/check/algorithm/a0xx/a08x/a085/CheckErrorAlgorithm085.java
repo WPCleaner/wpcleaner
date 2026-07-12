@@ -115,7 +115,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
     int currentIndex = tag.getValueBeginIndex();
     int lastIndex = tag.getValueEndIndex();
     StringBuilder replacementText = new StringBuilder();
-    replacementText.append(contents.substring(tag.getBeginIndex(), tag.getEndIndex()));
+    replacementText.append(contents, tag.getBeginIndex(), tag.getEndIndex());
     boolean useReplacement = false;
     while (currentIndex < lastIndex) {
       char currentChar = contents.charAt(currentIndex);
@@ -136,12 +136,10 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
           ignoredText = true;
           errorLevel = ErrorLevel.WARNING;
           if (WikiTagType.NOWIKI.equals(internalTag.getType())) {
-            replacementText.append(contents.substring(
-                internalTag.getValueBeginIndex(), internalTag.getValueEndIndex()));
+            replacementText.append(contents, internalTag.getValueBeginIndex(), internalTag.getValueEndIndex());
             useReplacement = true;
           } else {
-            replacementText.append(contents.substring(
-                currentIndex, internalTag.getCompleteEndIndex()));
+            replacementText.append(contents, currentIndex, internalTag.getCompleteEndIndex());
           }
           currentIndex = internalTag.getCompleteEndIndex();
         } else {
@@ -149,7 +147,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
           if (comment == null) {
             return false;
           }
-          replacementText.append(contents.substring(currentIndex, comment.getEndIndex()));
+          replacementText.append(contents, currentIndex, comment.getEndIndex());
           errorLevel = ErrorLevel.WARNING;
           currentIndex = comment.getEndIndex();
         }
@@ -157,8 +155,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
         return false;
       }
     }
-    replacementText.append(contents.substring(
-        tag.getValueEndIndex(), tag.getCompleteEndIndex()));
+    replacementText.append(contents, tag.getValueEndIndex(), tag.getCompleteEndIndex());
 
     // Check if tag has arguments
     boolean hasUnsafeArguments = false;
@@ -166,6 +163,15 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
       if (WikiTagType.REF.equals(tag.getType())) {
         return false;
       } else if (HtmlTagType.SPAN.equals(tag.getType())) {
+        // Allow empty anchor span
+        Parameter classParam = tag.getParameter("class");
+        if (classParam != null && classParam.getValue() != null) {
+          for (String cls : classParam.getValue().split("\\s+")) {
+            if ("anchor".equals(cls)) {
+              return false;
+            }
+          }
+        }
         for (int paramNum = 0; paramNum < tag.getParametersCount(); paramNum++) {
           Parameter param = tag.getParameter(paramNum);
           if (param != null) {
@@ -242,12 +248,12 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
           countCR++;
         }
         if (countCR > 1) {
-          while ((internalValue.length() > 0) &&
-                 (Character.isWhitespace(internalValue.charAt(0)))) {
+          while (!internalValue.isEmpty() &&
+                 Character.isWhitespace(internalValue.charAt(0))) {
             internalValue = internalValue.substring(1);
           }
-          while ((internalValue.length() > 0) &&
-                 (Character.isWhitespace(internalValue.charAt(internalValue.length() - 1)))) {
+          while (!internalValue.isEmpty() &&
+                 Character.isWhitespace(internalValue.charAt(internalValue.length() - 1))) {
             internalValue = internalValue.substring(0, internalValue.length() - 1);
           }
         }
@@ -278,7 +284,7 @@ public class CheckErrorAlgorithm085 extends CheckErrorAlgorithmBase {
 
     // Suggest replacements
     if (!ignoredText) {
-      if (internalValue.length() > 0) {
+      if (!internalValue.isEmpty()) {
         errorResult.addReplacement(internalValue, !hasUnsafeArguments && isEmpty && !isBetweenSpecialCharacters && !unsafeTag);
         errorResult.addReplacement("");
       } else {
