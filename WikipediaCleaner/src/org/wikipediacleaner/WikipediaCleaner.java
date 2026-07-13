@@ -12,15 +12,9 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -196,15 +190,9 @@ public class WikipediaCleaner {
     String userName = null;
     String password = null;
     if (credentials != null) {
-      Properties properties = new Properties();
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-          new FileInputStream(credentials), StandardCharsets.UTF_8))) {
-        properties.load(reader);
-      } catch (IOException e) {
-        // Doing nothing
-      }
-      userName = properties.getProperty("user");
-      password = properties.getProperty("password");
+      final CredentialsReader.Credentials creds = CredentialsReader.readCredentials(credentials);
+      userName = creds.username();
+      password = creds.password();
     } else {
       if (args.length > currentArg) {
         userName = args[currentArg];

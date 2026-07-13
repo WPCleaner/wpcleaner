@@ -9,18 +9,14 @@ package org.wikipediacleaner;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
-import java.util.Properties;
 import java.util.Set;
 import java.util.StringJoiner;
 
@@ -174,15 +170,9 @@ public class Bot implements BasicWorkerListener {
     String userName = null;
     String password = null;
     if (credentials != null) {
-      Properties properties = new Properties();
-      try (BufferedReader reader = new BufferedReader(new InputStreamReader(
-          new FileInputStream(credentials), StandardCharsets.UTF_8))) {
-        properties.load(reader);
-      } catch (IOException e) {
-        log.warn("Unable to load credentials file {}", credentials);
-      }
-      userName = properties.getProperty("user");
-      password = properties.getProperty("password");
+      final CredentialsReader.Credentials creds = CredentialsReader.readCredentials(credentials);
+      userName = creds.username();
+      password = creds.password();
     } else {
       if (args.length > currentArg) {
         userName = args[currentArg];
