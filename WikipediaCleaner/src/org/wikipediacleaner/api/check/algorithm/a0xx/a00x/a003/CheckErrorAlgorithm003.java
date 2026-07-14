@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import org.wikipediacleaner.api.algorithm.AlgorithmParameter;
@@ -27,7 +28,9 @@ import org.wikipediacleaner.api.data.PageElementTemplate;
 import org.wikipediacleaner.api.data.PageElementTitle;
 import org.wikipediacleaner.api.data.analysis.PageAnalysis;
 import org.wikipediacleaner.api.data.contents.ContentsElement;
+import org.wikipediacleaner.api.data.contents.ContentsInterval;
 import org.wikipediacleaner.api.data.contents.ContentsUtil;
+import org.wikipediacleaner.api.data.contents.Interval;
 import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
 import org.wikipediacleaner.api.data.contents.title.TitleBuilder;
 import org.wikipediacleaner.i18n.GT;
@@ -58,25 +61,14 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
       return false;
     }
 
-    // Analyzing text for <ref> tags
-    PageElementTag lastRefTag = null;
-    List<PageElementTag> refTags = analysis.getTags(WikiTagType.REF);
-    if ((refTags != null) && (!refTags.isEmpty())) {
-      for (int numTag = refTags.size() - 1; (numTag >= 0) && (lastRefTag == null); numTag--) {
-        boolean usefulRef = true;
-        PageElementTag refTag = refTags.get(numTag);
-        if (analysis.getSurroundingTag(WikiTagType.NOWIKI, refTag.getBeginIndex()) != null) {
-          usefulRef =  false;
-        }
-        if (usefulRef) {
-          lastRefTag = refTag;
-        }
-      }
-    }
-    if (lastRefTag == null) {
-      return false;
-    }
-    final int lastRefTagIndex = lastRefTag.getCompleteEndIndex();
+    return findLastReference(analysis).map(lastRefTag -> analyzeLastRefTag(analysis, lastRefTag, errors)).orElse(false);
+  }
+
+  private boolean analyzeLastRefTag(
+      final PageAnalysis analysis,
+      final Interval lastRefTag,
+      Collection<CheckErrorResult> errors) {
+    final int lastRefTagIndex = lastRefTag.getEndIndex();
 
     // Analyzing text for <references> tags
     boolean referencesFound = false;
@@ -91,7 +83,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     }
 
     // Search for templates like {{References}}
-    if ((referencesTemplates != null) && !referencesTemplates.isEmpty()) {
+    if (!referencesTemplates.isEmpty()) {
       List<PageElementTemplate> allTemplates = analysis.getTemplates();
       int templateNum = allTemplates.size();
       while (templateNum > 0) {
@@ -109,8 +101,8 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     }
     CheckErrorResult errorResult = createCheckErrorResult(
         analysis,
-        lastRefTag.getCompleteBeginIndex(),
-        lastRefTag.getCompleteEndIndex(),
+        lastRefTag.getBeginIndex(),
+        lastRefTag.getEndIndex(),
         referencesFound ? ErrorLevel.WARNING : ErrorLevel.ERROR);
     errors.add(errorResult);
 
@@ -202,7 +194,7 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
           boolean automatic = (errors.size() == 1) && (lastRefTagIndex <= beginIndex);
           if (automatic) {
             int tmpIndex = ContentsUtil.moveIndexBackwardWhileFound(contents, beginIndex - 1, " ");
-            automatic &= (contents.charAt(tmpIndex) != '}'); 
+            automatic = (contents.charAt(tmpIndex) != '}');
           }
           addSuggestionBeforeElement(analysis, errors, template, 2, automatic && canBeAutomatic);
         });
@@ -222,6 +214,41 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     }
 
     return true;
+  }
+
+  private Optional<ContentsInterval> findLastReference(final PageAnalysis analysis) {
+    return findLastRefTag(analysis)
+        .map(tag -> new ContentsInterval(tag.getCompleteBeginIndex(), tag.getCompleteEndIndex()))
+        .or(() -> findLastRefTemplate(analysis).map(template -> new ContentsInterval(template.getBeginIndex(), template.getEndIndex())));
+  }
+
+  private Optional<PageElementTag> findLastRefTag(final PageAnalysis analysis) {
+    final List<PageElementTag> refTags = analysis.getTags(WikiTagType.REF);
+    if (refTags == null || refTags.isEmpty()) {
+      return Optional.empty();
+    }
+    for (int numTag = refTags.size() - 1; numTag >= 0; numTag--) {
+      PageElementTag refTag = refTags.get(numTag);
+      boolean useful = analysis.getSurroundingTag(WikiTagType.NOWIKI, refTag.getBeginIndex()) == null;
+      if (useful) {
+        return Optional.of(refTag);
+      }
+    }
+    return Optional.empty();
+  }
+
+  private Optional<PageElementTemplate> findLastRefTemplate(final PageAnalysis analysis) {
+    if (refTemplates.isEmpty()) {
+      return Optional.empty();
+    }
+    final List<PageElementTemplate> templates = analysis.getTemplates();
+    for (int numTemplate = templates.size() - 1; numTemplate >= 0; numTemplate--) {
+      final PageElementTemplate template = templates.get(numTemplate);
+      if (refTemplates.contains(template.getTemplateName())) {
+       return Optional.of(template);
+      }
+    }
+    return Optional.empty();
   }
 
   private void addSuggestionBeforeElement(
@@ -277,6 +304,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
   /** Text to insert for references */
   private static final String PARAMETER_INSERT = "insert";
 
+  /** List of templates including ref tag */
+  private static final String PARAMETER_REF_TEMPLATES = "ref_templates";
+
   /** List of templates including references tag */
   private static final String PARAMETER_REFERENCES_TEMPLATES = "references_templates";
 
@@ -299,7 +329,18 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
    */
   @Override
   protected void initializeSettings() {
-    String tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
+    String tmp = getSpecificProperty(PARAMETER_REF_TEMPLATES, true, true, false);
+    refTemplates.clear();
+    if (tmp != null) {
+      List<String> tmpList = WPCConfiguration.convertPropertyToStringList(tmp);
+      if (tmpList != null) {
+        for (String tmpElement : tmpList) {
+          refTemplates.add(Page.normalizeTitle(tmpElement));
+        }
+      }
+    }
+
+    tmp = getSpecificProperty(PARAMETER_TEMPLATES, true, true, false);
     if (tmp == null) {
       tmp = getSpecificProperty(PARAMETER_REFERENCES_TEMPLATES, true, true, false);
     }
@@ -351,6 +392,9 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
     }
   }
 
+  /** List of templates including ref tag */
+  private final Set<String> refTemplates = new HashSet<>();
+
   /** List of templates including references tag */
   private final Set<String> referencesTemplates = new HashSet<>();
 
@@ -381,6 +425,13 @@ public class CheckErrorAlgorithm003 extends CheckErrorAlgorithmBase {
         new AlgorithmParameterElement(
             "text",
             GT._T("Text to insert for adding {0}", "&lt;references/&gt;"))));
+    addParameter(new AlgorithmParameter(
+        PARAMETER_REF_TEMPLATES,
+        GT._T("A list of templates resulting in the inclusion of {0}", "&lt;ref/&gt;"),
+        new AlgorithmParameterElement(
+            "template name",
+            GT._T("Template resulting in the inclusion of {0}", "&lt;ref/&gt;")),
+        true));
     addParameter(new AlgorithmParameter(
         PARAMETER_REFERENCES_TEMPLATES,
         GT._T("A list of templates resulting in the inclusion of {0}", "&lt;references/&gt;"),
