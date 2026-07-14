@@ -99,7 +99,7 @@ public class CWConfiguration {
     for (AlgorithmError.Progress progress : algorithms) {
 
       // Compute text for the algorithm
-      String text = null;
+      String text;
       CheckErrorAlgorithm algorithm = progress.algorithm;
       String link = algorithm.getLink();
       if ((link != null) &&
@@ -257,29 +257,27 @@ public class CWConfiguration {
       BufferedReader reader,
       String suffix, String otherSuffix,
       Origin origin) throws APIException {
-    StringBuilder line;
+    String line;
     try {
-      while ((line = new StringBuilder(reader.readLine())) != null) {
-        int posEqual = line.toString().indexOf('=');
-        int posSharp = line.toString().indexOf('#');
+      while ((line = reader.readLine()) != null) {
+        int posEqual = line.indexOf('=');
+        int posSharp = line.indexOf('#');
         if ((posEqual > 0) &&
             ((posSharp < 0) || (posSharp > posEqual))) {
           String name = line.substring(0, posEqual);
-          line = new StringBuilder(line.substring(posEqual + 1));
-          int posEnd = line.indexOf(" END");
+          StringBuilder value = new StringBuilder(line.substring(posEqual + 1));
+          int posEnd = value.indexOf(" END");
           while (posEnd == -1) {
             String nextLine = reader.readLine();
             if (nextLine != null) {
-              line.append("\n").append(nextLine);
-              posEnd = line.indexOf(" END");
+              value.append("\n").append(nextLine);
+              posEnd = value.indexOf(" END");
             } else {
-              posEnd = line.length();
+              posEnd = value.length();
             }
           }
-          line = new StringBuilder(line.substring(0, posEnd));
-          if (name != null) {
-            setProperty(name.trim(), line.toString(), suffix, otherSuffix, origin);
-          }
+          value.delete(posEnd, value.length());
+          setProperty(name.trim(), value.toString(), suffix, otherSuffix, origin);
           return true;
         }
       }
