@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-07-16 12:35:37+0000\n"
+"PO-Revision-Date: 2026-07-20 12:53:30+0000\n"
 "X-POT-Import-Date: 2026-07-14 16:30:31+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -3587,7 +3587,7 @@ msgstr "&Aktualiséieren"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:243
 msgid "Id"
-msgstr ""
+msgstr "ID"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:246
 msgid "User"

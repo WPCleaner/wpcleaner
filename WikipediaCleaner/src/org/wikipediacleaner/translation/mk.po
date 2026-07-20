@@ -9,7 +9,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-07-16 12:35:37+0000\n"
+"PO-Revision-Date: 2026-07-20 12:53:31+0000\n"
 "X-POT-Import-Date: 2026-07-14 16:30:31+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1562,7 +1562,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:124
 msgid "Trim text"
-msgstr "Скастри текст"
+msgstr "Поткастри текст"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:412
 msgid "Automatic replacements of ISBN"
