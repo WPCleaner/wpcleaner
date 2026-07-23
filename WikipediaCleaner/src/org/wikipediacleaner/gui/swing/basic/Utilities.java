@@ -15,9 +15,11 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -798,8 +800,19 @@ public class Utilities {
   public static ImageIcon getImageIcon(String iconName, EnumImageSize size) {
     ImageIcon icon = null;
     if ((iconName != null) && (size != null)) {
-      URL url = Utilities.class.getClassLoader().getResource(
-          "org/wikipediacleaner/images/" + size.getFolder() + "/" + iconName);
+      URL url = null;
+      final File localFile = new File(new File("images", size.getFolder()), iconName);
+      if (localFile.exists() && localFile.canRead()) {
+        try {
+          url = localFile.toURI().toURL();
+        } catch (MalformedURLException e) {
+          // Do nothing
+        }
+      }
+      if (url == null) {
+        url = Utilities.class.getClassLoader().getResource(
+            "org/wikipediacleaner/images/" + size.getFolder() + "/" + iconName);
+      }
       if (url != null) {
         icon = new ImageIcon(url);
       }
@@ -882,7 +895,7 @@ public class Utilities {
   public static boolean isDesktopSupported() {
     try {
       Class<?> desktop = Class.forName("java.awt.Desktop");
-      Method method = desktop.getMethod("isDesktopSupported", (Class[]) null);
+      Method method = desktop.getMethod("isDesktopSupported", (Class<?>[]) null);
       return (Boolean) method.invoke(null, (Object[]) null);
     } catch (Throwable e) {
       log.error("Throwable using Desktop.isDesktopSupported(): {} - {}", e.getClass().getName(), e.getMessage());
@@ -907,7 +920,7 @@ public class Utilities {
       // Attempt using Desktop class
       try {
         final Class<?> desktopClass = Class.forName("java.awt.Desktop");
-        Method method = desktopClass.getMethod("getDesktop", (Class[]) null);
+        Method method = desktopClass.getMethod("getDesktop", (Class<?>[]) null);
         final Object desktop = method.invoke(null, (Object[]) null);
         method = desktopClass.getMethod("browse", URI.class);
         method.invoke(desktop, uri);
@@ -1049,22 +1062,16 @@ public class Utilities {
   public static void addRowSorter(JTable table, TableModel model) {
     try {
       Class<?> tableRowSorterClass = Class.forName("javax.swing.table.TableRowSorter");
-      Constructor ctor = tableRowSorterClass.getConstructor(TableModel.class);
+      Constructor<?> ctor = tableRowSorterClass.getConstructor(TableModel.class);
       Object rowSorter = ctor.newInstance(model);
-      Class rowSorterClass = Class.forName("javax.swing.RowSorter");
+      Class<?> rowSorterClass = Class.forName("javax.swing.RowSorter");
       Method method = table.getClass().getMethod("setRowSorter", rowSorterClass);
       method.invoke(table, rowSorter);
     } catch (ClassNotFoundException e) {
       log.debug("ClassNotFoundException: {}", e.getMessage());
       // Nothing to be done, JVM < 6
-    } catch (NoSuchMethodException e) {
-      log.error("NoSuchMethodException: {}", e.getMessage());
-    } catch (InvocationTargetException e) {
-      log.error("InvocationTargetException: {}", e.getMessage());
-    } catch (IllegalAccessException e) {
-      log.error("IllegalAccessException: {}", e.getMessage());
-    } catch (ClassCastException e) {
-      log.error("ClassCastException: {}", e.getMessage());
+    } catch (NoSuchMethodException | InvocationTargetException | IllegalAccessException | ClassCastException e) {
+      log.error("{}}: {}", e.getClass().getSimpleName(), e.getMessage());
     } catch (Throwable e) {
       log.error("Throwable: {} - {}", e.getClass().getName(), e.getMessage());
     }
