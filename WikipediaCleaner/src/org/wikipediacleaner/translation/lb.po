@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-07-20 12:53:30+0000\n"
+"PO-Revision-Date: 2026-07-23 12:40:25+0000\n"
 "X-POT-Import-Date: 2026-07-14 16:30:31+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2022,7 +2022,7 @@ msgstr ""
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:266
 msgid "If parameters accept only integer values"
-msgstr ""
+msgstr "Wa Parametere just ganz Zuelen als Wäert akzeptéieren"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 msgid "Parameter name"
@@ -2179,7 +2179,7 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:471
 #, java-format
 msgid "Attribute {0} should be integer value"
-msgstr ""
+msgstr "D'Attribut {0} muss eng ganz Zuel als Wäert hunn"
 
 #: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
