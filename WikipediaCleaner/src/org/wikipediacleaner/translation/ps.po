@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-07-16 12:35:39+0000\n"
+"PO-Revision-Date: 2026-07-27 12:42:11+0000\n"
 "Last-Translator: UsmanKhan <khanusmanshah@gmail.com>\n"
 "Language-Team: Pashto <ps@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3151,7 +3151,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1341
 #, java-format
 msgid "Search results for {0}"
-msgstr ""
+msgstr "{0} لپاره د پلټلو پايلې"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1349
 msgid "You must input a page name for retrieving the list of backlinks"
