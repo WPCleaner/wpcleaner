@@ -32,6 +32,7 @@ import org.wikipediacleaner.WikipediaCleaner;
 import org.wikipediacleaner.api.constants.EnumLanguage;
 import org.wikipediacleaner.api.constants.EnumWikipedia;
 import org.wikipediacleaner.api.impl.MediaWikiAPI;
+import org.wikipediacleaner.gui.swing.basic.Utilities;
 import org.wikipediacleaner.i18n.GT;
 import org.wikipediacleaner.utils.ConfigurationValueStyle.StyleProperties;
 
@@ -310,6 +311,22 @@ public class Configuration implements WindowListener {
     return null;
   }
 
+  public void announceWPCleanerNG(Component parent) {
+    int result = JOptionPane.showConfirmDialog(
+        parent,
+        GT._T(
+            """
+            I have started the project of entirely rewriting WPCleaner.
+            It's clearly at the beginning, but I'm interested in early feedback.
+            Do you want to have more information about WPCleaner NG?
+            """),
+        "Wikipedia Cleaner",
+        JOptionPane.YES_NO_OPTION,
+        JOptionPane.QUESTION_MESSAGE);
+    if (result == JOptionPane.YES_OPTION) {
+      Utilities.browseURL(EnumWikipedia.EN, "Wikipedia:WPCleaner/Next Generation", false);
+    }
+  }
   /**
    * Write configuration.
    */

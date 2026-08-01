@@ -62,7 +62,8 @@ public enum ConfigurationValueBoolean {
   UPDATE_DAB_WARNING("UpdateDabWarning", true),
   UPDATE_DAB_WARNING_ALL("UpdateDabWarningAll", true),
   UPDATE_DAB_WARNING_ENCY("UpdateDabWarningEncyclo", true),
-  WIKICLEANER_COMMENT("WikiCleanerComment", true);
+  WIKICLEANER_COMMENT("WikiCleanerComment", true),
+  WPCLEANER_NG_ANNOUNCEMENT("WPCleanerNGAnnouncement", false);
 
   /**
    * Attribute name.

@@ -190,6 +190,10 @@ public class MainWindow
     public void displayWindow(BasicWindow window) {
       Configuration config = Configuration.getConfiguration();
       config.checkVersion(window.getParentComponent());
+      if (!config.getBoolean(null, ConfigurationValueBoolean.WPCLEANER_NG_ANNOUNCEMENT)) {
+        config.announceWPCleanerNG(window.getParentComponent());
+        config.setBoolean(null, ConfigurationValueBoolean.WPCLEANER_NG_ANNOUNCEMENT, true);
+      }
 
       // Check Java version
       if (!SystemUtils.isJavaVersionAtLeast(JavaVersion.JAVA_1_8)) {
