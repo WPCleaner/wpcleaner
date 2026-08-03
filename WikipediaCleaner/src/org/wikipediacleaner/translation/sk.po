@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-07-16 12:35:41+0000\n"
-"X-POT-Import-Date: 2026-07-14 16:30:31+0000\n"
+"PO-Revision-Date: 2026-08-03 12:44:24+0000\n"
+"X-POT-Import-Date: 2026-08-01 10:41:36+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sk\n"
@@ -2465,7 +2465,7 @@ msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the questio
 msgstr "Táto akcia je chránená pomocou CAPTCHA.\nAká je odpoveď na otázku zobrazenú vo vašom prehliadači?"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:63
-#: org/wikipediacleaner/gui/swing/MainWindow.java:515
+#: org/wikipediacleaner/gui/swing/MainWindow.java:519
 msgid "About"
 msgstr "O programe"
 
@@ -2906,48 +2906,48 @@ msgstr "Región"
 msgid "Variant n°{0}"
 msgstr "Variant č. {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:199
+#: org/wikipediacleaner/gui/swing/MainWindow.java:203
 #, java-format
 msgid "In the near future, WPCleaner will require Java {0} or above, but you''re currently using an older version ({1})."
 msgstr "V dohľadnej dobe bude WPCleaner vyžadovať Javu {0} alebo novšiu, ale vy momentálne používate staršiu verziu ({1})."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:205
+#: org/wikipediacleaner/gui/swing/MainWindow.java:209
 msgid "Please, upgrade to a newer version of Java"
 msgstr "Prosím, prejdite na novšiu verziu Javy"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:206
+#: org/wikipediacleaner/gui/swing/MainWindow.java:210
 msgid "Obsolete Java version"
 msgstr "Zastaraná verzia Javy"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:252
+#: org/wikipediacleaner/gui/swing/MainWindow.java:256
 #, java-format
 msgid "{0} - Version {1} ({2})"
 msgstr "{0} - Verzia {1} ({2})"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:362
+#: org/wikipediacleaner/gui/swing/MainWindow.java:366
 msgid "Message"
 msgstr "Správa"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:380
-#: org/wikipediacleaner/gui/swing/MainWindow.java:449
+#: org/wikipediacleaner/gui/swing/MainWindow.java:384
+#: org/wikipediacleaner/gui/swing/MainWindow.java:453
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:154
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:117
 msgid "Login"
 msgstr "Prihlásenie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:455
+#: org/wikipediacleaner/gui/swing/MainWindow.java:459
 msgid "Demo"
 msgstr "Demo"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:461
+#: org/wikipediacleaner/gui/swing/MainWindow.java:465
 msgid "Wiki logout"
 msgstr "Odhlásenie z wiki"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:468
+#: org/wikipediacleaner/gui/swing/MainWindow.java:472
 msgid "WPC logout"
 msgstr "Odhlásenie z WPC"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:487
+#: org/wikipediacleaner/gui/swing/MainWindow.java:491
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:564
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:566
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:201
@@ -2956,295 +2956,295 @@ msgstr "Odhlásenie z WPC"
 msgid "Options"
 msgstr "Voľby"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:494
+#: org/wikipediacleaner/gui/swing/MainWindow.java:498
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:184
 msgid "System options"
 msgstr "Systémové voľby"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:501
+#: org/wikipediacleaner/gui/swing/MainWindow.java:505
 msgid "Reload system options"
 msgstr "Znovu načítať systémové voľby"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:507
+#: org/wikipediacleaner/gui/swing/MainWindow.java:511
 msgid "Check spelling options"
 msgstr "Voľby kontroly pravopisu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:529
+#: org/wikipediacleaner/gui/swing/MainWindow.java:533
 msgid "Save username and password"
 msgstr "Uložiť používateľské meno a heslo"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:541
+#: org/wikipediacleaner/gui/swing/MainWindow.java:545
 msgid "Save username only"
 msgstr "Uložiť iba používateľské meno"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:551
+#: org/wikipediacleaner/gui/swing/MainWindow.java:555
 msgid "Save none of them"
 msgstr "Neuložiť nič"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:586
+#: org/wikipediacleaner/gui/swing/MainWindow.java:590
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:213
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:224
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:237
 msgid "Page"
 msgstr "Stránka"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:628
+#: org/wikipediacleaner/gui/swing/MainWindow.java:632
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:169
 msgid "Random page"
 msgstr "Náhodná stránka"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:635
+#: org/wikipediacleaner/gui/swing/MainWindow.java:639
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:199
 msgid "Add to list"
 msgstr "Pridať do zoznamu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:642
+#: org/wikipediacleaner/gui/swing/MainWindow.java:646
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:204
 msgid "Remove from list"
 msgstr "Odstrániť zo zoznamu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:668
+#: org/wikipediacleaner/gui/swing/MainWindow.java:672
 msgid "Search in titles"
 msgstr "Hľadať v názvoch"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:677
+#: org/wikipediacleaner/gui/swing/MainWindow.java:681
 msgid "Internal links"
 msgstr "Interné odkazy"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:686
+#: org/wikipediacleaner/gui/swing/MainWindow.java:690
 msgid "What links here"
 msgstr "Čo sem odkazuje"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:695
+#: org/wikipediacleaner/gui/swing/MainWindow.java:699
 msgid "Category members"
 msgstr "Členovia kategórie"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:704
+#: org/wikipediacleaner/gui/swing/MainWindow.java:708
 msgid "Embedded in"
 msgstr "Vložené v"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:730
+#: org/wikipediacleaner/gui/swing/MainWindow.java:734
 msgid "Load list from drive"
 msgstr "Načítať zoznam z disku"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:739
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1233
+#: org/wikipediacleaner/gui/swing/MainWindow.java:743
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1237
 msgid "Your contributions"
 msgstr "Vaše príspevky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:753
+#: org/wikipediacleaner/gui/swing/MainWindow.java:757
 msgid "Projects"
 msgstr "Projekty"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:771
+#: org/wikipediacleaner/gui/swing/MainWindow.java:775
 msgid "Preload disambiguations pages"
 msgstr "Prednačítať rozlišovacie stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:780
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1441
+#: org/wikipediacleaner/gui/swing/MainWindow.java:784
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1445
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:124
 msgid "Current disambiguation list"
 msgstr "Aktuálny zoznam rozlišovacích stránok"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:790
+#: org/wikipediacleaner/gui/swing/MainWindow.java:794
 msgid "With many disambiguation links"
 msgstr "S mnohými odkazmi na rozlišovacie stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:799
+#: org/wikipediacleaner/gui/swing/MainWindow.java:803
 msgid "Project Check Wikipedia"
 msgstr "Projekt Check Wikipedia"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:808
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1494
+#: org/wikipediacleaner/gui/swing/MainWindow.java:812
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1498
 msgid "Help requested on..."
 msgstr "Požadovaná pomoc na..."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:817
+#: org/wikipediacleaner/gui/swing/MainWindow.java:821
 msgid "Abuse filters"
 msgstr "Filtre zneužití"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:826
+#: org/wikipediacleaner/gui/swing/MainWindow.java:830
 msgid "Special lists"
 msgstr "Špeciálne zoznamy"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:835
+#: org/wikipediacleaner/gui/swing/MainWindow.java:839
 msgid "Linter categories"
 msgstr "Kategórie nástroja Linter"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:844
+#: org/wikipediacleaner/gui/swing/MainWindow.java:848
 msgid "Generate lists"
 msgstr "Vygenerovať zoznamy"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:853
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1828
+#: org/wikipediacleaner/gui/swing/MainWindow.java:857
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1832
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:194
 msgid "Local Watchlist"
 msgstr "Lokálny zoznam sledovaných"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:863
+#: org/wikipediacleaner/gui/swing/MainWindow.java:867
 msgid "Watchlist"
 msgstr "Zoznam sledovaných"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:872
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1942
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2007
+#: org/wikipediacleaner/gui/swing/MainWindow.java:876
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1946
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2011
 msgid "Random pages"
 msgstr "Náhodné stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:881
+#: org/wikipediacleaner/gui/swing/MainWindow.java:885
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:61
 msgid "Bot tools"
 msgstr "Nástroje bota"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:925
+#: org/wikipediacleaner/gui/swing/MainWindow.java:929
 msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
 msgstr "Demonstračný režim je dostupný iba na testovanie WPCleaner.\nV demonstračnom režime nebudete môcť upravovať stránky na Wikipédii.\nChcete pokračovať?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:945
+#: org/wikipediacleaner/gui/swing/MainWindow.java:949
 msgid "You must select which Wikipedia you want to work on before login"
 msgstr "Pred prihlásením musíte vybrať, na ktorej Wikipédii chcete pracovať"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:955
+#: org/wikipediacleaner/gui/swing/MainWindow.java:959
 msgid "You must select a language before login"
 msgstr "Pred prihlásením musíte vybrať jazyk"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:967
+#: org/wikipediacleaner/gui/swing/MainWindow.java:971
 msgid "You must input your username before login"
 msgstr "Pred prihlásením musíte zadať svoje používateľské meno"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:979
+#: org/wikipediacleaner/gui/swing/MainWindow.java:983
 msgid "You must input your password before login"
 msgstr "Pred prihlásením musíte zadať svoje heslo"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1086
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1090
 #, java-format
 msgid "You can learn how to configure {0} at the following URL:"
 msgstr "Ako nakonfigurovať {0} sa môžete dozvedieť na nasledujúcej adrese URL:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1133
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1137
 msgid "Activate all"
 msgstr "Aktivovať všetko"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1138
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1142
 msgid "Deactivate all"
 msgstr "Deaktivovať všetko"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1245
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1249
 msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
 msgstr "Heslo sa uloží na váš disk, takže ktokoľvek s prístupom k vášmu počítaču ho môže získať.\nSte si istý, že ho chcete uložiť?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1312
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1316
 msgid "You must input a page name for retrieving the list of internal links"
 msgstr "Pre získanie zoznamu interných odkazov musíte zadať názov stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1326
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1330
 #, java-format
 msgid "Internal links in {0}"
 msgstr "Interné odkazy v {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1333
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1337
 msgid "You must input a page name"
 msgstr "Musíte zadať názov stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1341
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1345
 #, java-format
 msgid "Search results for {0}"
 msgstr "Výsledky vyhľadávania pre {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1349
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1353
 msgid "You must input a page name for retrieving the list of backlinks"
 msgstr "Pre získanie zoznamu spätných odkazov musíte zadať názov stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1365
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1369
 #, java-format
 msgid "Links to {0}"
 msgstr "Odkazy na {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1373
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1377
 msgid "You must input a page name for retrieving the list of category members"
 msgstr "Pre získanie zoznamu členov kategórie musíte zadať názov stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1391
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1395
 #, java-format
 msgid "Category members of {0}"
 msgstr "Členovia kategórie {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1399
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1403
 msgid "You must input a page name for retrieving the list of page in which it is embedded"
 msgstr "Pre získanie zoznamu stránok, v ktorých je vložená, musíte zadať názov stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1417
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1421
 #, java-format
 msgid "Template {0} embedded in"
 msgstr "Šablóna {0} vložená v"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1466
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1470
 msgid "Pages with many disambiguation links"
 msgstr "Stránky s mnohými odkazmi na rozlišovacie stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1507
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1511
 msgid "What abuse filter are you interested in?"
 msgstr "O ktorý filter zneužití máte záujem?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1522
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1526
 #, java-format
 msgid "Hits for filter {0}"
 msgstr "Zásahy filtra {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1595
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1599
 msgid "Without templates"
 msgstr "Bez šablón"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1598
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1602
 msgid "With templates"
 msgstr "So šablónami"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1616
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1620
 msgid "All namespaces"
 msgstr "Všetky menné priestory"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1630
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1634
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:232
 msgid "Main"
 msgstr "Hlavný"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1686
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1690
 msgid "All disambiguations pages"
 msgstr "Všetky rozlišovacie stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1842
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1846
 msgid "Watch list"
 msgstr "Zoznam sledovaných"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1872
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1876
 msgid "Unformatted list of page names"
 msgstr "Neformátovaný zoznam názvov stránok"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1873
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1877
 msgid "Internal links in a formatted list"
 msgstr "Interné odkazy vo formátovanom zozname"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1876
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "The file must be encoded in UTF-8 to be read correctly."
 msgstr "Aby sa súbor správne načítal, musí byť kódovaný v UTF-8."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1877
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1881
 msgid "In which format is the file?"
 msgstr "V akom formáte je súbor?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1930
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1934
 msgid "List"
 msgstr "Zoznam"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1946
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1950
 msgid "Random redirect pages"
 msgstr "Náhodné presmerovacie stránky"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1978
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1982
 msgid "How many pages do you want?"
 msgstr "Koľko stránok chcete?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1990
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1994
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "Počet stránok musí byť medzi {0} a {1}"
@@ -3857,35 +3857,35 @@ msgstr "Nie"
 msgid "No to all"
 msgstr "Nie pre všetky"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:122
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:119
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:124
 #, java-format
 msgid "An error occurred: {0}"
 msgstr "Vyskytla sa chyba: {0}"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:127
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:129
 msgid "An unknown error occurred"
 msgstr "Vyskytla sa neznáma chyba"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:187
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:189
 #, java-format
 msgid "You need to define the {0} property in WPCleaner configuration."
 msgstr "V konfigurácii WPCleaner musíte definovať vlastnosť {0}."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:215
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:217
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
 msgstr "V konfigurácii WPCleaner musíte definovať vlastnosti {0}."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:227
 msgid "This function requires some configuration."
 msgstr "Táto funkcia vyžaduje určitú konfiguráciu."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:233
 msgid "Do you want to display help on configuring WPCleaner ?"
 msgstr "Chcete zobraziť pomocníka ku konfigurácii WPCleaner?"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:335
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:337
 msgid "Other..."
 msgstr "Iné..."
 
@@ -5602,9 +5602,13 @@ msgstr[0] "Trvalo to {0} sekundu"
 msgstr[1] "Trvalo to {0} sekundy"
 msgstr[2] "Trvalo to {0} sekúnd"
 
-#: org/wikipediacleaner/utils/Configuration.java:300
+#: org/wikipediacleaner/utils/Configuration.java:301
 msgid "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\nPreviously, options were global for every Wikipedia.\nThe current options will be saved as the options for your preferred Wikipedia.\nWhat is your preferred Wikipedia ?"
 msgstr "Voľby programu Wikipedia Cleaner sa zmenili tak, aby umožňovali rôzne nastavenia pre každú Wikipédiu.\nPredtým boli voľby globálne pre každú Wikipédiu.\nAktuálne voľby sa uložia ako voľby pre vašu preferovanú Wikipédiu.\nAká je vaša preferovaná Wikipédia?"
+
+#: org/wikipediacleaner/utils/Configuration.java:318
+msgid "I have started the project of entirely rewriting WPCleaner.\nIt's clearly at the beginning, but I'm interested in early feedback.\nDo you want to have more information about WPCleaner NG?\n"
+msgstr ""
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:60
 msgid "A reference name cannot be a numeric key"
