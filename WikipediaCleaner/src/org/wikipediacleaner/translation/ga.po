@@ -8,8 +8,8 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-07-16 12:35:34+0000\n"
-"X-POT-Import-Date: 2026-07-14 16:30:31+0000\n"
+"PO-Revision-Date: 2026-08-03 12:44:17+0000\n"
+"X-POT-Import-Date: 2026-08-01 10:41:36+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ga\n"
@@ -2471,7 +2471,7 @@ msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the questio
 msgstr "Tá an gníomh seo faoi chosaint ag CAPTCHA.\nCad é freagra na ceiste a thaispeántar i do bhrabhsálaí?"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:63
-#: org/wikipediacleaner/gui/swing/MainWindow.java:515
+#: org/wikipediacleaner/gui/swing/MainWindow.java:519
 msgid "About"
 msgstr "Maidir"
 
@@ -2912,48 +2912,48 @@ msgstr "Réigiún"
 msgid "Variant n°{0}"
 msgstr "Leagan uimh. {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:199
+#: org/wikipediacleaner/gui/swing/MainWindow.java:203
 #, java-format
 msgid "In the near future, WPCleaner will require Java {0} or above, but you''re currently using an older version ({1})."
 msgstr "Go luath amach anseo, beidh Java {0} nó níos airde ag teastáil ó WPCleaner, ach tá leagan níos sine ({1}) in úsáid agat faoi láthair."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:205
+#: org/wikipediacleaner/gui/swing/MainWindow.java:209
 msgid "Please, upgrade to a newer version of Java"
 msgstr "Uasghrádaigh go leagan níos nuaí de Java le do thoil"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:206
+#: org/wikipediacleaner/gui/swing/MainWindow.java:210
 msgid "Obsolete Java version"
 msgstr "Leagan Java atá as dáta"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:252
+#: org/wikipediacleaner/gui/swing/MainWindow.java:256
 #, java-format
 msgid "{0} - Version {1} ({2})"
 msgstr "{0} - Leagan {1} ({2})"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:362
+#: org/wikipediacleaner/gui/swing/MainWindow.java:366
 msgid "Message"
 msgstr "Teachtaireacht"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:380
-#: org/wikipediacleaner/gui/swing/MainWindow.java:449
+#: org/wikipediacleaner/gui/swing/MainWindow.java:384
+#: org/wikipediacleaner/gui/swing/MainWindow.java:453
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:154
 #: org/wikipediacleaner/gui/swing/worker/LoginWorker.java:117
 msgid "Login"
 msgstr "Logáil isteach"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:455
+#: org/wikipediacleaner/gui/swing/MainWindow.java:459
 msgid "Demo"
 msgstr "Taispeántas"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:461
+#: org/wikipediacleaner/gui/swing/MainWindow.java:465
 msgid "Wiki logout"
 msgstr "Logáil amach Vicí"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:468
+#: org/wikipediacleaner/gui/swing/MainWindow.java:472
 msgid "WPC logout"
 msgstr "Logáil amach WPC"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:487
+#: org/wikipediacleaner/gui/swing/MainWindow.java:491
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:564
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:566
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:201
@@ -2962,295 +2962,295 @@ msgstr "Logáil amach WPC"
 msgid "Options"
 msgstr "Roghanna"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:494
+#: org/wikipediacleaner/gui/swing/MainWindow.java:498
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:184
 msgid "System options"
 msgstr "Roghanna córais"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:501
+#: org/wikipediacleaner/gui/swing/MainWindow.java:505
 msgid "Reload system options"
 msgstr "Athlódáil roghanna córais"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:507
+#: org/wikipediacleaner/gui/swing/MainWindow.java:511
 msgid "Check spelling options"
 msgstr "Seiceáil roghanna litrithe"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:529
+#: org/wikipediacleaner/gui/swing/MainWindow.java:533
 msgid "Save username and password"
 msgstr "Sábháil ainm úsáideora agus pasfhocal"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:541
+#: org/wikipediacleaner/gui/swing/MainWindow.java:545
 msgid "Save username only"
 msgstr "Sábháil ainm úsáideora amháin"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:551
+#: org/wikipediacleaner/gui/swing/MainWindow.java:555
 msgid "Save none of them"
 msgstr "Sábháil aon cheann acu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:586
+#: org/wikipediacleaner/gui/swing/MainWindow.java:590
 #: org/wikipediacleaner/gui/swing/deadlink/DeadLinkListTableModel.java:213
 #: org/wikipediacleaner/gui/swing/linter/LinterErrorListTableModel.java:224
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:237
 msgid "Page"
 msgstr "Leathanach"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:628
+#: org/wikipediacleaner/gui/swing/MainWindow.java:632
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:169
 msgid "Random page"
 msgstr "Leathanach randamach"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:635
+#: org/wikipediacleaner/gui/swing/MainWindow.java:639
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:199
 msgid "Add to list"
 msgstr "Cuir leis an liosta"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:642
+#: org/wikipediacleaner/gui/swing/MainWindow.java:646
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:204
 msgid "Remove from list"
 msgstr "Bain den liosta"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:668
+#: org/wikipediacleaner/gui/swing/MainWindow.java:672
 msgid "Search in titles"
 msgstr "Cuardaigh i dteidil"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:677
+#: org/wikipediacleaner/gui/swing/MainWindow.java:681
 msgid "Internal links"
 msgstr "Naisc inmheánacha"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:686
+#: org/wikipediacleaner/gui/swing/MainWindow.java:690
 msgid "What links here"
 msgstr "Cad a nascann anseo"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:695
+#: org/wikipediacleaner/gui/swing/MainWindow.java:699
 msgid "Category members"
 msgstr "Baill na catagóire"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:704
+#: org/wikipediacleaner/gui/swing/MainWindow.java:708
 msgid "Embedded in"
 msgstr "Leabaithe i"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:730
+#: org/wikipediacleaner/gui/swing/MainWindow.java:734
 msgid "Load list from drive"
 msgstr "Luchtaigh liosta ón tiomántán"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:739
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1233
+#: org/wikipediacleaner/gui/swing/MainWindow.java:743
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1237
 msgid "Your contributions"
 msgstr "Do chuid ranníocaíochtaí"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:753
+#: org/wikipediacleaner/gui/swing/MainWindow.java:757
 msgid "Projects"
 msgstr "Tionscadail"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:771
+#: org/wikipediacleaner/gui/swing/MainWindow.java:775
 msgid "Preload disambiguations pages"
 msgstr "Réamhluchtaigh leathanaigh easbhríochta"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:780
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1441
+#: org/wikipediacleaner/gui/swing/MainWindow.java:784
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1445
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:124
 msgid "Current disambiguation list"
 msgstr "Liosta athbhríochta reatha"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:790
+#: org/wikipediacleaner/gui/swing/MainWindow.java:794
 msgid "With many disambiguation links"
 msgstr "Le go leor naisc dhímhínithe"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:799
+#: org/wikipediacleaner/gui/swing/MainWindow.java:803
 msgid "Project Check Wikipedia"
 msgstr "Seiceáil Tionscadail Vicipéid"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:808
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1494
+#: org/wikipediacleaner/gui/swing/MainWindow.java:812
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1498
 msgid "Help requested on..."
 msgstr "Cabhair iarrtha ar..."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:817
+#: org/wikipediacleaner/gui/swing/MainWindow.java:821
 msgid "Abuse filters"
 msgstr "Scagairí mí-úsáide"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:826
+#: org/wikipediacleaner/gui/swing/MainWindow.java:830
 msgid "Special lists"
 msgstr "Liostaí speisialta"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:835
+#: org/wikipediacleaner/gui/swing/MainWindow.java:839
 msgid "Linter categories"
 msgstr "Catagóirí Linter"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:844
+#: org/wikipediacleaner/gui/swing/MainWindow.java:848
 msgid "Generate lists"
 msgstr "Gin liostaí"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:853
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1828
+#: org/wikipediacleaner/gui/swing/MainWindow.java:857
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1832
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:194
 msgid "Local Watchlist"
 msgstr "Liosta Faire Áitiúil"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:863
+#: org/wikipediacleaner/gui/swing/MainWindow.java:867
 msgid "Watchlist"
 msgstr "Liosta faire"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:872
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1942
-#: org/wikipediacleaner/gui/swing/MainWindow.java:2007
+#: org/wikipediacleaner/gui/swing/MainWindow.java:876
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1946
+#: org/wikipediacleaner/gui/swing/MainWindow.java:2011
 msgid "Random pages"
 msgstr "Leathanaigh randamacha"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:881
+#: org/wikipediacleaner/gui/swing/MainWindow.java:885
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:61
 msgid "Bot tools"
 msgstr "Uirlisí bota"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:925
+#: org/wikipediacleaner/gui/swing/MainWindow.java:929
 msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
 msgstr "Níl an mód taispeána ar fáil ach le haghaidh tástála WPCleaner.\nNí bheidh tú in ann leathanaigh ar Vicipéid a mhodhnú sa mhodh taispeána.\nAr mhaith leat leanúint ar aghaidh?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:945
+#: org/wikipediacleaner/gui/swing/MainWindow.java:949
 msgid "You must select which Wikipedia you want to work on before login"
 msgstr "Ní mór duit a roghnú cén Vicipéid ar mhaith leat oibriú uirthi sula logálann tú isteach."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:955
+#: org/wikipediacleaner/gui/swing/MainWindow.java:959
 msgid "You must select a language before login"
 msgstr "Ní mór duit teanga a roghnú sula logálann tú isteach"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:967
+#: org/wikipediacleaner/gui/swing/MainWindow.java:971
 msgid "You must input your username before login"
 msgstr "Ní mór duit d’ainm úsáideora a chur isteach sula logálann tú isteach"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:979
+#: org/wikipediacleaner/gui/swing/MainWindow.java:983
 msgid "You must input your password before login"
 msgstr "Ní mór duit do phasfhocal a ionchur sula logálann tú isteach"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1086
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1090
 #, java-format
 msgid "You can learn how to configure {0} at the following URL:"
 msgstr "Is féidir leat foghlaim conas {0} a chumrú ag an URL seo a leanas:"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1133
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1137
 msgid "Activate all"
 msgstr "Gníomhachtaigh gach rud"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1138
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1142
 msgid "Deactivate all"
 msgstr "Díghníomhachtaigh gach rud"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1245
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1249
 msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
 msgstr "Sábhálfar an focal faire ar do dhiosca, ionas go mbeidh aon duine a bhfuil rochtain aige ar do ríomhaire in ann é a fháil.\nAn bhfuil tú cinnte gur mian leat é a shábháil?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1312
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1316
 msgid "You must input a page name for retrieving the list of internal links"
 msgstr "Ní mór duit ainm leathanaigh a ionchur chun an liosta de naisc inmheánacha a aisghabháil"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1326
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1330
 #, java-format
 msgid "Internal links in {0}"
 msgstr "Naisc inmheánacha i {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1333
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1337
 msgid "You must input a page name"
 msgstr "Ní mór duit ainm leathanaigh a ionchur"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1341
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1345
 #, java-format
 msgid "Search results for {0}"
 msgstr "Torthaí cuardaigh do {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1349
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1353
 msgid "You must input a page name for retrieving the list of backlinks"
 msgstr "Ní mór duit ainm leathanaigh a ionchur chun an liosta naisc siar a aisghabháil"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1365
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1369
 #, java-format
 msgid "Links to {0}"
 msgstr "Naisc chuig {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1373
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1377
 msgid "You must input a page name for retrieving the list of category members"
 msgstr "Ní mór duit ainm leathanaigh a ionchur chun liosta na mball catagóire a aisghabháil"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1391
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1395
 #, java-format
 msgid "Category members of {0}"
 msgstr "Baill chatagóire de {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1399
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1403
 msgid "You must input a page name for retrieving the list of page in which it is embedded"
 msgstr "Ní mór duit ainm leathanaigh a ionchur chun liosta na leathanach ina bhfuil sé leabaithe a aisghabháil"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1417
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1421
 #, java-format
 msgid "Template {0} embedded in"
 msgstr "Teimpléad {0} leabaithe i"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1466
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1470
 msgid "Pages with many disambiguation links"
 msgstr "Leathanaigh a bhfuil go leor naisc dhímhíniúcháin iontu"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1507
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1511
 msgid "What abuse filter are you interested in?"
 msgstr "Cén scagaire mí-úsáide a bhfuil suim agat ann?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1522
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1526
 #, java-format
 msgid "Hits for filter {0}"
 msgstr "Buillí don scagaire {0}"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1595
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1599
 msgid "Without templates"
 msgstr "Gan teimpléid"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1598
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1602
 msgid "With templates"
 msgstr "Le teimpléid"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1616
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1620
 msgid "All namespaces"
 msgstr "Gach ainmspás"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1630
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1634
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:232
 msgid "Main"
 msgstr "Príomh"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1686
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1690
 msgid "All disambiguations pages"
 msgstr "Gach leathanach easbhríochta"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1842
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1846
 msgid "Watch list"
 msgstr "Liosta faire"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1872
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1876
 msgid "Unformatted list of page names"
 msgstr "Liosta neamhfhormáidithe d'ainmneacha leathanach"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1873
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1877
 msgid "Internal links in a formatted list"
 msgstr "Naisc inmheánacha i liosta formáidithe"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1876
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "The file must be encoded in UTF-8 to be read correctly."
 msgstr "Ní mór an comhad a bheith ionchódaithe in UTF-8 le go léifear i gceart é."
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1877
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1881
 msgid "In which format is the file?"
 msgstr "Cén fhormáid atá ar an gcomhad?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1930
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1934
 msgid "List"
 msgstr "Liosta"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1946
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1950
 msgid "Random redirect pages"
 msgstr "Leathanaigh atreoraithe randamacha"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1978
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1982
 msgid "How many pages do you want?"
 msgstr "Cé mhéad leathanach atá uait?"
 
-#: org/wikipediacleaner/gui/swing/MainWindow.java:1990
+#: org/wikipediacleaner/gui/swing/MainWindow.java:1994
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
 msgstr "Ní mór líon na leathanach a bheith idir {0} agus {1}"
@@ -3867,35 +3867,35 @@ msgstr "Níl"
 msgid "No to all"
 msgstr "Níl le gach duine"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:117
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:122
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:119
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:124
 #, java-format
 msgid "An error occurred: {0}"
 msgstr "Tharla earráid: {0}"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:127
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:129
 msgid "An unknown error occurred"
 msgstr "Tharla earráid anaithnid"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:187
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:189
 #, java-format
 msgid "You need to define the {0} property in WPCleaner configuration."
 msgstr "Ní mór duit an mhaoin {0} a shainiú i gcumraíocht WPCleaner."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:215
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:217
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
 msgstr "Ní mór duit na hairíonna {0} a shainiú i gcumraíocht WPCleaner."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:225
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:227
 msgid "This function requires some configuration."
 msgstr "Éilíonn an fheidhm seo roinnt cumraíochta."
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:231
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:233
 msgid "Do you want to display help on configuring WPCleaner ?"
 msgstr "Ar mhaith leat cabhair a thaispeáint maidir le WPCleaner a chumrú?"
 
-#: org/wikipediacleaner/gui/swing/basic/Utilities.java:335
+#: org/wikipediacleaner/gui/swing/basic/Utilities.java:337
 msgid "Other..."
 msgstr "Eile..."
 
@@ -5644,9 +5644,13 @@ msgstr[2] "\nfew=Thóg sé {0} soicind"
 msgstr[3] "\nmany=Thóg sé {0} soicind"
 msgstr[4] "\nother=Thóg sé {0} soicind"
 
-#: org/wikipediacleaner/utils/Configuration.java:300
+#: org/wikipediacleaner/utils/Configuration.java:301
 msgid "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\nPreviously, options were global for every Wikipedia.\nThe current options will be saved as the options for your preferred Wikipedia.\nWhat is your preferred Wikipedia ?"
 msgstr "Tá roghanna Glantacháin Vicipéid athraithe chun socruithe difriúla a cheadú do gach Vicipéid.\nRoimhe seo, bhí roghanna domhanda do gach Vicipéid.\nSábhálfar na roghanna reatha mar roghanna do do Vicipéid is fearr leat.\nCad é do Vicipéid is fearr leat?"
+
+#: org/wikipediacleaner/utils/Configuration.java:318
+msgid "I have started the project of entirely rewriting WPCleaner.\nIt's clearly at the beginning, but I'm interested in early feedback.\nDo you want to have more information about WPCleaner NG?\n"
+msgstr ""
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:60
 msgid "A reference name cannot be a numeric key"
