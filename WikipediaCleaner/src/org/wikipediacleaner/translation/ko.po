@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-08-03 12:44:20+0000\n"
+"PO-Revision-Date: 2026-08-06 12:34:35+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -5577,7 +5577,7 @@ msgstr "Wikipedia Cleaner 옵션이 각 위키백과 별로 다른 설정을 할
 
 #: org/wikipediacleaner/utils/Configuration.java:318
 msgid "I have started the project of entirely rewriting WPCleaner.\nIt's clearly at the beginning, but I'm interested in early feedback.\nDo you want to have more information about WPCleaner NG?\n"
-msgstr ""
+msgstr "WPCleaner를 완전히 새로 작성하는 프로젝트를 시작했습니다!\n아직 초기 단계이지만, 여러분의 의견을 듣고 싶습니다!\nWPCleaner NG에 대해 더 자세히 알고 싶으신가요?\n"
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:60
 msgid "A reference name cannot be a numeric key"

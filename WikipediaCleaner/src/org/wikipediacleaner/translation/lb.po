@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-08-03 12:44:20+0000\n"
+"PO-Revision-Date: 2026-08-06 12:34:35+0000\n"
 "X-POT-Import-Date: 2026-08-01 10:41:36+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2479,7 +2479,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:179
 msgid "regex"
-msgstr ""
+msgstr "Regex"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:167
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:169
