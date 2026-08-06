@@ -2,6 +2,7 @@
 # Exported from translatewiki.net
 #
 # Author: Abijeet Patro
+# Author: Henryk Siuda
 # Author: MrJaroslavik
 # Author: MrJaroslavik
 # Author: Patriccck
@@ -18,7 +19,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-08-03 12:44:14+0000\n"
+"PO-Revision-Date: 2026-08-06 12:34:30+0000\n"
 "Last-Translator: Matěj S. <matejsuchanek97@gmail.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -38,7 +39,7 @@ msgstr "Rozšíření {0} je nyní k dispozici na všech wiki stránkách WikiMe
 
 #: org/wikipediacleaner/Version.java:32
 msgid "It identifies wikitext patterns that must or can be fixed in pages."
-msgstr ""
+msgstr "Identifikuje vzory wikitextu, které je nutné nebo možné na stránkách opravit."
 
 #: org/wikipediacleaner/Version.java:33
 msgid "It also provides some guidance about what the issues are with those patterns and how to fix them."
