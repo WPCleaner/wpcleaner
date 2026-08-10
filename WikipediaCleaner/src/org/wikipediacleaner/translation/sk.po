@@ -1,6 +1,7 @@
 # Translation of WPCleaner to Slovak (slovenčina)
 # Exported from translatewiki.net
 #
+# Author: KormiSK
 # Author: Wizzard
 # --
 # This file is distributed under the same license as the wikicleaner package.
@@ -8,7 +9,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-08-03 12:44:24+0000\n"
+"PO-Revision-Date: 2026-08-10 12:43:59+0000\n"
 "X-POT-Import-Date: 2026-08-01 10:41:36+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5608,7 +5609,7 @@ msgstr "Voľby programu Wikipedia Cleaner sa zmenili tak, aby umožňovali rôzn
 
 #: org/wikipediacleaner/utils/Configuration.java:318
 msgid "I have started the project of entirely rewriting WPCleaner.\nIt's clearly at the beginning, but I'm interested in early feedback.\nDo you want to have more information about WPCleaner NG?\n"
-msgstr ""
+msgstr "Začal som projekt úplného prepísania WPCleaneru. Je to samozrejme na začiatku, ale zaujíma ma skorá spätná väzba. Chcete viac informácií o WPCleaneri NG?\n"
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:60
 msgid "A reference name cannot be a numeric key"

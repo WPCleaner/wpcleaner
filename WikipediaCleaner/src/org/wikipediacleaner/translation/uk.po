@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-08-03 12:44:25+0000\n"
+"PO-Revision-Date: 2026-08-10 12:44:00+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Ukrainian <uk@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -385,12 +385,12 @@ msgstr "Заголовок розділу, куди можна додати {0}"
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:458
 #, java-format
 msgid "Section headings where a {0} can be added before"
-msgstr ""
+msgstr "Заголовки розділів, перед якими можна додати {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:461
 #, java-format
 msgid "Section heading where a {0} can be added before"
-msgstr ""
+msgstr "Заголовок розділу, перед яким можна додати {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a00x/a003/CheckErrorAlgorithm003.java:465
 #, java-format

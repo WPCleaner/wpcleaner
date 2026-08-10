@@ -18,7 +18,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-08-03 12:44:17+0000\n"
+"PO-Revision-Date: 2026-08-10 12:43:51+0000\n"
 "Last-Translator: reza <reza.energy@gmail.com>\n"
 "Language-Team: Persian <fa@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2489,7 +2489,7 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:63
 #: org/wikipediacleaner/gui/swing/MainWindow.java:519
 msgid "About"
-msgstr ""
+msgstr "درباره"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:177
 msgid "Original text"
