@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-08-03 12:44:23+0000\n"
+"PO-Revision-Date: 2026-08-27 12:32:26+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -77,7 +77,7 @@ msgstr "Proszę, zgłaszaj mi każdy napotkany problem."
 #: org/wikipediacleaner/Version.java:49
 #, java-format
 msgid "I hope you''ll like {0}."
-msgstr "Mam nadzieję, że spodoba ci się {0}."
+msgstr "Mam nadzieję, że spodoba Ci się {0}."
 
 #: org/wikipediacleaner/Version.java:50
 #, java-format
@@ -2239,7 +2239,7 @@ msgstr[2] "Naprawiłaś/eś {0} błędów \"{1}\""
 #: org/wikipediacleaner/api/constants/Contributions.java:84
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
-msgstr "Nie ma jeszcze żadnego twojego wkładu na \"{0}\"."
+msgstr "Nie ma jeszcze żadnego Twojego wkładu na „{0}”."
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:18
 msgid "Dormant pages"
@@ -3214,7 +3214,7 @@ msgstr "Z wieloma linkami do ujednoznacznień"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1511
 msgid "What abuse filter are you interested in?"
-msgstr "Który filtr nadużyć cię interesuje?"
+msgstr "Który filtr nadużyć Cię interesuje?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1526
 #, java-format
@@ -5643,7 +5643,7 @@ msgstr[2] "Zajęło to {0} sekund"
 
 #: org/wikipediacleaner/utils/Configuration.java:301
 msgid "Wikipedia Cleaner options have changed to allow different settings for each Wikipedia.\nPreviously, options were global for every Wikipedia.\nThe current options will be saved as the options for your preferred Wikipedia.\nWhat is your preferred Wikipedia ?"
-msgstr "Opcje programu Wikipedia Cleaner zostały pozmieniane tak, by pozwolić na różne ustawienia dla każdej Wikipedii.\nPoprzednio ustawienia były globalne dla wszystkich Wikipedii.\nTwoje obecnie ustawienia zostaną zachowane jako opcje dla twojej ulubionej Wikipedii\nWskaż twoją ulubioną Wikipedię."
+msgstr "Opcje programu Wikipedia Cleaner zostały pozmieniane tak, by pozwolić na różne ustawienia dla każdej Wikipedii.\nPoprzednio ustawienia były globalne dla wszystkich Wikipedii.\nTwoje obecnie ustawienia zostaną zachowane jako opcje dla Twojej ulubionej Wikipedii.\nWskaż Twoją ulubioną Wikipedię."
 
 #: org/wikipediacleaner/utils/Configuration.java:318
 msgid "I have started the project of entirely rewriting WPCleaner.\nIt's clearly at the beginning, but I'm interested in early feedback.\nDo you want to have more information about WPCleaner NG?\n"
