@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-09-14 12:09:59+0000\n"
+"PO-Revision-Date: 2026-09-21 12:07:42+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Polish <pl@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2487,11 +2487,11 @@ msgstr ""
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1789
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
-msgstr "To działanie posiada zabezpieczenie w postaci CAPTCHA.\nJaka jest odpowiedź na następujące pytanie?"
+msgstr "To działanie ma zabezpieczenie w postaci CAPTCHA.\nJaka jest odpowiedź na następujące pytanie?"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1796
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
-msgstr "To działanie posiada zabezpieczenie w postaci CAPTCHA.\nJaka jest odpowiedź na pytanie wyświetlone w przeglądarce?"
+msgstr "To działanie ma zabezpieczenie w postaci CAPTCHA.\nJaka jest odpowiedź na pytanie wyświetlone w przeglądarce?"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:63
 #: org/wikipediacleaner/gui/swing/MainWindow.java:519
