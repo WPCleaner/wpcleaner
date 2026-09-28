@@ -16,7 +16,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-09-14 12:10:02+0000\n"
+"PO-Revision-Date: 2026-09-28 12:07:02+0000\n"
 "X-POT-Import-Date: 2026-08-01 10:41:36+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -5574,7 +5574,7 @@ msgstr "維基百科清理器選項已更改為允許各個維基百科進行不
 
 #: org/wikipediacleaner/utils/Configuration.java:318
 msgid "I have started the project of entirely rewriting WPCleaner.\nIt's clearly at the beginning, but I'm interested in early feedback.\nDo you want to have more information about WPCleaner NG?\n"
-msgstr ""
+msgstr "我已啟動完全覆寫 WPCleaner 專案。\n目前專案雖處於起步階段，但歡迎給予初期意見回饋。\n您想了解更多關於 WPCleaner NG 的資訊嗎？\n"
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:60
 msgid "A reference name cannot be a numeric key"
