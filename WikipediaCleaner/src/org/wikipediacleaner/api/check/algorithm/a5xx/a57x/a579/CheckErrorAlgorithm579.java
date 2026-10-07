@@ -8,15 +8,9 @@
 package org.wikipediacleaner.api.check.algorithm.a5xx.a57x.a579;
 
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
-import javax.annotation.Nonnull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.check.CheckErrorResult;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithmBase;
 import org.wikipediacleaner.api.data.PageElementTag;
@@ -31,19 +25,16 @@ import org.wikipediacleaner.api.data.contents.tag.WikiTagType;
  * <br>
  * Error 579: Tag simplification.
  */
+@SuppressWarnings("unused")
 public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
-
-  @Nonnull private static final Logger log = LoggerFactory.getLogger(CheckErrorAlgorithm579.class);
 
   public CheckErrorAlgorithm579() {
     super("Tag simplification");
   }
 
-  private final static Map<TagType, Boolean> tagTypes = new HashMap<>();
-  
-  static {
-    tagTypes.put(WikiTagType.REF, Boolean.TRUE);
-  }
+  private static final List<TagType> TAG_TYPES = List.of(WikiTagType.REF);
+  private static final Set<TagType> IGNORE_WHITESPACE = Set.of(WikiTagType.REF);
+  private static final Set<TagType> DELETE_WITHOUT_ATTRIBUTES = Set.of(WikiTagType.REF);
 
   /**
    * Analyze a page to check if errors are present.
@@ -63,8 +54,8 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
 
     // Check each tag type
     boolean result = false;
-    for (Entry<TagType, Boolean> entry : tagTypes.entrySet()) {
-      result |= analyzeTagType(analysis, errors, entry.getKey(), entry.getValue());
+    for (TagType tagType : TAG_TYPES) {
+      result |= analyzeTagType(analysis, errors, tagType);
     }
 
     return result;
@@ -81,8 +72,7 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
   private boolean analyzeTagType(
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
-      TagType tagType,
-      Boolean ignoreWhitespace) {
+      TagType tagType) {
 
     // Check each tag
     List<PageElementTag> tags = analysis.getCompleteTags(tagType);
@@ -90,8 +80,10 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
       return false;
     }
     boolean result = false;
+    boolean ignoreWhitespace = IGNORE_WHITESPACE.contains(tagType);
+    boolean deleteWithoutAttributes = DELETE_WITHOUT_ATTRIBUTES.contains(tagType);
     for (PageElementTag tag : tags) {
-      result |= analyzeTag(analysis, errors, tag, ignoreWhitespace);
+      result |= analyzeTag(analysis, errors, tag, ignoreWhitespace, deleteWithoutAttributes);
     }
     return result;
   }
@@ -108,7 +100,8 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
       PageAnalysis analysis,
       Collection<CheckErrorResult> errors,
       PageElementTag tag,
-      Boolean ignoreWhitespace) {
+      boolean ignoreWhitespace,
+      boolean deleteWithoutAttributes) {
 
     // Check if tag has problems
     if (!tag.isComplete() || tag.isFullTag()) {
@@ -131,10 +124,15 @@ public class CheckErrorAlgorithm579 extends CheckErrorAlgorithmBase {
     int beginIndex = tag.getCompleteBeginIndex();
     int endIndex = tag.getCompleteEndIndex();
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
-    String replacement = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1) + " />";
-    errorResult.addReplacement(
-        replacement,
-        (tag.getValueEndIndex() == tag.getValueBeginIndex()) || Boolean.TRUE.equals(ignoreWhitespace));
+    boolean whitespaceOK = (tag.getValueEndIndex() == tag.getValueBeginIndex()) || ignoreWhitespace;
+    if (deleteWithoutAttributes && tag.getParametersCount() == 0) {
+      errorResult.addReplacement("", whitespaceOK);
+    } else {
+      String replacement = contents.substring(tag.getBeginIndex(), tag.getEndIndex() - 1) + " />";
+      errorResult.addReplacement(
+          replacement,
+          whitespaceOK);
+    }
     errors.add(errorResult);
 
     return true;
