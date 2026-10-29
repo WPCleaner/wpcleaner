@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-10-15 12:07:19+0000\n"
+"PO-Revision-Date: 2026-10-29 12:06:04+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2697,7 +2697,7 @@ msgstr "백링크를 도움이 필요한 것으로 표시"
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:328
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:256
 msgid "Link count"
-msgstr "연결 갯수"
+msgstr "연결 개수"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:376
 msgid "Filter namespaces"
