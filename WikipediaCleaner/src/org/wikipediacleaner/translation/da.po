@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-10-19 12:07:54+0000\n"
+"PO-Revision-Date: 2026-11-02 12:07:02+0000\n"
 "Last-Translator: Nicolas Vervelle <Unknown>\n"
 "Language-Team: Danish <da@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -22,7 +22,7 @@ msgstr ""
 "X-Launchpad-Export-Date: 2014-09-21 06:01+0000\n"
 "X-Generator: MediaWiki 1.48.0-alpha; Translate 2026-09-08\n"
 "Language: da\n"
-"X-POT-Import-Date: 2026-08-01 10:41:36+0000\n"
+"X-POT-Import-Date: 2026-10-30 14:30:23+0000\n"
 "X-Translation-Project: translatewiki.net <https://translatewiki.net>\n"
 
 #: org/wikipediacleaner/Version.java:31
@@ -1299,41 +1299,41 @@ msgstr "Et internt link, der kan udtrækkes, når det er i slutningen af det eks
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:882
 msgid "A list of links for which the external link can be removed it it takes all the text"
-msgstr ""
+msgstr "En liste over henvisninger, hvor den eksterne henvisninger kan fjernes, hvis det tager al teksten"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:886
 msgid "An internal link for which the external link can be removed it it takes all the text"
-msgstr ""
+msgstr "Et internt link, hvor den eksterne henvisning kan fjernes, hvis det tager al teksten"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:889
 msgid "Value of the URL to remove the external link"
-msgstr ""
+msgstr "Værdien af URL'en for at fjerne den eksterne henvisning"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:895
 msgid "A list of templates that create an internal link"
-msgstr ""
+msgstr "En liste over skabeloner, der opretter et internt link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:899
 msgid "Name of a template that creates an internal link"
-msgstr ""
+msgstr "Navn på en skabelon, der opretter et internt link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:902
 msgid "Name of a template that can be used as a replacement"
-msgstr ""
+msgstr "Navn på en skabelon, der kan bruges som erstatning"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:906
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:253
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:271
 msgid "True if the replacement can be automatic"
-msgstr ""
+msgstr "Sandt, hvis udskiftningen kan være automatisk"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:912
 msgid "A list of template parameters that create the text of an external link"
-msgstr ""
+msgstr "En liste over skabelonparametre, der opretter teksten til en eksternt henvisning"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:916
 msgid "Name of a template that creates an external link"
-msgstr ""
+msgstr "Navn på en skabelon, der opretter en eksternt henvisning"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:919
 msgid "Name of a parameter that is used to create the text of the external link"
@@ -1341,27 +1341,27 @@ msgstr "Navn på en parameter, der bruges til at oprette teksten til det ekstern
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:922
 msgid "True if removing internal links in the text can be automatic"
-msgstr ""
+msgstr "Sandt, hvis fjernelse af interne links i teksten kan ske automatisk"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:928
 msgid "A list of texts (regular expressions) that can be after the internal link"
-msgstr ""
+msgstr "En liste over tekster (regulære udtryk), der kan være efter det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:931
 msgid "Regular expression that can be after the internal link"
-msgstr ""
+msgstr "Regulært udtryk, der kan være efter det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:935
 msgid "A list of texts that can be before the internal link"
-msgstr ""
+msgstr "En liste over tekster, der kan være før det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:939
 msgid "Text that can be before the internal link"
-msgstr ""
+msgstr "Tekst, der kan være før det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a513/CheckErrorAlgorithm513.java:942
 msgid "True if finding this text means that the replacement can be automatic"
-msgstr ""
+msgstr "Sandt, hvis det at finde denne tekst betyder, at erstatningen kan være automatisk"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:184
 msgid "References defined by templates."
@@ -1369,7 +1369,7 @@ msgstr "Referencer defineret af skabeloner."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:188
 msgid "Name of a template which defines references"
-msgstr ""
+msgstr "Navn på en skabelon, der definerer referencer"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a514/CheckErrorAlgorithm514.java:191
 msgid "Name of the reference defined by the template"
@@ -1378,52 +1378,52 @@ msgstr "Navn på den reference, der er defineret af skabelonen"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:405
 #, java-format
 msgid "An identifier of an abuse filter that is triggered by {0} tags."
-msgstr ""
+msgstr "En identifikator for et misbrugsfilter, der udløses af {0}-tags."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:415
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:418
 msgid "A template that can be used instead of an apostrophe."
-msgstr ""
+msgstr "En skabelon, der kan bruges i stedet for en apostrof."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:421
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:424
 msgid "A template that can be used instead of an asterisk."
-msgstr ""
+msgstr "En skabelon, der kan bruges i stedet for en asterisk."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:427
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:430
 msgid "A template that can be used instead of a closing square bracket."
-msgstr ""
+msgstr "En skabelon, der kan bruges i stedet for en afsluttende firkantet parentes."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:433
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a51x/a518/CheckErrorAlgorithm518.java:436
 msgid "A template that can be used instead of an opening square bracket."
-msgstr ""
+msgstr "En skabelon, der kan bruges i stedet for en åben firkantet parentes."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:150
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a520/CheckErrorAlgorithm520.java:153
 msgid "An identifier of an abuse filter that is triggered by weird characters."
-msgstr ""
+msgstr "En identifikator for et misbrugsfilter, der udløses af mærkelige tegn."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:468
 msgid "A list of templates and parameters in which format should be checked"
-msgstr ""
+msgstr "En liste over skabeloner og parametre, hvor formatet skal kontrolleres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:472
 msgid "The name of a template in which format should be checked"
-msgstr ""
+msgstr "Navnet på en skabelon, hvor formatet skal kontrolleres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:475
 msgid "The name of a parameter in which format should be checked"
-msgstr ""
+msgstr "Navnet på en parameter, hvor formatet skal kontrolleres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:478
 msgid "A correct format for the date"
-msgstr ""
+msgstr "Et korrekt format for datoen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:484
 msgid "A list of text values for months"
-msgstr ""
+msgstr "En liste over tekstværdier for måneder"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a521/CheckErrorAlgorithm521.java:487
 msgid "A text value for a month"
@@ -1432,7 +1432,7 @@ msgstr "En tekstværdi for en måned"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:219
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a523/CheckErrorAlgorithm523.java:222
 msgid "The size below which images are not reported as duplicates"
-msgstr ""
+msgstr "Størrelsen under hvilken billeder ikke rapporteres som dubletter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:146
 msgid "Both values are equal"
@@ -1444,7 +1444,7 @@ msgstr "Anden værdi er tom"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr ""
+msgstr "Begge værdier er identiske"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
@@ -1468,39 +1468,39 @@ msgstr "Kommentar"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:258
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:261
 msgid "A category containing the list of pages in error"
-msgstr ""
+msgstr "En kategori, der indeholder listen over sider med fejl"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
 msgid "Values that are to be considered identical"
-msgstr ""
+msgstr "Værdier, der skal betragtes som identiske"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
 msgid "Comma separated list of template names"
-msgstr ""
+msgstr "Kommasepareret liste over skabelonnavne"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
 msgid "Comma separated list of parameter names"
-msgstr ""
+msgstr "Kommasepareret liste over parameternavne"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr ""
+msgstr "Parameterværdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
-msgstr ""
+msgstr "Værdier, der sikkert kan ignoreres for en given skabelon og et given argument"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:459
 msgid "Name of the template in which some values can be safely ignored"
-msgstr ""
+msgstr "Navn på den skabelon, hvor visse værdier sikkert kan ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:462
 msgid "Name of the parameter for which some values can be safely ignored"
-msgstr ""
+msgstr "Navn på den parameter, for hvilken visse værdier sikkert kan ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:465
 msgid "Value of the parameter which can be safely ignored"
-msgstr ""
+msgstr "Værdi af parameteren, som sikkert kan ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:136
 msgid "Use an anchor template?"
@@ -1509,7 +1509,7 @@ msgstr "Bruge en ankerskabelon?"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:232
 #, java-format
 msgid "A template that can replace a {0}"
-msgstr ""
+msgstr "En skabelon, der kan erstatte en {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a525/CheckErrorAlgorithm525.java:235
 msgid "Name of the parameter to be used for the anchor identifier"
@@ -1520,21 +1520,21 @@ msgstr "Navn på den parameter, der skal bruges til ankeridentifikatoren"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:603
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:624
 msgid "If replacement can be automatic"
-msgstr ""
+msgstr "Hvis udskiftning kan ske automatisk"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:423
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:426
 msgid "An identifier of an abuse filter that is triggered by incorrect year links."
-msgstr ""
+msgstr "En identifikator for et misbrugsfilter, der udløses af forkerte årstalslinks."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:429
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:436
 msgid "Text added after the link to ask for help."
-msgstr ""
+msgstr "Tekst tilføjet efter linket for at bede om hjælp."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:433
 msgid "Description of the action"
-msgstr ""
+msgstr "Beskrivelse af handlingen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:441
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:444
@@ -1543,7 +1543,7 @@ msgstr ""
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:292
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:295
 msgid "A page containing a dump analysis for this error."
-msgstr ""
+msgstr "En side, der indeholder en dumpanalyse for denne fejl."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:447
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:450
@@ -1558,12 +1558,12 @@ msgstr "Maksimalt antal cifre for året"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:459
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:462
 msgid "Minimum difference between the year displayed and the year linked"
-msgstr ""
+msgstr "Minimumsforskel mellem det viste år og det tilknyttede år"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:465
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a526/CheckErrorAlgorithm526.java:468
 msgid "Minimum difference between the year linked and the year displayed"
-msgstr ""
+msgstr "Minimumsforskel mellem det linkede år og det viste år"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a527/CheckErrorAlgorithm527.java:124
 msgid "Trim text"
@@ -1579,23 +1579,23 @@ msgstr "Navn på den skabelon, der skal bruges til ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:419
 msgid "Text before the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "Tekst før ISBN-nummeret, der skal fjernes i erstatningen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a529/CheckErrorAlgorithm529.java:422
 msgid "Text after the ISBN to be removed in the replacement"
-msgstr ""
+msgstr "Tekst efter ISBN-nummeret, der skal fjernes i erstatningen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a530/CheckErrorAlgorithm530.java:122
 msgid "View RFC"
-msgstr ""
+msgstr "Se RFC"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:131
 msgid "A list of templates that can't be used inside a reference"
-msgstr ""
+msgstr "En liste over skabeloner, der ikke kan bruges i en reference"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a531/CheckErrorAlgorithm531.java:135
 msgid "Name of a template that can't be used inside a reference"
-msgstr ""
+msgstr "Navn på en skabelon, der ikke kan bruges i en reference"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a532/CheckErrorAlgorithm532.java:46
 msgid "Fix tags"
@@ -1603,20 +1603,20 @@ msgstr "Ret tags"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a53x/a538/CheckErrorAlgorithm538.java:29
 msgid "Remove whitespace characters"
-msgstr ""
+msgstr "Fjern mellemrumstegn"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a540/CheckErrorAlgorithm540.java:47
 msgid "Fix bold and italic"
-msgstr ""
+msgstr "Ret fed og kursiv"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:235
 #, java-format
 msgid "Remove {0} tag"
-msgstr ""
+msgstr "Fjern {0}-tagget"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:333
 msgid "for marking an edit"
-msgstr ""
+msgstr "for at markere en redigering"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:338
 msgid "for anything else"
@@ -1624,43 +1624,43 @@ msgstr "til noget andet"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:358
 msgid "preferred for source code"
-msgstr ""
+msgstr "foretrukket til kildekode"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:363
 msgid "preferred for user input"
-msgstr ""
+msgstr "foretrukket til brugerinput"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:368
 msgid "preferred for variables"
-msgstr ""
+msgstr "foretrukket for variabler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:373
 msgid "preferred for output, function and tag names, etc."
-msgstr ""
+msgstr "foretrukket til output, funktions- og tagnavne osv."
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:381
 msgid "preferred for everything else"
-msgstr ""
+msgstr "foretrukket til alt andet"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:571
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:592
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:613
 #, java-format
 msgid "Possible replacements for {0} tags"
-msgstr ""
+msgstr "Mulige erstatninger for {0}-tags"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:575
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:596
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:617
 #, java-format
 msgid "Template for replacing {0} tag"
-msgstr ""
+msgstr "Skabelon til erstatning af {0}-tagget"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:578
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:599
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:620
 msgid "Parameter to use in the template for the text"
-msgstr ""
+msgstr "Parameter, der skal bruges i skabelonen til teksten"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:586
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a541/CheckErrorAlgorithm541.java:607
@@ -1670,7 +1670,7 @@ msgstr "Beskrivelse af skabelonen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:212
 msgid "Pairs of templates: for each opening template, all possible closing templates"
-msgstr ""
+msgstr "Par af skabeloner: for hver åbningsskabelon, alle mulige lukkeskabeloner"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:216
 msgid "Name of the opening template in the pair"
@@ -1678,25 +1678,25 @@ msgstr "Navnet på den første skabelon i parret"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a544/CheckErrorAlgorithm544.java:219
 msgid "Name of a closing template in the pair"
-msgstr ""
+msgstr "Navn på en lukkeskabelon i parret"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:274
 msgid "Categories listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "Kategorier med listesider ved hjælp af skabeloner med forældede parametre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:277
 msgid "Name of a category listing pages using templates with deprecated parameters"
-msgstr ""
+msgstr "Navn på en kategori, der viser sider ved hjælp af skabeloner med forældede parametre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:295
 msgid "Templates with deprecated parameters"
-msgstr ""
+msgstr "Skabeloner med forældede parametre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:299
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:315
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:331
 msgid "Name of a template with deprecated parameter"
-msgstr ""
+msgstr "Navn på en skabelon med forældet parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:302
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:318
@@ -1706,36 +1706,36 @@ msgstr "Navn på en forældet parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:305
 msgid "Textual explanation about the deprecated parameter"
-msgstr ""
+msgstr "Tekstforklaring af den forældede parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:311
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:327
 msgid "Replacements of deprecated parameters"
-msgstr ""
+msgstr "Udskiftninger af forældede parametre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:321
 msgid "Name of a replacement parameter"
-msgstr ""
+msgstr "Navn på en erstatningsparameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:337
 msgid "Value of the deprecated parameter"
-msgstr ""
+msgstr "Værdien af den forældede parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:340
 msgid "Name of the replacement parameter"
-msgstr ""
+msgstr "Navn på erstatningsparameteren"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a545/CheckErrorAlgorithm545.java:343
 msgid "Value of the replacement parameter"
-msgstr ""
+msgstr "Værdien af erstatningsparameteren"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:151
 msgid "List of categorizing templates"
-msgstr ""
+msgstr "Liste over kategoriserende skabeloner"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:155
 msgid "Name of a template that categorizes articles"
-msgstr ""
+msgstr "Navn på en skabelon, der kategoriserer artikler"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:158
 msgid "Name of the parameter that triggers the categorization"
@@ -1743,19 +1743,19 @@ msgstr "Navn på den parameter, der udløser kategoriseringen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a546/CheckErrorAlgorithm546.java:162
 msgid "Value of the parameter that triggers the categorization"
-msgstr ""
+msgstr "Værdien af den parameter, der udløser kategoriseringen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:260
 msgid "Templates in which empty list items should be ignored"
-msgstr ""
+msgstr "Skabeloner, hvor tomme listeelementer skal ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:264
 msgid "Template in which empty list items should be ignored"
-msgstr ""
+msgstr "Skabelon, hvor tomme listeelementer skal ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a547/CheckErrorAlgorithm547.java:267
 msgid "Template parameter in which empty list items should be ignored"
-msgstr ""
+msgstr "Skabelonparameter, hvor tomme listeelementer skal ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a54x/a548/CheckErrorAlgorithm548.java:374
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a550/CheckErrorAlgorithm550.java:269
@@ -1778,364 +1778,380 @@ msgstr "Skabelon, der skal ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:435
 msgid "Acceptable suffixes"
-msgstr ""
+msgstr "Acceptable suffikser"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:438
 msgid "Acceptable suffix"
-msgstr ""
+msgstr "Acceptabelt suffiks"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:442
 msgid "Words that should be separated from the link"
-msgstr ""
+msgstr "Ord, der skal adskilles fra linket"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a553/CheckErrorAlgorithm553.java:445
 msgid "Word that should be separated from the link by a whitespace"
-msgstr ""
+msgstr "Ord, der skal adskilles fra linket med et mellemrum"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:156
 #, java-format
 msgid "Add inside a {0} tag"
-msgstr ""
+msgstr "Tilføj i et {0}-tag"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:163
 #, java-format
 msgid "Keep text and add link inside a {0} tag"
-msgstr ""
+msgstr "Behold teksten og tilføj et link i et {0}-tag"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:255
 msgid "Templates in which external links are normal"
-msgstr ""
+msgstr "Skabeloner hvor eksterne henvisninger er normale"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:259
 msgid "Template in which external links are normal"
-msgstr ""
+msgstr "Skabelon hvor eksterne henvisninger er normale"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:262
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:272
 msgid "Parameter in which external links are normal"
-msgstr ""
+msgstr "Parameter hvor eksterne henvisninger er normale"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:268
 msgid "Template parameters in which external links are normal"
-msgstr ""
+msgstr "Skabelonparametre, hvor eksterne henvisninger er normale"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:277
 msgid "Sections in which external links are normal"
-msgstr ""
+msgstr "Sektioner hvor eksterne henvisninger er normale"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a556/CheckErrorAlgorithm556.java:280
 msgid "Section in which external links are normal"
-msgstr ""
+msgstr "Afsnit hvor eksterne henvisninger er normale"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:568
 msgid "Links which are correct with a prefix"
-msgstr ""
+msgstr "Links, der er korrekte med et præfiks"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:572
 msgid "Link target"
-msgstr ""
+msgstr "Linkmål"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:575
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:216
 #: org/wikipediacleaner/gui/swing/menu/MWPaneDisambiguationMenuCreator.java:228
 msgid "Link text"
-msgstr ""
+msgstr "Linktekst"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:582
 msgid "Prefixes which can be before an internal link"
-msgstr ""
+msgstr "Præfikser, der kan stå før et internt link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:586
 msgid "Prefix which can be before an internal link"
-msgstr ""
+msgstr "Præfiks, som kan stå før et internt link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:591
 msgid "Prefixes which should be excluded from the internal link"
-msgstr ""
+msgstr "Præfikser, der skal udelukkes fra det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:595
 msgid "Prefix which should be excluded from the internal link"
-msgstr ""
+msgstr "Præfiks, som skal udelades fra det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:600
 msgid "List of suggestions for separators between the text and the internal link"
-msgstr ""
+msgstr "Liste med forslag til separatorer mellem teksten og det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a557/CheckErrorAlgorithm557.java:604
 msgid "Suggestion for a separator between the text and the internal link"
-msgstr ""
+msgstr "Forslag til en separator mellem teksten og det interne link"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:343
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:346
 msgid "Option to apply automatic replacement even in templates"
-msgstr ""
+msgstr "Mulighed for at anvende automatisk erstatning, selv i skabeloner"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:349
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:352
 #, java-format
 msgid "Incorrect separator between consecutive {0} tags"
-msgstr ""
+msgstr "Forkert separator mellem fortløbende {0}-tags"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:228
 msgid "Templates for which unused parameters should be verified"
-msgstr ""
+msgstr "Skabeloner, for hvilke ubrugte parametre skal verificeres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:235
 msgid "Set to true to automatically remove unused parameters"
-msgstr ""
+msgstr "Sæt til sand for automatisk at fjerne ubrugte parametre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:246
 msgid "Parameters that should be ignored"
-msgstr ""
+msgstr "Parametre, der skal ignoreres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:135
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:127
 #, java-format
 msgid "Template {0}"
-msgstr ""
+msgstr "Skabelon {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:338
 msgid "Templates for which unknown parameters should be verified"
-msgstr ""
+msgstr "Skabeloner, for hvilke ukendte parametre skal verificeres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:352
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:411
 msgid "Template parameters which can be safely deleted"
-msgstr ""
+msgstr "Skabelonparametre, der sikkert kan slettes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:366
 msgid "Template parameters for which unnamed parameters can be safely deleted when values are equal"
-msgstr ""
+msgstr "Skabelonparametre, for hvilke unavngivne parametre sikkert kan slettes, når værdierne er ens"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:373
 msgid "Name of parameter"
-msgstr ""
+msgstr "Navn på parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:380
 msgid "Template parameters which can be safely deleted if they have a given value"
-msgstr ""
+msgstr "Skabelonparametre, der sikkert kan slettes, hvis de har en given værdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:387
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:325
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:360
 msgid "Value of the parameter"
-msgstr ""
+msgstr "Parameterens værdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:397
 msgid "Template parameters which can be safely commented"
-msgstr ""
+msgstr "Skabelonparametre, der sikkert kan kommenteres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:425
 msgid "Template parameters which can be safely replaced"
-msgstr ""
+msgstr "Skabelonparametre, der sikkert kan erstattes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:432
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:451
 msgid "Initial name of the parameter"
-msgstr ""
+msgstr "Parameterens oprindelige navn"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:437
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:457
 msgid "Target name of the parameter"
-msgstr ""
+msgstr "Parameterens målnavn"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:444
 msgid "Template parameters which can be safely replaced if they have a given value"
-msgstr ""
+msgstr "Skabelonparametre, der sikkert kan erstattes, hvis de har en given værdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:454
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:342
 msgid "Initial value of the parameter"
-msgstr ""
+msgstr "Parameterens startværdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a564/CheckErrorAlgorithm564.java:460
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:345
 msgid "Target value of the parameter"
-msgstr ""
+msgstr "Parameterens målværdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:246
 msgid "Possible replacements based on abbreviation value"
-msgstr ""
+msgstr "Mulige erstatninger baseret på forkortelsesværdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:250
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:265
 msgid "Value of the abbreviation"
-msgstr ""
+msgstr "Forkortelsens værdi"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:256
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:274
 msgid "Replacement for the abbreviation"
-msgstr ""
+msgstr "Erstatning for forkortelsen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:261
 msgid "Possible replacements based on abbreviation value and title"
-msgstr ""
+msgstr "Mulige erstatninger baseret på forkortelsesværdi og titel"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:268
 msgid "Title of the abbreviation"
-msgstr ""
+msgstr "Titel på forkortelsen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:279
 msgid "Templates which can replace an abbreviation"
-msgstr ""
+msgstr "Skabeloner, der kan erstatte en forkortelse"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:286
 msgid "Name of the parameter for the abbreviation"
-msgstr ""
+msgstr "Navn på parameteren for forkortelsen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:289
 msgid "Name of the parameter for the meaning"
-msgstr ""
+msgstr "Navn på parameteren for betydningen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a566/CheckErrorAlgorithm566.java:292
 msgid "Default value for the meaning"
-msgstr ""
+msgstr "Standardværdi for betydningen"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:241
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:256
 #, java-format
 msgid "Categories listing pages using non-numeric {0} arguments"
-msgstr ""
+msgstr "Kategorier, der viser sider ved hjælp af ikke-numeriske {0}-argumenter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:244
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:259
 #, java-format
 msgid "Name of a category listing pages using non-numeric {0} arguments"
-msgstr ""
+msgstr "Navn på en kategori, der viser sider ved hjælp af ikke-numeriske {0}-argumenter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:248
 msgid "Prefixes that can be safely extracted"
-msgstr ""
+msgstr "Præfikser, der sikkert kan udtrækkes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:251
 msgid "Prefix that can be safely extracted"
-msgstr ""
+msgstr "Præfiks, der sikkert kan udtrækkes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:255
 msgid "Suffixes that can be safely extracted"
-msgstr ""
+msgstr "Suffikser, der sikkert kan udtrækkes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a567/CheckErrorAlgorithm567.java:258
 msgid "Suffix that can be safely extracted"
-msgstr ""
+msgstr "Suffiks, der sikkert kan udvindes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:263
 msgid "Template parameters that should only contain numeric arguments"
-msgstr ""
+msgstr "Skabelonparametre, der kun må indeholde numeriske argumenter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:266
 msgid "If parameters accept only integer values"
-msgstr ""
+msgstr "Hvis parametre kun accepterer heltal"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:267
 msgid "Parameter name"
-msgstr ""
+msgstr "Parameternavn"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:272
 msgid "Template parameters that can contain a reference"
-msgstr ""
+msgstr "Skabelonparametre, der kan indeholde en reference"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:275
 msgid "Parameter name with the formatnum"
-msgstr ""
+msgstr "Parameternavn med formatnum"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a568/CheckErrorAlgorithm568.java:276
 msgid "Parameter name that can contain a reference"
-msgstr ""
+msgstr "Parameternavn, der kan indeholde en reference"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a571/CheckErrorAlgorithm571.java:188
 #, java-format
 msgid "Delete {0} tags"
-msgstr ""
+msgstr "Slet {0} tags"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:147
 #, java-format
 msgid "Same value as parameter {0}"
-msgstr ""
+msgstr "Samme værdi som parameter {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:312
 msgid "Templates for which unknown values should be verified"
-msgstr ""
+msgstr "Skabeloner, for hvilke ukendte værdier skal verificeres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:322
 msgid "True if the value is case sensitive"
-msgstr ""
+msgstr "Sandt, hvis værdien skelner mellem store og små bogstaver"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:332
 msgid "Template values which can be safely replaced"
-msgstr ""
+msgstr "Skabelonværdier, der sikkert kan erstattes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a572/CheckErrorAlgorithm572.java:350
 msgid "Possible confusions with another parameter"
-msgstr ""
+msgstr "Mulige forvekslinger med en anden parameter"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:230
 msgid "Templates for which values should be verified"
-msgstr ""
+msgstr "Skabeloner, for hvilke værdier skal verificeres"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a576/CheckErrorAlgorithm576.java:240
 msgid "Image attribute"
-msgstr ""
+msgstr "Billedattribut"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:173
 #, java-format
 msgid "Check incorrect DOI {0}"
-msgstr ""
+msgstr "Tjek forkert DOI {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:239
 #, java-format
 msgid "External viewer for parameter {0}"
-msgstr ""
+msgstr "Ekstern fremviser til parameter {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:264
 #, java-format
 msgid "Check DOI {0}"
-msgstr ""
+msgstr "Tjek DOI {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:358
 msgid "Prefixes that can be safely deleted"
-msgstr ""
+msgstr "Præfikser, der sikkert kan slettes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a577/CheckErrorAlgorithm577.java:362
 msgid "Prefix that can be safely deleted"
-msgstr ""
+msgstr "Præfiks, der sikkert kan slettes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:264
 msgid "Templates that shouldn't be used in list item"
-msgstr ""
+msgstr "Skabeloner, der ikke bør bruges i listeelementer"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a57x/a578/CheckErrorAlgorithm578.java:268
 msgid "Template that shouldn't be used in list item"
-msgstr ""
+msgstr "Skabelon, der ikke skal bruges i listeelementet"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:364
 msgid "Redundant templates"
-msgstr ""
+msgstr "Redundante skabeloner"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:371
 msgid "Redundant templates when used with only unnamed parameters"
-msgstr ""
+msgstr "Redundante skabeloner, når de kun bruges med unavngivne parametre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:378
 msgid "Templates that can be merged when used with only unnamed parameters"
-msgstr ""
+msgstr "Skabeloner, der kan flettes sammen, når de kun bruges med unavngivne parametre"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:385
 msgid "Templates for which we can keep only the first duplicate"
-msgstr ""
+msgstr "Skabeloner, hvor vi kun kan beholde den første duplikat"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:392
 msgid "Templates for which we can keep only the last if they are different"
-msgstr ""
+msgstr "Skabeloner, som vi kun kan beholde den sidste for, hvis de er forskellige"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:399
 msgid "Templates to ignore if they're not one after each other"
-msgstr ""
+msgstr "Skabeloner, der skal ignoreres, hvis de ikke er efter hinanden"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:258
+msgid "Templates that shouldn't be preceded by multiple line jumps"
+msgstr "Skabeloner, der ikke bør forudgås af flere linjespring"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:262
+msgid "Template that shouldn't be preceded by multiple line jumps"
+msgstr "Skabelon, der ikke bør forudgås af flere linjespring"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:267
+msgid "Templates used to do line jumps"
+msgstr "Skabeloner brugt til at lave linjespring"
+
+#: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:271
+msgid "Template used to do line jumps"
+msgstr "Skabelon brugt til at lave linjespring"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
 msgid "Fixed using {0}"
-msgstr ""
+msgstr "Rettet ved hjælp af {0}"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:313
 msgid "Deactivated"
@@ -2155,7 +2171,7 @@ msgstr "Høj prioritet"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:317
 msgid "For Bot"
-msgstr ""
+msgstr "Til bot"
 
 #: org/wikipediacleaner/api/configuration/CWConfigurationError.java:318
 msgid "Priority unknown"
@@ -2168,7 +2184,7 @@ msgstr "Prioritet ukendt"
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:498
 #, java-format
 msgid "Attribute {0} can''t be set in general configuration"
-msgstr ""
+msgstr "Attributten {0} kan ikke indstilles i den generelle konfiguration"
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:407
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:426
@@ -2177,83 +2193,83 @@ msgstr ""
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:481
 #, java-format
 msgid "Attribute {0} can''t be set in user configuration"
-msgstr ""
+msgstr "Attributten {0} kan ikke indstilles i brugerkonfigurationen"
 
 #: org/wikipediacleaner/api/configuration/WPCConfiguration.java:471
 #, java-format
 msgid "Attribute {0} should be integer value"
-msgstr ""
+msgstr "Attribut {0} skal være en heltalsværdi"
 
 #: org/wikipediacleaner/api/constants/Contributions.java:44
 #, java-format
 msgid "You have done the following contributions on \"{0}\":"
-msgstr ""
+msgstr "Du har bidraget med følgende på \"{0}\":"
 
 #: org/wikipediacleaner/api/constants/Contributions.java:50
 #, java-format
 msgid "You have edited {0} page."
 msgid_plural "You have edited {0} pages."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Du har redigeret {0} side."
+msgstr[1] "Du har redigeret {0} sider."
 
 #: org/wikipediacleaner/api/constants/Contributions.java:59
 #, java-format
 msgid "You have fixed {0} link to disambiguation pages."
 msgid_plural "You have fixed {0} links to disambiguation pages."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Du har rettet {0} link til flertydighedssider."
+msgstr[1] "Du har rettet {0} links til flertydighedssider."
 
 #: org/wikipediacleaner/api/constants/Contributions.java:71
 #, java-format
 msgid "You have fixed {0} error \"{1}\"."
 msgid_plural "You have fixed {0} errors \"{1}\"."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Du har rettet {0} fejlen \"{1}\"."
+msgstr[1] "Du har rettet {0} fejlene \"{1}\"."
 
 #: org/wikipediacleaner/api/constants/Contributions.java:84
 #, java-format
 msgid "You haven''t done any contribution on \"{0}\""
-msgstr ""
+msgstr "Du har ikke bidraget til \"{0}\""
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:18
 msgid "Dormant pages"
-msgstr ""
+msgstr "Hvilende sider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:19
 msgid "Broken redirects"
-msgstr ""
+msgstr "Defekte omdirigeringer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:20
 msgid "Dead-end pages"
-msgstr ""
+msgstr "Blindgydesider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:21
 msgid "Pages linking to disambiguation pages"
-msgstr ""
+msgstr "Sider, der henviser til flertydige titler"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:22
 msgid "Disambiguation pages"
-msgstr ""
+msgstr "Flertydige sider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:23
 msgid "Double redirects"
-msgstr ""
+msgstr "Dobbelte omdirigeringer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:24
 msgid "Pages with the fewest revisions"
-msgstr ""
+msgstr "Sider med de færreste versioner"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:25
 msgid "Usage of gadgets"
-msgstr ""
+msgstr "Brug af gadgets"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:26
 msgid "Globally wanted files"
-msgstr ""
+msgstr "Globalt ønskede filer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:27
 msgid "Duplicated files"
-msgstr ""
+msgstr "Duplikerede filer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:28
 msgid "Redirects"
@@ -2269,7 +2285,7 @@ msgstr "Lange sider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:31
 msgid "Media statistics"
-msgstr ""
+msgstr "Mediestatistik"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:32
 msgid "Pages with the most categories"
@@ -2277,7 +2293,7 @@ msgstr "Sider med de fleste kategorier"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:33
 msgid "Most globally linked files"
-msgstr ""
+msgstr "De fleste globalt linkede filer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:34
 msgid "Pages with the most files"
@@ -2285,27 +2301,27 @@ msgstr "Sider med de fleste filer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:35
 msgid "Pages with the most interwikis"
-msgstr ""
+msgstr "Sider med flest interwikilinks"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:36
 msgid "Most linked-to pages"
-msgstr ""
+msgstr "Sider med flest henvisninger"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:37
 msgid "Most linked-to categories"
-msgstr ""
+msgstr "Mest brugte kategorier"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:38
 msgid "Most linked-to templates"
-msgstr ""
+msgstr "De fleste anvendte skabeloner"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:39
 msgid "Pages with the most revisions"
-msgstr ""
+msgstr "Sider med de fleste ændringer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:40
 msgid "Orphaned timed text"
-msgstr ""
+msgstr "Forældreløs tidsbestemt tekst"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:41
 msgid "Short pages"
@@ -2313,11 +2329,11 @@ msgstr "Korte sider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:42
 msgid "Uncategorized categories"
-msgstr ""
+msgstr "Ikke kategoriserede kategorier"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:43
 msgid "Uncategorized files"
-msgstr ""
+msgstr "Ikke-kategoriserede filer"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:44
 msgid "Uncategorized pages"
@@ -2325,11 +2341,11 @@ msgstr "Ikke-kategoriserede sider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:45
 msgid "Uncategorized templates"
-msgstr ""
+msgstr "Ikke kategoriserede skabeloner"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:46
 msgid "Unconnected pages"
-msgstr ""
+msgstr "Ikke-forbundne sider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:47
 msgid "Unused categories"
@@ -2349,7 +2365,7 @@ msgstr "Ikke overvågede sider"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:51
 msgid "Wanted categories"
-msgstr ""
+msgstr "Ønskede kategorier"
 
 #: org/wikipediacleaner/api/constants/EnumQueryPage.java:52
 msgid "Wanted files"
@@ -2370,21 +2386,21 @@ msgstr "Sider uden henvisninger til andre sprog"
 #: org/wikipediacleaner/api/data/ISBNRange.java:162
 #: org/wikipediacleaner/api/data/ISBNRange.java:184
 msgid "No range found for ISBN"
-msgstr ""
+msgstr "Der blev ikke fundet noget interval for ISBN"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:172
 #, java-format
 msgid "Suggested format: {0}"
-msgstr ""
+msgstr "Foreslået format: {0}"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:174
 msgid "ISBN length incoherent with range found"
-msgstr ""
+msgstr "ISBN-længde er usammenhængende med det fundne interval"
 
 #: org/wikipediacleaner/api/data/ISBNRange.java:178
 #, java-format
 msgid "ISBN is in a reserved range {0}"
-msgstr ""
+msgstr "ISBN er i et reserveret område {0}"
 
 #: org/wikipediacleaner/api/data/PageComparator.java:193
 msgid "Namespace"
@@ -2414,16 +2430,16 @@ msgstr "Omdirigering"
 #: org/wikipediacleaner/api/data/TemplateMatcher1LT.java:87
 #, java-format
 msgid "Replace parameter {0} with {1}"
-msgstr ""
+msgstr "Erstat parameter {0} med {1}"
 
 #: org/wikipediacleaner/api/data/TemplateMatcher1L2T.java:65
 #, java-format
 msgid "Link parameter {0} to"
-msgstr ""
+msgstr "Link parameter {0} til"
 
 #: org/wikipediacleaner/api/execution/AllLinksToPageCallable.java:43
 msgid "Retrieving all links to page"
-msgstr ""
+msgstr "Henter alle links til siden"
 
 #: org/wikipediacleaner/api/execution/ContentsCallable.java:64
 msgid "Retrieving contents"
@@ -2431,41 +2447,41 @@ msgstr "Indlæser indhold"
 
 #: org/wikipediacleaner/api/execution/DisambiguationStatusCallable.java:49
 msgid "Retrieving disambiguation information"
-msgstr ""
+msgstr "Hentning af flertydighedsoplysninger"
 
 #: org/wikipediacleaner/api/execution/EmbeddedInCallable.java:53
 msgid "Retrieving page usage"
-msgstr ""
+msgstr "Henter sidebrug"
 
 #: org/wikipediacleaner/api/execution/ExpandTemplatesCallable.java:45
 msgid "Expanding templates"
-msgstr ""
+msgstr "Udvidelse af skabeloner"
 
 #: org/wikipediacleaner/api/execution/LinksWRCallable.java:55
 msgid "Retrieving page links"
-msgstr ""
+msgstr "Henter sidelinks"
 
 #: org/wikipediacleaner/api/execution/ParseTextCallable.java:45
 msgid "Parsing text"
-msgstr ""
+msgstr "Tolkning af tekst"
 
 #: org/wikipediacleaner/api/execution/TemplatesCallable.java:43
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:212
 msgid "Retrieving templates"
-msgstr ""
+msgstr "Henter skabeloner"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:640
 #, java-format
 msgid "URL {0} is blacklisted"
-msgstr ""
+msgstr "URL {0} er sortlistet"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1789
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the following question ?"
-msgstr ""
+msgstr "Denne handling er beskyttet af en CAPTCHA.\nHvad er svaret på følgende spørgsmål?"
 
 #: org/wikipediacleaner/api/impl/MediaWikiAPI.java:1796
 msgid "This action is protected by a CAPTCHA.\nWhat is the answer to the question displayed in your browser ?"
-msgstr ""
+msgstr "Denne handling er beskyttet af en CAPTCHA.\nHvad er svaret på spørgsmålet, der vises i din browser?"
 
 #: org/wikipediacleaner/gui/swing/AboutWindow.java:63
 #: org/wikipediacleaner/gui/swing/MainWindow.java:519
@@ -2482,7 +2498,7 @@ msgstr "Erstatningstekst"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingTableModel.java:179
 msgid "regex"
-msgstr ""
+msgstr "regex"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:167
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:169
@@ -2491,11 +2507,11 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:752
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:268
 msgid "Automatic fixing"
-msgstr ""
+msgstr "Automatisk fiksering"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:233
 msgid "This feature may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Denne funktion kan ændre mange sider på kort tid."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:234
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:765
@@ -2537,7 +2553,7 @@ msgstr "Ret valgte sider"
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:288
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:388
 msgid "Test automatic replacements"
-msgstr ""
+msgstr "Test automatiske udskiftninger"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:294
 msgid "Load replacements"
@@ -2545,54 +2561,54 @@ msgstr "Indlæs erstatninger"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:300
 msgid "Save replacements"
-msgstr ""
+msgstr "Gem erstatninger"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:313
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:117
 #: org/wikipediacleaner/gui/swing/bot/CWToolsPanel.java:199
 msgid "Automatic fixing for Check Wiki"
-msgstr ""
+msgstr "Automatisk rettelse til Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:330
 msgid "Always apply automatic fixing for Check Wiki"
-msgstr ""
+msgstr "Anvend altid automatisk rettelse for Check Wiki"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:345
 msgid "Pause after each edit"
-msgstr ""
+msgstr "Pause efter hver redigering"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:353
 msgid "Apply bot fixes"
-msgstr ""
+msgstr "Anvend botrettelser"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:492
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:229
 msgid "No errors selected"
-msgstr ""
+msgstr "Ingen fejl valgt"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:639
 msgid "Text that should be replaced"
-msgstr ""
+msgstr "Tekst, der bør erstattes"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:650
 msgid "Text to be used as a replacement"
-msgstr ""
+msgstr "Tekst, der skal bruges som erstatning"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:661
 msgid "Use regular expressions"
-msgstr ""
+msgstr "Brug regulære udtryk"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:733
 msgid "You must select the pages on which running automatic fixing."
-msgstr ""
+msgstr "Du skal vælge de sider, hvor automatisk rettelse skal køres."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:741
 msgid "A comment is required for automatic fixing."
-msgstr ""
+msgstr "En kommentar er påkrævet for automatisk rettelse."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:751
 msgid "You must input the initial and destination texts."
-msgstr ""
+msgstr "Du skal indtaste start- og destinationsteksten."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:762
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:86
@@ -2601,31 +2617,31 @@ msgstr "!!! ADVARSEL !!!!"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:763
 msgid "This function will carry out all replacements on all selected pages."
-msgstr ""
+msgstr "Denne funktion udfører alle udskiftninger på alle valgte sider."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:764
 msgid "It may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "Det kan ændre mange sider på kort tid."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:767
 msgid "Also, verify again the texts you have inputted before running this function."
-msgstr ""
+msgstr "Kontroller også de indtastede tekster igen, før du kører denne funktion."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:768
 msgid "You can also test the modifications before actually doing them."
-msgstr ""
+msgstr "Du kan også teste ændringerne, før du rent faktisk udfører dem."
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:769
 msgid "Do you want to proceed with the modifications ?"
-msgstr ""
+msgstr "Vil du fortsætte med ændringerne?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:826
 msgid "The following replacements have been made:"
-msgstr ""
+msgstr "Følgende udskiftninger er foretaget:"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:837
 msgid "Do you want to test the replacements on the pages ?"
-msgstr ""
+msgstr "Vil du teste udskiftningerne på siderne?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:851
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:891
@@ -2634,7 +2650,7 @@ msgstr "XML-filer"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:906
 msgid "This file exists, do you want to overwrite it?"
-msgstr ""
+msgstr "Denne fil findes, vil du overskrive den?"
 
 #: org/wikipediacleaner/gui/swing/AutomaticFixingWindow.java:974
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:358
@@ -2671,7 +2687,7 @@ msgstr "Nej, {0} sider"
 #: org/wikipediacleaner/gui/swing/Controller.java:307
 #, java-format
 msgid "You have selected {0} pages.\nWould you like to analyze more than {1} pages ?"
-msgstr ""
+msgstr "Du har valgt {0} sider.\nVil du analysere mere end {1} sider?"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:136
 #, java-format
@@ -2685,12 +2701,12 @@ msgstr "Vælg &næste links"
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:315
 #: org/wikipediacleaner/gui/swing/menu/DisambiguationPageListMenuCreator.java:45
 msgid "Mark backlink as normal"
-msgstr ""
+msgstr "Markér backlink som normalt"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:321
 #: org/wikipediacleaner/gui/swing/menu/DisambiguationPageListMenuCreator.java:50
 msgid "Mark backlink as needing help"
-msgstr ""
+msgstr "Markér backlink som brug for hjælp"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:328
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:256
@@ -2699,7 +2715,7 @@ msgstr "Antal links"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:376
 msgid "Filter namespaces"
-msgstr ""
+msgstr "Filtrer navnerum"
 
 #: org/wikipediacleaner/gui/swing/DisambiguationWindow.java:444
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:495
@@ -2710,15 +2726,15 @@ msgstr "Sortér"
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiWindow.java:1405
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:528
 msgid "You must select pages on which running automatic fixing."
-msgstr ""
+msgstr "Du skal vælge sider, hvor der kører automatisk rettelse."
 
 #: org/wikipediacleaner/gui/swing/InformationWindow.java:103
 msgid "Information"
-msgstr ""
+msgstr "Information"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:120
 msgid "WPCleaner installer"
-msgstr ""
+msgstr "WPCleaner-installationsprogram"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:179
 msgid "Configuration"
@@ -2734,52 +2750,52 @@ msgstr "Vælg installationsmappe"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:315
 msgid "Create a desktop shortcut"
-msgstr ""
+msgstr "Opret en skrivebordsgenvej"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:323
 msgid "Install beta version (only for experienced users)"
-msgstr ""
+msgstr "Installer betaversionen (kun for erfarne brugere)"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:365
 msgid "A desktop shortcut can be created automatically under Windows and some Linux flavors."
-msgstr ""
+msgstr "En skrivebordsgenvej kan oprettes automatisk under Windows og nogle Linux-versioner."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:368
 msgid "If the desktop shortcut is not created automatically, you can still create it manually."
-msgstr ""
+msgstr "Hvis skrivebordsgenvejen ikke oprettes automatisk, kan du stadig oprette den manuelt."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:370
 #, java-format
 msgid "The working directory for the shortcut MUST be the installation folder ({0})."
-msgstr ""
+msgstr "Arbejdsmappen for genvejen SKAL være installationsmappen ({0})."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:372
 msgid "The command itself is dependent on the operating system you're using (see below)."
-msgstr ""
+msgstr "Selve kommandoen afhænger af det operativsystem, du bruger (se nedenfor)."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:374
 msgid "Note: avoid having whitespace characters in the installation folder path, or you will need to adapt the commands."
-msgstr ""
+msgstr "Bemærk: Undgå at bruge mellemrumstegn i installationsmappens sti, ellers bliver du nødt til at tilpasse kommandoerne."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:377
 msgid "If you want to run WPCleaner manually, open a terminal/command prompt/... and change the current directory to the installation folder."
-msgstr ""
+msgstr "Hvis du vil køre WPCleaner manuelt, skal du åbne en terminal/kommandoprompt/... og ændre den aktuelle mappe til installationsmappen."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:382
 msgid "And then execute the command dependent on the operating system you're using (see below)."
-msgstr ""
+msgstr "Og udfør derefter kommandoen afhængigt af det operativsystem, du bruger (se nedenfor)."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:385
 msgid "Under Windows, the command can be:"
-msgstr ""
+msgstr "Under Windows kan kommandoen være:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:391
 msgid "Under Linux (or other systems working with .sh scripts), the command can be:"
-msgstr ""
+msgstr "Under Linux (eller andre systemer, der arbejder med .sh-scripts), kan kommandoen være:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:397
 msgid "On any operating system, the command can be:"
-msgstr ""
+msgstr "På ethvert operativsystem kan kommandoen være:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:416
 msgid "Install"
@@ -2795,50 +2811,50 @@ msgstr "Systemoplysninger"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:701
 msgid "You must select an installation folder."
-msgstr ""
+msgstr "Du skal vælge en installationsmappe."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:708
 #, java-format
 msgid "The path {0} already exists but is not a folder."
-msgstr ""
+msgstr "Stien {0} findes allerede, men er ikke en mappe."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:716
 #, java-format
 msgid "The folder {0} already exists, do you want to install WPCleaner there?"
-msgstr ""
+msgstr "Mappen {0} findes allerede. Vil du installere WPCleaner der?"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:718
 msgid "Existing files may be deleted by the installation process."
-msgstr ""
+msgstr "Eksisterende filer kan blive slettet under installationsprocessen."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:726
 #, java-format
 msgid "Unable to create folder {0}"
-msgstr ""
+msgstr "Kan ikke oprette mappen {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:742
 msgid "Desktop shortcut is only supported for the following operating systems:"
-msgstr ""
+msgstr "Skrivebordsgenvejen understøttes kun for følgende operativsystemer:"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:803
 msgid "Installation was successful"
-msgstr ""
+msgstr "Installationen var vellykket"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:821
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:836
 #, java-format
 msgid "Downloading {0}"
-msgstr ""
+msgstr "Downloader {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:851
 #, java-format
 msgid "Creating {0}"
-msgstr ""
+msgstr "Opretter {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:858
 #, java-format
 msgid "Unable to create file {0}"
-msgstr ""
+msgstr "Kan ikke oprette filen {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:859
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:890
@@ -2852,44 +2868,44 @@ msgstr "Fejl: {0}"
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:868
 #, java-format
 msgid "Installing {0}"
-msgstr ""
+msgstr "Installerer {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:883
 msgid "Problem running getdown installer"
-msgstr ""
+msgstr "Problem med at køre Getdown-installationsprogrammet"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:884
 #, java-format
 msgid "Exit code: {0}"
-msgstr ""
+msgstr "Udgangskode: {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:889
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:965
 #, java-format
 msgid "Problem running {0}"
-msgstr ""
+msgstr "Problem med at køre {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:944
 msgid "Problem creating desktop file"
-msgstr ""
+msgstr "Problem med oprettelse af desktop-fil"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:952
 #, java-format
 msgid "Running {0}"
-msgstr ""
+msgstr "Kører {0}"
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:985
 #, java-format
 msgid "Unable to download file {0}."
-msgstr ""
+msgstr "Filen {0} kunne ikke downloades."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:989
 msgid "Certificate exception: old versions of Java may fail to validate recent certificates, try upgrading Java"
-msgstr ""
+msgstr "Certifikatundtagelse: Gamle versioner af Java kan muligvis ikke validere nyere certifikater. Prøv at opgradere Java."
 
 #: org/wikipediacleaner/gui/swing/InstallerWindow.java:991
 msgid "Java version: {}"
-msgstr ""
+msgstr "Java-version: {}"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:191
 #: org/wikipediacleaner/gui/swing/component/simple/LanguageSelector.java:73
@@ -2898,34 +2914,34 @@ msgstr "Sprog"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:205
 msgid "Script"
-msgstr ""
+msgstr "Script"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:220
 msgid "Region"
-msgstr ""
+msgstr "Region"
 
 #: org/wikipediacleaner/gui/swing/LanguageSelectionPanel.java:239
 #, java-format
 msgid "Variant n°{0}"
-msgstr ""
+msgstr "Variant nr. {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:203
 #, java-format
 msgid "In the near future, WPCleaner will require Java {0} or above, but you''re currently using an older version ({1})."
-msgstr ""
+msgstr "I den nærmeste fremtid vil WPCleaner kræve Java {0} eller nyere, men du bruger i øjeblikket en ældre version ({1})."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:209
 msgid "Please, upgrade to a newer version of Java"
-msgstr ""
+msgstr "Opgrader venligst til en nyere version af Java"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:210
 msgid "Obsolete Java version"
-msgstr ""
+msgstr "Forældet Java-version"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:256
 #, java-format
 msgid "{0} - Version {1} ({2})"
-msgstr ""
+msgstr "{0} - Version {1} ({2})"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:366
 msgid "Message"
@@ -2940,15 +2956,15 @@ msgstr "Log ind"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:459
 msgid "Demo"
-msgstr ""
+msgstr "Demo"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:465
 msgid "Wiki logout"
-msgstr ""
+msgstr "Wiki-log ud"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:472
 msgid "WPC logout"
-msgstr ""
+msgstr "WPC-log ud"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:491
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:564
@@ -2962,15 +2978,15 @@ msgstr "Indstillinger"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:498
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:184
 msgid "System options"
-msgstr ""
+msgstr "Systemindstillinger"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:505
 msgid "Reload system options"
-msgstr ""
+msgstr "Genindlæs systemindstillinger"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:511
 msgid "Check spelling options"
-msgstr ""
+msgstr "Kontroller staveindstillinger"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:533
 msgid "Save username and password"
@@ -3020,15 +3036,15 @@ msgstr "Hvad henviser hertil"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:699
 msgid "Category members"
-msgstr ""
+msgstr "Kategorimedlemmer"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:708
 msgid "Embedded in"
-msgstr ""
+msgstr "Indlejret i"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:734
 msgid "Load list from drive"
-msgstr ""
+msgstr "Indlæs liste fra drev"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:743
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1237
@@ -3041,42 +3057,42 @@ msgstr "Projekter"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:775
 msgid "Preload disambiguations pages"
-msgstr ""
+msgstr "Forudindlæs sider med flertydigheder"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:784
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1445
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:124
 msgid "Current disambiguation list"
-msgstr ""
+msgstr "Aktuel flertydighedsliste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:794
 msgid "With many disambiguation links"
-msgstr ""
+msgstr "Med mange flertydighedslinks"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:803
 msgid "Project Check Wikipedia"
-msgstr ""
+msgstr "Projekttjek Wikipedia"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:812
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1498
 msgid "Help requested on..."
-msgstr ""
+msgstr "Hjælp søges på..."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:821
 msgid "Abuse filters"
-msgstr ""
+msgstr "Misbrugsfiltre"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:830
 msgid "Special lists"
-msgstr ""
+msgstr "Særlige lister"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:839
 msgid "Linter categories"
-msgstr ""
+msgstr "Linter-kategorier"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:848
 msgid "Generate lists"
-msgstr ""
+msgstr "Generer lister"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:857
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1832
@@ -3101,28 +3117,28 @@ msgstr "Botværktøjer"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:929
 msgid "Demo mode is only available for testing WPCleaner.\nYou won't be able to modify pages on Wikipedia in Demo mode.\nDo you want to continue ?"
-msgstr ""
+msgstr "Demotilstand er kun tilgængelig til test af WPCleaner.\nDu vil ikke kunne ændre sider på Wikipedia i demotilstand.\nVil du fortsætte?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:949
 msgid "You must select which Wikipedia you want to work on before login"
-msgstr ""
+msgstr "Du skal vælge hvilken Wikipedia du vil arbejde på, før du logger ind."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:959
 msgid "You must select a language before login"
-msgstr ""
+msgstr "Du skal vælge et sprog før du logger ind"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:971
 msgid "You must input your username before login"
-msgstr ""
+msgstr "Du skal indtaste dit brugernavn før du logger ind"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:983
 msgid "You must input your password before login"
-msgstr ""
+msgstr "Du skal indtaste din adgangskode før du logger ind"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1090
 #, java-format
 msgid "You can learn how to configure {0} at the following URL:"
-msgstr ""
+msgstr "Du kan lære, hvordan du konfigurerer {0}, på følgende URL:"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1137
 msgid "Activate all"
@@ -3134,38 +3150,38 @@ msgstr "Deaktiver alle"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1249
 msgid "The password will be saved on your disk, so anyone having access to your computer may be able to get it.\nAre you sure that you want to save it ?"
-msgstr ""
+msgstr "Adgangskoden gemmes på din disk, så alle, der har adgang til din computer, kan få adgang til den.\nEr du sikker på, at du vil gemme den?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1316
 msgid "You must input a page name for retrieving the list of internal links"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn for at hente listen over interne links"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1330
 #, java-format
 msgid "Internal links in {0}"
-msgstr ""
+msgstr "Interne links i {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1337
 msgid "You must input a page name"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1345
 #, java-format
 msgid "Search results for {0}"
-msgstr ""
+msgstr "Søgeresultater for {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1353
 msgid "You must input a page name for retrieving the list of backlinks"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn for at hente listen over backlinks"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1369
 #, java-format
 msgid "Links to {0}"
-msgstr ""
+msgstr "Links til {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1377
 msgid "You must input a page name for retrieving the list of category members"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn for at hente listen over kategorimedlemmer"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1395
 #, java-format
@@ -3174,25 +3190,25 @@ msgstr "Kategori medlemmer af {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1403
 msgid "You must input a page name for retrieving the list of page in which it is embedded"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn for at hente listen over sider, hvor den er integreret."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1421
 #, java-format
 msgid "Template {0} embedded in"
-msgstr ""
+msgstr "Skabelon {0} integreret i"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1470
 msgid "Pages with many disambiguation links"
-msgstr ""
+msgstr "Sider med mange flertydige links"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1511
 msgid "What abuse filter are you interested in?"
-msgstr ""
+msgstr "Hvilket misbrugsfilter er du interesseret i?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1526
 #, java-format
 msgid "Hits for filter {0}"
-msgstr ""
+msgstr "Hits for filter {0}"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1599
 msgid "Without templates"
@@ -3209,31 +3225,31 @@ msgstr "Alle navnerum"
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1634
 #: org/wikipediacleaner/gui/swing/pagelist/PageListTableModel.java:232
 msgid "Main"
-msgstr ""
+msgstr "Hoved"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1690
 msgid "All disambiguations pages"
-msgstr ""
+msgstr "Alle sider med flertydigheder"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1846
 msgid "Watch list"
-msgstr ""
+msgstr "Overvågningsliste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1876
 msgid "Unformatted list of page names"
-msgstr ""
+msgstr "Uformateret liste over sidenavne"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1877
 msgid "Internal links in a formatted list"
-msgstr ""
+msgstr "Interne links i en formateret liste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1880
 msgid "The file must be encoded in UTF-8 to be read correctly."
-msgstr ""
+msgstr "Filen skal være kodet i UTF-8 for at kunne læses korrekt."
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1881
 msgid "In which format is the file?"
-msgstr ""
+msgstr "I hvilket format er filen?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1934
 msgid "List"
@@ -3241,25 +3257,25 @@ msgstr "Liste"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1950
 msgid "Random redirect pages"
-msgstr ""
+msgstr "Tilfældige omdirigeringssider"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1982
 msgid "How many pages do you want?"
-msgstr ""
+msgstr "Hvor mange sider ønsker du?"
 
 #: org/wikipediacleaner/gui/swing/MainWindow.java:1994
 #, java-format
 msgid "The number of pages must be between {0} and {1}"
-msgstr ""
+msgstr "Antallet af sider skal være mellem {0} og {1}"
 
 #: org/wikipediacleaner/gui/swing/MonitorRCWindow.java:108
 msgid "Recent changes monitoring"
-msgstr ""
+msgstr "Overvågning af de seneste ændringer"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:104
 #, java-format
 msgid "New section in {0}"
-msgstr ""
+msgstr "Ny sektion i {0}"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:131
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:141
@@ -3272,11 +3288,11 @@ msgstr "&Signatur"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:150
 msgid "&Force watching page"
-msgstr ""
+msgstr "&Tving overvågningsside"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:193
 msgid "Article contents"
-msgstr ""
+msgstr "Artikelindhold"
 
 #: org/wikipediacleaner/gui/swing/NewSectionWindow.java:201
 msgid "&Validate"
@@ -3293,11 +3309,11 @@ msgstr "Analyse - {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:455
 msgid "Mark the selected text as being in a foreign language"
-msgstr ""
+msgstr "Marker den valgte tekst som værende på et fremmedsprog"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:461
 msgid "Translation of an article copied from an other wiki"
-msgstr ""
+msgstr "Oversættelse af en artikel kopieret fra en anden wiki"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:509
 msgid "&Options"
@@ -3352,33 +3368,33 @@ msgstr "Tjek Wikipedia"
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:858
 #, java-format
 msgid "Page {0} doesn''t exist, do you want to load a similar page ?"
-msgstr ""
+msgstr "Side {0} findes ikke. Vil du indlæse en lignende side?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:871
 #, java-format
 msgid "Page {0} doesn''t exist, do you still want to analyze it ?"
-msgstr ""
+msgstr "Side {0} findes ikke. Vil du stadig analysere den?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:922
 #, java-format
 msgid "\"{0}\" has been tagged with the following templates, be careful when editing:"
-msgstr ""
+msgstr "\"{0}\" er blevet tagget med følgende skabeloner. Vær forsigtig, når du redigerer:"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:944
 msgid "Do you want to apply the automatic modifications?"
-msgstr ""
+msgstr "Vil du anvende de automatiske ændringer?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1075
 msgid "You must select the text that is written in a foreign language"
-msgstr ""
+msgstr "Du skal vælge teksten, der er skrevet på et fremmedsprog"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1084
 msgid "Foreign language"
-msgstr ""
+msgstr "Fremmedsprog"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1121
 msgid "From which Wikipedia is this text coming ?"
-msgstr ""
+msgstr "Fra hvilken Wikipedia kommer denne tekst?"
 
 #: org/wikipediacleaner/gui/swing/OnePageAnalysisWindow.java:1220
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:109
@@ -3395,7 +3411,7 @@ msgstr "&Side :"
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:129
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:198
 msgid "Disambiguation"
-msgstr ""
+msgstr "Flertydig"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:400
 msgid "Reload (Alt + &R)"
@@ -3408,7 +3424,7 @@ msgstr "&Genindlæs"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:433
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:179
 msgid "Send"
-msgstr ""
+msgstr "Send"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:450
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:452
@@ -3429,7 +3445,7 @@ msgstr "Indholdsfortegnelse"
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:132
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:189
 msgid "Validate"
-msgstr ""
+msgstr "Valider"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:549
 msgid "Automatic comment"
@@ -3438,32 +3454,32 @@ msgstr "Automatisk kommentar"
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:575
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:266
 msgid "Mark edit as minor"
-msgstr ""
+msgstr "Markér redigering som mindre"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:581
 msgid "Disable bot flag for this edit"
-msgstr ""
+msgstr "Deaktiver botflag for denne redigering"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:585
 msgid "&Close after sending"
-msgstr ""
+msgstr "&Luk efter afsendelse"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:591
 msgid "&Add a note on talk page"
-msgstr ""
+msgstr "&Tilføj en note på diskussionssiden"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:595
 msgid "Update disambiguation warning on talk page"
-msgstr ""
+msgstr "Opdater advarsel om flertydighedsfejl på diskussionssiden"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:600
 msgid "Create disambiguation warning on talk page"
-msgstr ""
+msgstr "Opret advarsel om flertydighed på diskussionssiden"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:624
 #: org/wikipediacleaner/gui/swing/options/GeneralOptionsPanel.java:205
 msgid "Check spelling and typography"
-msgstr ""
+msgstr "Tjek stavning og typografi"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:626
 msgid "Spelling"
@@ -3471,28 +3487,28 @@ msgstr "Stavning"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:661
 msgid "Protection level for editing the page"
-msgstr ""
+msgstr "Beskyttelsesniveau for redigering af siden"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:743
 #, java-format
 msgid "Last modified at {0}"
-msgstr ""
+msgstr "Sidst ændret kl. {0}"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:751
 #, java-format
 msgid "Last modified at {0}. It was modified less than {1} minute ago."
 msgid_plural "Last modified at {0}. It was modified less than {1} minutes ago."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Sidst ændret kl. {0}. Den blev ændret for mindre end {1} minut siden."
+msgstr[1] "Sidst ændret kl. {0}. Den blev ændret for mindre end {1} minutter siden."
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:792
 msgid "Fix &redirects"
-msgstr ""
+msgstr "Ret &omdirigeringer"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:802
 #, java-format
 msgid "Link \"{0}\" to \"{1}\""
-msgstr ""
+msgstr "Forbind \"{0}\" til \"{1}\""
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:819
 msgid "&Tools"
@@ -3500,15 +3516,15 @@ msgstr "&Værktøjer"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:823
 msgid "&Preview"
-msgstr ""
+msgstr "&Forhåndsvisning"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:828
 msgid "&Expand templates"
-msgstr ""
+msgstr "&Udvid skabeloner"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:833
 msgid "Expand templates &and Preview"
-msgstr ""
+msgstr "Udvid skabeloner og forhåndsvisning"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:928
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:51
@@ -3516,13 +3532,13 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:139
 #: org/wikipediacleaner/gui/swing/pagelist/PageListWindow.java:190
 msgid "Full analysis"
-msgstr ""
+msgstr "Fuld analyse"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:934
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:266
 #: org/wikipediacleaner/gui/swing/menu/BasicMenuCreator.java:271
 msgid "Disambiguation analysis"
-msgstr ""
+msgstr "Analyse af flertydighed"
 
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1024
 #: org/wikipediacleaner/gui/swing/checkwiki/CheckWikiContentPanel.java:714
@@ -3532,12 +3548,12 @@ msgstr "En kommentar er nødvendig for at sende siden."
 #: org/wikipediacleaner/gui/swing/OnePageWindow.java:1084
 #, java-format
 msgid "Sending {0}"
-msgstr ""
+msgstr "Sender {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:100
 #, java-format
 msgid "Page comments - {0}"
-msgstr ""
+msgstr "Sidekommentarer - {0}"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:121
 #: org/wikipediacleaner/gui/swing/options/FormattingOptionsPanel.java:183
@@ -3551,15 +3567,15 @@ msgstr "Kommentarer :"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:157
 msgid "Max backlinks in Main :"
-msgstr ""
+msgstr "Maks. antal backlinks i Main:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:185
 msgid "Max backlinks in Template :"
-msgstr ""
+msgstr "Maks. antal backlinks i skabelonen:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:213
 msgid "Max backlinks in other namespaces :"
-msgstr ""
+msgstr "Maks. antal backlinks i andre navnerum:"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:271
 msgid "&OK"
@@ -3567,17 +3583,17 @@ msgstr "&Ok"
 
 #: org/wikipediacleaner/gui/swing/PageCommentsWindow.java:277
 msgid "&Remove page comments"
-msgstr ""
+msgstr "&Fjern sidekommentarer"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:111
 #, java-format
 msgid "Expand Templates and Preview - {0}"
-msgstr ""
+msgstr "Udvid skabeloner og forhåndsvisning - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:112
 #, java-format
 msgid "Preview - {0}"
-msgstr ""
+msgstr "Forhåndsvisning - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:115
 #, java-format
@@ -3586,11 +3602,11 @@ msgstr "Udvid skabeloner - {0}"
 
 #: org/wikipediacleaner/gui/swing/PreviewWindow.java:203
 msgid "&Update"
-msgstr ""
+msgstr "&Opdater"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:243
 msgid "Id"
-msgstr ""
+msgstr "Id"
 
 #: org/wikipediacleaner/gui/swing/RecentChangesTableModel.java:246
 msgid "User"
@@ -3599,12 +3615,12 @@ msgstr "Bruger"
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:90
 #, java-format
 msgid "Templates in {0}"
-msgstr ""
+msgstr "Skabeloner i {0}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:115
 #, java-format
 msgid "Templates used in {0}, linking to {1}"
-msgstr ""
+msgstr "Skabeloner brugt i {0}, der linker til {1}"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:210
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:57
@@ -3616,15 +3632,15 @@ msgstr ""
 #: org/wikipediacleaner/gui/swing/worker/SendWorker.java:199
 #: org/wikipediacleaner/gui/swing/worker/warning/UpdateDabWarningWorker.java:87
 msgid "Retrieving MediaWiki API"
-msgstr ""
+msgstr "Henter MediaWiki API"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:214
 msgid "Retrieving links in templates"
-msgstr ""
+msgstr "Hentning af links i skabeloner"
 
 #: org/wikipediacleaner/gui/swing/TemplateListWindow.java:216
 msgid "Displaying templates found"
-msgstr ""
+msgstr "Viser fundne skabeloner"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:51
 msgid "Check article"
@@ -3633,7 +3649,7 @@ msgstr "Tjek artikel"
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:262
 #: org/wikipediacleaner/gui/swing/action/ActionFullAnalysis.java:276
 msgid "You must input a page name for running a full analysis"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn for at køre en fuld analyse"
 
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:293
 #: org/wikipediacleaner/gui/swing/action/ActionCheckArticle.java:309
@@ -3655,11 +3671,11 @@ msgstr "Slet side"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDeletePage.java:130
 msgid "Do you want to delete this page on Wikipedia ?\nPlease, enter the reason for deleting the page"
-msgstr ""
+msgstr "Vil du slette denne side på Wikipedia?\nAngiv venligst årsagen til sletningen af siden."
 
 #: org/wikipediacleaner/gui/swing/action/ActionDisambiguationAnalysis.java:250
 msgid "You must input a page name for running a disambiguation analysis"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn for at køre en flertydighedsanalyse"
 
 #: org/wikipediacleaner/gui/swing/action/ActionDispose.java:37
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:119
@@ -3682,22 +3698,22 @@ msgstr "Indsæt tekst"
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:66
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:219
 msgid "Next occurrence"
-msgstr ""
+msgstr "Næste forekomst"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:56
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:209
 msgid "First occurrence"
-msgstr ""
+msgstr "Første forekomst"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:61
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:224
 msgid "Last occurrence"
-msgstr ""
+msgstr "Sidste forekomst"
 
 #: org/wikipediacleaner/gui/swing/action/ActionOccurrence.java:71
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:214
 msgid "Previous occurrence"
-msgstr ""
+msgstr "Tidligere forekomst"
 
 #: org/wikipediacleaner/gui/swing/action/ActionPasteText.java:46
 msgid "Paste"
@@ -3705,43 +3721,43 @@ msgstr "Indsæt"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:61
 msgid "Add warnings on talk page"
-msgstr ""
+msgstr "Tilføj advarsler på diskussionssiden"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:257
 msgid "Add a warning about links to disambiguation pages"
-msgstr ""
+msgstr "Tilføj en advarsel om links til flertydighedssider"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:264
 msgid "Add a warning about ISBN errors"
-msgstr ""
+msgstr "Tilføj en advarsel om ISBN-fejl"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:271
 msgid "Add a warning about duplicate arguments errors"
-msgstr ""
+msgstr "Tilføj en advarsel om fejl med dublerede argumenter"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:278
 msgid "Add a warning about unknown parameter errors"
-msgstr ""
+msgstr "Tilføj en advarsel om ukendte parameterfejl"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:318
 msgid "Do you want to update the disambiguation warning on talk page?"
-msgstr ""
+msgstr "Vil du opdatere flertydighedsadvarslen på diskussionssiden?"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:361
 msgid "Do you want to update the ISBN warning on talk page?"
-msgstr ""
+msgstr "Vil du opdatere ISBN-advarslen på diskussionssiden?"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:404
 msgid "Do you want to update the duplicate arguments warning on talk page?"
-msgstr ""
+msgstr "Vil du opdatere advarslen om dublerede argumenter på diskussionssiden?"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:447
 msgid "Do you want to update the unknown parameter warning on talk page?"
-msgstr ""
+msgstr "Vil du opdatere advarslen om ukendt parameter på diskussionssiden?"
 
 #: org/wikipediacleaner/gui/swing/action/ActionUpdateWarning.java:492
 msgid "You must input a page name for updating warnings"
-msgstr ""
+msgstr "Du skal indtaste et sidenavn for at opdatere advarsler"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:46
 #: org/wikipediacleaner/gui/swing/options/ShortcutOptionsPanel.java:104
@@ -3750,97 +3766,97 @@ msgstr "Tilføj til lokal overvågningsliste"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:176
 msgid "You must select a page to add it on your local watchlist"
-msgstr ""
+msgstr "Du skal vælge en side for at tilføje den til din lokale overvågningsliste"
 
 #: org/wikipediacleaner/gui/swing/action/ActionWatchPage.java:183
 #, java-format
 msgid "Would you like to add the page {0} on your local watchlist?"
 msgid_plural "Would you like to add these pages ({0}) on your local watchlist?"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Vil du tilføje siden {0} til din lokale overvågningsliste?"
+msgstr[1] "Vil du tilføje disse sider ({0}) til din lokale overvågningsliste?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:89
 #, java-format
 msgid "Unable to find if category {0} exists in \"{1}\"."
-msgstr ""
+msgstr "Kan ikke finde ud af, om kategori {0} findes i \"{1}\"."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:98
 #, java-format
 msgid "The category {0} exists in \"{1}\".\nDo you want to replace the category by [[{2}]] ?"
-msgstr ""
+msgstr "Kategorien {0} findes i \"{1}\".\nVil du erstatte kategorien med [[{2}]]?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:120
 #, java-format
 msgid "The category {0} in the {1} Wikipedia doesn''t have a language link to the {2} Wikipedia.\nIt doesn''t exist either in the {2} Wikipedia."
-msgstr ""
+msgstr "Kategorien {0} på {1} Wikipedia har ikke et sproglink til {2} Wikipedia.\nDen findes heller ikke på {2} Wikipedia."
 
 #: org/wikipediacleaner/gui/swing/action/CheckCategoryLinkAction.java:129
 #, java-format
 msgid "The category {0} doesn''t exist in the {2} Wikipedia.\nIn the {1} Wikipedia, it has a language link to the {2} Wikipedia: {3}.\nDo you want to replace the category by [[{3}]] ?"
-msgstr ""
+msgstr "Kategorien {0} findes ikke på {2} Wikipedia.\nPå {1} Wikipedia har den et sproglink til {2} Wikipedia: {3}.\nVil du erstatte kategorien med [[{3}]]?"
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:84
 #, java-format
 msgid "The page {0} in \"{1}\" has a language link to \"{2}\": {3}."
-msgstr ""
+msgstr "Siden {0} i \"{1}\" har et sproglink til \"{2}\": {3}."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:100
 #, java-format
 msgid "The page {0} in \"{1}\" doesn''t have a language link to \"{2}\"."
-msgstr ""
+msgstr "Siden {0} i \"{1}\" har ikke et sproglink til \"{2}\"."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:114
 #, java-format
 msgid "The page {0} doesn''t exist in \"{1}\"."
-msgstr ""
+msgstr "Siden {0} findes ikke i \"{1}\"."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:118
 #, java-format
 msgid "The page {0} exists in \"{1}\"."
-msgstr ""
+msgstr "Siden {0} findes i \"{1}\"."
 
 #: org/wikipediacleaner/gui/swing/action/CheckLanguageLinkAction.java:137
 msgid "What replacement do you want to use?"
-msgstr ""
+msgstr "Hvilken erstatning vil du bruge?"
 
 #: org/wikipediacleaner/gui/swing/action/FindTextAction.java:62
 msgid "String to find"
-msgstr ""
+msgstr "Streng at finde"
 
 #: org/wikipediacleaner/gui/swing/action/PurgeCacheAction.java:61
 msgid "Purging page cache"
-msgstr ""
+msgstr "Rydder sidens cache"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadCategoryMembersAction.java:61
 msgid "Retrieving members of a category"
-msgstr ""
+msgstr "Hentning af medlemmer af en kategori"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:64
 msgid "Analyzing links for redirect pages"
-msgstr ""
+msgstr "Analyse af links til omdirigeringssider"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:70
 msgid "Analyzing links for disambiguation pages"
-msgstr ""
+msgstr "Analyse af links til flertydighedssider"
 
 #: org/wikipediacleaner/gui/swing/action/ReloadLinksAction.java:78
 #, java-format
 msgid "Retrieving possible disambiguations for {0}"
-msgstr ""
+msgstr "Henter mulige flertydigheder for {0}"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceAllLinksAction.java:55
 msgid "Do you want to proceed with the replacement ?"
-msgstr ""
+msgstr "Vil du fortsætte med udskiftningen?"
 
 #: org/wikipediacleaner/gui/swing/action/ReplaceLinkAction.java:232
 #, java-format
 msgid "The link can be extended to include text before or after the current link.\nWould you like to extend the link to \"{0}\"?"
-msgstr ""
+msgstr "Linket kan udvides til at inkludere tekst før eller efter det aktuelle link.\nVil du udvide linket til \"{0}\"?"
 
 #: org/wikipediacleaner/gui/swing/basic/BasicWindow.java:64
 #, java-format
 msgid "{0} is working..."
-msgstr ""
+msgstr "{0} arbejder..."
 
 #: org/wikipediacleaner/gui/swing/basic/TaskYesNoAllDialog.java:52
 msgid "Yes"
@@ -3862,7 +3878,7 @@ msgstr "Nej til alle"
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:124
 #, java-format
 msgid "An error occurred: {0}"
-msgstr ""
+msgstr "Der opstod en fejl: {0}"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:129
 msgid "An unknown error occurred"
@@ -3871,82 +3887,82 @@ msgstr "Der opstod en ukendt fejl"
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:189
 #, java-format
 msgid "You need to define the {0} property in WPCleaner configuration."
-msgstr ""
+msgstr "Du skal definere egenskaben {0} i WPCleaner-konfigurationen."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:217
 #, java-format
 msgid "You need to define the {0} properties in WPCleaner configuration."
-msgstr ""
+msgstr "Du skal definere egenskaberne for {0} i WPCleaner-konfigurationen."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:227
 msgid "This function requires some configuration."
-msgstr ""
+msgstr "Denne funktion kræver en vis konfiguration."
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:233
 msgid "Do you want to display help on configuring WPCleaner ?"
-msgstr ""
+msgstr "Vil du have hjælp til konfiguration af WPCleaner?"
 
 #: org/wikipediacleaner/gui/swing/basic/Utilities.java:337
 msgid "Other..."
-msgstr ""
+msgstr "Andre..."
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticCWWorker.java:93
 #: org/wikipediacleaner/gui/swing/worker/CheckWikiProjectWorker.java:75
 #, java-format
 msgid "Checking for errors n°{0}"
-msgstr ""
+msgstr "Kontrol af fejl nr. {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:201
 #, java-format
 msgid "Analyzing page {0}"
-msgstr ""
+msgstr "Analyserer side {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:307
 #, java-format
 msgid "Fixing page {0}"
-msgstr ""
+msgstr "Retter side {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:385
 #, java-format
 msgid "{0} page has been modified"
 msgid_plural "{0} pages have been modified"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} side er blevet ændret"
+msgstr[1] "{0} sider er blevet ændret"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:390
 #, java-format
 msgid "{0} page has been marked as fixed for the selected algorithms"
 msgid_plural "{0} pages have been marked as fixed for the selected algorithms"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} side er markeret som rettet for de valgte algoritmer"
+msgstr[1] "{0} sider er markeret som rettet for de valgte algoritmer"
 
 #: org/wikipediacleaner/gui/swing/bot/AutomaticFixWorker.java:395
 #, java-format
 msgid "{0} page has been marked as fixed for other algorithms"
 msgid_plural "{0} pages have been marked as fixed for other algorithms"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "{0} side er markeret som rettet for andre algoritmer"
+msgstr[1] "{0} sider er markeret som rettet for andre algoritmer"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:282
 msgid "Activate automatic fixing for all algorithms"
-msgstr ""
+msgstr "Aktivér automatisk rettelse for alle algoritmer"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:288
 msgid "Deactivate automatic fixing for all algorithms"
-msgstr ""
+msgstr "Deaktiver automatisk rettelse for alle algoritmer"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:294
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:317
 msgid "Reverse the selection"
-msgstr ""
+msgstr "Omvend valget"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:305
 msgid "Use the list of pages of each algorithm"
-msgstr ""
+msgstr "Brug listen over sider for hver algoritme"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:311
 msgid "Use no list of pages"
-msgstr ""
+msgstr "Brug ingen liste over sider"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:499
 msgid "Description"
@@ -3954,15 +3970,15 @@ msgstr "Beskrivelse"
 
 #: org/wikipediacleaner/gui/swing/bot/BotCWTableModel.java:502
 msgid "N°"
-msgstr ""
+msgstr "Nr."
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:87
 msgid "Functions available here are considered as bot tools."
-msgstr ""
+msgstr "Funktioner, der er tilgængelige her, betragtes som botværktøjer."
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:88
 msgid "They may modify a lot of pages in a short period of time."
-msgstr ""
+msgstr "De kan ændre mange sider på kort tid."
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:101
 #: org/wikipediacleaner/gui/swing/options/OptionsWindow.java:88
@@ -3971,12 +3987,12 @@ msgstr "Generelt"
 
 #: org/wikipediacleaner/gui/swing/bot/BotToolsWindow.java:104
 msgid "Check Wiki"
-msgstr ""
+msgstr "Tjek Wiki"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:83
 #, java-format
 msgid "Checking whitelist for error {0}"
-msgstr ""
+msgstr "Tjekker hvidliste for fejl {0}"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
