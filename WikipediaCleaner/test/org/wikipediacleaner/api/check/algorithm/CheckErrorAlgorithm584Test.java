@@ -52,47 +52,70 @@ public class CheckErrorAlgorithm584Test {
     algorithm = CheckErrorAlgorithms.getAlgorithm(wiki, 584);
   }
 
-  private void check(String text, String expected) {
+  private void check(String text) {
+    check(text, text, false);
+  }
+
+  private void check(String text, String expected, boolean automatic) {
     Page page = DataManager.createSimplePage(wiki, "Test", null, null, null);
     PageAnalysis analysis = new PageAnalysis(page, text);
     List<CheckErrorResult> errors = new ArrayList<>();
     algorithm.analyze(analysis, errors, false);
-    assertEquals("Errors for " + text, text.equals(expected) ? 0 : 1, errors.size());
-    assertEquals("Fix for " + text, expected, algorithm.automaticFix(analysis));
+    boolean error = !text.equals(expected);
+    assertEquals("Errors for " + text, error ? 1 : 0, errors.size());
+    if (error) {
+      CheckErrorResult errorResult = errors.get(0);
+      String fixed =
+          text.substring(0, errorResult.getStartPosition()) +
+          errorResult.getFirstReplacement() +
+          text.substring(errorResult.getEndPosition());
+      assertEquals("Fix for " + text, expected, fixed);
+    }
+    assertEquals("Automatic fix for " + text, automatic ? expected : text, algorithm.automaticFix(analysis));
   }
 
   @Test
   public void testCorrect() {
-    check("Texte.\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
-    check("Texte.\n{{Palette|Thème}}", "Texte.\n{{Palette|Thème}}");
-    check("{{Palette|Thème}}", "{{Palette|Thème}}");
-    check("Texte.\n\n\n{{Autre}}", "Texte.\n\n\n{{Autre}}");
-    check("{{Boîte|\n\n\n{{Palette|Thème}}}}", "{{Boîte|\n\n\n{{Palette|Thème}}}}");
+    check("Texte.\n\n{{Palette|Thème}}");
+    check("Texte.\n{{Palette|Thème}}");
+    check("{{Palette|Thème}}");
+    check("Texte.\n\n\n{{Autre}}");
+    check("{{Boîte|\n\n\n{{Palette|Thème}}}}");
   }
 
   @Test
   public void testMultipleBlankLines() {
-    check("Texte.\n\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
-    check("Texte.\n \n\n\n{{Palette}}", "Texte.\n\n{{Palette}}");
+    check("Texte.\n\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", false);
+    check("Texte.\n \n\n\n{{Palette}}", "Texte.\n\n{{Palette}}", false);
   }
 
   @Test
   public void testBrTag() {
-    check("Texte.<br />\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
-    check("Texte.\n<br clear=\"all\">\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
+    check("Texte.<br />\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
+    check("Texte.\n<br clear=\"all\">\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
   }
 
   @Test
   public void testLineJumpTemplates() {
-    check("Texte.\n{{Clr}}\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
-    check("Texte.\n\n{{clear}}\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
-    check("Texte.\n{{Saut|2em}}\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
-    check("Texte.\n{{Clr}}{{Saut|10px}}\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}");
+    check("Texte.\n{{Clr}}\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
+    check("Texte.\n\n{{clear}}\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
+    check("Texte.\n{{Saut|2em}}\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
+    check("Texte.\n{{Clr}}{{Saut|10px}}\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
+    check("Texte.<br />\n{{Clr}}\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
+  }
+
+  @Test
+  public void testCommentBefore() {
+    check("Texte.<!-- Commentaire -->\n{{Clr}}\n{{Palette|Thème}}", "Texte.<!-- Commentaire -->\n\n{{Palette|Thème}}", false);
+    check("Texte.\n<!-- Commentaire --> \n\n{{clear}}\n\n{{Palette|Thème}}", "Texte.\n<!-- Commentaire -->\n\n{{Palette|Thème}}", false);
+    check("Texte.\n<!-- Commentaire -->\n\n\n{{Palette|Thème}}", "Texte.\n<!-- Commentaire -->\n\n{{Palette|Thème}}", false);
+    check("<!-- Commentaire -->Texte.\n{{Clr}}\n{{Palette|Thème}}", "<!-- Commentaire -->Texte.\n\n{{Palette|Thème}}", true);
+    check("Texte.<!-- Commentaire --><br />\n{{Palette|Thème}}", "Texte.<!-- Commentaire -->\n\n{{Palette|Thème}}", false);
   }
 
   @Test
   public void testTemplateGroups() {
-    check("Texte.\n{{Clr}}\n{{Palettes|Thème}}", "Texte.\n\n{{Palettes|Thème}}");
-    check("Texte.\n\n\n{{Palettes|Thème}}", "Texte.\n\n{{Palettes|Thème}}");
+    check("Texte.\n{{Clr}}\n{{Palettes|Thème}}", "Texte.\n\n{{Palettes|Thème}}", true);
+    check("Texte.\n\n\n{{Palettes|Thème}}", "Texte.\n\n{{Palettes|Thème}}", false);
   }
 }
