@@ -107,7 +107,6 @@ public class CheckErrorAlgorithm584 extends CheckErrorAlgorithmBase {
     int beginIndex = template.getBeginIndex();
     int newLineCount = 0;
     boolean lineJumpElement = false;
-    boolean lineJumpAutomatic = false;
     boolean tryAgain = true;
     while (tryAgain && (beginIndex > 0)) {
       tryAgain = false;
@@ -120,13 +119,10 @@ public class CheckErrorAlgorithm584 extends CheckErrorAlgorithmBase {
         beginIndex--;
         tryAgain = true;
       } else {
-        LineJumpElement element = lineJumps.elementsByEndIndex.get(beginIndex);
-        if (element != null) {
+        Integer elementBeginIndex = lineJumps.elementsByEndIndex.get(beginIndex);
+        if (elementBeginIndex != null) {
           lineJumpElement = true;
-          if (element.kind().automatic) {
-            lineJumpAutomatic = true;
-          }
-          beginIndex = element.beginIndex();
+          beginIndex = elementBeginIndex;
           tryAgain = true;
         }
       }
@@ -155,10 +151,7 @@ public class CheckErrorAlgorithm584 extends CheckErrorAlgorithmBase {
     }
     CheckErrorResult errorResult = createCheckErrorResult(analysis, beginIndex, endIndex);
     String replacement = "\n\n" + contents.substring(template.getBeginIndex(), endIndex);
-    boolean automatic = lineJumpAutomatic;
-    if (analysis.comments().getEndsAt(beginIndex) != null) {
-      automatic = false;
-    }
+    boolean automatic = (analysis.comments().getEndsAt(beginIndex) == null);
     errorResult.addReplacement(replacement, automatic);
     errors.add(errorResult);
 
@@ -180,50 +173,21 @@ public class CheckErrorAlgorithm584 extends CheckErrorAlgorithmBase {
   }
 
   /**
-   * Kinds of elements used to do line jumps.
-   */
-  private enum LineJumpKind {
-    BR_TAG(true),
-    TEMPLATE(true);
-
-    /** True if this kind of line jump allows an automatic fix */
-    final boolean automatic;
-
-    LineJumpKind(boolean automatic) {
-      this.automatic = automatic;
-    }
-  }
-
-  /**
-   * Element used to do a line jump.
-   *
-   * @param beginIndex Begin index of the element.
-   * @param kind Kind of element.
-   */
-  private record LineJumpElement(int beginIndex, LineJumpKind kind) {
-    // Nothing to add
-  }
-
-  /**
    * Elements used to do line jumps in a page.
    */
   private class LineJumps {
 
-    /** Elements used to do line jumps, indexed by their end index */
-    final Map<Integer, LineJumpElement> elementsByEndIndex = new HashMap<>();
+    /** Begin index of elements used to do line jumps, indexed by their end index */
+    final Map<Integer, Integer> elementsByEndIndex = new HashMap<>();
 
     LineJumps(PageAnalysis analysis) {
       for (PageElementTag tag : analysis.getTags(HtmlTagType.BR)) {
-        elementsByEndIndex.put(
-            tag.getEndIndex(),
-            new LineJumpElement(tag.getBeginIndex(), LineJumpKind.BR_TAG));
+        elementsByEndIndex.put(tag.getEndIndex(), tag.getBeginIndex());
       }
       if (!lineJumpTemplateNames.isEmpty()) {
         for (PageElementTemplate template : analysis.getTemplates()) {
           if (lineJumpTemplateNames.contains(template.getTemplateName())) {
-            elementsByEndIndex.put(
-                template.getEndIndex(),
-                new LineJumpElement(template.getBeginIndex(), LineJumpKind.TEMPLATE));
+            elementsByEndIndex.put(template.getEndIndex(), template.getBeginIndex());
           }
         }
       }

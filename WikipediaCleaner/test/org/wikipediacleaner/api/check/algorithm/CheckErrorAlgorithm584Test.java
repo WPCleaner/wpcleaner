@@ -85,8 +85,8 @@ public class CheckErrorAlgorithm584Test {
 
   @Test
   public void testMultipleBlankLines() {
-    check("Texte.\n\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", false);
-    check("Texte.\n \n\n\n{{Palette}}", "Texte.\n\n{{Palette}}", false);
+    check("Texte.\n\n\n{{Palette|Thème}}", "Texte.\n\n{{Palette|Thème}}", true);
+    check("Texte.\n \n\n\n{{Palette}}", "Texte.\n\n{{Palette}}", true);
   }
 
   @Test
@@ -116,6 +116,6 @@ public class CheckErrorAlgorithm584Test {
   @Test
   public void testTemplateGroups() {
     check("Texte.\n{{Clr}}\n{{Palettes|Thème}}", "Texte.\n\n{{Palettes|Thème}}", true);
-    check("Texte.\n\n\n{{Palettes|Thème}}", "Texte.\n\n{{Palettes|Thème}}", false);
+    check("Texte.\n\n\n{{Palettes|Thème}}", "Texte.\n\n{{Palettes|Thème}}", true);
   }
 }
