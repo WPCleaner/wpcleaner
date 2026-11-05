@@ -11,7 +11,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-11-02 12:07:04+0000\n"
+"PO-Revision-Date: 2026-11-05 12:06:09+0000\n"
 "X-POT-Import-Date: 2026-10-30 14:30:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4510,7 +4510,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:65
 msgid "Report bug"
-msgstr ""
+msgstr "Feeler mellen"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:69
 msgid "Request a new feature"
@@ -4518,7 +4518,7 @@ msgstr ""
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:107
 msgid "You can submit bug reports at the following URL:"
-msgstr ""
+msgstr "Dir kënnt ënner der follgender URL Feelermeldunge maachen:"
 
 #: org/wikipediacleaner/gui/swing/component/simple/IdeaButton.java:120
 msgid "You can submit feature requests at the following URL:"
