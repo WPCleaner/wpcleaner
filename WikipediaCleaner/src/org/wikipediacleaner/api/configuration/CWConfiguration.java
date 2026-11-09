@@ -14,7 +14,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.wikipediacleaner.api.APIException;
 import org.wikipediacleaner.api.algorithm.AlgorithmError;
 import org.wikipediacleaner.api.check.algorithm.CheckErrorAlgorithm;
@@ -28,6 +31,9 @@ import org.wikipediacleaner.utils.ConfigurationValueBoolean;
  * Configuration for Check Wiki project.
  */
 public class CWConfiguration {
+
+  /** Logger */
+  private final static Logger log = LoggerFactory.getLogger(CWConfiguration.class);
 
   /**
    * Maximum number for error numbers.
@@ -159,6 +165,12 @@ public class CWConfiguration {
    */
   private final static String PREFIX = "error_";
 
+  /** Pattern detecting a line starting a new parameter */
+  private final static Pattern NEW_PARAMETER = Pattern.compile("\\s*" + PREFIX + "\\d{3}_[^=#\\s]+\\s*=");
+
+  /** Maximum length of a line that can be pushed back to the reader */
+  private final static int MAX_LINE_LENGTH = 100_000;
+
   /**
    * Enumerated value for the origin of the configuration.
    */
@@ -268,12 +280,20 @@ public class CWConfiguration {
           StringBuilder value = new StringBuilder(line.substring(posEqual + 1));
           int posEnd = value.indexOf(" END");
           while (posEnd == -1) {
+            reader.mark(MAX_LINE_LENGTH);
             String nextLine = reader.readLine();
-            if (nextLine != null) {
+            if (nextLine == null) {
+              posEnd = value.length();
+            } else if (NEW_PARAMETER.matcher(nextLine).lookingAt()) {
+              // Missing END: the next line starts a new parameter, keep it for next call
+              log.warn(
+                  "Missing END for parameter {} in Check Wiki configuration, stopped before line: {}",
+                  name.trim(), nextLine);
+              reader.reset();
+              posEnd = value.length();
+            } else {
               value.append("\n").append(nextLine);
               posEnd = value.indexOf(" END");
-            } else {
-              posEnd = value.length();
             }
           }
           value.delete(posEnd, value.length());
