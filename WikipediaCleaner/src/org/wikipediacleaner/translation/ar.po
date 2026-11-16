@@ -17,7 +17,7 @@
 msgid ""
 msgstr ""
 ""
-"PO-Revision-Date: 2026-11-02 12:07:01+0000\n"
+"PO-Revision-Date: 2026-11-16 12:08:38+0000\n"
 "X-POT-Import-Date: 2026-10-30 14:30:23+0000\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -2137,15 +2137,15 @@ msgstr "شكلات لا تتجاهل إذا لم تكن واحدة بعد الأ
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:258
 msgid "Templates that shouldn't be preceded by multiple line jumps"
-msgstr ""
+msgstr "القوالب التي لا ينبغي أن تكون مسبقة من قبل قفزات خط متعددة"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:262
 msgid "Template that shouldn't be preceded by multiple line jumps"
-msgstr ""
+msgstr "نموذج لا ينبغي أن يكون مسبقاً من قبل قفزات خط متعددة"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:267
 msgid "Templates used to do line jumps"
-msgstr ""
+msgstr "العلامات المستخدمة لقيام قفزات خط"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:271
 msgid "Template used to do line jumps"
