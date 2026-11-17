@@ -423,10 +423,18 @@ public abstract class UpdateWarningTools {
       }
     } else {
       if (!simulation) {
-        result |= updateWarningOnTodoSubpage(
+        boolean resultTodo = updateWarningOnTodoSubpage(
             pageRevId, todoSubpage, elements, creator, modifiers);
+        boolean resultTalk = false;
         if (createWarning) {
-          result |= cleanWarningOnTalkPage(talkPage, elements);
+          resultTalk = cleanWarningOnTalkPage(talkPage, elements);
+        }
+        result = resultTodo || resultTalk;
+
+        // Talk page displays the "To do" sub-page: purge it if it hasn't been modified
+        if (resultTodo && !resultTalk &&
+            (talkPage != null) && !Boolean.FALSE.equals(talkPage.isExisting())) {
+          purgePage(talkPage);
         }
       }
       if (stats != null) {
