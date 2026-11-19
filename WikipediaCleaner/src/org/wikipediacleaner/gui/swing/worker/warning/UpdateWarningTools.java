@@ -368,6 +368,14 @@ public abstract class UpdateWarningTools {
             creator, modifiers, stats);
       }
 
+      // If talk page is missing or empty and a template is configured to create it,
+      // the warning must be on the "To do" sub-page
+      if ((getTodoAddTemplate() != null) && isTalkPageEmpty(talkPage)) {
+        return manageWarningOnTodoSubpage(
+            pageAnalysis, pageRevId, todoSubpage, talkPage,
+            creator, modifiers, stats);
+      }
+
       // If talk page has a link to the "To do" sub-page,
       // the warning must be on the "To do" sub-page
       /*api.retrieveLinks(wikipedia, talkPage, talkPage.getNamespace());
@@ -810,6 +818,16 @@ public abstract class UpdateWarningTools {
     if ((todoTemplates == null) || (todoTemplates.isEmpty())) {
       return false;
     }
+
+    // Create missing or empty talk page with the configured template
+    String todoAddTemplate = getTodoAddTemplate();
+    if ((todoAddTemplate != null) && isTalkPageEmpty(talkPage)) {
+      String comment = warningProcessor.getWarningComment(elements);
+      String newContents = TemplateBuilder.from(todoAddTemplate).toString();
+      updateTalkPage(talkPage, newContents, comment, false);
+      return true;
+    }
+
     if (Boolean.FALSE.equals(talkPage.isExisting())) {
       String comment = warningProcessor.getWarningComment(elements);
       String newContents = TemplateBuilder.from(todoTemplates.get(0)).toString();
@@ -1123,6 +1141,40 @@ public abstract class UpdateWarningTools {
       }
     }
     return templateTodoLink;
+  }
+
+  /**
+   * @return Template to use when creating a talk page to link to the "To do" sub-page,
+   *         or null if it shouldn't be used.
+   */
+  private String getTodoAddTemplate() {
+    if (configuration.getString(WPCConfigurationString.TODO_SUBPAGE) == null) {
+      return null;
+    }
+    String template = configuration.getString(WPCConfigurationString.TODO_ADD_TEMPLATE);
+    if ((template == null) || template.trim().isEmpty()) {
+      return null;
+    }
+    return template.trim();
+  }
+
+  /**
+   * @param talkPage Talk page.
+   * @return True if the talk page doesn't exist or is empty.
+   */
+  private boolean isTalkPageEmpty(Page talkPage) {
+    if (talkPage == null) {
+      return false;
+    }
+    if (Boolean.FALSE.equals(talkPage.isExisting())) {
+      return true;
+    }
+    if (section0) {
+      // Only section 0 is known: other sections may have contents
+      return false;
+    }
+    String contents = talkPage.getContents();
+    return (contents != null) && contents.trim().isEmpty();
   }
 
   /**

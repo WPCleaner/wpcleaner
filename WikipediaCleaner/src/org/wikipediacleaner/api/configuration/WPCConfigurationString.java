@@ -138,6 +138,8 @@ public enum WPCConfigurationString {
   REF_SEPARATOR("general_ref_separator", null, true, true, true),
   // WPCleaner tag for modifications
   TAG("general_wpcleaner_tag", null, false, true, true),
+  // Template to use when creating a talk page to hold a link to the "To do" sub-page
+  TODO_ADD_TEMPLATE("general_todo_add_template", null, false, true, false),
   // "To do" sub-page
   TODO_SUBPAGE("general_todo_subpage", null, false, true, false),
   // Text to use in the "To do" sub-page for requesting its deletion
