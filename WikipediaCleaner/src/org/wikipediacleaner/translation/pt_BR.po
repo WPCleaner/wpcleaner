@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: WPCleaner\n"
 "Report-Msgid-Bugs-To: translatewiki.net\n"
 "POT-Creation-Date: 2020-07-04 16:07+0200\n"
-"PO-Revision-Date: 2026-11-02 12:07:05+0000\n"
+"PO-Revision-Date: 2026-11-26 12:07:39+0000\n"
 "Last-Translator: Felipe L. <felipe.idj@hotmail.com>\n"
 "Language-Team: Brazilian Portuguese <pt_BR@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -461,7 +461,7 @@ msgstr "Um parâmetro de predefinição no qual as categorias devem ser ignorada
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a010/CheckErrorAlgorithm010.java:203
 msgid "Remove surrounding brackets"
-msgstr ""
+msgstr "Remova os colchetes ao redor"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:40
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a01x/a016/CheckErrorAlgorithm016.java:283
@@ -635,7 +635,7 @@ msgstr "Predefinições que pode ser usado para substituir etiquetas {0}"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a034/CheckErrorAlgorithm034.java:184
 msgid "Expand"
-msgstr ""
+msgstr "Expandir"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a03x/a037/CheckErrorAlgorithm037.java:164
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a091/CheckErrorAlgorithm091_Old.java:100
@@ -904,15 +904,15 @@ msgstr "Uma explicação sobre o problema"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:938
 msgid "Templates to replace ISBN"
-msgstr ""
+msgstr "Predefinição para substituir o ISBN"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:945
 msgid "True if the template includes parenthesis"
-msgstr ""
+msgstr "Verdadeiro se a predefinição incluir parênteses"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a06x/a069/CheckErrorAlgorithm069.java:948
 msgid "True if the template includes small tags"
-msgstr ""
+msgstr "Verdadeiro se a predefinição incluir tags pequenas"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a07x/a070/CheckErrorAlgorithm070.java:119
 #, java-format
@@ -1021,7 +1021,7 @@ msgstr "Tags têm nome diferentes"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:253
 msgid "Both tags are unnamed"
-msgstr ""
+msgstr "Ambas as tags não têm nome"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a08x/a081/CheckErrorAlgorithm081.java:296
 msgid "Name the reference from template parameter"
@@ -1186,15 +1186,15 @@ msgstr "Para relatar apenas títulos consecutivos"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:249
 msgid "Templates that should be ignored"
-msgstr ""
+msgstr "Predefinições que devem ser ignoradas"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:253
 msgid "Template to be ignored"
-msgstr ""
+msgstr "Predefinição a ser ignorada"
 
 #: org/wikipediacleaner/api/check/algorithm/a0xx/a09x/a095/CheckErrorAlgorithm095.java:256
 msgid "Parameter to be ignored"
-msgstr ""
+msgstr "Parâmetro a ser ignorado"
 
 #: org/wikipediacleaner/api/check/algorithm/a1xx/a10x/a101/CheckErrorAlgorithm101.java:165
 msgid "List of ordinal suffixes"
@@ -1456,7 +1456,7 @@ msgstr "Outro valor está vazio"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:150
 msgid "Both values are identical"
-msgstr ""
+msgstr "Ambos os valores são idênticos"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:152
 #, java-format
@@ -1484,19 +1484,19 @@ msgstr "Uma categoria que contém a lista de páginas com erro"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:434
 msgid "Values that are to be considered identical"
-msgstr ""
+msgstr "Valores que devem ser considerados idênticos"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:438
 msgid "Comma separated list of template names"
-msgstr ""
+msgstr "Lista de nomes de predefinições separadas por vírgulas"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:442
 msgid "Comma separated list of parameter names"
-msgstr ""
+msgstr "Lista de nomes de parâmetros separados por vírgulas"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:446
 msgid "Parameter value"
-msgstr ""
+msgstr "Valor do parâmetro"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a52x/a524/CheckErrorAlgorithm524.java:455
 msgid "Values that can be safely ignored for a given template and argument"
@@ -1886,7 +1886,7 @@ msgstr "Opção de aplicar substituição automática mesmo em predefinições"
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a55x/a559/CheckErrorAlgorithm559.java:352
 #, java-format
 msgid "Incorrect separator between consecutive {0} tags"
-msgstr ""
+msgstr "Separador incorreto entre tags {0} consecutivas"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a56x/a563/CheckErrorAlgorithm563.java:228
 msgid "Templates for which unused parameters should be verified"
@@ -2138,27 +2138,27 @@ msgstr "Predefinições para as quais só podemos guardar o primeiro duplicado"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:392
 msgid "Templates for which we can keep only the last if they are different"
-msgstr ""
+msgstr "Predefinições dos quais podemos manter apenas o último, caso sejam diferentes"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a580/CheckErrorAlgorithm580.java:399
 msgid "Templates to ignore if they're not one after each other"
-msgstr ""
+msgstr "Predefinições a serem ignoradas caso não estejam um após o outro"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:258
 msgid "Templates that shouldn't be preceded by multiple line jumps"
-msgstr ""
+msgstr "Predefinições que não devem ser precedidos por saltos de linha múltiplos"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:262
 msgid "Template that shouldn't be preceded by multiple line jumps"
-msgstr ""
+msgstr "Predefinição que não deve ser precedido por saltos de linha múltiplos"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:267
 msgid "Templates used to do line jumps"
-msgstr ""
+msgstr "Predefinições usados para fazer saltos de linha"
 
 #: org/wikipediacleaner/api/check/algorithm/a5xx/a58x/a584/CheckErrorAlgorithm584.java:271
 msgid "Template used to do line jumps"
-msgstr ""
+msgstr "Predefinição usado para criar saltos de linha"
 
 #: org/wikipediacleaner/api/configuration/CWConfiguration.java:83
 #, java-format
@@ -4009,37 +4009,37 @@ msgstr "Verificando lista branca por erro {0}"
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:180
 #, java-format
 msgid "Regarding whitelist for error {0}:"
-msgstr ""
+msgstr "Sobre a lista de permissões (whitelist) para erros {0}:"
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:188
 #, java-format
 msgid "Page {0} should be removed from the whitelist."
-msgstr ""
+msgstr "A página {0} deve ser removida da lista de permissões."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:190
 #, java-format
 msgid "Page {0} should be kept in the whitelist."
-msgstr ""
+msgstr "A página {0} deve permanecer na lista de permissões."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:194
 msgid "It doesn't exist on Wikipedia."
-msgstr ""
+msgstr "Isso não existe na Wikipédia."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:196
 msgid "The error hasn't been detected by WPCleaner, and CheckWiki doesn't handle this error."
-msgstr ""
+msgstr "O erro não foi detectado pelo WPCleaner, e o CheckWiki não lida com esse erro."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:199
 msgid "The error hasn't been detected by WPCleaner but it's still detected by CheckWiki."
-msgstr ""
+msgstr "O erro não foi detectado pelo WPCleaner, mas ainda é detectado pelo CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:201
 msgid "The error hasn't been detected neither by WPCleaner or CheckWiki."
-msgstr ""
+msgstr "O erro não foi detectado nem pelo WPCleaner nem pelo CheckWiki."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:205
 msgid "WPCleaner couldn't perform the removal."
-msgstr ""
+msgstr "O WPCleaner não conseguiu realizar a remoção."
 
 #: org/wikipediacleaner/gui/swing/bot/CWCheckWhiteListsWorker.java:223
 msgid "Whitelists"
@@ -5621,7 +5621,7 @@ msgstr "As opções do WPCleaner mudaram para permitir configurações diferente
 
 #: org/wikipediacleaner/utils/Configuration.java:318
 msgid "I have started the project of entirely rewriting WPCleaner.\nIt's clearly at the beginning, but I'm interested in early feedback.\nDo you want to have more information about WPCleaner NG?\n"
-msgstr ""
+msgstr "Comecei o projeto de reescrever o WPCleaner do zero.\nÉ claro que ainda estou no início, mas estou interessado em receber comentários desde o início.\nGostaria de saber mais sobre o WPCleaner NG?\n"
 
 #: org/wikipediacleaner/utils/StringCheckerReferenceName.java:60
 msgid "A reference name cannot be a numeric key"
